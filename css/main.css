@@ -66,6 +66,7 @@ table { border-collapse: collapse; border-spacing: 0;}
 
 html, body {
   height: 100%;
+  width: 100%;
 }
 
 body {
@@ -133,7 +134,6 @@ h3 {
 }
 
 .main {
-  padding: 3em;
   width: 40em;
   margin: 0 auto;
 }
