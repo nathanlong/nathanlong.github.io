@@ -1,0 +1,79 @@
+---
+layout: default
+custom_js: canvas
+---
+
+
+<section id="js-intro" class="intro">
+  <div class="container">
+    <h1 class="intro-title">Nathan Long</h1>
+    <h3 class="intro-subhead">Designer &amp; Front-End Developer</h3>
+    <p class="intro-copy">I build websites and mobile experiences for Fortune 500 companies.</p>
+  </div>
+  <canvas id="c"></canvas>
+</section>
+
+<article class="content">
+
+  <section class="clients chunk container">
+    <h2 class="chunk-title">Clients</h2>
+
+    <p>I've had the priviledge of working with both small and large companies, including:</p>
+    <ul>
+      <li>Walmart</li>
+      <li>Wells Fargo</li>
+      <li>Verizon</li>
+      <li>USAA</li>
+      <li>AAA</li>
+      <li>Four Seasons Hotels &amp; Resorts</li>
+      <li>and many more...</li>
+    </ul>
+
+    <p>If you'd like to see a sample of my work, contact me.</p>
+    <a href="/contact/?intent=samples">Request work sample &rarr;</a>
+  </section>
+
+  <hr>
+
+  <section class="skills chunk container">
+    <h2 class="chunk-title">What I Do</h2>
+
+    <ul>
+      <li>Responsive Web Design</li>
+      <li>Front-End Development</li>
+      <li>Wordpress Responsive Theme Development</li>
+      <li>Front-End Prototyping</li>
+      <li>Mobile Experiences</li>
+    </ul>
+
+    <a href="/contact/?intent=hire">Hire me &rarr;</a>
+  </section>
+
+  <hr>
+
+  <section class="blog chunk container">
+    <h2 class="chunk-title">What I Think</h2>
+
+    <p>A small sampling of my thoughts: </p>
+
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <li><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <a href="#">See the rest &rarr;</a>
+  </section>
+
+  <hr>
+
+  <section class="social chunk container">
+    <h2 class="chunk-title">Elsewhere</h2>
+
+    <ul>
+      <li><a href="http://www.twitter.com/nathanmlong">Twitter</a></li>
+      <li><a href="http://www.github.com/nathanlong">Github</a></li>
+      <li><a href="http://www.linkedin.com/nathanmlong">LinkedIn</a></li>
+    </ul>
+  </section>
+</article>

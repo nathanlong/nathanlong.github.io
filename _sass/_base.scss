@@ -1,0 +1,49 @@
+// Colors
+
+$aqua: #7fdbff;
+$blue: #0074d9;
+$navy: #001f3f;
+$teal: #39cccc;
+$green: #2ecc40;
+$olive: #3d9970;
+$lime: #01ff70;
+$yellow: #ffdc00;
+$orange: #ff851b;
+$red: #ff4136;
+$fuchsia: #f012be;
+$purple: #b10dc9;
+$maroon: #85144b;
+$white: #fff;
+$off-white: #f7f9fb;
+$near-white: #f0f0f0;
+$silver: #ddd;
+$gray: #aaa;
+$charcoal: #555;
+$black: #222;
+
+
+$primary-accent: $blue;
+$secondary-accent: $teal;
+
+$text-color: $charcoal;
+$link-color: $primary-accent;
+$link-hover-color: $secondary-accent;
+$border-color: desaturate(lighten($blue, 45%), 50%);
+
+// Fonts
+
+$sans-serif: "Source Sans Pro", sans-serif;
+$monospaced: "Source Code Pro", monospace;
+
+// Mixins
+
+$small: 676px;
+
+// Inline media queries
+@mixin respond-min($width) {
+  @media screen and (min-width: $width) {
+    @content;
+  }
+}
+
+

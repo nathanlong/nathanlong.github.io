@@ -1,0 +1,9 @@
+# Site settings
+title: Nathan Long
+email: your-email@domain.com
+description: > # this means to ignore newlines until "baseurl:"
+  I design and build websites for Fortune 100 companies and small businesses.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://nathan-long.com" # the base hostname & protocol for your site
+permalink: /blog/:title/
+markdown: redcarpet

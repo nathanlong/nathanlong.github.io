@@ -1,0 +1,13 @@
+<header class="header">
+
+    {% comment %} <a class="logo" href="{{ site.baseurl }}/">NL</a> {% endcomment %}
+
+    <nav class="nav">
+      <a class="nav-link" href="/">Home</a>
+        {% for page in site.pages %}
+          {% if page.title %}
+          <a class="nav-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+          {% endif %}
+        {% endfor %}
+    </nav>
+</header>
