@@ -1,3 +1,5 @@
+// Structure
+
 .container {
   max-width: 100%;
   margin: 0 auto;
@@ -32,6 +34,36 @@
   &:visited, &:visited:hover {
     color: $white
   }
+}
+
+// Header + Nav
+
+.header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.logo {
+  display: block;
+  padding: 1em;
+  float: left;
+}
+
+.nav {
+  text-align: center;
+  padding: 1em;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-link + .nav-link {
+  margin-left: 1em;
 }
 
 // Intro
@@ -112,37 +144,7 @@
   border-bottom-width: 0px;
 }
 
-// Header + Nav
-
-.header {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 10;
-}
-
-.logo {
-  display: block;
-  padding: 1em;
-  float: left;
-}
-
-.nav {
-  text-align: center;
-  padding: 1em;
-}
-
-.nav-link {
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.nav-link + .nav-link {
-  margin-left: 1em;
-}
-
-// Homepage
+// Chunk
 
 .chunk {
   margin-top: 2em;
@@ -170,6 +172,8 @@
   margin: 0;
 }
 
+// Single Page Setup
+
 .post, .single {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -180,29 +184,12 @@
   }
 }
 
-// Blog
-
-time {
-  color: $gray;
-  text-transform: uppercase;
-}
-
-// Article
-
 .content {
   font-size: 1.125em;
 }
 
-.post
 
-blockquote {
-  font-size: 1.5em;
-  font-weight: 300;
-  text-align: center;
-  color: $black;
-  margin-left: 0;
-  margin-right: 0;
-}
+// Social
 
 .social-share {
   text-align: center;
@@ -210,7 +197,7 @@ blockquote {
   margin-bottom: 2em;
 }
 
-// Contact
+// Contact - built to fit Wufoo forms
 
 .contact {
 
@@ -235,12 +222,6 @@ blockquote {
     margin: 0 auto;
   }
 
-  label {
-    display: block;
-    color: $primary-accent;
-    font-size: 0.888em;
-  }
-
   input, textarea, select {
     width: 100%;
   }
@@ -248,8 +229,6 @@ blockquote {
   .btn {
     font-size: 0.8em;
   }
-
-
 }
 
 
@@ -313,27 +292,36 @@ blockquote {
 @-webkit-keyframes fadein {
   0% {
     -webkit-transform: translateY(-20px);
-    opacity: 0; }
+    opacity: 0;
+  }
 
   100% {
     -webkit-transform: translateY(0);
-    opacity: 1; } }
+    opacity: 1; 
+  } 
+}
 
 @-moz-keyframes fadein {
   0% {
     -webkit-transform: translateY(-20px);
-    opacity: 0; }
+    opacity: 0; 
+  }
 
   100% {
     -webkit-transform: translateY(0);
-    opacity: 1; } }
+    opacity: 1; 
+  }   
+}
 
 @keyframes fadein {
   0% {
     -webkit-transform: translateY(-20px);
-    opacity: 0; }
+    opacity: 0;
+  }
 
   100% {
     -webkit-transform: translateY(0);
-    opacity: 1; } }
+    opacity: 1; 
+  } 
+}
 

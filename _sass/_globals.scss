@@ -1,3 +1,6 @@
+// Base
+// ----------------------------------------------------------------------------
+
 html {
   box-sizing: border-box;
 }
@@ -12,6 +15,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+// Basic Text Styles
+// ----------------------------------------------------------------------------
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
@@ -77,7 +83,68 @@ hr {
   width: 4em;
 }
 
-// Helper classes
+time {
+  color: $gray;
+  text-transform: uppercase;
+}
+
+// Forms
+// ----------------------------------------------------------------------------
+
+input[type="email"],
+input[type="search"],
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+  border: 1px solid $border-color;
+  height: 36px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  box-shadow: none;
+  font-weight: 400;
+  background: #fff; }
+/* Removes awkard default styles on some inputs */
+input[type="email"],
+input[type="search"],
+input[type="text"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+textarea {
+  min-height: 5em;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid $primary-accent;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  font-size: 0.888em;
+  color: $primary-accent;
+  font-weight: 400;
+}
+fieldset {
+  border-width: 0;
+  padding: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  font-weight: normal;
+  margin-left: .5em; }
+
+
+// Helper Classes
+// ----------------------------------------------------------------------------
 
 .pull-right {
   float: right;
@@ -97,11 +164,7 @@ hr {
   clear: both;
 }
 
-
-/*
- * Hide only visually, but have it available for screen readers:
- * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- */
+// Visually hide, but allow screen readers
 
 .visuallyhidden {
     border: 0;
@@ -114,11 +177,7 @@ hr {
     width: 1px;
 }
 
-/*
- * Extends the .visuallyhidden class to allow the element
- * to be focusable when navigated to via the keyboard:
- * https://www.drupal.org/node/897638
- */
+// Allows focusing of hidden elements
 
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {

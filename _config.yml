@@ -7,3 +7,5 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://nathan-long.com" # the base hostname & protocol for your site
 permalink: /blog/:title/
 markdown: redcarpet
+sass:
+    style: :compressed
