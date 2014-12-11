@@ -4,7 +4,7 @@ layout: default
 
 <section class="intro intro-shallow">
   <h1 class="intro-title">{{ page.title }}</h1>
-  <p class="intro-copy">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+  {%if page.subtitle%}<p class="intro-copy">{{page.subtitle}}</p>{% endif %}
 </section>
 
 <div class="container">
@@ -14,5 +14,6 @@ layout: default
 </div>
 <hr>
 <section class="social-share container">
-  <a href="http://twitter.com/home?status={{page.title | cgi_escape}} {{page.url | prepend: site.url}}">Tweet This &rarr;</a>
+  <p><time>{{ page.date | date: "%b %-d, %Y" }}</time> &mdash; <a href="http://twitter.com/home?status={{page.title | cgi_escape}} {{page.url | prepend: site.url}}">Tweet</a> &mdash; <a href="http://www.twitter.com/nathanmlong">Follow @nathanmlong</a></p>
+  <p></p>
 </section>

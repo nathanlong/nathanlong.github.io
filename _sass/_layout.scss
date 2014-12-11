@@ -90,8 +90,8 @@
   padding-bottom: 2em;
 
   @include respond-min($small) {
-    padding-top: 6em;
-    padding-bottom: 4em;
+    padding-top: 5em;
+    padding-bottom: 3em;
   }
 }
 
@@ -195,6 +195,21 @@
   text-align: center;
   margin-top: 2em;
   margin-bottom: 2em;
+}
+
+// Post Nav
+
+.post-nav {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.prev, .next {
+  display: block;
+  float: left;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 // Contact - built to fit Wufoo forms
