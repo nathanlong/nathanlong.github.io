@@ -66,6 +66,10 @@
   margin-left: 1em;
 }
 
+.nav-link.title {
+  font-weight: 700;
+}
+
 // Intro
 
 .intro {
@@ -98,10 +102,10 @@
 .intro-title {
   margin-bottom: 0;
   font-weight: 300;
-  font-size: 3em;
+  font-size: 2em;
   line-height: 1.125;
-  color: $black;
   z-index: 10;
+  padding: 0 1em;
 
   @include respond-min($small) {
     font-size: 4em;
@@ -113,7 +117,7 @@
   margin-top: 0;
   font-weight: 300;
   font-size: 1em;
-  color: $charcoal;
+  color: $steel;
   text-transform: uppercase;
   z-index: 10;
 
@@ -126,7 +130,7 @@
   margin-bottom: 0;
   z-index: 10;
   @include respond-min($small) {
-    font-size: 1.125em;
+    font-size: 1.25em;
   }
 }
 
@@ -164,11 +168,16 @@
 
 .chunk li {
   font-weight: 600;
+  margin: 0;
 }
 
 .chunk li:before {
   content:"";
   display: inline;
+  margin: 0;
+}
+
+.chunk .chunk-list li {
   margin: 0;
 }
 
@@ -185,7 +194,14 @@
 }
 
 .content {
-  font-size: 1.125em;
+  @include respond-min($small) {
+    font-size: 1.25em;
+    line-height: 1.6;
+  }
+
+  li {
+    margin-bottom: .5em;
+  }
 }
 
 

@@ -12,7 +12,7 @@ During the day, I work for [Pace](http://www.paceco.com), building websites and 
 
 My guiding principles are **Efficiency &amp; Clarity**.
 
-- As a single contractor with a wide skill set and experience, I can cut out any middleman processes and expenses.
+- As a one man team, you deal with me directly at all stages of the project. There is no middleman to pay.
 - I work from home, keeping overhead small.
 - Minimalism is nice, but clarity is better. The clearest solution is not always the simplest one.
 
@@ -25,4 +25,9 @@ I love God and I love my family, both of those things are important to me and dr
 - I will always look for the clearest, most efficient solution, not the one that will make me the most money.
 - I am pretty knowledgable, but I will tell you if I don't know something. 
 - If I don't know something, I will do my best to find out. 
-- I'm a huge fan of animated gifs, you WILL see them in my emails to you. Fair warning.
+- I'm a huge fan of [animated gifs](http://gim.ie/buixd), you WILL see them in my emails to you. Fair warning.
+
+## Side Projects
+
+- [Dotfiles](https://github.com/nathanlong/dotfiles) - front-end development setup with extensive Vim configuration
+- [Writer](/vim-colors-writer/) - distraction-free writing environment for Vim

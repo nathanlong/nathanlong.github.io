@@ -54,7 +54,7 @@ for(var i = 0; i < (Math.random() * 50) + 100; i++) {
 }
 requestAnimationFrame(demo = function() {
   ctx.save();
-  ctx.fillStyle = '#f0f0f0';
+  ctx.fillStyle = '#f7f7f7';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.restore();
   

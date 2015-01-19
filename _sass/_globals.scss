@@ -12,7 +12,7 @@ body {
   font-family: $sans-serif;
   line-height: 1.5;
   color: $text-color;
-  -webkit-font-smoothing: antialiased;
+  // -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
@@ -39,6 +39,14 @@ h2 {
 
   @include respond-min($small) {
     font-size: 2.5em;
+  }
+}
+
+h3 {
+  font-size: 1.5em;
+
+  @include respond-min($small) {
+    font-size: 1.75em;
   }
 }
 
@@ -85,7 +93,8 @@ hr {
 
 blockquote {
   font-size: 1.5em;
-  text-align: center;
+  border-left: 2px solid $primary-accent;
+  padding-left: 1em;
   margin: 1em 0;
   font-weight: 300;
   color: $black;

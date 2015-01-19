@@ -4,6 +4,8 @@
 .highlight {
     background: $near-white;
     padding: 1em;
+    font-family: $monospaced;
+    font-size: .75em;
 
     @include respond-min($small) {
       margin-left: -2em;

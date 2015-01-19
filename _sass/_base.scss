@@ -15,17 +15,19 @@ $purple: #b10dc9;
 $maroon: #85144b;
 $white: #fff;
 $off-white: #f7f9fb;
-$near-white: #f0f0f0;
+$near-white: #f7f7f7;
 $silver: #ddd;
 $gray: #aaa;
+$steel: #999;
 $charcoal: #555;
-$black: #222;
+$carbon: #4d4d4d;
+$black: #333;
 
 
 $primary-accent: $blue;
 $secondary-accent: $teal;
 
-$text-color: $charcoal;
+$text-color: $carbon;
 $link-color: $primary-accent;
 $link-hover-color: $secondary-accent;
 $border-color: desaturate(lighten($blue, 45%), 50%);
