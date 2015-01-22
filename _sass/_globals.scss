@@ -16,6 +16,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.oldie body {
+  font-family: Arial;
+}
+
 // Basic Text Styles
 // ----------------------------------------------------------------------------
 
@@ -50,6 +54,19 @@ h3 {
   }
 }
 
+h4 {
+  font-size: 1.125em;
+
+  @include respond-min($small) {
+    font-size: 1.25em;
+  }
+}
+
+p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 a {
   color: $link-color;
   transition: color 0.25s ease-in-out;
@@ -63,6 +80,11 @@ a {
   &:visited:hover {
     color: darken($link-hover-color, 10%);
   }
+}
+
+small {
+  display: block;
+  color: $steel;
 }
 
 ul {
@@ -100,10 +122,6 @@ blockquote {
   color: $black;
 }
 
-time {
-  color: $gray;
-  text-transform: uppercase;
-}
 
 // Forms
 // ----------------------------------------------------------------------------

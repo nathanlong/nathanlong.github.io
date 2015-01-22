@@ -13,6 +13,12 @@
   }
 }
 
+.oldie .container {
+  max-width: 40em;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 // Buttons
 
 .btn {
@@ -74,7 +80,7 @@
 
 .intro {
   width: 100%;
-  background: $near-white;
+  background-color: $near-white;
   padding-top: 8em;
   padding-bottom: 6em;
   text-align: center;
@@ -144,8 +150,13 @@
 }
 
 #js-intro {
-  background: transparent;
+  background-color: transparent;
   border-bottom-width: 0px;
+}
+
+.oldie #js-intro {
+  background-color: $near-white;
+  border-bottom-width: 1px;
 }
 
 // Chunk
@@ -181,6 +192,50 @@
   margin: 0;
 }
 
+.oldie .chunk {
+  width: 100%;
+}
+
+// Blog
+
+.blog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-post {
+
+  border-top: solid 1px $border-color;
+  padding: 1.5em 0;
+
+  &:before {
+    content: "";
+    display: none;
+  }
+}
+
+.blog-link {
+  text-decoration: none;
+}
+
+.blog-title {
+  margin: 0;
+}
+
+.blog-dek {
+  margin-top: .5em;
+  margin-bottom: .5em;
+  font-size: .9em;
+  color: $charcoal;
+}
+
+.blog-time {
+  color: $gray;
+  font-size: .9em;
+  margin: 0;
+}
+
 // Single Page Setup
 
 .post, .single {
@@ -193,15 +248,54 @@
   }
 }
 
+// Content
+
 .content {
   @include respond-min($small) {
     font-size: 1.25em;
     line-height: 1.6;
   }
+}
 
+.content--article {
   li {
     margin-bottom: .5em;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+  }
+
+  hr {
+    margin: 2em auto;
+  }
+}
+
+.inset {
+  padding: 1em;
+  background: $near-white;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.image {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+
+  @include respond-min($small) {
+    margin-left: -2em;
+    margin-right: -2em;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.oldie .image {
+  margin-left: -2em;
+  margin-right: -2em;
 }
 
 
@@ -354,5 +448,11 @@
     -webkit-transform: translateY(0);
     opacity: 1; 
   } 
+}
+
+// IE fixes - for kicks and giggles
+
+.oldie canvas {
+  display: none;
 }
 
