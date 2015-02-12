@@ -136,7 +136,7 @@ select {
   height: 36px;
   padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
   box-shadow: none;
-  font-weight: 400;
+  font-weight: 100;
   background: #fff; }
 /* Removes awkard default styles on some inputs */
 input[type="email"],
@@ -164,7 +164,7 @@ legend {
   display: block;
   font-size: 0.888em;
   color: $primary-accent;
-  font-weight: 400;
+  font-weight: 100;
 }
 fieldset {
   border-width: 0;

@@ -54,13 +54,29 @@
 
 .logo {
   display: block;
-  padding: 1em;
-  float: left;
+  float: none;
+  margin: 0 auto;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 1em;
+
+  @include respond-min($small) {
+    float: left;
+    padding: 1em 0;
+    text-align: left;
+  }
 }
 
 .nav {
   text-align: center;
-  padding: 1em;
+  float: none;
+  margin: 0 auto;
+  font-weight: 100;
+
+  @include respond-min($small) {
+    float: right;
+    padding: 1em 0;
+  }
 }
 
 .nav-link {
@@ -96,11 +112,10 @@
 }
 
 .intro-shallow {
-  padding-top: 4em;
+  padding-top: 5em;
   padding-bottom: 2em;
 
   @include respond-min($small) {
-    padding-top: 5em;
     padding-bottom: 3em;
   }
 }
@@ -373,7 +388,7 @@
 
 // Animations
 
-.nav, .intro-title, .intro-subhead, .intro-copy, .content {
+.header, .intro-title, .intro-subhead, .intro-copy, .content {
   opacity: 0;
   -webkit-transform: translateY(-20px);
   -moz-transform: translateY(-20px);
@@ -383,7 +398,7 @@
   animation: fadein 0.6s 0.5s 1 forwards ease-in-out;
 }
 
-.nav {
+.header {
   -webkit-animation-delay: 0s;
   -moz-animation-delay: 0s;
   animation-delay: 0s;
