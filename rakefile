@@ -8,6 +8,7 @@ CONFIG = {
   'layouts' => File.join(SOURCE, "_layouts"),
   'posts' => File.join(SOURCE, "_posts"),
   'drafts' => File.join(SOURCE, "_drafts"),
+  'draft-remote' => "~/Dropbox/docs/drafts",
   'post_ext' => "md",
 }
 
@@ -17,7 +18,7 @@ task :dev do
 end # task :dev
 
 # Usage: rake draft title="A Title"
-desc "Begin a new draft in #{CONFIG['drafts']}"
+desc "Begin a new draft in #{CONFIG['drafts']}. (Usage: rake draft title='A Title')"
 task :draft do
   abort("rake aborted: '#{CONFIG['drafts']}' directory not found.") unless FileTest.directory?(CONFIG['posts'])
   title = ENV["title"] || "new-post"
@@ -39,7 +40,7 @@ task :draft do
 end # task :draft
 
 # Usage: rake publish post="new-post.md" date="2014-12-18", date is optional, defaults to current day
-desc "Move a draft to posts folder for publishing"
+desc 'Move a draft to posts folder for publishing. (Usage: rake publish post="new-post.md" date="2014-12-18", date is optional, defaults to current day.)'
 task :publish do
   abort("rake aborted: '#{CONFIG['posts']}' directory not found.") unless FileTest.directory?(CONFIG['posts'])
   post = ENV["post"]
@@ -57,7 +58,12 @@ task :publish do
   puts "Publishing post: #{filename}"
 end # task :publish
 
-desc "List all drafts"
+desc "List all drafts."
 task :list do
   system "ls -toF #{CONFIG['drafts']}"
 end # task :list
+
+desc "Link draft folder to remote location specified in CONFIG"
+task :link do
+  system "ln -s #{CONFIG['draft-remote']} #{CONFIG['drafts']}"
+end # task :link
