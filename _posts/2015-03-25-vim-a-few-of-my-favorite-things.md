@@ -29,19 +29,19 @@ There's a couple things that are happening in the line above. First, it checks t
 "Changes leader from \ to ,
 let mapleader = ","
 
-"Map : to ; then ; to \ massive pinky-saver
+"Map : to ; (then remap ;) -- massive pinky-saver
 noremap ; :
-noremap \ ;
+noremap <M-;> ;
 
 "Map escape key to jj -- much faster
-noremap! jj <esc>
+inoremap jj <esc>
 ```
 
 The default configuration of Vim causes your pinky fingers to stretch all over this place.
 
 Changing the leader from `\` to `,` makes performing leader commands much, MUCH easier.
 
-Similarly, instead of having to reach for that left shift key to get your `:` commands, you can just move the semi-colon out of the way to our recently freed up `\` key. This allows you to access `:` with just one pinky instead of two.
+Similarly, instead of having to reach for that left shift key to get your `:` commands, we can move the `;` out of the way by remapping it to `<M-;>`. This allows you to access `:` with just one pinky instead of two.
 
 And lastly, when you're inside insert mode, instead of reaching over for the `esc` key, a quick double-tap of the `j` key will send you back to normal mode.
 
@@ -51,32 +51,32 @@ Save those pinky fingers for tea time!
 
 ```vim
 "Easier window navigation, control+letter moves in that direction
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 "Firefox-style tab selection with command+number, mac only
-noremap <D-1> 1gt
-noremap <D-2> 2gt
-noremap <D-3> 3gt
-noremap <D-4> 4gt
-noremap <D-5> 5gt
-noremap <D-6> 6gt
-noremap <D-7> 7gt
-noremap <D-8> 8gt
-noremap <D-9> 9gt
-noremap <D-0> :tablast<CR>
-noremap! <D-1> <esc>1gt
-noremap! <D-2> <esc>2gt
-noremap! <D-3> <esc>3gt
-noremap! <D-4> <esc>4gt
-noremap! <D-5> <esc>5gt
-noremap! <D-6> <esc>6gt
-noremap! <D-7> <esc>7gt
-noremap! <D-8> <esc>8gt
-noremap! <D-9> <esc>9gt
-noremap! <D-0> <esc>:tablast<CR>
+nnoremap <D-1> 1gt
+nnoremap <D-2> 2gt
+nnoremap <D-3> 3gt
+nnoremap <D-4> 4gt
+nnoremap <D-5> 5gt
+nnoremap <D-6> 6gt
+nnoremap <D-7> 7gt
+nnoremap <D-8> 8gt
+nnoremap <D-9> 9gt
+nnoremap <D-0> :tablast<CR>
+inoremap <D-1> <esc>1gt
+inoremap <D-2> <esc>2gt
+inoremap <D-3> <esc>3gt
+inoremap <D-4> <esc>4gt
+inoremap <D-5> <esc>5gt
+inoremap <D-6> <esc>6gt
+inoremap <D-7> <esc>7gt
+inoremap <D-8> <esc>8gt
+inoremap <D-9> <esc>9gt
+inoremap <D-0> <esc>:tablast<CR>
 ```
 
 I have always loved the flexibility of Vim's windows. Slice, dice, and make julienne fries of those windows into splits, tabs, or whatever! But getting around in them isn't always the easiest.
@@ -89,11 +89,11 @@ I tend to use a lot of tabs as well, especially if I'm jumping across different 
 
 ```vim
 " Bubble single lines
-nmap <C-Up> ddkP
-nmap <C-Down> ddp
+nnoremap <C-Up> ddkP
+nnoremap <C-Down> ddp
 " Bubble multiple lines
-vmap <C-Up> xkP`[V`]
-vmap <C-Down> xp`[V`]
+xnoremap <C-Up> xkP`[V`]
+xnoremap <C-Down> xp`[V`]
 ```
 
 Originally from Drew Neil's [Vimcast](http://vimcasts.org/episodes/bubbling-text/), this set of mappings will take your current line or selection and move it up or down one line at a time, shifting the other lines around it.
@@ -102,11 +102,11 @@ If you happen to have the super handy [Unimpaired](https://github.com/tpope/vim-
 
 ```vim
 " Bubble single lines - uses unimpaired plugin actions
-nmap <C-Up> [e
-nmap <C-Down> ]e
+nnoremap <C-Up> [e
+nnoremap <C-Down> ]e
 " Bubble multiple lines
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
+xnoremap <C-Up> [egv
+xnoremap <C-Down> ]egv
 ```
 
 ---
@@ -121,16 +121,18 @@ xnoremap <silent> <C-Up>   :move-2<CR>gv=gv
 xnoremap <silent> <C-Down> :move'>+<CR>gv=gv
 ```
 
+---
+
 ### Duplicating Lines
 
 ```vim
 "Duplicate lines above and below
-imap <C-A-down> <esc>Ypk
-nmap <C-A-down> Ypk
-vmap <C-A-down> y`>pgv
-imap <C-A-up> <esc>YPj
-nmap <C-A-up> YPj
-vmap <C-A-up> y`<Pgv
+inoremap <C-A-down> <esc>Ypk
+nnoremap <C-A-down> Ypk
+xnoremap <C-A-down> y`>pgv
+inoremap <C-A-up> <esc>YPj
+nnoremap <C-A-up> YPj
+xnoremap <C-A-up> y`<Pgv
 ```
 
 This is extremely handy for prototyping or filling out some markup quickly.
@@ -143,10 +145,10 @@ These mappings will duplicate your current line or selection either above or bel
 "Will open files in current directory, allows you to leave the working cd in
 "the project root. You can also use %% anywhere in the command line to expand.
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
-noremap <leader>ew :e %%
-noremap <leader>es :sp %%
-noremap <leader>ev :vsp %%
-noremap <leader>et :tabe %%
+nmap <leader>ew :e %%
+nmap <leader>es :sp %%
+nmap <leader>ev :vsp %%
+nmap <leader>et :tabe %%
 ```
 
 While I usually use a combination of the [Ctrl-P](https://github.com/kien/ctrlp.vim) plugin and [Ag](http://geoff.greer.fm/ag/) (more on this later), sometimes there's no substitute for quick and dirty local based file edits.
@@ -157,8 +159,8 @@ These mappings will shortcut `%%` to expand the local directory of the file you'
 
 ```vim
 "Jump back to last edited buffer
-nmap <D-b> :e#<CR>
-imap <D-b> <esc>:e#<CR>
+nnoremap <D-b> :e#<CR>
+inoremap <D-b> <esc>:e#<CR>
 ```
 
 This one is crazy handy. Ever find yourself jumping between two files? Or you just need to open one to copy something real quick, then put it back in that first file?
@@ -175,9 +177,11 @@ It's relative to the last two files you had open. Again, the `<D>` mapping is sp
 
 ```vim
 "Jump back to last edited buffer
-noremap <D-b> <C-^>
-noremap! <D-b> <esc><C-^>
+nnoremap <D-b> <C-^>
+inoremap <D-b> <esc><C-^>
 ```
+
+---
 
 #### Remember Cursor Positions
 
@@ -198,7 +202,9 @@ This autocommand and helper function fire off whenever you open a buffer that do
 
 ---
 
-**Update:** Thanks to reddit user [\_\_\_violet\_\_\_](http://www.reddit.com/user/___violet___) for suggesting the function be set as a script-local instead of a global function.
+**Update:** Thanks to reddit user [\_\_\_violet\_\_\_](http://www.reddit.com/user/___violet___) for suggesting the function be set as a script-local instead of a global function, and helping me use the correct mapping modes.
+
+---
 
 #### Final Words
 
