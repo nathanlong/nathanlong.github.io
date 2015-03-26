@@ -25,10 +25,6 @@ I work at all stages to keep my process as **efficient** as possible:
 - Minimalism is nice, but clarity is better&mdash;the clearest solution is not always the simplest one.
 - Clear and effective design advocates for your users, your most important stakeholders.
 
-## Inspiration
-
-I love God and I love my family (my beautiful wife and two daughters), both of those things are important to me and drive a lot of my decisions.
-
 ## Other Points
 
 - I will always look for the clearest, most efficient solution, not the one that will make me the most money.
