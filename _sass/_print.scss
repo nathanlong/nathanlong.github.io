@@ -1,0 +1,12 @@
+.print-only { display: none; color: #666; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em; margin-top: 1em; }
+
+@media print {
+
+  .print-only { display: block; }
+  body { font-size: 12px; }
+  .header, .footer { display: none; }
+  .intro, .intro-shallow { padding-top: 0; }
+  h2, h3, h4, h5, h6 { margin-bottom: .25em; }
+  p { margin-top: 0; }
+
+}

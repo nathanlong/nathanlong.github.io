@@ -277,6 +277,10 @@
     margin-bottom: .5em;
   }
 
+  li li {
+    margin-bottom: 0;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     margin-top: 1.5em;
   }
@@ -306,6 +310,10 @@
   img {
     max-width: 100%;
   }
+}
+
+.flush-image {
+  margin: 2em 0;
 }
 
 .oldie .image {

@@ -10,7 +10,7 @@
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }} - Designer and Front-End Developer{% endif %}"/>
   <meta property="og:site_name" content="Nathan Long"/>
-  <meta property="og:description" content="{% if page.subtitle %}{{ page.subtitle }}{% else %}{{site.description}}{% endif %}"/>
+  <meta property="og:description" content="{% if page.dek %}{{ page.dek }}{% else %}{{site.description}}{% endif %}"/>
   <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}"/>
   {% comment %} <meta property="og:image" content=""/> {% endcomment %}
 

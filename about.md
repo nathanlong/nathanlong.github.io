@@ -4,35 +4,32 @@ title: About
 permalink: /about/
 ---
 
-## Basics
+<h3 class="light margin-clear">Helping companies build efficient, performant, responsive websites.</h3>
 
-During the day, I work for [Pace](http://www.paceco.com), building websites and mobile experiences for Fortune 500 companies. In my other hours, I partner with other shops, small businesses, and organizations. 
+<div class="flush-image">
+  <img src="/img/nathan-long-16x9.jpg" alt="Portrait of Nathan Long">
+</div>
 
-I'm a generalist by nature, so I can tackle branding, illustration, UX (User Experience), UI (User Interface), and some back-end development, but I specialize in responsive websites and front-end development.
+Hi, I'm Nathan Long. I've been creating websites since 1999.
 
-## Principles 
+I was formally trained as an artist and graphic designer, but I applied my visual skills to the web and dived right into the business of building websites. Since then, I've been able to help large companies like Walmart, Verizon, Wells Fargo, Four Seasons Hotels and Resorts, USAA, plus several others including entreprenuers, startups, and other businesses.
 
-My guiding principles are **Efficiency &amp; Clarity**.
+My work has helped increase engagement on mobile devices as well as help increase business through better user experience and better performing websites.
 
-I work at all stages to keep my process as **efficient** as possible:
+Those are some of the official terms for what my work does, but my real goal is to help others build clarity out of the wild landscape that is the internet. The internet can be beautiful in it's chaos... but that also makes it intimidating. I work to reduce the barrier between you, your users, and that wild web.
 
-- As a one man team, you deal with me directly at all stages of the project. There is no middleman to pay.
-- I work from home, keeping overhead low.
-- I will always trend towards over-communication rather than under-communication, as it's the cornerstone of efficiency.
+I currently live right outside of Greensboro, NC with my wife and two daughters.
 
-**Clarity** is what I strive for, not only in communication, but also in my designs:
+---
 
-- Minimalism is nice, but clarity is better&mdash;the clearest solution is not always the simplest one.
-- Clear and effective design advocates for your users, your most important stakeholders.
+Perhaps you'd like to know more? Try these on:
 
-## Other Points
+1. **Are you currently accepting new projects?**
+  - Yes. [Contact me](/contact/?intent=hire) if you want to see if we'd be a good fit.
+- **How much does it cost to...?**
+  - For every project I take on, I'll meet with you and give you an estimate and how long I think your project will take to complete. You won't pay a dime until we shake hands and I start work.
+- **Can I see your resume?**
+  - [Sure, if you really want to.](/resume/)
 
-- I will always look for the clearest, most efficient solution, not the one that will make me the most money.
-- I am pretty knowledgeable, but I will tell you if I don't know something. 
-- If I don't know something, I will do my best to find out (I love a challenge). 
-- I'm a huge fan of [animated gifs](http://gim.ie/buixd), you WILL see them in my emails to you. Fair warning.
-
-## Side Projects
-
-- [Dotfiles](https://github.com/nathanlong/dotfiles) - front-end development setup with extensive Vim configuration
-- [Writer](/vim-colors-writer/) - distraction-free writing environment for Vim
+  {% comment %} 3. **What can I expect from working together?** {% endcomment %}
+  {% comment %}   - [Here's a sample process to give you an idea.]() {% endcomment %}

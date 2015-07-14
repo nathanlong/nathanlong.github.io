@@ -122,6 +122,14 @@ blockquote {
   color: $black;
 }
 
+img {
+  max-width: 100%;
+}
+
+.light {
+  font-weight: 100;
+}
+
 
 // Forms
 // ----------------------------------------------------------------------------
@@ -187,6 +195,10 @@ label > .label-body {
 
 .pull-left {
   float: left;
+}
+
+.margin-clear {
+  margin: 0 !important;
 }
 
 .clearfix:before,
