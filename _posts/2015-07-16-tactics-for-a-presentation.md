@@ -156,7 +156,7 @@ your presentation. You'll have to gauge the humor level and type of your
 clients (mortgage bankers may require a different approach than a young tech
 startup founder), but allow your personality to show through.
 
-Ever heard of [power posing](posing) before speaking in front of others? 
+Ever heard of [power posing](http://www.ted.com/talks/amy_cuddy_your_body_language_shapes_who_you_are?language=en) before speaking in front of others? 
 
 In a nutshell, it's purposely posing in a 'powerful' stance before at least
 2 minutes before some sort of activity. It sounds like pseudoscience and feels
@@ -197,7 +197,7 @@ Here's a short framework I use for dealing with conflict (large or small) in
 client relations:
 
 1. **Never assume they're “out to get you”. Move past your initial knee jerk
-   reaction.** (See [Hanlon's Razor](hanlon))
+   reaction.** (See [Hanlon's Razor](https://en.wikipedia.org/wiki/Hanlon%27s_razor))
 - **Acknowledge that you heard them.**
   - This can help diffuse an initially strong reaction and start to move from
   statements to dialogue.
@@ -218,7 +218,7 @@ to succeed (help ME help YOU), and that you're willing to put in the work to
 see it happen. A well-handled conflict (where both parties walk away satisfied)
 will earn you nothing but mad props.
 
-(I strongly recommend the book [Crucial Conversations](cc) for some of the more
+(I strongly recommend the book [Crucial Conversations](http://www.amazon.com/Crucial-Conversations-Tools-Talking-Stakes/dp/0071401946) for some of the more
 advanced conflict-management techniques. Buy it, borrow it, find it in the
 library &#8212; you won't regret it.)
 
@@ -262,11 +262,5 @@ To summarize, here's my checklist before a major presentation:
 ---
 
 Do you have your own tactics for presentations? Have questions about any of my
-points? [Hit me up on Twitter](twitter), I'd love to chat about it.
-
-
-[posing]: http://www.ted.com/talks/amy_cuddy_your_body_language_shapes_who_you_are?language=en
-[hanlon]: https://en.wikipedia.org/wiki/Hanlon%27s_razor
-[cc]: http://www.amazon.com/Crucial-Conversations-Tools-Talking-Stakes/dp/0071401946
-[twitter]: http://www.twitter.com/nathanmlong
+points? [Hit me up on Twitter](http://www.twitter.com/nathanmlong), I'd love to chat about it.
 
