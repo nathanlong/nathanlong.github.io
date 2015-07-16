@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tactics for a Successful Design Presentation"
-subtitle: "Small changes to help make presentations more effective."
+dek: "Small changes to help make presentations more effective."
 ---
 
 Early in my career, I would get uncomfortable and nervous whenever I had to
