@@ -161,15 +161,15 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: -5;
 }
 
-#js-intro {
-  background-color: transparent;
+#particles-js {
+  background-color: $near-white;
   border-bottom-width: 0px;
+  // pointer-events: none;
 }
 
-.oldie #js-intro {
+.oldie #particles-js {
   background-color: $near-white;
   border-bottom-width: 1px;
 }

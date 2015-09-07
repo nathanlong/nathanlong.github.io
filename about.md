@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-<h3 class="light margin-clear">Helping companies build efficient, performant, responsive websites.</h3>
+<h3 class="light margin-clear">Helping companies build efficient, high performing, and responsive websites.</h3>
 
 <div class="flush-image">
   <img src="/img/nathan-long-16x9.jpg" alt="Portrait of Nathan Long">
@@ -16,7 +16,7 @@ I was formally trained as an artist and graphic designer, but I applied my visua
 
 My work has helped increase engagement on mobile devices as well as help increase business through better user experience and better performing websites.
 
-Those are some of the official terms for what my work does, but my real goal is to help others build clarity out of the wild landscape that is the internet. The internet can be beautiful in it's chaos... but that also makes it intimidating. I work to reduce the barrier between you, your users, and that wild web.
+Those are some of the official terms for what my work does, but my real goal is to help others build clarity out of the wild landscape that is the internet. The internet can be beautiful in its chaos... but that also makes it intimidating. I work to reduce the barrier between you, your users, and that wild web.
 
 I currently live right outside of Greensboro, NC with my wife and two daughters.
 
