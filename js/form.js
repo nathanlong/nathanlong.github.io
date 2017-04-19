@@ -25,4 +25,6 @@ if (get['intent'] == 'hire'){
 	selectElement("Hire me");
 } else if (get['intent'] == 'samples') {
 	selectElement("See some work samples");
+} else if (get['intent'] == 'other') {
+	selectElement("Talk about something else")
 }

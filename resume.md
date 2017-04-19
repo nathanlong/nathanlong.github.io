@@ -21,10 +21,6 @@ I design and build responsive websites for Fortune 500 companies.
 - **Back-End Development**
   - *Languages (limited proficiency):* PHP, Ruby, Node
   - *Familiar with:* WordPress, ExpressionEngine, Static site generators, Ektron
-- **Other Tools**
-  - *Design Tool of Choice:* Pencil, Pen, and Paper
-  - *Text Editor of Choice:* Vim
-  - *Communication Medium of Choice:* Animated gifs
 
 ## Experience
 
