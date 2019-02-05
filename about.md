@@ -20,21 +20,13 @@ I currently live right outside of Greensboro, NC with my wife and two daughters.
 
 ---
 
-Perhaps you'd like to know more? Try these on:
+Perhaps you'd like to know more? Try these out:
 
 1. **Are you currently accepting new projects?**
 	- No, not currently. But you can [contact me](/contact/?intent=hire) if you'd like to know when I'm available.
-- **How much does it cost to...?**
-  - For every project I take on, I'll meet with you and give you an estimate and how long I think your project will take to complete. You won't pay a dime until we shake hands and I start work.
-- **Can I see your resume?**
+2. **How much does it cost to...?**
+	- For every project I take on, I'll meet with you and give you an estimate of how long I think your project will take to complete and a range of how much it will cost. You won't pay a dime until we shake hands and I start work.
+3. **Can I see your work?**
+	- Some of my work is protected by NDA's (Non-Disclosure Agreements) — which is part of why I don't keep a public portfolio — but if you [drop me a line](/contact/?intent=samples) I can send you some samples. 
+4. **Can I see your resume?**
 	- [Sure, if you really want to.](/resume/)
-
----
-
-Still curious? Here are some random facts:
-
-- **Favorite text editor:**
-	-	Vim. Hands-down. You can peruse [my setup](https://github.com/nathanlong/dotfiles).
-- **Favorite game:**
-	- [Go](https://en.wikipedia.org/wiki/Go_(game)) (also known as Baduk/Igo/Weiqi). If you play, [contact me](/contact/?intent=other) and we'll get a game going.
-
