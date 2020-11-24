@@ -1,0 +1,36 @@
+body {
+	font-family: $font-body;
+	background-color: $color-background;
+	color: #fff;
+	font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: $font-display;
+	font-weight: normal;
+}
+
+.font-body {
+	font-family: $font-body;
+}
+
+.font-display {
+	font-family: $font-display;
+}
+
+a {
+  color: $color-link;
+
+	&:hover, &:focus {
+	  color: $color-link-hover;
+	}
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+strong {
+  font-weight: 900;
+}
