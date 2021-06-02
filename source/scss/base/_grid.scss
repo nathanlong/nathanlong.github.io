@@ -4,3 +4,23 @@
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
+
+.grid {
+	display: flex;
+	flex-direction: column;
+	margin-left: 15px;
+
+
+	@include small-screen {
+	  flex-direction: row;
+	}
+}
+
+.col-33 {
+  display: flex;
+	flex: 0 1 100%;
+
+	@include small-screen {
+		flex: 0 0 33%;
+	}
+}
