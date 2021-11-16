@@ -82,6 +82,7 @@ h1, h2, h3, h4 {
 	text-transform: lowercase;
 /* font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width]))); */
 	font-size: calc(60px + (200 - 60) * ((100vw - 300px) / (1600 - 300)));
+	-webkit-marquee-increment: 0vw; /* force safari to recompute font size */
 	line-height: 0.825;
 	margin: 0 0 .5em 0;
 }
@@ -119,6 +120,7 @@ h1, h2, h3, h4 {
 	position: relative;
 	font-weight: normal;
 	font-size: calc(18px + (50 - 18) * ((100vw - 300px) / (1600 - 300)));
+	-webkit-marquee-increment: 0vw; /* force safari to recompute font size */
 	margin: 0;
 }
 
@@ -232,6 +234,7 @@ h1, h2, h3, h4 {
 	display: block;
 	text-align: right;
 	font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1600 - 300)));
+	-webkit-marquee-increment: 0vw; /* force safari to recompute font size */
 }
 
 
@@ -253,6 +256,7 @@ h1, h2, h3, h4 {
 	text-align: right;
 	color: var(--color-accent);
 	font-size: calc(24px + (40 - 24) * ((100vw - 300px) / (1600 - 300)));
+	-webkit-marquee-increment: 0vw; /* force safari to recompute font size */
 	opacity: 0.6;
 }
 
