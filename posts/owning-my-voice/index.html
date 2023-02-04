@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owning My Voice</title>
+    <meta name="description" content="2023 is the year of the rabbit... and personal websites.">
+    <meta name="generator" content="Eleventy v1.0.1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
+  </head>
+  <body>
+    <script>
+      // Prevent FART (look it up) by blocking render for a tiny bit...
+      // First check for local settings, then check media queries, then apply fallback
+      function getColor() {
+        const colorPref = window.localStorage.getItem('color-mode');
+        if (typeof colorPref === 'string') {
+          return colorPref;
+        }
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'dark' : 'light';
+        }
+        return 'light';
+      }
+
+      function getMotion() {
+        const motionPref = window.localStorage.getItem('motion-mode');
+        if (typeof motionPref === 'string') {
+          return motionPref;
+        }
+        const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'no-preference' : 'reduced'
+        }
+        return 'no-preference';
+      }
+
+      function getParty() {
+        const partyPref = window.localStorage.getItem('party-mode')
+        if (typeof partyPref === 'string') {
+          return partyPref;
+        }
+        return 'no-party';
+      }
+
+      const colorMode = getColor();
+      const motionMode = getMotion();
+      const partyMode = getParty();
+      const root = document.documentElement;
+      root.classList.add(colorMode, partyMode);
+      root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
+      root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
+    </script>
+
+    <header class="header mt-1/2" data-module="nav" data-mobile="false" data-pref="false">
+  <a class="sr-only sr-only-focus skip-link" href="#main">Skip to main content</a>
+  <div class="logo">
+    <a class="logo-link" href="/" title="Nathan Long">
+      <span class="sr-only">Nathan Long</span>
+      <svg class="logo-svg" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M26.6213 1.87259C25.4497 0.701019 23.5502 0.701018 22.3787 1.87259L1.87258 22.3787C0.701003 23.5503 0.701003 25.4498 1.87258 26.6213L22.3787 47.1274C23.5502 48.299 25.4497 48.299 26.6213 47.1274L47.1274 26.6213C48.299 25.4498 48.299 23.5503 47.1274 22.3787L26.6213 1.87259ZM30.1666 31.472C30.8226 31.824 31.5826 32 32.4466 32H36.6466V29.288H32.6626C32.1826 29.288 31.7986 29.152 31.5106 28.88C31.2386 28.592 31.1026 28.208 31.1026 27.728V14.48H23.8786V17.192H28.1026V27.728C28.1026 28.576 28.2866 29.328 28.6546 29.984C29.0226 30.624 29.5266 31.12 30.1666 31.472ZM12.848 18.8V32H15.848V23.744C15.848 22.912 16.056 22.272 16.472 21.824C16.904 21.376 17.488 21.152 18.224 21.152C18.976 21.152 19.56 21.368 19.976 21.8C20.392 22.232 20.6 22.848 20.6 23.648V32H23.6V23.336C23.6 21.88 23.208 20.72 22.424 19.856C21.656 18.992 20.624 18.56 19.328 18.56C18.224 18.56 17.352 18.864 16.712 19.472C16.228 19.9436 15.9317 20.5596 15.8231 21.32H15.776V18.8H12.848Z" fill="#9ECE6A"/>
+      </svg>
+    </a>
+  </div>
+  <nav class="nav-wrapper" data-nav-target>
+    <menu class="nav m-0 p-0">
+      <li class="nav-item"><a href="/about/">About</a></li>
+      <li class="nav-item"><a href="/posts/">Archive</a></li>
+      <li class="nav-item"><a href="/lab/">Lab</a></li>
+      <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
+    </menu>
+
+    <div class="preferences relative">
+      <button class="preferences-trigger btn btn-square btn-borderless z-1" data-pref-trigger>
+        <span class="sr-only">Prefs</span>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/></svg>
+      </button>
+      <div class="preferences-detail shadow-light-only rounded bg-editor" data-state="closed" data-pref-target data-module="preferences">
+        <p>Color Theme</p>
+        <div class="flex btn-group">
+          <button class="btn" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
+            <span>☀️</span>
+            <span>Light</span>
+          </button>
+          <button class="btn" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
+            <span>🌙</span>
+            <span>Dark</span>
+          </button>
+          <button class="btn" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Motion Preferences</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
+            <span>👍</span>
+            <span>Allow</span>
+          </button>
+          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
+            <span>🚫</span>
+            <span>Reduce</span>
+          </button>
+          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Party Mode (Audio)</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-col items-center" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
+            <span>🎉</span>
+            <span>Party</span>
+          </button>
+          <button class="btn font-thin flex flex-col items-center" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
+            <span>🛑</span>
+            <span>PLZ NO</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <button class="btn btn-square nav-toggle" data-mobile-trigger>
+    <div class="nav-toggle-line-top"></div>
+    <div class="nav-toggle-line-mid"></div>
+    <div class="nav-toggle-line-bottom"></div>
+  </button>
+</header>
+
+
+    <main id="main"  class="content tmpl-post">
+      
+<div class="mt-content mb-2">
+  <h1 class="mb-0">Owning My Voice</h1>
+  <span class="divide-comma inline-block">
+  <a href="/tags/ramblings/" class="uppercase decoration-none font-bold text-small font-thin after:color-text">Ramblings</a>
+  </span>
+  <time class="uppercase text-small" datetime="2023-01-31">- 2023-01-31</time>
+</div>
+
+<p>Take a quick nostalgia trip with me...</p>
+<p>Back when I started my career in this industry, the web was my starry-eyed, fairy-winged teacher:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Molly_Holzschlag">Molly Holzschlag</a> helped me take my first baby-steps with HTML and CSS.</li>
+<li>I learned responsive web design from <a href="https://ethanmarcotte.com/">Ethan Marcotte</a>'s <a href="https://alistapart.com/article/responsive-web-design/">articles</a>.</li>
+<li><a href="https://adactio.com/">Jeremy Keith</a> taught me the new things in <a href="https://html5forwebdesigners.com/">HTML5</a>.</li>
+<li><a href="https://www.lukew.com/">Luke Wroblewski</a> taught me how to build '<a href="https://www.lukew.com/presos/preso.asp?26">mobile first</a>'.</li>
+<li><a href="http://rachelnabors.com/">Rachel Nabors's</a> continued efforts in animation inspired me to also see what could be done in the browser.</li>
+<li><a href="https://chriscoyier.net/">Chris Coyier</a> schooled me on the deeper parts of CSS with <a href="https://css-tricks.com/">CSS Tricks</a>.</li>
+</ul>
+<p>At some point (perhaps when Google Reader was shut down in 2013?) everything started to shift to social media. Particularly Twitter. In many ways it felt like an evolution—the barrier to communication was dropping. I could @mention <a href="https://www.paulirish.com/">Paul Irish</a> or <a href="https://www.sarasoueidan.com/">Sarah Soueidan</a> and they might ACTUALLY RESPOND. 😵‍💫</p>
+<h2 id="waking-up-in-the-dark-forest" tabindex="-1">Waking up in the Dark Forest <a class="direct-link" href="#waking-up-in-the-dark-forest" aria-hidden="true">#</a></h2>
+<p>But things slowly changed while I wasn't looking. If the web was once this weird and <a href="http://www.csszengarden.com/">magical garden</a> it slowly turned into what <a href="https://maggieappleton.com/">Maggie Appleton</a> (and <a href="https://onezero.medium.com/the-dark-forest-theory-of-the-internet-7dc3e68a7cb1">others</a>) now describe as the <strong><a href="https://maggieappleton.com/cozy-web">Dark Forest</a></strong>. It's not safe there. The tech giants prey on you and your personal data. Engaging in open debate is meaningless at BEST. Trolls are lurking in the comment sections. Being yourself out THERE can be like inviting the worst of the internet onto your back porch.</p>
+<p>At some point I was no longer reading updates from people I knew or cared about but getting lost endless amounts of shallow-yet-mildly-amusing content or <a href="https://en.wikipedia.org/wiki/Doomscrolling">doomscrolling</a> through emotionally incendiary material.</p>
+<h2 id="are-we-human-or-are-we-robot" tabindex="-1">Are we human? <code>Or are we robot?</code> <a class="direct-link" href="#are-we-human-or-are-we-robot" aria-hidden="true">#</a></h2>
+<p>I was no longer in control what I was ingesting. The robots were feeding me what they were trained to surface. <code>And I liked it.</code> Well, at first anyways.</p>
+<p>Unfortunately it <a href="https://maggieappleton.com/ai-dark-forest">seems like it's going to get worse</a>. The Dark Forest is about to be overrun with bots through the brilliant yet terrifying engines of <a href="https://openai.com/blog/chatgpt/">ChatGPT</a>, <a href="https://www.midjourney.com/home/">Midjourney</a>, <a href="https://openai.com/dall-e-2/">DALL-E</a>, <a href="https://en.wikipedia.org/wiki/Stable_Diffusion">Stable Diffusion</a> and others. It's going to be hard to tell what is made by real humans, and what is bot-generated in a flood of unoriginal content.</p>
+<p>Combine that with the <a href="https://twitter.com/garius/status/1588115310124539904?s=46&amp;t=OH02ZwWUxJOQs9Z6MTQCug">trust thermocline</a> in our industry giants and it's not looking so nice out there right now.</p>
+<h2 id="owning-my-voice" tabindex="-1">Owning My Voice <a class="direct-link" href="#owning-my-voice" aria-hidden="true">#</a></h2>
+<p>They say that <a href="https://matthiasott.com/notes/the-year-of-the-personal-website">2023 is the year of personal website</a>. <a href="https://bringback.blog/">There is a call</a> for individuals to start owning their spaces and <a href="https://www.theverge.com/23513418/bring-back-personal-blogging">owning their voices again</a>.</p>
+<p>To me that was part of the magic of the web when I first entered the industry: unique voices with unique ideas in highly personalized spaces. That's why I'm dusting off this website and being more intentional about using it to own my voice on the web and create connections.</p>
+<blockquote>
+<p>“Don’t do it like me. Do it like you.”</p>
+<p><cite><a href="https://matthiasott.com/articles/into-the-personal-website-verse">Matthias Ott</a> - User Experience Designer</cite></p>
+</blockquote>
+<p>This blog is hosted on <a href="https://pages.github.com/">Github Pages</a> and built with <a href="https://www.11ty.dev/">11ty</a> but there are so many other ways to create your space, even if you're not a developer:</p>
+<ul>
+<li><a href="https://ghost.org/">Ghost CMS</a> - slick, content focused interface</li>
+<li><a href="https://webflow.com/">Webflow</a> - a no-code solution with a free starter plan</li>
+<li><a href="https://hotglue.me/">Hotglue.me</a> - charmingly wild no-code platform</li>
+<li><a href="https://mmm.page/">mmm.page</a> - drag and drop website builder</li>
+<li>Wordpress - in either <a href="https://wordpress.org/">self-hosted</a> or <a href="https://wordpress.com/">ready-to-go</a> form</li>
+</ul>
+<p>I plan to use this space to experiment, get <code>weird</code>, actually work on my improving my meme-damaged writing skills, and highlight unique ideas from other folks who are also working to own their voices.</p>
+<p>I hope to see more doing the same, because THAT'S the web I fell in love with. Who knows, maybe they'll even bring Google Reader back... <code>:troll:</code></p>
+
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0">Discussion</p>
+
+  
+  <p>Want to discuss? Reply by:
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Owning My Voice">Email</a>
+    <span>or</span>
+    <a href="https://github.com/nathanlong/nathanlong.github.io/issues/21">Github</a>
+    
+  </p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0">Mentions</p>
+  <p>TBD: <a href="https://webmention.io/">Webmentions</a> are coming, <a href="https://github.com/nathanlong/nathanlong.github.io/issues/20">eventually...</a></p>
+</div>
+
+    </main>
+
+    <footer class="footer full w-full flex flex-col-to-row justify-between items-center px-1rem py-1 items-center mt-content gap-1">
+      <p class="color-reduced no-shrink font-small m-0">&copy; 2023 Nathan Long. All Rights Reserved.</p>
+
+      <nav class="nav-footer no-shrink">
+        <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
+          <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
+          <li class="font-small"><a class="decoration-none" href="/posts/">Archive</a></li>
+          <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
+
+          <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>
+        </menu>
+    </footer>
+
+    
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

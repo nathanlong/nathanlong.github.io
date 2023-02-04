@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nathan Long</title>
+    <meta name="description" content="I am writing about my experiences as a naval navel-gazer.">
+    <meta name="generator" content="Eleventy v1.0.1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
+  </head>
+  <body>
+    <script>
+      // Prevent FART (look it up) by blocking render for a tiny bit...
+      // First check for local settings, then check media queries, then apply fallback
+      function getColor() {
+        const colorPref = window.localStorage.getItem('color-mode');
+        if (typeof colorPref === 'string') {
+          return colorPref;
+        }
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'dark' : 'light';
+        }
+        return 'light';
+      }
+
+      function getMotion() {
+        const motionPref = window.localStorage.getItem('motion-mode');
+        if (typeof motionPref === 'string') {
+          return motionPref;
+        }
+        const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'no-preference' : 'reduced'
+        }
+        return 'no-preference';
+      }
+
+      function getParty() {
+        const partyPref = window.localStorage.getItem('party-mode')
+        if (typeof partyPref === 'string') {
+          return partyPref;
+        }
+        return 'no-party';
+      }
+
+      const colorMode = getColor();
+      const motionMode = getMotion();
+      const partyMode = getParty();
+      const root = document.documentElement;
+      root.classList.add(colorMode, partyMode);
+      root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
+      root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
+    </script>
+
+    <header class="header mt-1/2" data-module="nav" data-mobile="false" data-pref="false">
+  <a class="sr-only sr-only-focus skip-link" href="#main">Skip to main content</a>
+  <div class="logo">
+    <a class="logo-link" href="/" title="Nathan Long">
+      <span class="sr-only">Nathan Long</span>
+      <svg class="logo-svg" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M26.6213 1.87259C25.4497 0.701019 23.5502 0.701018 22.3787 1.87259L1.87258 22.3787C0.701003 23.5503 0.701003 25.4498 1.87258 26.6213L22.3787 47.1274C23.5502 48.299 25.4497 48.299 26.6213 47.1274L47.1274 26.6213C48.299 25.4498 48.299 23.5503 47.1274 22.3787L26.6213 1.87259ZM30.1666 31.472C30.8226 31.824 31.5826 32 32.4466 32H36.6466V29.288H32.6626C32.1826 29.288 31.7986 29.152 31.5106 28.88C31.2386 28.592 31.1026 28.208 31.1026 27.728V14.48H23.8786V17.192H28.1026V27.728C28.1026 28.576 28.2866 29.328 28.6546 29.984C29.0226 30.624 29.5266 31.12 30.1666 31.472ZM12.848 18.8V32H15.848V23.744C15.848 22.912 16.056 22.272 16.472 21.824C16.904 21.376 17.488 21.152 18.224 21.152C18.976 21.152 19.56 21.368 19.976 21.8C20.392 22.232 20.6 22.848 20.6 23.648V32H23.6V23.336C23.6 21.88 23.208 20.72 22.424 19.856C21.656 18.992 20.624 18.56 19.328 18.56C18.224 18.56 17.352 18.864 16.712 19.472C16.228 19.9436 15.9317 20.5596 15.8231 21.32H15.776V18.8H12.848Z" fill="#9ECE6A"/>
+      </svg>
+    </a>
+  </div>
+  <nav class="nav-wrapper" data-nav-target>
+    <menu class="nav m-0 p-0">
+      <li class="nav-item"><a href="/about/">About</a></li>
+      <li class="nav-item nav-item-active"><a href="/posts/">Archive</a></li>
+      <li class="nav-item"><a href="/lab/">Lab</a></li>
+      <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
+    </menu>
+
+    <div class="preferences relative">
+      <button class="preferences-trigger btn btn-square btn-borderless z-1" data-pref-trigger>
+        <span class="sr-only">Prefs</span>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/></svg>
+      </button>
+      <div class="preferences-detail shadow-light-only rounded bg-editor" data-state="closed" data-pref-target data-module="preferences">
+        <p>Color Theme</p>
+        <div class="flex btn-group">
+          <button class="btn" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
+            <span>☀️</span>
+            <span>Light</span>
+          </button>
+          <button class="btn" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
+            <span>🌙</span>
+            <span>Dark</span>
+          </button>
+          <button class="btn" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Motion Preferences</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
+            <span>👍</span>
+            <span>Allow</span>
+          </button>
+          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
+            <span>🚫</span>
+            <span>Reduce</span>
+          </button>
+          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Party Mode (Audio)</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-col items-center" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
+            <span>🎉</span>
+            <span>Party</span>
+          </button>
+          <button class="btn font-thin flex flex-col items-center" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
+            <span>🛑</span>
+            <span>PLZ NO</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <button class="btn btn-square nav-toggle" data-mobile-trigger>
+    <div class="nav-toggle-line-top"></div>
+    <div class="nav-toggle-line-mid"></div>
+    <div class="nav-toggle-line-bottom"></div>
+  </button>
+</header>
+
+
+    <main id="main"  class="content tmpl-full">
+      
+
+<div class="mt-content">
+  <h1 class="m-1">Archive</h1>
+
+  <p class="mb-0 font-thin uppercase">Topics:</p>
+  <div class="divide-comma">
+  
+    
+    <a href="/tags/ramblings/" class="font-thin decoration-none font-bold after:color-text">Ramblings</a>
+  
+  </div>
+</div>
+
+<hr class="mt-2 mb-2">
+
+
+<ul class="postlist p-0 space-y-2">
+  
+  <li class="flex flex-col items-baseline">
+    <a href="/posts/owning-my-voice/" class="font-thin m-0 font-bold decoration-none text-large tracking-1">Owning My Voice</a>
+    <p class="postlist-meta m-0">
+    <span class="divide-comma inline-block">
+      
+      
+      <a href="/tags/ramblings/" class="font-thin uppercase font-bold decoration-none text-small after:color-text">Ramblings</a>
+      
+    </span>
+    <time class="postlist-date uppercase text-small" datetime="2023-01-31">- 2023-01-31</time>
+    </p>
+  </li>
+  
+</ul>
+
+
+
+    </main>
+
+    <footer class="footer full w-full flex flex-col-to-row justify-between items-center px-1rem py-1 items-center mt-content gap-1">
+      <p class="color-reduced no-shrink font-small m-0">&copy; 2023 Nathan Long. All Rights Reserved.</p>
+
+      <nav class="nav-footer no-shrink">
+        <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
+          <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
+          <li class="font-small"><a class="decoration-none" href="/posts/">Archive</a></li>
+          <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
+
+          <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>
+        </menu>
+    </footer>
+
+    
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

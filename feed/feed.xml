@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Nathan Long</title>
+	<subtitle>I am writing about my experiences as a naval navel-gazer.</subtitle>
+	
+	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
+	<link href="https://nathan-long.com/"/>
+	<updated>2023-01-31T00:00:00Z</updated>
+	<id>https://nathan-long.com/</id>
+	<author>
+		<name>Nathan Long</name>
+		<email>nlong5+blog@gmail.com</email>
+	</author>
+	
+	<entry>
+		<title>Owning My Voice</title>
+		<link href="https://nathan-long.com/posts/owning-my-voice/"/>
+		<updated>2023-01-31T00:00:00Z</updated>
+		<id>https://nathan-long.com/posts/owning-my-voice/</id>
+		<content type="html">&lt;p&gt;Take a quick nostalgia trip with me...&lt;/p&gt;
+&lt;p&gt;Back when I started my career in this industry, the web was my starry-eyed, fairy-winged teacher:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Molly_Holzschlag&quot;&gt;Molly Holzschlag&lt;/a&gt; helped me take my first baby-steps with HTML and CSS.&lt;/li&gt;
+&lt;li&gt;I learned responsive web design from &lt;a href=&quot;https://ethanmarcotte.com/&quot;&gt;Ethan Marcotte&lt;/a&gt;&#39;s &lt;a href=&quot;https://alistapart.com/article/responsive-web-design/&quot;&gt;articles&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://adactio.com/&quot;&gt;Jeremy Keith&lt;/a&gt; taught me the new things in &lt;a href=&quot;https://html5forwebdesigners.com/&quot;&gt;HTML5&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.lukew.com/&quot;&gt;Luke Wroblewski&lt;/a&gt; taught me how to build &#39;&lt;a href=&quot;https://www.lukew.com/presos/preso.asp?26&quot;&gt;mobile first&lt;/a&gt;&#39;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://rachelnabors.com/&quot;&gt;Rachel Nabors&#39;s&lt;/a&gt; continued efforts in animation inspired me to also see what could be done in the browser.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://chriscoyier.net/&quot;&gt;Chris Coyier&lt;/a&gt; schooled me on the deeper parts of CSS with &lt;a href=&quot;https://css-tricks.com/&quot;&gt;CSS Tricks&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At some point (perhaps when Google Reader was shut down in 2013?) everything started to shift to social media. Particularly Twitter. In many ways it felt like an evolution—the barrier to communication was dropping. I could @mention &lt;a href=&quot;https://www.paulirish.com/&quot;&gt;Paul Irish&lt;/a&gt; or &lt;a href=&quot;https://www.sarasoueidan.com/&quot;&gt;Sarah Soueidan&lt;/a&gt; and they might ACTUALLY RESPOND. 😵‍💫&lt;/p&gt;
+&lt;h2 id=&quot;waking-up-in-the-dark-forest&quot; tabindex=&quot;-1&quot;&gt;Waking up in the Dark Forest &lt;a class=&quot;direct-link&quot; href=&quot;https://nathan-long.com/posts/owning-my-voice/#waking-up-in-the-dark-forest&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;But things slowly changed while I wasn&#39;t looking. If the web was once this weird and &lt;a href=&quot;http://www.csszengarden.com/&quot;&gt;magical garden&lt;/a&gt; it slowly turned into what &lt;a href=&quot;https://maggieappleton.com/&quot;&gt;Maggie Appleton&lt;/a&gt; (and &lt;a href=&quot;https://onezero.medium.com/the-dark-forest-theory-of-the-internet-7dc3e68a7cb1&quot;&gt;others&lt;/a&gt;) now describe as the &lt;strong&gt;&lt;a href=&quot;https://maggieappleton.com/cozy-web&quot;&gt;Dark Forest&lt;/a&gt;&lt;/strong&gt;. It&#39;s not safe there. The tech giants prey on you and your personal data. Engaging in open debate is meaningless at BEST. Trolls are lurking in the comment sections. Being yourself out THERE can be like inviting the worst of the internet onto your back porch.&lt;/p&gt;
+&lt;p&gt;At some point I was no longer reading updates from people I knew or cared about but getting lost endless amounts of shallow-yet-mildly-amusing content or &lt;a href=&quot;https://en.wikipedia.org/wiki/Doomscrolling&quot;&gt;doomscrolling&lt;/a&gt; through emotionally incendiary material.&lt;/p&gt;
+&lt;h2 id=&quot;are-we-human-or-are-we-robot&quot; tabindex=&quot;-1&quot;&gt;Are we human? &lt;code&gt;Or are we robot?&lt;/code&gt; &lt;a class=&quot;direct-link&quot; href=&quot;https://nathan-long.com/posts/owning-my-voice/#are-we-human-or-are-we-robot&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I was no longer in control what I was ingesting. The robots were feeding me what they were trained to surface. &lt;code&gt;And I liked it.&lt;/code&gt; Well, at first anyways.&lt;/p&gt;
+&lt;p&gt;Unfortunately it &lt;a href=&quot;https://maggieappleton.com/ai-dark-forest&quot;&gt;seems like it&#39;s going to get worse&lt;/a&gt;. The Dark Forest is about to be overrun with bots through the brilliant yet terrifying engines of &lt;a href=&quot;https://openai.com/blog/chatgpt/&quot;&gt;ChatGPT&lt;/a&gt;, &lt;a href=&quot;https://www.midjourney.com/home/&quot;&gt;Midjourney&lt;/a&gt;, &lt;a href=&quot;https://openai.com/dall-e-2/&quot;&gt;DALL-E&lt;/a&gt;, &lt;a href=&quot;https://en.wikipedia.org/wiki/Stable_Diffusion&quot;&gt;Stable Diffusion&lt;/a&gt; and others. It&#39;s going to be hard to tell what is made by real humans, and what is bot-generated in a flood of unoriginal content.&lt;/p&gt;
+&lt;p&gt;Combine that with the &lt;a href=&quot;https://twitter.com/garius/status/1588115310124539904?s=46&amp;amp;t=OH02ZwWUxJOQs9Z6MTQCug&quot;&gt;trust thermocline&lt;/a&gt; in our industry giants and it&#39;s not looking so nice out there right now.&lt;/p&gt;
+&lt;h2 id=&quot;owning-my-voice&quot; tabindex=&quot;-1&quot;&gt;Owning My Voice &lt;a class=&quot;direct-link&quot; href=&quot;https://nathan-long.com/posts/owning-my-voice/#owning-my-voice&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;They say that &lt;a href=&quot;https://matthiasott.com/notes/the-year-of-the-personal-website&quot;&gt;2023 is the year of personal website&lt;/a&gt;. &lt;a href=&quot;https://bringback.blog/&quot;&gt;There is a call&lt;/a&gt; for individuals to start owning their spaces and &lt;a href=&quot;https://www.theverge.com/23513418/bring-back-personal-blogging&quot;&gt;owning their voices again&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To me that was part of the magic of the web when I first entered the industry: unique voices with unique ideas in highly personalized spaces. That&#39;s why I&#39;m dusting off this website and being more intentional about using it to own my voice on the web and create connections.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Don’t do it like me. Do it like you.”&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a href=&quot;https://matthiasott.com/articles/into-the-personal-website-verse&quot;&gt;Matthias Ott&lt;/a&gt; - User Experience Designer&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This blog is hosted on &lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt; and built with &lt;a href=&quot;https://www.11ty.dev/&quot;&gt;11ty&lt;/a&gt; but there are so many other ways to create your space, even if you&#39;re not a developer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://ghost.org/&quot;&gt;Ghost CMS&lt;/a&gt; - slick, content focused interface&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://webflow.com/&quot;&gt;Webflow&lt;/a&gt; - a no-code solution with a free starter plan&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://hotglue.me/&quot;&gt;Hotglue.me&lt;/a&gt; - charmingly wild no-code platform&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mmm.page/&quot;&gt;mmm.page&lt;/a&gt; - drag and drop website builder&lt;/li&gt;
+&lt;li&gt;Wordpress - in either &lt;a href=&quot;https://wordpress.org/&quot;&gt;self-hosted&lt;/a&gt; or &lt;a href=&quot;https://wordpress.com/&quot;&gt;ready-to-go&lt;/a&gt; form&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I plan to use this space to experiment, get &lt;code&gt;weird&lt;/code&gt;, actually work on my improving my meme-damaged writing skills, and highlight unique ideas from other folks who are also working to own their voices.&lt;/p&gt;
+&lt;p&gt;I hope to see more doing the same, because THAT&#39;S the web I fell in love with. Who knows, maybe they&#39;ll even bring Google Reader back... &lt;code&gt;:troll:&lt;/code&gt;&lt;/p&gt;
+</content>
+	</entry>
+</feed>
