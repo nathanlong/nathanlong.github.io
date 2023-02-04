@@ -1,0 +1,16 @@
+<ul class="postlist p-0 space-y-2">
+  {% for post in postslist | reverse %}
+  <li class="flex flex-col items-baseline">
+    <a href="{{ post.url | url }}" class="font-thin m-0 font-bold decoration-none text-large tracking-1">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+    <p class="postlist-meta m-0">
+    <span class="divide-comma inline-block">
+      {% for tag in post.data.tags | filterTagList %}
+      {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+      <a href="{{ tagUrl | url }}" class="font-thin uppercase font-bold decoration-none text-small after:color-text">{{ tag }}</a>
+      {% endfor %}
+    </span>
+    <time class="postlist-date uppercase text-small" datetime="{{ post.date | htmlDateString }}">- {{ post.date | htmlDateString }}</time>
+    </p>
+  </li>
+  {% endfor %}
+</ul>

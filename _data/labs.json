@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Animation Playground",
+    "url": "https://nathan-long.com/animation/",
+    "source": "https://github.com",
+    "description": "Playing around with different techniques and animation stacks.",
+    "image": "https://user-images.githubusercontent.com/623568/207959370-a7a9d3ba-98a9-4787-9376-a8f3d1fae38e.png",
+    "imageAlt": "Curvy red path with two dots indicating motion",
+    "feature": false
+  },
+  {
+    "name": "Hero Dice",
+    "url": "https://nathan-long.com/hero-dice/",
+    "source": "https://github.com",
+    "description": "Dice roller app for self-made RPG system for kids: F.I.G. (Fantastical Imagination Game)",
+    "image": "https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png",
+    "imageAlt": "The word 'Hero' above a six-sided dice",
+    "feature": true
+  },
+  {
+    "name": "Game Rules",
+    "url": "https://nathan-long.com/rules/",
+    "source": "https://github.com/nathanlong/rules",
+    "description": "A personal reference for games (with house-rules) I play with my family.",
+    "image": "https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png",
+    "imageAlt": "Playing card suit icons over a field of X's. Icon by Irene Hoffman",
+    "feature": false
+  }
+]

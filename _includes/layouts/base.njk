@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="{{ metadata.language }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or metadata.title }}</title>
+    <meta name="description" content="{{ description or metadata.description }}">
+    <meta name="generator" content="{{ eleventy.generator }}">
+    <link rel="icon" href="{{ '/favicon.ico' | url }}" sizes="any">
+    <link rel="icon" href="{{ '/icon.svg' | url }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | url }}">
+    <link rel="manifest" href="{{ '/site.webmanifest' | url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
+    <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
+    <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
+  </head>
+  <body>
+    <script>
+      // Prevent FART (look it up) by blocking render for a tiny bit...
+      // First check for local settings, then check media queries, then apply fallback
+      function getColor() {
+        const colorPref = window.localStorage.getItem('color-mode');
+        if (typeof colorPref === 'string') {
+          return colorPref;
+        }
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'dark' : 'light';
+        }
+        return 'light';
+      }
+
+      function getMotion() {
+        const motionPref = window.localStorage.getItem('motion-mode');
+        if (typeof motionPref === 'string') {
+          return motionPref;
+        }
+        const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'no-preference' : 'reduced'
+        }
+        return 'no-preference';
+      }
+
+      function getParty() {
+        const partyPref = window.localStorage.getItem('party-mode')
+        if (typeof partyPref === 'string') {
+          return partyPref;
+        }
+        return 'no-party';
+      }
+
+      const colorMode = getColor();
+      const motionMode = getMotion();
+      const partyMode = getParty();
+      const root = document.documentElement;
+      root.classList.add(colorMode, partyMode);
+      root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
+      root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
+    </script>
+
+    {% include "nav.njk" %}
+
+    <main id="main" {% if templateClass %} class="content {{ templateClass }}"{% endif %}>
+      {{ content | safe }}
+    </main>
+
+    <footer class="footer full w-full flex flex-col-to-row justify-between items-center px-1rem py-1 items-center mt-content gap-1">
+      <p class="color-reduced no-shrink font-small m-0">&copy; 2023 Nathan Long. All Rights Reserved.</p>
+
+      <nav class="nav-footer no-shrink">
+        <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
+          {%- for entry in collections.all | eleventyNavigation %}
+          <li class="font-small"><a class="decoration-none" href="{{ entry.url | url }}">{{ entry.title }}</a></li>
+          {%- endfor %}
+
+          <li class="font-small"><a class="decoration-none" href="{{ '/feed/feed.xml' | url }}">RSS</a></li>
+        </menu>
+    </footer>
+
+    {% if extraJS %}
+    {%- for name, src in extraJS %}
+    <script name="{{name}}" src="{{src | url}}"></script>
+    {%- endfor %}
+    {% endif %}
+
+    <script type="module" src="{{ '/js/main.js' | url }}"></script>
+  </body>
+</html>

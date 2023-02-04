@@ -1,0 +1,21 @@
+{
+  "title": "Nathan Long",
+  "url": "https://nathan-long.com/",
+  "language": "en",
+  "description": "I am writing about my experiences as a naval navel-gazer.",
+  "feed": {
+    "subtitle": "I am writing about my experiences as a naval navel-gazer.",
+    "filename": "feed.xml",
+    "path": "/feed/feed.xml",
+    "id": "https://nathan-long.com/"
+  },
+  "jsonfeed": {
+    "path": "/feed/feed.json",
+    "url": "https://nathan-long.com/feed/feed.json"
+  },
+  "author": {
+    "name": "Nathan Long",
+    "email": "nlong5+blog@gmail.com",
+    "url": "https://nathan-long.com"
+  }
+}

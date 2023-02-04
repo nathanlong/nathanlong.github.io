@@ -1,0 +1,19 @@
+<h2 class="border-0">Featured: </h2>
+
+<ul class="lablist p-0 m-0 space-y-1">
+  {%- for lab in lablist %}
+    {% if lab.feature %}
+      {% include "labitem.njk" %}
+    {% endif %}
+  {%- endfor %}
+</ul>
+
+<hr class="my-2" />
+
+<ul class="lablist p-0 m-0 mb-2 space-y-1">
+  {%- for lab in lablist %}
+    {% if lab.feature === false %}
+      {% include "labitem.njk" %}
+    {% endif %}
+  {%- endfor %}
+</ul>

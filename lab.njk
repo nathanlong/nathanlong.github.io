@@ -1,0 +1,18 @@
+---
+layout: layouts/full.njk
+permalink: /lab/
+eleventyNavigation:
+  key: lab
+  title: Lab
+  order: 3
+---
+
+<section class="mt-content">
+  <h1 class="">Lab</h1>
+  <p>Side projects, experiments, demos, random things I've built...</p>
+</section>
+
+<hr class="mt-2 mb-2">
+
+{% set lablist = labs %}
+{% include "lablist.njk" %}

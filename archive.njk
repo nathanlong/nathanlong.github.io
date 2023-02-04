@@ -1,0 +1,25 @@
+---
+layout: layouts/full.njk
+permalink: /posts/
+eleventyNavigation:
+  key: posts
+  title: Archive
+  order: 2
+---
+
+<div class="mt-content">
+  <h1 class="m-1">Archive</h1>
+
+  <p class="mb-0 font-thin uppercase">Topics:</p>
+  <div class="divide-comma">
+  {% for tag in collections.tagList %}
+    {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+    <a href="{{ tagUrl | url }}" class="font-thin decoration-none font-bold after:color-text">{{ tag }}</a>
+  {% endfor %}
+  </div>
+</div>
+
+<hr class="mt-2 mb-2">
+
+{% set postslist = collections.posts %}
+{% include "postslist.njk" %}

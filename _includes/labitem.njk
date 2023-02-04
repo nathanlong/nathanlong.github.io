@@ -1,0 +1,19 @@
+<li class="list-none flex items-start">
+  <div class="lablist-image aspect-square rounded overflow-hidden">
+    <a href="{{ lab.url if lab.url else lab.source }}">
+      <img src="{{ lab.image }}" alt="{{ lab.imageAlt if lab.imageAlt else ''}}" class="w-full">
+    </a>
+  </div>
+  <div class="lablist-content">
+    <h3 class="mb-1/4 lablist-link">{{lab.name}}</h3>
+
+    {% if lab.description %}
+    <p class="mt-0">{{lab.description}}</p>
+    {% endif %}
+
+    <div class="flex space-x-1">
+      {% if lab.url %}<a class="font-thin font-bold uppercase text-small decoration-none" href="{{lab.url}}">View</a>{% endif %}
+      {% if lab.source %}<a class="font-thin font-bold uppercase text-small decoration-none" href="{{lab.source}}">Source</a>{% endif %}
+    </div>
+  </div>
+</li>

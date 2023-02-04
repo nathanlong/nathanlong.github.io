@@ -1,33 +1,43 @@
 {
-  "name": "pace-prototype",
-  "version": "0.1.0",
-  "description": "Static HTML prototyping with Pace Front-End development standard tooling",
-  "main": "index.js",
+  "name": "Nathans Super Cool Personal Site",
+  "version": "1.0.0",
+  "description": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx @11ty/eleventy",
+    "bench": "DEBUG=Eleventy:Benchmark* npx @11ty/eleventy",
+    "watch": "npx @11ty/eleventy --watch",
+    "serve": "npx @11ty/eleventy --serve",
+    "dev": "npx @11ty/eleventy --serve",
+    "debug": "DEBUG=* npx @11ty/eleventy"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/nathanlong/pace-prototype.git"
+    "url": "git://github.com/11ty/eleventy-base-blog.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Nathan Long",
+    "email": "nlong5+blog@gmail.com",
+    "url": "https://nathan-long.com"
+  },
+  "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/nathanlong/pace-prototype/issues"
+    "url": "https://github.com/11ty/eleventy-base-blog/issues"
   },
-  "homepage": "https://gitlab.com/nathanlong/pace-prototype#readme",
+  "homepage": "https://github.com/11ty/eleventy-base-blog#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^1.0.1",
+    "@11ty/eleventy-navigation": "^0.3.3",
+    "@11ty/eleventy-plugin-rss": "^1.2.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0",
+    "luxon": "^2.4.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-anchor": "^8.6.4"
+  },
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^8.0.0",
-    "gulp-changed": "^4.0.3",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-include": "^2.4.1",
-    "gulp-rename": "^2.0.0",
-    "gulp-sass": "^5.0.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
-    "live-server": "^1.2.1",
-    "path": "^0.12.7",
-    "sass": "^1.36.0"
+    "eslint": "^8.22.0",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.10.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^27.0.0"
   }
 }
