@@ -2,9 +2,9 @@
   "title": "Nathan Long",
   "url": "https://nathan-long.com/",
   "language": "en",
-  "description": "I am writing about my experiences as a naval navel-gazer.",
+  "description": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
   "feed": {
-    "subtitle": "I am writing about my experiences as a naval navel-gazer.",
+    "subtitle": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
     "filename": "feed.xml",
     "path": "/feed/feed.xml",
     "id": "https://nathan-long.com/"

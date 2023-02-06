@@ -127,7 +127,7 @@ export default class Nav {
   }
 
   checkClickOutside = (e) => {
-    if (this.prefTarget.dataset.state === 'closed') {
+    if (this.el.dataset.pref === 'false') {
       return
     }
 

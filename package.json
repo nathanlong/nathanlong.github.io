@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/11ty/eleventy-base-blog.git"
+    "url": "https://github.com/nathanlong/nathanlong.github.io/"
   },
   "author": {
     "name": "Nathan Long",
@@ -21,9 +21,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/11ty/eleventy-base-blog/issues"
+    "url": "https://github.com/nathanlong/nathanlong.github.io/issues"
   },
-  "homepage": "https://github.com/11ty/eleventy-base-blog#readme",
+  "homepage": "https://nathan-long.com",
   "dependencies": {
     "@11ty/eleventy": "^1.0.1",
     "@11ty/eleventy-navigation": "^0.3.3",
