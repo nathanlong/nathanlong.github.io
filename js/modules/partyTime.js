@@ -45,7 +45,6 @@ export default class partyTime {
     this.midiFiles = [
       '../../audio/chrono-battle.mid',
       '../../audio/ff6-battle.mid',
-      '../../audio/mmx-spark-01.mid',
       '../../audio/koopa-theme.mid',
       '../../audio/mmx-storm-eagle-4.mid',
       '../../audio/ultra-pinball-11.mid',

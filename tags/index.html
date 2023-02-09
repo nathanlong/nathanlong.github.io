@@ -62,8 +62,8 @@
       root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
     </script>
 
-    <header class="header mt-1/2" data-module="nav" data-mobile="false" data-pref="false">
-  <a class="sr-only sr-only-focus skip-link" href="#main">Skip to main content</a>
+    <a class="sr-only sr-only-focus skip-link bg-editor relative z-4" href="#main">Skip to main content</a>
+<header class="header mt-1/2" data-module="nav" data-mobile="false" data-pref="false">
   <div class="logo">
     <a class="logo-link" href="/" title="Nathan Long">
       <span class="sr-only">Nathan Long</span>
@@ -85,18 +85,18 @@
         <span class="sr-only">Prefs</span>
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/></svg>
       </button>
-      <div class="preferences-detail shadow-light-only rounded bg-editor" data-state="closed" data-pref-target data-module="preferences">
+      <div class="preferences-detail rounded" data-state="closed" data-pref-target data-module="preferences">
         <p>Color Theme</p>
         <div class="flex btn-group">
-          <button class="btn" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
             <span>☀️</span>
             <span>Light</span>
           </button>
-          <button class="btn" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
             <span>🌙</span>
             <span>Dark</span>
           </button>
-          <button class="btn" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
             <span>🤖</span>
             <span>Auto</span>
           </button>
@@ -105,15 +105,15 @@
         <p class="mt-1">Motion Preferences</p>
 
         <div class="flex btn-group">
-          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
             <span>👍</span>
             <span>Allow</span>
           </button>
-          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
             <span>🚫</span>
             <span>Reduce</span>
           </button>
-          <button class="btn font-thin" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
             <span>🤖</span>
             <span>Auto</span>
           </button>
@@ -122,11 +122,11 @@
         <p class="mt-1">Party Mode (Audio)</p>
 
         <div class="flex btn-group">
-          <button class="btn font-thin flex flex-col items-center" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
             <span>🎉</span>
             <span>Party</span>
           </button>
-          <button class="btn font-thin flex flex-col items-center" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
             <span>🛑</span>
             <span>PLZ NO</span>
           </button>
