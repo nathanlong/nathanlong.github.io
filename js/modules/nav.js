@@ -1,5 +1,9 @@
 import { debounce } from '../util/debounce.js'
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from '../vendor/bodyScrollLock.esm.js'
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from '../vendor/bodyScrollLock.esm.js'
 
 export default class Nav {
   constructor(el) {
@@ -44,14 +48,23 @@ export default class Nav {
     return this.el.dataset.pref === 'true'
   }
 
+  mql = window.matchMedia('(min-width: 576px)')
+
   setVars() {
     this.navTarget = this.el.querySelector('[data-nav-target]')
     this.prefTrigger = this.el.querySelector('[data-pref-trigger]')
     this.prefTarget = this.el.querySelector('[data-pref-target]')
     this.mobileTrigger = this.el.querySelector('[data-mobile-trigger]')
+    this.focusableEls = this.el.querySelectorAll(
+      'a[href]:not([disabled]), a[href]:not(.skip-link), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+    )
+    this.focusFirst = this.focusableEls[0]
+    this.focusLast = this.focusableEls[this.focusableEls.length - 1]
     this.resizeObserver = new ResizeObserver((entries) => {
       for (const _entry of entries) {
-        this.debouncedClear()
+        if (this.mql.matches) {
+          this.debouncedClear()
+        }
       }
     })
   }
@@ -103,27 +116,66 @@ export default class Nav {
   }
 
   toggleMobile = () => {
+    console.log(this.mobileOpen)
     if (this.mobileOpen) {
       // close
       if (this.motionPref) {
+        console.log('close yes anim')
         this.mobileAnimation.playbackRate = -1
         this.mobileAnimation.play()
         this.mobileAnimation.finished.then(() => {
+          this.mobileTrigger.ariaPressed = false
           this.el.dataset.mobile = false
         })
       } else {
+        this.mobileTrigger.ariaPressed = false
         this.el.dataset.mobile = false
       }
       enableBodyScroll(this.navTarget)
+      this.el.removeEventListener('keydown', this.focusTrap)
+      document.activeElement.blur()
     } else {
       // open
+      this.mobileTrigger.ariaPressed = true
       this.el.dataset.mobile = true
       if (this.motionPref) {
         this.mobileAnimation.playbackRate = 1
         this.mobileAnimation.play()
+        this.mobileAnimation.finished.then(() => {
+          this.navTarget.focus()
+        })
       }
+      this.el.addEventListener('keydown', this.focusTrap)
       disableBodyScroll(this.navTarget)
     }
+  }
+
+  focusTrap = (e) => {
+    const isTabPressed = e.key === 'Tab' || e.keyCode === '9'
+    const isEscapedPressed = e.key === 'Escape' || e.keyCode === '27'
+
+    if (isEscapedPressed) {
+      this.toggleMobile();
+    }
+
+    if (!isTabPressed) {
+      return
+    }
+
+    if (e.shiftKey) {
+      //shift + tab
+      if (document.activeElement === this.focusFirst) {
+        this.focusLast.focus()
+        e.preventDefault()
+      }
+    } else {
+      // tab
+      if (document.activeElement === this.focusLast) {
+        this.focusFirst.focus()
+        e.preventDefault()
+      }
+    }
+
   }
 
   checkClickOutside = (e) => {

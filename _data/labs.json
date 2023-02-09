@@ -6,7 +6,7 @@
     "description": "Playing around with different techniques and animation stacks.",
     "image": "https://user-images.githubusercontent.com/623568/207959370-a7a9d3ba-98a9-4787-9376-a8f3d1fae38e.png",
     "imageAlt": "Curvy red path with two dots indicating motion",
-    "feature": false
+    "feature": true
   },
   {
     "name": "Hero Dice",
@@ -15,7 +15,7 @@
     "description": "Dice roller app for self-made RPG system for kids: F.I.G. (Fantastical Imagination Game)",
     "image": "https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png",
     "imageAlt": "The word 'Hero' above a six-sided dice",
-    "feature": true
+    "feature": false
   },
   {
     "name": "Game Rules",

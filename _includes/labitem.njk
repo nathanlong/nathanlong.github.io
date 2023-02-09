@@ -1,6 +1,6 @@
 <li class="list-none flex items-start">
   <div class="lablist-image aspect-square rounded overflow-hidden">
-    <a href="{{ lab.url if lab.url else lab.source }}">
+    <a class="lablist-image-link" href="{{ lab.url if lab.url else lab.source }}">
       <img src="{{ lab.image }}" alt="{{ lab.imageAlt if lab.imageAlt else ''}}" class="w-full">
     </a>
   </div>
