@@ -15,6 +15,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("css");
 	eleventyConfig.addPassthroughCopy("js");
 	eleventyConfig.addPassthroughCopy("audio");
+	eleventyConfig.addPassthroughCopy("CNAME");
 
   // Favicons and site manifest
   eleventyConfig.addPassthroughCopy({ "favicons": "/" });
