@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting up LSPs for Modern JavaScript Tooling in Neovim</title>
+    <meta name="description" content="Installing LSPs, snippets, and Intellisense-style autocompletion">
+    <meta name="generator" content="Eleventy v2.0.0">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
+  </head>
+  <body>
+    <script>
+      // Prevent FART (look it up) by blocking render for a tiny bit...
+      // First check for local settings, then check media queries, then apply fallback
+      function getColor() {
+        const colorPref = window.localStorage.getItem('color-mode');
+        if (typeof colorPref === 'string') {
+          return colorPref;
+        }
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'dark' : 'light';
+        }
+        return 'light';
+      }
+
+      function getMotion() {
+        const motionPref = window.localStorage.getItem('motion-mode');
+        if (typeof motionPref === 'string') {
+          return motionPref;
+        }
+        const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'no-preference' : 'reduced'
+        }
+        return 'no-preference';
+      }
+
+      function getParty() {
+        const partyPref = window.localStorage.getItem('party-mode')
+        if (typeof partyPref === 'string') {
+          return partyPref;
+        }
+        return 'no-party';
+      }
+
+      const colorMode = getColor();
+      const motionMode = getMotion();
+      const partyMode = getParty();
+      const root = document.documentElement;
+      root.classList.add(colorMode, partyMode);
+      root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
+      root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
+    </script>
+
+    <a class="sr-only sr-only-focus skip-link bg-editor relative z-4" href="#main">Skip to main content</a>
+<header class="header mt-1/2" data-module="nav" data-mobile="false" data-pref="false">
+  <div class="logo">
+    <a class="logo-link" href="/" title="Nathan Long">
+      <span class="sr-only">Nathan Long</span>
+      <svg class="logo-svg" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M26.6213 1.87259C25.4497 0.701019 23.5502 0.701018 22.3787 1.87259L1.87258 22.3787C0.701003 23.5503 0.701003 25.4498 1.87258 26.6213L22.3787 47.1274C23.5502 48.299 25.4497 48.299 26.6213 47.1274L47.1274 26.6213C48.299 25.4498 48.299 23.5503 47.1274 22.3787L26.6213 1.87259ZM30.1666 31.472C30.8226 31.824 31.5826 32 32.4466 32H36.6466V29.288H32.6626C32.1826 29.288 31.7986 29.152 31.5106 28.88C31.2386 28.592 31.1026 28.208 31.1026 27.728V14.48H23.8786V17.192H28.1026V27.728C28.1026 28.576 28.2866 29.328 28.6546 29.984C29.0226 30.624 29.5266 31.12 30.1666 31.472ZM12.848 18.8V32H15.848V23.744C15.848 22.912 16.056 22.272 16.472 21.824C16.904 21.376 17.488 21.152 18.224 21.152C18.976 21.152 19.56 21.368 19.976 21.8C20.392 22.232 20.6 22.848 20.6 23.648V32H23.6V23.336C23.6 21.88 23.208 20.72 22.424 19.856C21.656 18.992 20.624 18.56 19.328 18.56C18.224 18.56 17.352 18.864 16.712 19.472C16.228 19.9436 15.9317 20.5596 15.8231 21.32H15.776V18.8H12.848Z" fill="#9ECE6A"/>
+      </svg>
+    </a>
+  </div>
+  <nav class="nav-wrapper" data-nav-target>
+    <menu class="nav m-0 p-0">
+      <li class="nav-item"><a href="/about/">About</a></li>
+      <li class="nav-item"><a href="/posts/">Archive</a></li>
+      <li class="nav-item"><a href="/lab/">Lab</a></li>
+      <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
+    </menu>
+
+    <div class="preferences relative">
+      <button class="preferences-trigger btn btn-square btn-borderless z-1" data-pref-trigger>
+        <span class="sr-only">Prefs</span>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/></svg>
+      </button>
+      <div class="preferences-detail rounded" data-state="closed" data-pref-target data-module="preferences">
+        <p>Color Theme</p>
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
+            <span>☀️</span>
+            <span>Light</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
+            <span>🌙</span>
+            <span>Dark</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Motion Preferences</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
+            <span>👍</span>
+            <span>Allow</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
+            <span>🚫</span>
+            <span>Reduce</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Party Mode (Audio)</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
+            <span>🎉</span>
+            <span>Party</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
+            <span>🛑</span>
+            <span>PLZ NO</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <button class="btn btn-square nav-toggle" data-mobile-trigger>
+    <div class="nav-toggle-line-top"></div>
+    <div class="nav-toggle-line-mid"></div>
+    <div class="nav-toggle-line-bottom"></div>
+  </button>
+</header>
+
+
+    <main id="main"  class="content flow tmpl-post prose">
+      
+<div class="mt-content mb-2">
+  <h1 class="mb-0">Setting up LSPs for Modern JavaScript Tooling in Neovim</h1>
+  <span class="divide-comma inline-block">
+  <a href="/tags/neovim/" class="uppercase decoration-none font-bold text-small font-thin after:color-text">neovim</a>
+  </span>
+  <time class="uppercase text-small" datetime="2023-02-23">- 2023-02-23</time>
+</div>
+
+<p>It's no secret that I love Vim. I've been using it since I started in the industry, but rather than talking about WHY I love it so much (that feels like a separate post) let's talk about adding some key modern features of a code editor for writing JavaScript.</p>
+<blockquote>
+<p><strong>Note:</strong> These features are going to require us to run with <a href="https://neovim.io/">Neovim</a>, a relatively recent retooling of <a href="https://www.vim.org/">Vim</a>, the modal editor that's been in active development since the 90's! <small>(Such sleek, much wow, very powerful... 🐕)</small></p>
+</blockquote>
+<p>We're going to nab:</p>
+<ul>
+<li><strong>Intellisense-style code-completion</strong> and hinting for:
+<ul>
+<li>JavaScript, HTML, CSS, ESLint, and JSON</li>
+</ul>
+</li>
+<li><strong>Powerful language actions</strong> and methods for displaying info and jumping around in your code.</li>
+<li><strong>Linters</strong> that will <s>tell you how wrong you are</s> help you write better code.</li>
+<li><strong>Auto code-formatting</strong> with Prettier.</li>
+</ul>
+<p>What you'll need:</p>
+<ul>
+<li><strong><a href="https://neovim.io/">Neovim</a></strong> (for LSP support).</li>
+<li>A little bit of <strong>Lua</strong> code (don't worry, if I can parse it you can too).</li>
+<li>Some familiarity with installing utilities via the <strong>command line</strong>.</li>
+</ul>
+<h2 id="lsp-s-you-magical-beasties" tabindex="-1">LSP's, you magical beasties... <a class="direct-link" href="#lsp-s-you-magical-beasties" aria-hidden="true">#</a></h2>
+<p>A lot of the features we're interested in come from the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a> or LSP developed by Microsoft. They act as language-specific 'brains' that an editor (like Visual Studio Code) can communicate with for all sorts of handy language features.</p>
+<p>This is the tech behind <strong>Intellisense</strong> completion, and it's also supported in Neovim. We're going to be nabbing these brains for ourselves with the help of NPM.</p>
+<p>There are 4 LSP's that we're interested in today:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/typescript">TypeScript</a> - Why TypeScript? Well, it has inside of it many language features that work for vanilla JavaScript, not JUST TypeScript.</li>
+<li><a href="https://www.npmjs.com/package/typescript-language-server">typescript-language-server</a> - works with TypeScript to provide those language features for JavaScript</li>
+<li><a href="https://www.npmjs.com/package/vscode-langservers-extracted">vscode-langservers-extracted</a> - This is a combo bundle. The fine folks at Microsoft wrote LSPs for HTML, CSS, JSON, and added ESLint support while they were at it.</li>
+<li><a href="https://www.npmjs.com/package/@tailwindcss/language-server">@tailwindcss/language-server</a> - (optional) We use <a href="https://tailwindcss.com/">Tailwind</a> quite a bit at <a href="https://www.viget.com/">Viget</a>, and this gives us powerful autocompletion which is a MUST with Tailwind, but if this isn't your cup of tea you can leave this one off.</li>
+</ul>
+<p>We're going to install everything globally with this command:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> -g typescript-language-server typescript vscode-langservers-extracted @tailwindcss/language-server</code></pre>
+<p>(I'm using <code>npm</code> to install modules in this example, but you can use whatever package manager you prefer. The point is you just need these globally installed so you can access them from Neovim. These LSP's are just a small sampling of what's available, see the docs at <a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a> for ways to install and configure more LSPs)</p>
+<p>Now that we have these magical language 🧠's available globally we need to connect them to Neovim.</p>
+<h2 id="connecting-neovim" tabindex="-1">Connecting Neovim <a class="direct-link" href="#connecting-neovim" aria-hidden="true">#</a></h2>
+<p>We'll be installing Neovim plugins to help attach everything. The plugin manager I'm using here is <a href="https://github.com/wbthomason/packer.nvim">Packer</a>, but these will work with any other plugin manager as well.</p>
+<p>We're also going to be writing the setup and configurations of these plugins in Lua because most of them are written in Lua themselves. However, there's no need to swap out your <code>init.vim</code> (vimscript-based config equivalent of <code>.vimrc</code> for Neovim) for <code>init.lua</code> just yet. Neovim gives you the option to write Lua blocks inside of Vimscript like:</p>
+<pre class="feature language-lua"><code class="language-lua">lua <span class="token operator">&lt;&lt;</span> EOF<br>  <span class="token comment">-- all your lua config here</span><br><span class="token keyword">end</span></code></pre>
+<p>So if you're rocking Vimscript, make sure to wrap the following setup in the Lua markers.</p>
+<h3 id="install-the-plugins" tabindex="-1">Install the plugins <a class="direct-link" href="#install-the-plugins" aria-hidden="true">#</a></h3>
+<pre class="feature language-lua"><code class="language-lua"><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'packer'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">startup</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token keyword">function</span><span class="token punctuation">(</span>use<span class="token punctuation">)</span><br>  <span class="token comment">-- ...other plugins before and after...</span><br>  <span class="token comment">--</span><br>  <span class="token comment">-- LSP integration and autocomplete</span><br>  use <span class="token string">'neovim/nvim-lspconfig'</span><br>  use <span class="token string">'hrsh7th/nvim-cmp'</span><br>  use <span class="token string">'hrsh7th/cmp-nvim-lsp'</span><br>  use <span class="token string">'hrsh7th/cmp-nvim-lsp-signature-help'</span><br>  use <span class="token string">'hrsh7th/cmp-buffer'</span><br>  use <span class="token string">'hrsh7th/cmp-path'</span><br>  <span class="token comment">-- Prettier</span><br>  <span class="token function">use</span> <span class="token punctuation">{</span><br>    <span class="token string">'prettier/vim-prettier'</span><span class="token punctuation">,</span> <br>    run <span class="token operator">=</span> <span class="token string">'yarn install --frozen-lockfile --production'</span><span class="token punctuation">,</span><br>    ft <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'javascript'</span><span class="token punctuation">,</span> <span class="token string">'typescript'</span><span class="token punctuation">,</span> <span class="token string">'css'</span><span class="token punctuation">,</span> <span class="token string">'scss'</span><span class="token punctuation">,</span> <span class="token string">'json'</span><span class="token punctuation">,</span> <span class="token string">'graphql'</span><span class="token punctuation">,</span> <span class="token string">'markdown'</span><span class="token punctuation">,</span> <span class="token string">'vue'</span><span class="token punctuation">,</span> <span class="token string">'yaml'</span><span class="token punctuation">,</span> <span class="token string">'html'</span><span class="token punctuation">}</span><br>  <span class="token punctuation">}</span><br><span class="token keyword">end</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Plugin</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a></td>
+<td style="text-align:left">Officially supported LSP quickstart configs</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/hrsh7th/nvim-cmp">nvim-cmp</a></td>
+<td style="text-align:left">The completion engine we'll be using for everything</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/hrsh7th/cmp-nvim-lsp">cmp-nvim-lsp</a></td>
+<td style="text-align:left">This is a 'source' plugin for our complete engine, <code>nvim-cmp</code>. This allows it to use the LSPs (required)</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/hrsh7th/cmp-nvim-lsp-signature-help">cmp-nvim-lsp-signature-help</a></td>
+<td style="text-align:left">A helper source that will auto-hint at function arguments for us (optional)</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/hrsh7th/cmp-buffer">cmp-buffer</a></td>
+<td style="text-align:left">While we're at it, another source plugin that allows autocompletion from the buffer itself (optional)</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/hrsh7th/cmp-path">cmp-path</a></td>
+<td style="text-align:left">Another source plugin to help complete file system paths (optional)</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/prettier/vim-prettier">Prettier</a></td>
+<td style="text-align:left">Officially maintained auto-formatting utility for a variety of languages, what we're doing here is actually only activating it for certain filetypes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One note about Prettier:</strong> You may have noticed we did not install Prettier globally. TYPICALLY you'll be running Prettier from a local project installation, and this setup will hook into a project that has Prettier installed. But if you want to use Prettier outside of a project config, you can also install a version globally that you can use without modifying project dependencies. We'll come back to Prettier a little later on.</p>
+<h3 id="activate-the-plugins" tabindex="-1">Activate the plugins <a class="direct-link" href="#activate-the-plugins" aria-hidden="true">#</a></h3>
+<p>If you haven't worked with Lua plugins before they differ from traditional Vim plugins in the fact that they're not active by default, you have to call them (and optionally pass configuration options) before they'll attach themselves to your session. This allows for you to selectively load plugins per filetype or any other fancy options you might need.</p>
+<p>Inside of your <code>init.vim</code> or <code>init.lua</code> add the following:</p>
+<h4 id="lsp-config" tabindex="-1">LSP Config <a class="direct-link" href="#lsp-config" aria-hidden="true">#</a></h4>
+<pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- LSP Mappings + Settings -----------------------------------------------------</span><br><span class="token comment">-- modified from: https://github.com/neovim/nvim-lspconfig#suggested-configuration</span><br><span class="token keyword">local</span> opts <span class="token operator">=</span> <span class="token punctuation">{</span> noremap<span class="token operator">=</span><span class="token keyword">true</span><span class="token punctuation">,</span> silent<span class="token operator">=</span><span class="token keyword">true</span> <span class="token punctuation">}</span><br><span class="token comment">-- Basic diagnostic mappings, these will navigate to or display diagnostics</span><br>vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'&lt;space>d'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>diagnostic<span class="token punctuation">.</span>open_float<span class="token punctuation">,</span> opts<span class="token punctuation">)</span><br>vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'[d'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>diagnostic<span class="token punctuation">.</span>goto_prev<span class="token punctuation">,</span> opts<span class="token punctuation">)</span><br>vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">']d'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>diagnostic<span class="token punctuation">.</span>goto_next<span class="token punctuation">,</span> opts<span class="token punctuation">)</span><br>vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'&lt;space>q'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>diagnostic<span class="token punctuation">.</span>setloclist<span class="token punctuation">,</span> opts<span class="token punctuation">)</span><br><br><span class="token comment">-- Use an on_attach function to only map the following keys</span><br><span class="token comment">-- after the language server attaches to the current buffer</span><br><span class="token keyword">local</span> on_attach <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> bufnr<span class="token punctuation">)</span><br>  <span class="token comment">-- Enable completion triggered by &lt;c-x>&lt;c-o></span><br>  vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_buf_set_option</span><span class="token punctuation">(</span>bufnr<span class="token punctuation">,</span> <span class="token string">'omnifunc'</span><span class="token punctuation">,</span> <span class="token string">'v:lua.vim.lsp.omnifunc'</span><span class="token punctuation">)</span><br><br>  <span class="token comment">-- Mappings to magical LSP functions!</span><br>  <span class="token keyword">local</span> bufopts <span class="token operator">=</span> <span class="token punctuation">{</span> noremap<span class="token operator">=</span><span class="token keyword">true</span><span class="token punctuation">,</span> silent<span class="token operator">=</span><span class="token keyword">true</span><span class="token punctuation">,</span> buffer<span class="token operator">=</span>bufnr <span class="token punctuation">}</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'gD'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>declaration<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'gd'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>definition<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'gk'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>hover<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'gi'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>implementation<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'gK'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>signature_help<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'&lt;space>D'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>type_definition<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'&lt;space>rn'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>rename<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'&lt;space>ca'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>code_action<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'gr'</span><span class="token punctuation">,</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span>references<span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br>  vim<span class="token punctuation">.</span>keymap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'n'</span><span class="token punctuation">,</span> <span class="token string">'&lt;space>f'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> vim<span class="token punctuation">.</span>lsp<span class="token punctuation">.</span>buf<span class="token punctuation">.</span><span class="token function">format</span> <span class="token punctuation">{</span> async <span class="token operator">=</span> <span class="token keyword">true</span> <span class="token punctuation">}</span> <span class="token keyword">end</span><span class="token punctuation">,</span> bufopts<span class="token punctuation">)</span><br><span class="token keyword">end</span><br><br><span class="token comment">-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..</span><br><span class="token keyword">local</span> capabilities <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'cmp_nvim_lsp'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">default_capabilities</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><br><span class="token comment">-- Capabilities required for the visualstudio lsps (css, html, etc)</span><br>capabilities<span class="token punctuation">.</span>textDocument<span class="token punctuation">.</span>completion<span class="token punctuation">.</span>completionItem<span class="token punctuation">.</span>snippetSupport <span class="token operator">=</span> <span class="token keyword">true</span><br><br><span class="token comment">-- Activate LSPs</span><br><span class="token comment">-- All LSPs in this list need to be manually installed via NPM/PNPM/whatevs</span><br><span class="token keyword">local</span> lspconfig <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'lspconfig'</span><span class="token punctuation">)</span><br><span class="token keyword">local</span> servers <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">'tailwindcss'</span><span class="token punctuation">,</span> <span class="token string">'tsserver'</span><span class="token punctuation">,</span> <span class="token string">'jsonls'</span><span class="token punctuation">,</span> <span class="token string">'eslint'</span> <span class="token punctuation">}</span><br><span class="token keyword">for</span> _<span class="token punctuation">,</span> lsp <span class="token keyword">in</span> <span class="token function">pairs</span><span class="token punctuation">(</span>servers<span class="token punctuation">)</span> <span class="token keyword">do</span><br>  lspconfig<span class="token punctuation">[</span>lsp<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">setup</span> <span class="token punctuation">{</span><br>    on_attach <span class="token operator">=</span> on_attach<span class="token punctuation">,</span><br>    capabilites <span class="token operator">=</span> capabilities<span class="token punctuation">,</span><br>  <span class="token punctuation">}</span><br><span class="token keyword">end</span><br><br><span class="token comment">-- This is an interesting one, for some reason these two LSPs (CSS/HTML) need to</span><br><span class="token comment">-- be activated separately outside of the above loop. If someone can tell me why,</span><br><span class="token comment">-- send me a note...</span><br>lspconfig<span class="token punctuation">.</span>cssls<span class="token punctuation">.</span><span class="token function">setup</span> <span class="token punctuation">{</span><br>  on_attach <span class="token operator">=</span> on_attach<span class="token punctuation">,</span><br>  capabilities <span class="token operator">=</span> capabilities<br><span class="token punctuation">}</span><br><br>lspconfig<span class="token punctuation">.</span>html<span class="token punctuation">.</span><span class="token function">setup</span> <span class="token punctuation">{</span><br>  on_attach <span class="token operator">=</span> on_attach<span class="token punctuation">,</span><br>  capabilities <span class="token operator">=</span> capabilities<br><span class="token punctuation">}</span></code></pre>
+<p>Awesome, that's the LSP setup. We now have LSP's activated and attached -- but they're not going to autocompleting yet. We need to set up <code>nvim-cmp</code>. But to do that we also need to specify a snippet engine.</p>
+<h4 id="snippet-setup" tabindex="-1">Snippet Setup <a class="direct-link" href="#snippet-setup" aria-hidden="true">#</a></h4>
+<p>Now, you don't NEED <code>LuaSnip</code> specifically for <code>nvim-cmp</code>, but you do need A snippet engine (<code>nvim-cmp</code> requires one 🤷). I've chosen <code>LuaSnip</code> for it's ease of use and power, which I may cover in a future article. For now let's set it up:</p>
+<pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- Luasnip ---------------------------------------------------------------------</span><br><span class="token comment">-- Load as needed by filetype by the luasnippets folder in the config dir</span><br><span class="token keyword">local</span> luasnip <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"luasnip"</span><span class="token punctuation">)</span><br><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"luasnip.loaders.from_lua"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">lazy_load</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><span class="token comment">-- set keybinds for both INSERT and VISUAL.</span><br>vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_set_keymap</span><span class="token punctuation">(</span><span class="token string">"i"</span><span class="token punctuation">,</span> <span class="token string">"&lt;C-n>"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Plug>luasnip-next-choice"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><br>vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_set_keymap</span><span class="token punctuation">(</span><span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"&lt;C-n>"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Plug>luasnip-next-choice"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><br>vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_set_keymap</span><span class="token punctuation">(</span><span class="token string">"i"</span><span class="token punctuation">,</span> <span class="token string">"&lt;C-p>"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Plug>luasnip-prev-choice"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><br>vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_set_keymap</span><span class="token punctuation">(</span><span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"&lt;C-p>"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Plug>luasnip-prev-choice"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token comment">-- Set this check up for nvim-cmp tab mapping</span><br><span class="token keyword">local</span> has_words_before <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>  <span class="token keyword">local</span> line<span class="token punctuation">,</span> col <span class="token operator">=</span> <span class="token function">unpack</span><span class="token punctuation">(</span>vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_win_get_cursor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><br>  <span class="token keyword">return</span> col <span class="token operator">~=</span> <span class="token number">0</span> <span class="token keyword">and</span> vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_buf_get_lines</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> line <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">,</span> <span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token function">sub</span><span class="token punctuation">(</span>col<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">nil</span><br><span class="token keyword">end</span></code></pre>
+<h4 id="autocomplete-setup" tabindex="-1">Autocomplete Setup <a class="direct-link" href="#autocomplete-setup" aria-hidden="true">#</a></h4>
+<p>Almost done! Now we just need to activate <code>nvim-cmp</code> and feed it both our LSP and other sources, and create some keymappings:</p>
+<pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- CMP - Autocompletion --------------------------------------------------------</span><br><span class="token keyword">local</span> cmp <span class="token operator">=</span> require <span class="token string">'cmp'</span><br>cmp<span class="token punctuation">.</span><span class="token function">setup</span> <span class="token punctuation">{</span><br>  snippet <span class="token operator">=</span> <span class="token punctuation">{</span><br>    expand <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><br>       <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'luasnip'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">lsp_expand</span><span class="token punctuation">(</span>args<span class="token punctuation">.</span>body<span class="token punctuation">)</span> <span class="token comment">-- For `luasnip` users.</span><br>    <span class="token keyword">end</span><span class="token punctuation">,</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  mapping <span class="token operator">=</span> <span class="token punctuation">{</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;C-p>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">select_prev_item</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;C-n>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">select_next_item</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;C-d>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">scroll_docs</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;C-f>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">scroll_docs</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;C-Space>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;C-e>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">'&lt;CR>'</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span>mapping<span class="token punctuation">.</span><span class="token function">confirm</span> <span class="token punctuation">{</span><br>      behavior <span class="token operator">=</span> cmp<span class="token punctuation">.</span>ConfirmBehavior<span class="token punctuation">.</span>Replace<span class="token punctuation">,</span><br>      select <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token string">"&lt;Tab>"</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span><span class="token function">mapping</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>fallback<span class="token punctuation">)</span><br>      <span class="token keyword">if</span> cmp<span class="token punctuation">.</span><span class="token function">visible</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">then</span><br>        cmp<span class="token punctuation">.</span><span class="token function">select_next_item</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>      <span class="token keyword">elseif</span> luasnip<span class="token punctuation">.</span><span class="token function">expand_or_jumpable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">then</span><br>        luasnip<span class="token punctuation">.</span><span class="token function">expand_or_jump</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>      <span class="token keyword">elseif</span> <span class="token function">has_words_before</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">then</span><br>        cmp<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>      <span class="token keyword">else</span><br>        <span class="token function">fallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>      <span class="token keyword">end</span><br>    <span class="token keyword">end</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"i"</span><span class="token punctuation">,</span> <span class="token string">"s"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br><br>    <span class="token punctuation">[</span><span class="token string">"&lt;S-Tab>"</span><span class="token punctuation">]</span> <span class="token operator">=</span> cmp<span class="token punctuation">.</span><span class="token function">mapping</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>fallback<span class="token punctuation">)</span><br>      <span class="token keyword">if</span> cmp<span class="token punctuation">.</span><span class="token function">visible</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">then</span><br>        cmp<span class="token punctuation">.</span><span class="token function">select_prev_item</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>      <span class="token keyword">elseif</span> luasnip<span class="token punctuation">.</span><span class="token function">jumpable</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">then</span><br>        luasnip<span class="token punctuation">.</span><span class="token function">jump</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><br>      <span class="token keyword">else</span><br>        <span class="token function">fallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>      <span class="token keyword">end</span><br>    <span class="token keyword">end</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"i"</span><span class="token punctuation">,</span> <span class="token string">"s"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  sources <span class="token operator">=</span> <span class="token punctuation">{</span><br>    <span class="token punctuation">{</span> name <span class="token operator">=</span> <span class="token string">'nvim_lsp'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token punctuation">{</span> name <span class="token operator">=</span> <span class="token string">'nvim_lsp_signature_help'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token punctuation">{</span> name <span class="token operator">=</span> <span class="token string">'luasnip'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token punctuation">{</span> name <span class="token operator">=</span> <span class="token string">'buffer'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token punctuation">{</span> name <span class="token operator">=</span> <span class="token string">'path'</span> <span class="token punctuation">}</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br><span class="token punctuation">}</span></code></pre>
+<p>Aaaaay, now we have LSP-assisted autocomplete working! 😎 We've set up some smart mappings specifically around <code>&lt;Tab&gt;</code> and <code>&lt;S-Tab&gt;</code> to allow <code>nvim-cmp</code> to quickly cycle through options, and we've fed all of our sources into the completion engine.</p>
+<h3 id="prettier-setup" tabindex="-1">Prettier Setup <a class="direct-link" href="#prettier-setup" aria-hidden="true">#</a></h3>
+<p>And lastly, lets activate and make some keybindings for Prettier:</p>
+<pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- Prettier</span><br><span class="token function">keymap</span><span class="token punctuation">(</span><span class="token string">"n"</span><span class="token punctuation">,</span> <span class="token string">"&lt;leader>re"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Plug>(Prettier)"</span><span class="token punctuation">,</span> opts<span class="token punctuation">)</span><br><span class="token function">keymap</span><span class="token punctuation">(</span><span class="token string">"v"</span><span class="token punctuation">,</span> <span class="token string">"&lt;leader>re"</span><span class="token punctuation">,</span> <span class="token string">":PrettierFragment&lt;cr>"</span><span class="token punctuation">,</span> opts<span class="token punctuation">)</span></code></pre>
+<p>If it's more helpful to see everything all together, you can take a peek at <a href="https://github.com/nathanlong/dotfiles/blob/main/nvim/init.lua">my personal Neovim config</a>, just know that it may deviate slightly from these instructions as I'm always tinkering.</p>
+<h2 id="that-s-great-but-what-can-i-do-with-these-things" tabindex="-1">That's great, but what can I DO with these things? <a class="direct-link" href="#that-s-great-but-what-can-i-do-with-these-things" aria-hidden="true">#</a></h2>
+<p>Each one of these things we just installed and connected will allow to some truly magical actions.</p>
+<h3 id="language-powered-extensible-autocompletion-nvim-cmp-lsp" tabindex="-1">Language-Powered Extensible autocompletion (nvim-cmp + LSP) <a class="direct-link" href="#language-powered-extensible-autocompletion-nvim-cmp-lsp" aria-hidden="true">#</a></h3>
+<p>If you've seen someone use VSCode, you have seen this in action. Language keywords are automatically provided for you as you type, and more than that: it KNOWS your code base. If you've correctly formatted your code, the autocomplete popups will be able to tell you what types of arguments the function requires, grab methods and functions from imported code, and just overall better autocomplete.</p>
+<p>But YOU get to pick what goes in there. If you need something like Elixir and Erlang support, there are <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#elixirls">LSP's for that</a>. This system will allow you to grab whatever completion brains you want and plug them into your new system.</p>
+<h3 id="super-language-powers" tabindex="-1">Super Language Powers <a class="direct-link" href="#super-language-powers" aria-hidden="true">#</a></h3>
+<p>There are a lot of powerful features hidden in the LSPs that are not obvious at first. We bound a lot of these commands to key mappings in our config files, here are a few of them explained:</p>
+<ul>
+<li><strong>Buffer Hover</strong> = Display a tooltip for what your cursor is on. Helpful for things like seeing the expanded Tailwind CSS definitions or a bit of info about a piece of code. Very handy.</li>
+<li><strong>Buffer Implementation</strong> = Open a quickfix window of everywhere in the current file what your cursor is over has been implemented (not the same as referenced, there's a different command for that 😆).</li>
+<li><strong>Buffer Definition</strong> = Jumps to the definition of what your cursor is currently over. You can jump back to a variable or function definition.</li>
+<li><strong>Buffer Type Definition</strong> = Jumps to the definition of the type you're on.</li>
+<li><strong>Buffer Rename</strong> = Rename what's under your cursor everywhere. Incredibly handy!</li>
+<li><strong>Signature Help</strong> = Displays function signatures with the current parameter emphasized. Can't remember what arguments a function takes? Activate signature help and it'll tell you!</li>
+<li><strong>Code Action</strong> = This one is interesting. It's context sensitive command that will give you a list of things that can be done for a diagnostic error and can actually fix an issue for you or provide recommendations!</li>
+<li><strong>Buffer Reference</strong> = Create a quickfix window for all references for what your cursor is on.</li>
+<li><strong>Buffer Format</strong> = This one can also be pretty magical. This command can do some basic clean up and formatting for you. Think of it as Prettier-Lite™️</li>
+</ul>
+<h3 id="linting-in-context" tabindex="-1">Linting In Context <a class="direct-link" href="#linting-in-context" aria-hidden="true">#</a></h3>
+<p>We didn't address it directly, but part of the <code>vscode-langservers-extracted</code> package included <code>eslint</code>. Through the LSP integration, diagnostics will output directly alongside your JavaScript so you can see <s>when you've made a terrible mistake</s> when your code could be improved. This setup also gives you an easy way to navigate through diagnostic errors (We bound them to <code>[d</code> and <code>]d</code> in the config files) and even have some quick LSP-assisted resolution through Code Actions.</p>
+<h3 id="auto-formatting-prettier" tabindex="-1">Auto-formatting (Prettier) <a class="direct-link" href="#auto-formatting-prettier" aria-hidden="true">#</a></h3>
+<p>Alright, this is more subjective than the other benefits, but stick with me here for a 🔥 <strong>hot take</strong> 🔥.</p>
+<p>While <a href="https://prettier.io/">Prettier</a> isn't perfect, it does have a valuable function: it completely removes arbitrary and subjective formatting differences when working on a team.</p>
+<p>Tabs/Spaces? (Foh-get a-bout eet) Spaces around argument options? (Naht to woo-ray, hun). Entire PR's littered with whitespace adjustments? (Ne-vah agaihns). Write the code how you want to while you're hacking away, then, when you're done, have the formatter clean it up and snap it into alignment with team standards (collected in the <code>.pretterrc</code>). It's like a robot butler for your code, and while it may not put everything back where YOU would put it you can also know that it's doing the same thing for everyone else. And that's a lot harder to get stuck on.</p>
+<h2 id="conclusion" tabindex="-1">Conclusion <a class="direct-link" href="#conclusion" aria-hidden="true">#</a></h2>
+<p>The support of LSP's is one of the main reasons I hopped onboard the Neovim train. After seeing how nice the JavaScript experience is in Visual Studio Code and the power of what LSP's allow you to do with your code I was sold. When you're styling a user interface in TailwindCSS or working in a Next.js app, having the lightning fast autocomplete along with quick hopping, output previews, and contextual linting... It turns Neovim into a rocket ship for writing modern JavaScript!</p>
+
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0">Discussion</p>
+
+  
+  <p>Want to discuss? Reply by:
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Setting up LSPs for Modern JavaScript Tooling in Neovim">Email</a>
+    <span>or</span>
+    <a href="https://github.com/nathanlong/nathanlong.github.io/issues/18#issue-comment-box">Github</a>
+    
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none items-center p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/posts/owning-my-voice/" class="decoration-none font-thin font-bold">Owning My Voice<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
+
+    </main>
+
+    <footer class="footer full w-full flex flex-col-to-row justify-between items-center px-1rem py-1 items-center mt-content gap-1">
+      <p class="color-reduced no-shrink font-small m-0">&copy; 2023 Nathan Long. All Rights Reserved.</p>
+
+      <nav class="nav-footer no-shrink">
+        <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
+          <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
+          <li class="font-small"><a class="decoration-none" href="/posts/">Archive</a></li>
+          <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
+
+          <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>
+        </menu>
+    </footer>
+
+    
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
