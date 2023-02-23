@@ -27,7 +27,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginSyntaxHighlight, {
     preAttributes: {
       class: function({language}) {
-        return 'popout language-' + language
+        return 'feature language-' + language
       },
     },
   });

@@ -5,18 +5,17 @@ extraJS:
 ---
 
 <section class="intro full radial-bottom" data-module="animation-hero">
-  <div class="content-inner mx-auto">
-    <p class="intro-eyebrow lh-1 m-0">Nathan Long</p>
+  <div class="content-inner mx-auto flow">
+    <p class="intro-eyebrow lh-1">Nathan Long</p>
     <h1 class="intro-title">Designer brain,<br/>developer heart.</h1>
     <p>UI Developer at <a href="https://www.viget.com">Viget</a></p>
-    <a class="intro-link btn text-small" role="button" draggable="false" href="/about/" data-module="link-button">About Me &rarr;</a>
+    <a class="intro-link btn text-small flow-3/2" role="button" draggable="false" href="/about/" data-module="link-button">About Me &rarr;</a>
   </div>
 </section>
 
 
 <section class="full">
-  <div class="content-inner mx-auto">
-
+  <div class="content-inner mx-auto flow">
 
     {% set maxPosts = collections.posts.length | min(3) %}
     <p class="section-eyebrow">Writing</p>
@@ -25,13 +24,13 @@ extraJS:
     {% set postslistCounter = collections.posts | length %}
     {% include "postslist.njk" %}
 
-    <a class="btn text-small" role="button" draggable="false" href="{{ '/posts/' | url }}" data-module="link-button">Archive &rarr;</a>
+    <a class="btn text-small flow-3/2" role="button" draggable="false" href="{{ '/posts/' | url }}" data-module="link-button">Archive &rarr;</a>
   </div>
 
 </section>
 
 <section class="py-3 mt-3 radial-top full">
-  <div class="content-inner mx-auto">
+  <div class="content-inner mx-auto flow">
     <p class="section-eyebrow">Labs</p>
     <ul class="lablist p-0 m-0 mb-2 space-y-1">
       {%- for lab in labs %}

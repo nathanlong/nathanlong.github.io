@@ -2,7 +2,7 @@
 title: Owning My Voice
 description: 2023 is the year of the rabbit... and personal websites.
 date: 2023-01-31
-tags: Ramblings
+tags: ramblings
 github: https://github.com/nathanlong/nathanlong.github.io/issues/21
 layout: layouts/post.njk
 ---
@@ -27,7 +27,7 @@ But things slowly changed while I wasn't looking. If the web was once this weird
 
 At some point I was no longer reading updates from people I knew or cared about but getting lost endless amounts of shallow-yet-mildly-amusing content or [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) through emotionally incendiary material.
 
-## Are we human? `Or are we robot?`
+## Are we human? Or are we `robot?`
 
 I was no longer in control what I was ingesting. The robots were feeding me what they were trained to surface. `And I liked it.` Well, at first anyways.
 

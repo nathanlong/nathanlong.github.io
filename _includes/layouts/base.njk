@@ -64,7 +64,7 @@
 
     {% include "nav.njk" %}
 
-    <main id="main" {% if templateClass %} class="content {{ templateClass }}"{% endif %}>
+    <main id="main" {% if templateClass %} class="content flow {{ templateClass }}"{% endif %}>
       {{ content | safe }}
     </main>
 

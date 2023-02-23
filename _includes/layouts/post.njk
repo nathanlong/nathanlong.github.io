@@ -1,6 +1,6 @@
 ---
 layout: layouts/base.njk
-templateClass: tmpl-post
+templateClass: tmpl-post prose
 ---
 
 <div class="mt-content mb-2">
@@ -24,23 +24,18 @@ templateClass: tmpl-post
     <a href="{{ mailitems | join }}">Email</a>
     {%- if github %}
     <span>or</span>
-    <a href="{{ github }}">Github</a>
+    <a href="{{ github ~ '#issue-comment-box' }}">Github</a>
     {% endif %}
   </p>
-</div>
-
-<div class="mt-2">
-  <p class="section-eyebrow m-0">Mentions</p>
-  <p>TBD: <a href="https://webmention.io/">Webmentions</a> are coming, <a href="https://github.com/nathanlong/nathanlong.github.io/issues/20">eventually...</a></p>
 </div>
 
 {%- if collections.posts %}
 {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
 {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
 {%- if nextPost or previousPost %}
-<div class="popout py-1 color-reduced mt-2">
+<div class="feature py-1 color-reduced mt-2">
   <ul class="content-inner flex justify-between list-none items-center p-0 m-0 w-full">
-    <li class="grow">
+    <li class="grow w-1/2">
       <span class="uppercase decoration-none text-small">Previous:</span><br/>
       {%- if previousPost %}
         <a href="{{ previousPost.url | url }}" class="decoration-none font-thin font-bold">{{ previousPost.data.title }}<br/>&larr;</a></li>
@@ -48,7 +43,7 @@ templateClass: tmpl-post
         <span class="font-thin font-bold">You're at the very beginning!<br/>🙃</span>
         </li>
       {% endif %}
-    <li class="text-right grow">
+    <li class="text-right grow w-1/2">
       <span class="uppercase decoration-none text-small">Next:</span>
       <br/>
       {%- if nextPost %}

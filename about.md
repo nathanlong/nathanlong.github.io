@@ -13,10 +13,11 @@ I'm a **Former-Designer-turned-UI-Developer** for [Viget](https://www.viget.com)
 
 Looking for more? Here's more about:
 
-<details class="popout details mt-1 mb-2">
+<details class="popout details flow-2">
 <summary class="font-bold">A Little History</summary>
 
 <hr class="my-1">
+<div class="flow flow-1">
 
 ### An Art Degree?
 
@@ -26,13 +27,15 @@ I had been playing around with **Flash** (oh Flash, I both miss you dearly and y
 
 I eventually went `full developer` in 2022 at **[Viget](https://www.viget.com/about/team/nlong/)** where I work now as a **UI Developer**.
 
+</div>
 </details>
 
 
-<details class="popout details mb-2">
+<details class="popout details flow-2">
 <summary class="font-bold">How to Contact Me</summary>
 
 <hr class="my-1">
+<div class="flow flow-1">
 
 The best way to have a real conversation with me is by email: <a data-module="email-hider"></a>
 
@@ -41,5 +44,7 @@ You can also find me in these spaces:
 - [Github](https://github.com/nathanlong) - Code and projects
 - [CodePen](https://codepen.io/nathanlong) - Demos and experiments
 - [LinkedIn](https://www.linkedin.com/in/nathanmlong/) - Digital resume and recruiter spam
+
+</div>
 
 </details>
