@@ -6,6 +6,16 @@
     <title>Setting up LSPs for Modern JavaScript Tooling in Neovim</title>
     <meta name="description" content="Installing LSPs, snippets, and Intellisense-style autocompletion">
     <meta name="generator" content="Eleventy v2.0.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nathan-long.com">
+    <meta property="og:title" content="Setting up LSPs for Modern JavaScript Tooling in Neovim">
+    <meta property="og:description" content="Installing LSPs, snippets, and Intellisense-style autocompletion">
+    <meta property="og:image" content="/icon-512.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nathan-long.com">
+    <meta property="twitter:title" content="Setting up LSPs for Modern JavaScript Tooling in Neovim">
+    <meta property="twitter:description" content="Installing LSPs, snippets, and Intellisense-style autocompletion">
+    <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -184,7 +194,7 @@
 <li><a href="https://www.npmjs.com/package/@tailwindcss/language-server">@tailwindcss/language-server</a> - (optional) We use <a href="https://tailwindcss.com/">Tailwind</a> quite a bit at <a href="https://www.viget.com/">Viget</a>, and this gives us powerful autocompletion which is a MUST with Tailwind, but if this isn't your cup of tea you can leave this one off.</li>
 </ul>
 <p>We're going to install everything globally with this command:</p>
-<pre class="feature language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> -g typescript-language-server typescript vscode-langservers-extracted @tailwindcss/language-server</code></pre>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> typescript-language-server typescript vscode-langservers-extracted @tailwindcss/language-server</code></pre>
 <p>(I'm using <code>npm</code> to install modules in this example, but you can use whatever package manager you prefer. The point is you just need these globally installed so you can access them from Neovim. These LSP's are just a small sampling of what's available, see the docs at <a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a> for ways to install and configure more LSPs)</p>
 <p>Now that we have these magical language 🧠's available globally we need to connect them to Neovim.</p>
 <h2 id="connecting-neovim" tabindex="-1">Connecting Neovim <a class="direct-link" href="#connecting-neovim" aria-hidden="true">#</a></h2>
