@@ -6,6 +6,16 @@
     <title>{{ title or metadata.title }}</title>
     <meta name="description" content="{{ description or metadata.description }}">
     <meta name="generator" content="{{ eleventy.generator }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nathan-long.com">
+    <meta property="og:title" content="{{ title or metadata.title }}">
+    <meta property="og:description" content="{{ description or metadata.description }}">
+    <meta property="og:image" content="{{ '/icon-512.jpg' | url }}">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nathan-long.com">
+    <meta property="twitter:title" content="{{ title or metadata.title }}">
+    <meta property="twitter:description" content="{{ description or metadata.description }}">
+    <meta property="twitter:image" content="{{ '/icon-512.jpg' | url }}">
     <link rel="icon" href="{{ '/favicon.ico' | url }}" sizes="any">
     <link rel="icon" href="{{ '/icon.svg' | url }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | url }}">

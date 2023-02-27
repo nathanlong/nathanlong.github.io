@@ -265,11 +265,11 @@ h6 {
   margin-top: 0;
 }
 
-h1 {
+h1, .heading-100 {
   font-size: 3em;
 }
 
-h2 {
+h2, .heading-200 {
   font-size: 2em;
 }
 
@@ -277,15 +277,15 @@ h2 {
   border-bottom: 2px dotted var(--theme-divider);
 }
 
-h3 {
+h3, .heading-300 {
   font-size: 1.423em;
 }
 
-h4 {
+h4, .heading-400 {
   font-size: 1.25em;
 }
 
-h5 {
+h5, .heading-500 {
   font-size: 1.125em;
 }
 
