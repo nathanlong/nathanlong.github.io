@@ -10,13 +10,11 @@ const Pluralize = require("@11ty/eleventy/src/Util/Pluralize");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 module.exports = function(eleventyConfig) {
-  // Copy folders and special files to the output
-	eleventyConfig.addPassthroughCopy({
-		"./public/": "/",
-    "./CNAME": "/",
-    "./favicons/": "/",
-    "./site.webmanifest": "/"
-	});
+  // Copy folders and special files
+  eleventyConfig.addPassthroughCopy("public");
+	eleventyConfig.addPassthroughCopy("CNAME");
+  eleventyConfig.addPassthroughCopy({ "favicons": "/" });
+  eleventyConfig.addPassthroughCopy("site.webmanifest");
 
 	// Watch content images for the image pipeline.
 	eleventyConfig.addWatchTarget("content/**/*.{svg,webp,png,jpeg}");
