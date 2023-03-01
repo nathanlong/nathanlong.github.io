@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan Long</title>
-    <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <title>Owning My Voice</title>
+    <meta name="description" content="2023 is the year of the rabbit... and personal websites.">
     <meta name="generator" content="Eleventy v2.0.0">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com">
-    <meta property="og:title" content="Nathan Long">
-    <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="og:url" content="https://nathan-long.com/">
+    <meta property="og:title" content="Owning My Voice">
+    <meta property="og:description" content="2023 is the year of the rabbit... and personal websites.">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://nathan-long.com">
-    <meta property="twitter:title" content="Nathan Long">
-    <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="twitter:url" content="https://nathan-long.com/">
+    <meta property="twitter:title" content="Owning My Voice">
+    <meta property="twitter:description" content="2023 is the year of the rabbit... and personal websites.">
     <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -22,7 +22,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500;700&family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
@@ -67,7 +67,7 @@
       const motionMode = getMotion();
       const partyMode = getParty();
       const root = document.documentElement;
-      root.classList.add(colorMode, partyMode);
+      root.classList.add(colorMode, partyMode, motionMode);
       root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
       root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
     </script>
@@ -85,7 +85,7 @@
   <nav class="nav-wrapper" data-nav-target>
     <menu class="nav m-0 p-0">
       <li class="nav-item"><a href="/about/">About</a></li>
-      <li class="nav-item"><a href="/posts/">Archive</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
       <li class="nav-item"><a href="/lab/">Lab</a></li>
       <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
     </menu>
@@ -144,7 +144,7 @@
       </div>
     </div>
   </nav>
-  <button class="btn btn-square nav-toggle" data-mobile-trigger>
+  <button class="btn btn-square nav-toggle" aria-label="Open Mobile Nav" data-mobile-trigger>
     <div class="nav-toggle-line-top"></div>
     <div class="nav-toggle-line-mid"></div>
     <div class="nav-toggle-line-bottom"></div>
@@ -152,55 +152,79 @@
 </header>
 
 
-    <main id="main"  class="content flow tmpl-full">
+    <main id="main"  class="content flow tmpl-post prose">
       
-<table>
-  <thead>
-    <tr>
-      <th>URL</th>
-      <th>Page Title</th>
-    </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td><a href="/posts/owning-my-voice/"><code>/posts/owning-my-voice/</code></a></td>
-    <td>Owning My Voice</td>
-  </tr>
-  <tr>
-    <td><a href="/posts/modern-javascript-tooling-in-neovim/"><code>/posts/modern-javascript-tooling-in-neovim/</code></a></td>
-    <td>Setting up LSPs for Modern JavaScript Tooling in Neovim</td>
-  </tr>
-  <tr>
-    <td><a href="/about/"><code>/about/</code></a></td>
-    <td>About Me</td>
-  </tr>
-  <tr>
-    <td><a href="/posts/"><code>/posts/</code></a></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="/"><code>/</code></a></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="/lab/"><code>/lab/</code></a></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="/tags/"><code>/tags/</code></a></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="/tags/neovim/"><code>/tags/neovim/</code></a></td>
-    <td>Tagged “neovim”</td>
-  </tr>
-  <tr>
-    <td><a href="/tags/ramblings/"><code>/tags/ramblings/</code></a></td>
-    <td>Tagged “ramblings”</td>
-  </tr>
-  </tbody>
-</table>
+<div class="mt-content mb-2">
+  <h1 class="mb-0">Owning My Voice</h1>
+  <span class="divide-comma inline-block">
+  <a href="/tags/thoughts/" class="uppercase decoration-none font-bold text-small font-thin after:color-text">thoughts</a>
+  </span>
+  <time class="uppercase text-small" datetime="2023-01-31">- 2023-01-31</time>
+</div>
 
+<p>Take a quick nostalgia trip with me...</p>
+<p>Back when I started my career in this industry, the web was my starry-eyed, fairy-winged teacher:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Molly_Holzschlag">Molly Holzschlag</a> helped me take my first baby-steps with HTML and CSS.</li>
+<li>I learned responsive web design from <a href="https://ethanmarcotte.com/">Ethan Marcotte</a>'s <a href="https://alistapart.com/article/responsive-web-design/">articles</a>.</li>
+<li><a href="https://adactio.com/">Jeremy Keith</a> taught me the new things in <a href="https://html5forwebdesigners.com/">HTML5</a>.</li>
+<li><a href="https://www.lukew.com/">Luke Wroblewski</a> taught me how to build '<a href="https://www.lukew.com/presos/preso.asp?26">mobile first</a>'.</li>
+<li><a href="http://rachelnabors.com/">Rachel Nabors's</a> continued efforts in animation inspired me to also see what could be done in the browser.</li>
+<li><a href="https://chriscoyier.net/">Chris Coyier</a> schooled me on the deeper parts of CSS with <a href="https://css-tricks.com/">CSS Tricks</a>.</li>
+</ul>
+<p>At some point (perhaps when Google Reader was shut down in 2013?) everything started to shift to social media. Particularly Twitter. In many ways it felt like an evolution—the barrier to communication was dropping. I could @mention <a href="https://www.paulirish.com/">Paul Irish</a> or <a href="https://www.sarasoueidan.com/">Sarah Soueidan</a> and they might ACTUALLY RESPOND. 😵‍💫</p>
+<h2 id="waking-up-in-the-dark-forest" tabindex="-1">Waking up in the Dark Forest <a class="header-anchor" href="#waking-up-in-the-dark-forest">#</a></h2>
+<p>But things slowly changed while I wasn't looking. If the web was once this weird and <a href="http://www.csszengarden.com/">magical garden</a> it slowly turned into what <a href="https://maggieappleton.com/">Maggie Appleton</a> (and <a href="https://onezero.medium.com/the-dark-forest-theory-of-the-internet-7dc3e68a7cb1">others</a>) now describe as the <strong><a href="https://maggieappleton.com/cozy-web">Dark Forest</a></strong>. It's not safe there. The tech giants prey on you and your personal data. Engaging in open debate is meaningless at BEST. Trolls are lurking in the comment sections. Being yourself out THERE can be like inviting the worst of the internet onto your back porch.</p>
+<p>At some point I was no longer reading updates from people I knew or cared about but getting lost endless amounts of shallow-yet-mildly-amusing content or <a href="https://en.wikipedia.org/wiki/Doomscrolling">doomscrolling</a> through emotionally incendiary material.</p>
+<h2 id="are-we-human-or-are-we-robot" tabindex="-1">Are we human? Or are we <code>robot?</code> <a class="header-anchor" href="#are-we-human-or-are-we-robot">#</a></h2>
+<p>I was no longer in control what I was ingesting. The robots were feeding me what they were trained to surface. <code>And I liked it.</code> Well, at first anyways.</p>
+<p>Unfortunately it <a href="https://maggieappleton.com/ai-dark-forest">seems like it's going to get worse</a>. The Dark Forest is about to be overrun with bots through the brilliant yet terrifying engines of <a href="https://openai.com/blog/chatgpt/">ChatGPT</a>, <a href="https://www.midjourney.com/home/">Midjourney</a>, <a href="https://openai.com/dall-e-2/">DALL-E</a>, <a href="https://en.wikipedia.org/wiki/Stable_Diffusion">Stable Diffusion</a> and others. It's going to be hard to tell what is made by real humans, and what is bot-generated in a flood of unoriginal content.</p>
+<p>Combine that with the <a href="https://twitter.com/garius/status/1588115310124539904?s=46&amp;t=OH02ZwWUxJOQs9Z6MTQCug">trust thermocline</a> in our industry giants and it's not looking so nice out there right now.</p>
+<h2 id="owning-my-voice" tabindex="-1">Owning My Voice <a class="header-anchor" href="#owning-my-voice">#</a></h2>
+<p>They say that <a href="https://matthiasott.com/notes/the-year-of-the-personal-website">2023 is the year of personal website</a>. <a href="https://bringback.blog/">There is a call</a> for individuals to start owning their spaces and <a href="https://www.theverge.com/23513418/bring-back-personal-blogging">owning their voices again</a>.</p>
+<p>To me that was part of the magic of the web when I first entered the industry: unique voices with unique ideas in highly personalized spaces. That's why I'm dusting off this website and being more intentional about using it to own my voice on the web and create connections.</p>
+<blockquote>
+<p>“Don’t do it like me. Do it like you.”</p>
+<p><cite><a href="https://matthiasott.com/articles/into-the-personal-website-verse">Matthias Ott</a> - User Experience Designer</cite></p>
+</blockquote>
+<p>This blog is hosted on <a href="https://pages.github.com/">Github Pages</a> and built with <a href="https://www.11ty.dev/">11ty</a> but there are so many other ways to create your space, even if you're not a developer:</p>
+<ul>
+<li><a href="https://ghost.org/">Ghost CMS</a> - slick, content focused interface</li>
+<li><a href="https://webflow.com/">Webflow</a> - a no-code solution with a free starter plan</li>
+<li><a href="https://hotglue.me/">Hotglue.me</a> - charmingly wild no-code platform</li>
+<li><a href="https://mmm.page/">mmm.page</a> - drag and drop website builder</li>
+<li>Wordpress - in either <a href="https://wordpress.org/">self-hosted</a> or <a href="https://wordpress.com/">ready-to-go</a> form</li>
+</ul>
+<p>I plan to use this space to experiment, get <code>weird</code>, actually work on my improving my meme-damaged writing skills, and highlight unique ideas from other folks who are also working to own their voices.</p>
+<p>I hope to see more doing the same, because THAT'S the web I fell in love with. Who knows, maybe they'll even bring Google Reader back... <code>:troll:</code></p>
+
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0">Discussion</p>
+
+  
+  <p>Want to discuss? Reply by:
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Owning My Voice">Email</a>
+    <span>or</span>
+    <a href="https://github.com/nathanlong/nathanlong.github.io/issues/21#issue-comment-box">Github</a>
+    
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <span class="font-thin font-bold">You're at the very beginning!<br/>🙃</span>
+        </li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <a href="/blog/modern-javascript-tooling-in-neovim/" class="decoration-none font-thin font-bold">Setting up LSPs for Modern JavaScript Tooling in Neovim<br/>&rarr;</a>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 
@@ -210,7 +234,7 @@
       <nav class="nav-footer no-shrink">
         <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
           <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
-          <li class="font-small"><a class="decoration-none" href="/posts/">Archive</a></li>
+          <li class="font-small"><a class="decoration-none" href="/blog/">Blog</a></li>
           <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
 
           <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>

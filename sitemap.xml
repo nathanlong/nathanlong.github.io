@@ -2,52 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://nathan-long.com/posts/owning-my-voice/</loc>
+    <loc>https://nathan-long.com/blog/owning-my-voice/</loc>
     <lastmod>2023-01-31</lastmod>
   </url>
   
   <url>
-    <loc>https://nathan-long.com/posts/modern-javascript-tooling-in-neovim/</loc>
+    <loc>https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/</loc>
     <lastmod>2023-02-23</lastmod>
   </url>
   
   <url>
     <loc>https://nathan-long.com/about/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-01</lastmod>
   </url>
   
   <url>
-    <loc>https://nathan-long.com/posts/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <loc>https://nathan-long.com/blog/</loc>
+    <lastmod>2023-03-01</lastmod>
   </url>
   
   <url>
     <loc>https://nathan-long.com/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-01</lastmod>
   </url>
   
   <url>
     <loc>https://nathan-long.com/lab/</loc>
-    <lastmod>2023-02-27</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nathan-long.com/page-list/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-01</lastmod>
   </url>
   
   <url>
     <loc>https://nathan-long.com/tags/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-01</lastmod>
   </url>
   
   <url>
     <loc>https://nathan-long.com/tags/neovim/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-01</lastmod>
   </url>
   
   <url>
-    <loc>https://nathan-long.com/tags/ramblings/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <loc>https://nathan-long.com/tags/thoughts/</loc>
+    <lastmod>2023-03-01</lastmod>
   </url>
 </urlset>

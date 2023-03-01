@@ -7,12 +7,12 @@
     <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta name="generator" content="Eleventy v2.0.0">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com">
+    <meta property="og:url" content="https://nathan-long.com/">
     <meta property="og:title" content="Tagged “neovim”">
     <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://nathan-long.com">
+    <meta property="twitter:url" content="https://nathan-long.com/">
     <meta property="twitter:title" content="Tagged “neovim”">
     <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta property="twitter:image" content="/icon-512.jpg">
@@ -22,7 +22,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500;700&family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
@@ -67,7 +67,7 @@
       const motionMode = getMotion();
       const partyMode = getParty();
       const root = document.documentElement;
-      root.classList.add(colorMode, partyMode);
+      root.classList.add(colorMode, partyMode, motionMode);
       root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
       root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
     </script>
@@ -85,7 +85,7 @@
   <nav class="nav-wrapper" data-nav-target>
     <menu class="nav m-0 p-0">
       <li class="nav-item"><a href="/about/">About</a></li>
-      <li class="nav-item"><a href="/posts/">Archive</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
       <li class="nav-item"><a href="/lab/">Lab</a></li>
       <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
     </menu>
@@ -144,7 +144,7 @@
       </div>
     </div>
   </nav>
-  <button class="btn btn-square nav-toggle" data-mobile-trigger>
+  <button class="btn btn-square nav-toggle" aria-label="Open Mobile Nav" data-mobile-trigger>
     <div class="nav-toggle-line-top"></div>
     <div class="nav-toggle-line-mid"></div>
     <div class="nav-toggle-line-bottom"></div>
@@ -165,7 +165,7 @@
 <ul class="postlist p-0 space-y-2">
   
   <li class="flex flex-col items-baseline">
-    <h2 class="heading-200"><a href="/posts/modern-javascript-tooling-in-neovim/" class="font-thin m-0 font-bold decoration-none tracking-1">Setting up LSPs for Modern JavaScript Tooling in Neovim</a></h2>
+    <h2 class="heading-200"><a href="/blog/modern-javascript-tooling-in-neovim/" class="font-thin m-0 font-bold decoration-none tracking-1">Setting up LSPs for Modern JavaScript Tooling in Neovim</a></h2>
     <p class="postlist-meta m-0">
     <span class="divide-comma inline-block">
       
@@ -192,7 +192,7 @@
       <nav class="nav-footer no-shrink">
         <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
           <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
-          <li class="font-small"><a class="decoration-none" href="/posts/">Archive</a></li>
+          <li class="font-small"><a class="decoration-none" href="/blog/">Blog</a></li>
           <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
 
           <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>

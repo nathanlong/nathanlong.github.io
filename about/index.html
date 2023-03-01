@@ -7,12 +7,12 @@
     <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta name="generator" content="Eleventy v2.0.0">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com">
+    <meta property="og:url" content="https://nathan-long.com/">
     <meta property="og:title" content="About Me">
     <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://nathan-long.com">
+    <meta property="twitter:url" content="https://nathan-long.com/">
     <meta property="twitter:title" content="About Me">
     <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta property="twitter:image" content="/icon-512.jpg">
@@ -22,7 +22,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500;700&family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
@@ -67,7 +67,7 @@
       const motionMode = getMotion();
       const partyMode = getParty();
       const root = document.documentElement;
-      root.classList.add(colorMode, partyMode);
+      root.classList.add(colorMode, partyMode, motionMode);
       root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
       root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
     </script>
@@ -85,7 +85,7 @@
   <nav class="nav-wrapper" data-nav-target>
     <menu class="nav m-0 p-0">
       <li class="nav-item nav-item-active"><a href="/about/">About</a></li>
-      <li class="nav-item"><a href="/posts/">Archive</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
       <li class="nav-item"><a href="/lab/">Lab</a></li>
       <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
     </menu>
@@ -144,7 +144,7 @@
       </div>
     </div>
   </nav>
-  <button class="btn btn-square nav-toggle" data-mobile-trigger>
+  <button class="btn btn-square nav-toggle" aria-label="Open Mobile Nav" data-mobile-trigger>
     <div class="nav-toggle-line-top"></div>
     <div class="nav-toggle-line-mid"></div>
     <div class="nav-toggle-line-bottom"></div>
@@ -157,13 +157,13 @@
   <h1 class="">About Me</h1>
 </section>
 
-<p>I'm a <strong>Former-Designer-turned-UI-Developer</strong> for <a href="https://www.viget.com">Viget</a> where I help build user interfaces for clients. I create accessible experiences with a focus on animation and interaction design. I'm currently based in North Carolina.</p>
+<p>I'm a <strong>Designer-turned-UI-Developer</strong> for <a href="https://www.viget.com">Viget</a> where I help build user interfaces for clients. I create accessible experiences with a focus on animation and interaction design. I'm currently based in North Carolina.</p>
 <p>Looking for more? Here's more about:</p>
 <details class="popout details flow-2">
 <summary class="font-bold">A Little History</summary>
 <hr class="my-1">
 <div class="flow flow-1">
-<h3 id="an-art-degree" tabindex="-1">An Art Degree? <a class="direct-link" href="#an-art-degree" aria-hidden="true">#</a></h3>
+<h3 id="an-art-degree" tabindex="-1">An Art Degree? <a class="header-anchor" href="#an-art-degree">#</a></h3>
 <p>Yep. I originally thought I was going to be a <strong><a href="https://en.wikipedia.org/wiki/Sequential_art">Sequential Artist</a></strong> and work at Marvel ... BUT in a dash of prudence unbecoming of my younger self I decided to diversify and found graphic design which combined my love of art AND computers. I finished school and went into marketing and advertising.</p>
 <p>I had been playing around with <strong>Flash</strong> (oh Flash, I both miss you dearly and yet not at all...) at the time, but started to learn <strong>HTML</strong> and <strong>CSS</strong> on the side. A real turning point for me was <strong><a href="https://ethanmarcotte.com/">Ethan Marcotte</a>'s</strong> article on <strong><a href="https://alistapart.com/article/responsive-web-design/">Responsive Design</a></strong> and the realization of how fluid the web could be! I soon after bamboozled my way into an agency as a <strong>Designer-Who-Codes</strong> and spent several years there doing more and more code (and loving every minute of it)...</p>
 <p>I eventually went <code>full developer</code> in 2022 at <strong><a href="https://www.viget.com/about/team/nlong/">Viget</a></strong> where I work now as a <strong>UI Developer</strong>.</p>
@@ -193,7 +193,7 @@
       <nav class="nav-footer no-shrink">
         <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
           <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
-          <li class="font-small"><a class="decoration-none" href="/posts/">Archive</a></li>
+          <li class="font-small"><a class="decoration-none" href="/blog/">Blog</a></li>
           <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
 
           <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>

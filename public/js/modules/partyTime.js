@@ -43,9 +43,11 @@ export default class partyTime {
     //track progress
 
     this.midiFiles = [
+      '../../audio/kakariko-party-mix.mid',
+      '../../audio/gerudo-valley.mid',
       '../../audio/chrono-battle.mid',
-      '../../audio/ff6-battle.mid',
       '../../audio/koopa-theme.mid',
+      '../../audio/lost-woods-hot-v21.mid',
       '../../audio/mmx-storm-eagle-4.mid',
       '../../audio/ultra-pinball-11.mid',
     ]
