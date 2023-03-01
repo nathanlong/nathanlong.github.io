@@ -66,6 +66,7 @@ export default class preferences {
       newValue = value
     }
 
+    this.root.classList.remove('no-preference', 'reduced')
     this.root.style.setProperty(
       '--play-state',
       newValue === 'reduced' ? 'paused' : 'running'
@@ -74,6 +75,7 @@ export default class preferences {
       '--transition-toggle',
       newValue === 'reduced' ? '0' : '1'
     )
+    this.root.classList.add(newValue)
 
     this.setControls()
   }

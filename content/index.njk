@@ -3,11 +3,17 @@ layout: layouts/full.njk
 ---
 
 <section class="intro full radial-bottom" data-module="animation-hero">
-  <div class="content-inner mx-auto flow">
-    <p class="intro-eyebrow lh-1">Nathan Long</p>
-    <h1 class="intro-title">Designer brain,<br/>developer heart.</h1>
-    <p>UI Developer at <a href="https://www.viget.com">Viget</a></p>
-    <a class="intro-link btn text-small flow-3/2" role="button" draggable="false" href="/about/" data-module="link-button">About Me &rarr;</a>
+  <div class="content-inner mx-auto">
+    <div class="intro-content flow">
+      <p class="intro-eyebrow lh-1">Nathan Long</p>
+      <h1 class="intro-title">Designer brain,<br/>developer heart.</h1>
+      <p>UI Developer at <a href="https://www.viget.com">Viget</a></p>
+      <a class="intro-link btn text-small flow-3/2" role="button" draggable="false" href="/about/" data-module="link-button">About Me &rarr;</a>
+    </div>
+
+    <div class="intro-accent">
+      {% include "svg/pixel-heart.svg" %}
+    </div>
   </div>
 </section>
 

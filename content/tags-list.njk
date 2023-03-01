@@ -1,0 +1,18 @@
+---
+permalink: /tags/
+layout: layouts/full.njk
+---
+
+<section class="mt-content">
+  <h1 class="m-0">All Topics</h1>
+  <p>Return to <a href="{{ '/blog/' | url }}">blog</a>.</p>
+</section>
+
+<hr class="my-2">
+
+<div class="two-columns">
+  {% for tag in collections.all | getAllTags | filterTagList %}
+    {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+    <a href="{{ tagUrl | url }}" class="block font-thin decoration-none font-bold uppercase">{{ tag }}</a>
+  {% endfor %}
+</div>

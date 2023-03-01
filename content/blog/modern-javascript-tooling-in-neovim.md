@@ -4,7 +4,6 @@ description: Installing LSPs, snippets, and Intellisense-style autocompletion
 date: 2023-02-23
 tags: neovim
 github: https://github.com/nathanlong/nathanlong.github.io/issues/18
-layout: layouts/post.njk
 ---
 
 It's no secret that I love Vim. I've been using it since I started in the industry, but rather than talking about WHY I love it so much (that feels like a separate post) let's talk about adding some key modern features of a code editor for writing JavaScript.
@@ -60,7 +59,7 @@ lua << EOF
 end
 ```
 
-So if you're rocking Vimscript, make sure to wrap the following setup in the Lua markers. 
+So if you're rocking Vimscript, make sure to wrap the following setup in the Lua markers.
 
 ### Install the plugins
 
@@ -77,7 +76,7 @@ require('packer').startup({function(use)
   use 'hrsh7th/cmp-path'
   -- Prettier
   use {
-    'prettier/vim-prettier', 
+    'prettier/vim-prettier',
     run = 'yarn install --frozen-lockfile --production',
     ft = {'javascript', 'typescript', 'css', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'}
   }
@@ -290,7 +289,7 @@ We didn't address it directly, but part of the `vscode-langservers-extracted` pa
 
 Alright, this is more subjective than the other benefits, but stick with me here for a 🔥 **hot take** 🔥.
 
-While [Prettier](https://prettier.io/) isn't perfect, it does have a valuable function: it completely removes arbitrary and subjective formatting differences when working on a team. 
+While [Prettier](https://prettier.io/) isn't perfect, it does have a valuable function: it completely removes arbitrary and subjective formatting differences when working on a team.
 
 Tabs/Spaces? (Foh-get a-bout eet) Spaces around argument options? (Naht to woo-ray, hun). Entire PR's littered with whitespace adjustments? (Ne-vah agaihns). Write the code how you want to while you're hacking away, then, when you're done, have the formatter clean it up and snap it into alignment with team standards (collected in the `.pretterrc`). It's like a robot butler for your code, and while it may not put everything back where YOU would put it you can also know that it's doing the same thing for everyone else. And that's a lot harder to get stuck on.
 

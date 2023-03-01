@@ -34,7 +34,7 @@ templateClass: tmpl-post prose
 {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
 {%- if nextPost or previousPost %}
 <div class="feature py-1 color-reduced mt-2">
-  <ul class="content-inner flex justify-between list-none items-center p-0 m-0 w-full">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
     <li class="grow w-1/2">
       <span class="uppercase decoration-none text-small">Previous:</span><br/>
       {%- if previousPost %}

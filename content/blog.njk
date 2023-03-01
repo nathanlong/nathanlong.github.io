@@ -1,0 +1,24 @@
+---
+layout: layouts/full.njk
+permalink: /blog/
+eleventyNavigation:
+  key: posts
+  title: Blog
+  order: 2
+---
+
+<div class="mt-content">
+  <h1 class="m-1">Blog</h1>
+  <p class="">Sometimes I write about things like:</p>
+  <div class="divide-comma mt-1">
+  {% for tag in collections.all | getAllTags | filterTagList %}
+    {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+    <a href="{{ tagUrl | url }}" class="font-thin decoration-none font-bold uppercase after:color-text">{{ tag }}</a>
+  {% endfor %}
+  </div>
+</div>
+
+<hr class="mt-2 mb-2">
+
+{% set postslist = collections.posts %}
+{% include "postslist.njk" %}

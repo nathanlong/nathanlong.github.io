@@ -7,12 +7,12 @@
     <meta name="description" content="{{ description or metadata.description }}">
     <meta name="generator" content="{{ eleventy.generator }}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com">
+    <meta property="og:url" content="{{ metadata.url }}">
     <meta property="og:title" content="{{ title or metadata.title }}">
     <meta property="og:description" content="{{ description or metadata.description }}">
     <meta property="og:image" content="{{ '/icon-512.jpg' | url }}">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://nathan-long.com">
+    <meta property="twitter:url" content="{{ metadata.url }}">
     <meta property="twitter:title" content="{{ title or metadata.title }}">
     <meta property="twitter:description" content="{{ description or metadata.description }}">
     <meta property="twitter:image" content="{{ '/icon-512.jpg' | url }}">
@@ -22,10 +22,10 @@
     <link rel="manifest" href="{{ '/site.webmanifest' | url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500;700&family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
-    <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
-    <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
+    <link rel="alternate" href="{{ metadata.feed.path }}" type="application/atom+xml" title="{{ metadata.title }}">
+    <link rel="alternate" href="{{ metadata.jsonfeed.path }}" type="application/json" title="{{ metadata.title }}">
   </head>
   <body>
     <script>
@@ -67,7 +67,7 @@
       const motionMode = getMotion();
       const partyMode = getParty();
       const root = document.documentElement;
-      root.classList.add(colorMode, partyMode);
+      root.classList.add(colorMode, partyMode, motionMode);
       root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
       root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
     </script>
@@ -93,7 +93,7 @@
 
     {% if extraJS %}
     {%- for name, src in extraJS %}
-    <script name="{{name}}" src="{{src | url}}"></script>
+    <script name="{{name}}" src="{{ src | url }}"></script>
     {%- endfor %}
     {% endif %}
 

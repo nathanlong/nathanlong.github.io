@@ -1,4 +1,4 @@
-{
+module.exports = {
   "title": "Nathan Long",
   "url": "https://nathan-long.com/",
   "language": "en",
