@@ -11,9 +11,9 @@ const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 module.exports = function(eleventyConfig) {
   // Copy folders and special files
-  eleventyConfig.addPassthroughCopy("public");
-	eleventyConfig.addPassthroughCopy("CNAME");
+  eleventyConfig.addPassthroughCopy({ "public": "/" });
   eleventyConfig.addPassthroughCopy({ "favicons": "/" });
+	eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy("site.webmanifest");
 
 	// Watch content images for the image pipeline.
