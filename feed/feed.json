@@ -5,6 +5,8 @@
 	"home_page_url": "https://nathan-long.com/",
 	"feed_url": "https://nathan-long.com/feed/feed.json",
 	"description": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
+  "icon": "https://nathan-long.com/icon-512.png",
+  "favicon": "https://nathan-long.com/icon-192.svg",
 	"author": {
 		"name": "Nathan Long",
 		"url": "https://nathan-long.com"

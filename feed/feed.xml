@@ -6,6 +6,13 @@
 	<link href="https://nathan-long.com/"/>
 	<updated>2023-02-23T00:00:00Z</updated>
 	<id>https://nathan-long.com/</id>
+  <image>
+    <url>https://nathan-long.com/icon-512.png</url>
+    <title>Nathan Long</title>
+    <link>https://nathan-long.com/</link>
+    <width>192</width>
+    <height>192</height>
+  </image>
 	<author>
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
