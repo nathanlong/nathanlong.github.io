@@ -9,6 +9,8 @@ permalink: /feed/feed.json
 	"home_page_url": "{{ metadata.url | addPathPrefixToFullUrl }}",
 	"feed_url": "{{ permalink | htmlBaseUrl(metadata.url) }}",
 	"description": "{{ metadata.description }}",
+  "icon": "{{ metadata.url }}icon-512.png",
+  "favicon": "{{ metadata.url }}icon-192.svg",
 	"author": {
 		"name": "{{ metadata.author.name }}",
 		"url": "{{ metadata.author.url }}"
