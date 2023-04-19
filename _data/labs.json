@@ -25,5 +25,14 @@
     "image": "https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png",
     "imageAlt": "Playing card suit icons over a field of X's. Icon by Irene Hoffman",
     "feature": false
+  },
+  {
+    "name": "WIP: Sandclock",
+    "url": "https://nathan-long.com/sandclock/",
+    "source": "https://github.com/nathanlong/sandclock",
+    "description": "A digital hourglass with simple timer functionality.",
+    "image": "https://user-images.githubusercontent.com/623568/233101852-cc17b991-9360-4794-add9-51e5ce8ae4b9.png",
+    "imageAlt": "Construction crane with warning barricades. Icon by Eko Purnomo.",
+    "feature": false
   }
 ]
