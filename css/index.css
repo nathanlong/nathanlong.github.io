@@ -30,6 +30,30 @@
   size-adjust: 105%;
 }
 
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fira-sans-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/fira-sans-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/fira-sans-extra-condensed-700.woff2') format('woff2');
+}
+
 /* Variables */
 :root {
   /* fonts */
@@ -760,13 +784,6 @@ button {
 .intro {
   margin-bottom: 10vh;
   padding: 3em 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.intro-content {
-  position: relative;
-  z-index: 1;
 }
 
 .intro-eyebrow {
@@ -889,6 +906,7 @@ a[href].header-anchor:focus:visited,
 
 .party .nav-wrapper {
   z-index: 2;
+  background-color: var(--theme-background);
 }
 
 .party-wrapper {
