@@ -1282,7 +1282,7 @@ pre[class*='language-'] {
   color: var(--theme-text-faint);
 }
 
-.color-reduced {
+.color-reduced, a.color-reduced {
   color: var(--theme-text-reduced);
 }
 
