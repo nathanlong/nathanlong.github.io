@@ -3,7 +3,6 @@ title: Setting up LSPs for Modern JavaScript Tooling in Neovim
 description: Installing LSPs, snippets, and Intellisense-style autocompletion
 date: 2023-02-23
 tags: neovim
-github: https://github.com/nathanlong/nathanlong.github.io/issues/18
 ---
 
 It's no secret that I love Vim. I've been using it since I started in the industry, but rather than talking about WHY I love it so much (that feels like a separate post) let's talk about adding some key modern features of a code editor for writing JavaScript.

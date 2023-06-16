@@ -22,10 +22,6 @@ templateClass: tmpl-post prose
   {% set mailitems = ['mailto:', metadata.author.email, '?subject=Re:', title] %}
   <p>Want to discuss? Reply by:
     <a href="{{ mailitems | join }}">Email</a>
-    {%- if github %}
-    <span>or</span>
-    <a href="{{ github ~ '#issue-comment-box' }}">Github</a>
-    {% endif %}
   </p>
 </div>
 

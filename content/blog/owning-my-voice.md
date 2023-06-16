@@ -3,7 +3,6 @@ title: Owning My Voice
 description: 2023 is the year of the rabbit... and personal websites.
 date: 2023-01-31
 tags: thoughts
-github: https://github.com/nathanlong/nathanlong.github.io/issues/21
 ---
 
 Take a quick nostalgia trip with me...
