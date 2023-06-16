@@ -4,7 +4,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2023-02-23T00:00:00Z</updated>
+	<updated>2023-06-16T00:00:00Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -17,6 +17,74 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Vite Rapid Prototyping Starter Kits</title>
+		<link href="https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/"/>
+		<updated>2023-06-16T00:00:00Z</updated>
+		<id>https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/</id>
+		<content type="html">&lt;p&gt;One of the things I love about &lt;a href=&quot;https://vitejs.dev/&quot;&gt;Vite&lt;/a&gt; is how FAST it is to spin up. When I had the idea for my  &lt;a href=&quot;https://nathan-long.com/sandclock/&quot;&gt;Sandclock&lt;/a&gt; toy app (which I&#39;ll write about once I get a little further with it) I used the Vite React starter to quickly spin up a basic project. No configuration, no hunting for packages, just drop and go.&lt;/p&gt;
+&lt;p&gt;This got me thinking about prototypes.&lt;/p&gt;
+&lt;h2 id=&quot;prototypes&quot; tabindex=&quot;-1&quot;&gt;Prototypes &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Sometimes when building a user interface a concept comes up that&#39;s a bit tricky to nail down. Our design tools are great at communicating static design but once you add motion or more complex functionality it can become harder to get collaborate.&lt;/p&gt;
+&lt;p&gt;This is where I feel prototypes become valuable—getting buy-in on a difficult to explain concept. Splitting the concept from the codebase gives some freedom to get messy and iterate without causing a PR nesting tangle or a bunch of churn commits.&lt;/p&gt;
+&lt;p&gt;I LOVE code playgrounds like &lt;a href=&quot;https://codepen.io/&quot;&gt;CodePen&lt;/a&gt;. They excel at sharing ideas, illustrating concepts, and exposing techniques — but as a rapid prototyping tool there&#39;s some friction between the playground and your final code. Especially if you&#39;re looking to port your code afterwards into a specific stack.&lt;/p&gt;
+&lt;p&gt;Vite helps here in quickly spinning up a local dev environment with little to no config. You get your normal code editor and can plug in any stack you need. If you use one of their starter kits, it&#39;s just a one line script to get a full local playground up and running. Vite has the bases covered pretty well in terms of JS frameworks (Vue, React, Svelte, and more) — BUT there are a few patterns we use at Viget that aren&#39;t as widely covered like &lt;a href=&quot;https://tailwindcss.com/&quot;&gt;Tailwind&lt;/a&gt; + &lt;a href=&quot;https://stimulus.hotwired.dev/&quot;&gt;Stimulus&lt;/a&gt; and Vanilla JS with &lt;a href=&quot;https://www.viget.com/articles/how-does-viget-javascript/&quot;&gt;Viget Modules&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;degit-ize-your-starter-kit&quot; tabindex=&quot;-1&quot;&gt;Degit-ize your Starter Kit &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;In the Vite docs, they surface &lt;a href=&quot;https://github.com/Rich-Harris/degit&quot;&gt;degit&lt;/a&gt; (by Rich Harris) as a way to expand beyond the official Vite starters. It&#39;s a command-line utility that nabs clean copies of git repos but leaves all the history behind. We&#39;re looking forward, not backwards! It&#39;s a nice little utility that opens up the field for one-line installs for UNOFFICIAL starter kits... like these next two.&lt;/p&gt;
+&lt;h2 id=&quot;tailwind-and-stimulus&quot; tabindex=&quot;-1&quot;&gt;Tailwind and Stimulus &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;At &lt;a href=&quot;https://www.viget.com/&quot;&gt;Viget&lt;/a&gt;, we&#39;re big fans of &lt;a href=&quot;https://tailwindcss.com/&quot;&gt;Tailwind&lt;/a&gt; and &lt;a href=&quot;https://stimulus.hotwired.dev/&quot;&gt;Stimulus&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;tailwind&quot; tabindex=&quot;-1&quot;&gt;Tailwind &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Maybe one day I&#39;ll write an apologetics-style post about the reasons Tailwind is great, but for now I&#39;ll keep it short. Tailwind is massively composable, completely sidesteps any need for naming methodologies, and flattens out the selector specificity so it&#39;ll scale long-term on a project without gathering cruft. It&#39;s also portable in that you can write Tailwind in React, Vue, Svelte, but also Craft, Wordpress, custom Ruby apps, or any other system you&#39;d like to use. That means as a team it&#39;s a common language that can we can spread on top of any stack we&#39;ll need to use.&lt;/p&gt;
+&lt;p&gt;Tailwind is also well suited for prototypes. You can lift the HTML markup and classes and just port it into whatever you&#39;re working on — and it ought to just work. Even if you have custom classes and patterns, those are portable enough between projects, and if you need to RELY on project-specific setup you can just grab the project&#39;s &lt;code&gt;tailwind.config.js&lt;/code&gt; into your prototype from the beginning!&lt;/p&gt;
+&lt;h3 id=&quot;stimulus&quot; tabindex=&quot;-1&quot;&gt;Stimulus &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Sometimes you don&#39;t need that much JavaScript. Rather than attempting to render the interface, Stimulus allows you to &#39;sprinkle&#39; your interface with interactivity that loads only when needed. Like Tailwind, it augments HTML markup as the source of truth and when the two are paired together you can really jam on something without much file switching!&lt;/p&gt;
+&lt;h3 id=&quot;a-new-tailwind-stimulus-starter&quot; tabindex=&quot;-1&quot;&gt;A new Tailwind/Stimulus starter &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Given these team staples, I set about writing a Vite starter only to find my coworker, &lt;a href=&quot;https://github.com/jeremyfrank&quot;&gt;Jeremy Frank&lt;/a&gt;, had already created one!&lt;/p&gt;
+&lt;p&gt;Check it out &lt;a href=&quot;https://github.com/jeremyfrank/vite-tailwind-stimulus-starter&quot;&gt;on Github here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And with degit, you can one-line it with:&lt;/p&gt;
+&lt;pre class=&quot;feature language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;degit jeremyfrank/vite-tailwind-stimulus-starter my-new-project&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;vanilla-all-the-things&quot; tabindex=&quot;-1&quot;&gt;Vanilla All the Things &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;OK, so this isn&#39;t really a tech stack as it is buy-in into the platform itself. CSS and JS have come a long way in the last several years.&lt;/p&gt;
+&lt;h3 id=&quot;css&quot; tabindex=&quot;-1&quot;&gt;CSS &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;In CSS we have variables, grid, powerful selectors like &lt;code&gt;has()&lt;/code&gt; (ALMOST here) and &lt;code&gt;not()&lt;/code&gt;, and amazing features like &lt;code&gt;clamp()&lt;/code&gt; that remove many of the original reasons we used a pre-processor like SASS. And just look at these &lt;a href=&quot;https://developer.chrome.com/blog/whats-new-css-ui-2023/&quot;&gt;new things for CSS in 2023&lt;/a&gt; like this &lt;code&gt;popover&lt;/code&gt; &lt;a href=&quot;https://developer.chrome.com/blog/introducing-popover-api/&quot;&gt;demo from Una Kravets&lt;/a&gt;. How can you not be excited about all this?!&lt;/p&gt;
+&lt;h3 id=&quot;javascript&quot; tabindex=&quot;-1&quot;&gt;JavaScript &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;A few years ago the Viget team developed a pattern called &lt;a href=&quot;https://www.viget.com/articles/how-does-viget-javascript/&quot;&gt;Viget Modules&lt;/a&gt; that tap into &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import&quot;&gt;dynamic imports&lt;/a&gt; to load only the modules needed on a page. Don&#39;t need it? Don&#39;t load it!&lt;/p&gt;
+&lt;p&gt;Originally, Webpack worked it&#39;s magic to chunk and bundle everything, but now with native ESM support in browsers we can ship these independent modules WITHOUT a bundler. Which means this approach could work without a build system at all!&lt;/p&gt;
+&lt;p&gt;While we&#39;ve largely replaced Viget Modules with Stimulus controllers in production sites, I have found that when learning new API&#39;s or techniques it is easier to clear away all the magic to better understand what&#39;s actually going on in the browser.&lt;/p&gt;
+&lt;p&gt;This also ensures that whatever you&#39;re writing isn&#39;t going to be subject to a third-party&#39;s opinions of how things ought to be. It&#39;s just you and the browser.&lt;/p&gt;
+&lt;p&gt;You can check out my &lt;a href=&quot;https://github.com/nathanlong/vite-vanilla&quot;&gt;vanilla starter kit here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And with degit, you can one-line it with:&lt;/p&gt;
+&lt;pre class=&quot;feature language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;degit nathanlong/vite-vanilla my-new-project&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;extra-credit-prototype-junk-drawer&quot; tabindex=&quot;-1&quot;&gt;Extra Credit: Prototype Junk Drawer &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;We&#39;ve now got several options on how we want to roll our quick prototype kits, but what if we took it one step further?&lt;/p&gt;
+&lt;p&gt;We could transform all these one-line starter commands with &lt;code&gt;degit&lt;/code&gt; into aliases, OR... &lt;a href=&quot;https://just.systems/man/en/&quot;&gt;we could use &lt;code&gt;just&lt;/code&gt;&lt;/a&gt; to pull together a prototype directory where we can make those one lines EVEN SHORTER.&lt;/p&gt;
+&lt;p&gt;Check out this &lt;code&gt;justfile&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&quot;feature language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# react prototype from the official vite docs&lt;/span&gt;
+react target:
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating React prototype in …&#39;&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; create vite@latest  -- &lt;span class=&quot;token parameter variable&quot;&gt;--template&lt;/span&gt; react
+  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Start dev with: npm run dev&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# stimulus prototype (custom starter)&lt;/span&gt;
+stimulus target:
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating Stimulus prototype in …&#39;&lt;/span&gt;
+  degit jeremyfrank/vite-tailwind-stimulus-starter 
+  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Start dev with: npm run dev&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# vanilla prototype (custom starter)&lt;/span&gt;
+vanilla target:
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating Vanilla prototype in …&#39;&lt;/span&gt;
+  degit nathanlong/vite-vanilla 
+  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Start dev with: npm run dev&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now instead of even having to remember the repo paths you can plop into your &lt;s&gt;junk drawer&lt;/s&gt; prototyping directory and start a prototype with something like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;just stimulus my-awesome-prototype&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Happy prototyping!&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Setting up LSPs for Modern JavaScript Tooling in Neovim</title>
