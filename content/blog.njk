@@ -7,13 +7,13 @@ eleventyNavigation:
   order: 2
 ---
 
-<div class="mt-content">
+<div class="mt-content feature text-center">
   <h1 class="m-1">Blog</h1>
   <p class="">Sometimes I write about things like:</p>
-  <div class="divide-comma mt-1">
+  <div class="mt-1">
   {% for tag in collections.all | getAllTags | filterTagList %}
     {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-    <a href="{{ tagUrl | url }}" class="font-thin decoration-none font-bold uppercase after:color-text">{{ tag }}</a>
+    <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
   {% endfor %}
   </div>
 </div>

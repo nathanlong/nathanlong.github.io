@@ -3,7 +3,7 @@ permalink: /tags/
 layout: layouts/full.njk
 ---
 
-<section class="mt-content">
+<section class="mt-content feature text-center">
   <h1 class="m-0">All Topics</h1>
   <p>Return to <a href="{{ '/blog/' | url }}">blog</a>.</p>
 </section>
@@ -13,6 +13,6 @@ layout: layouts/full.njk
 <div class="two-columns">
   {% for tag in collections.all | getAllTags | filterTagList %}
     {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-    <a href="{{ tagUrl | url }}" class="block font-thin decoration-none font-bold uppercase">{{ tag }}</a>
+    <a href="{{ tagUrl | url }}" class="block font-mono decoration-none font-bold uppercase">{{ tag }}</a>
   {% endfor %}
 </div>

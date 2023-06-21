@@ -3,15 +3,15 @@ layout: layouts/base.njk
 templateClass: tmpl-post prose
 ---
 
-<div class="mt-content mb-2">
+<div class="mt-content feature text-center mb-2">
+  <time class="uppercase text-small font-mono" datetime="{{ page.date | htmlDateString }}">{{ page.date | htmlDateString }}</time>
   <h1 class="mb-0">{{ title }}</h1>
-  <span class="divide-comma inline-block">
+  <span class="inline-block">
   {%- for tag in tags | filterTagList %}
   {%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-  <a href="{{ tagUrl | url }}" class="uppercase decoration-none font-bold text-small font-thin after:color-text">{{ tag }}</a>
+  <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
   {%- endfor %}
   </span>
-  <time class="uppercase text-small" datetime="{{ page.date | htmlDateString }}">- {{ page.date | htmlDateString }}</time>
 </div>
 
 {{ content | safe }}

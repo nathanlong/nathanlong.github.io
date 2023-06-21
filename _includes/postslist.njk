@@ -6,10 +6,10 @@
     <span class="divide-comma inline-block">
       {% for tag in post.data.tags | filterTagList %}
       {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-      <a href="{{ tagUrl | url }}" class="font-thin uppercase font-bold decoration-none text-small after:color-text py-1/2">{{ tag }}</a>
+      <a href="{{ tagUrl | url }}" class="post-tag py-1/2">{{ tag }}</a>
       {% endfor %}
     </span>
-    <time class="postlist-date uppercase text-small" datetime="{{ post.date | htmlDateString }}">- {{ post.date | htmlDateString }}</time>
+    <time class="postlist-date uppercase text-small font-mono" datetime="{{ post.date | htmlDateString }}">{{ post.date | htmlDateString }}</time>
     </p>
   </li>
   {% endfor %}
