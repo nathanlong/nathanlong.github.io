@@ -11,7 +11,7 @@ eleventyNavigation:
   <h1 class="m-1">Blog</h1>
   <p class="">Sometimes I write about things like:</p>
   <div class="mt-1">
-  {% for tag in collections.all | getAllTags | filterTagList %}
+  {% for tag in collections.all | getAllTags | filterTagList | sort() %}
     {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
     <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
   {% endfor %}

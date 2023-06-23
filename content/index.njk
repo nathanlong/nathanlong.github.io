@@ -13,7 +13,7 @@ layout: layouts/full.njk
   </div>
 </section>
 
-<section class="full">
+<section class="full flow-0">
   <div class="content-inner mx-auto flow">
 
     {% set maxPosts = collections.posts.length | min(3) %}
@@ -23,7 +23,7 @@ layout: layouts/full.njk
     {% set postslistCounter = collections.posts | length %}
     {% include "postslist.njk" %}
 
-    <a class="btn text-small flow-3/2" role="button" draggable="false" href="{{ '/posts/' | url }}" data-module="link-button">Archive &rarr;</a>
+    <a class="btn text-small flow-3" role="button" draggable="false" href="{{ '/posts/' | url }}" data-module="link-button">Archive &rarr;</a>
   </div>
 </section>
 

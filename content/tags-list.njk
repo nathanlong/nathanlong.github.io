@@ -11,7 +11,7 @@ layout: layouts/full.njk
 <hr class="my-2">
 
 <div class="two-columns">
-  {% for tag in collections.all | getAllTags | filterTagList %}
+  {% for tag in collections.all | getAllTags | filterTagList | sort() %}
     {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
     <a href="{{ tagUrl | url }}" class="block font-mono decoration-none font-bold uppercase">{{ tag }}</a>
   {% endfor %}
