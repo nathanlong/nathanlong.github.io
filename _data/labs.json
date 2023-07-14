@@ -4,6 +4,8 @@
     "url": "https://nathan-long.com/animation/",
     "source": "https://github.com",
     "description": "Playing around with different techniques and animation stacks.",
+    "dateCreated": "2022-06-01",
+    "dateModified": "ongoing",
     "image": "https://user-images.githubusercontent.com/623568/207959370-a7a9d3ba-98a9-4787-9376-a8f3d1fae38e.png",
     "imageAlt": "Curvy red path with two dots indicating motion",
     "feature": true
@@ -13,6 +15,7 @@
     "url": "https://nathan-long.com/hero-dice/",
     "source": "https://github.com",
     "description": "Dice roller app for self-made RPG system for kids: F.I.G. (Fantastical Imagination Game)",
+    "dateCreated": "2021-11-16",
     "image": "https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png",
     "imageAlt": "The word 'Hero' above a six-sided dice",
     "feature": false
@@ -22,6 +25,8 @@
     "url": "https://nathan-long.com/rules/",
     "source": "https://github.com/nathanlong/rules",
     "description": "A personal reference for games (with house-rules) I play with my family.",
+    "dateCreated": "2022-10-12",
+    "dateModified": "ongoing",
     "image": "https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png",
     "imageAlt": "Playing card suit icons over a field of X's. Icon by Irene Hoffman",
     "feature": false
@@ -31,6 +36,7 @@
     "url": "https://nathan-long.com/sandclock/",
     "source": "https://github.com/nathanlong/sandclock",
     "description": "A digital hourglass with simple timer functionality.",
+    "dateCreated": "TBD",
     "image": "https://user-images.githubusercontent.com/623568/233101852-cc17b991-9360-4794-add9-51e5ce8ae4b9.png",
     "imageAlt": "Construction crane with warning barricades. Icon by Eko Purnomo.",
     "feature": false

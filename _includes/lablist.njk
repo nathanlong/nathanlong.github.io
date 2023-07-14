@@ -11,7 +11,7 @@
 <hr class="my-2" />
 
 <ul class="lablist p-0 m-0 mb-2 space-y-1">
-  {%- for lab in lablist %}
+  {%- for lab in lablist | sort(false, true, 'dateCreated') | reverse %}
     {% if lab.feature === false %}
       {% include "labitem.njk" %}
     {% endif %}
