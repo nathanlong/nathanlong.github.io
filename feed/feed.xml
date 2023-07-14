@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2023-06-16T00:00:00Z</updated>
+	<updated>2023-07-14T00:00:00Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,49 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Building Motion for the Web</title>
+		<link href="https://nathan-long.com/blog/building-motion-for-the-web/"/>
+		<updated>2023-07-14T00:00:00Z</updated>
+		<id>https://nathan-long.com/blog/building-motion-for-the-web/</id>
+		<content type="html">&lt;p&gt;I&#39;ve recently been noodling on motion and its use in web interfaces. I&#39;ve been frustrated that most examples and material you find about motion fall into a few common categories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Another rehash of Disney&#39;s motion principles&lt;/li&gt;
+&lt;li&gt;Explanations of easing and CSS transitions&lt;/li&gt;
+&lt;li&gt;Imaginary app interactions built entirely in prototyping tools&lt;/li&gt;
+&lt;li&gt;Wild and technically complex demos that can be inscrutable. (Have fun reading that 3D shader algorithm...)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It all seems to be very low-level, limited-scope implementations, or so high level you might as well be reading a Wikipedia article. Very rarely do you find material on how a team considered motion as part of their design ideation, how the designer and developers collaborated on bringing it to life, and how they convinced the stakeholders that the time spent was worth the effort...&lt;/p&gt;
+&lt;p&gt;So I thought we should try to bridge that gap.&lt;/p&gt;
+&lt;p&gt;What I&#39;m most interested in is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Creating &lt;strong&gt;shared language&lt;/strong&gt; around motion
+&lt;ul&gt;
+&lt;li&gt;(Have you tried having a conversation on how something should move?)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Empowering designers to be creative &lt;strong&gt;without&lt;/strong&gt; blowing the entire development budget.
+&lt;ul&gt;
+&lt;li&gt;(&amp;quot;Yes, all the things can move, but like THIS rather than like THAT...&amp;quot;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Create frameworks for &lt;strong&gt;talking to clients&lt;/strong&gt; about motion and setting &lt;strong&gt;expectations&lt;/strong&gt; around timing and cost.
+&lt;ul&gt;
+&lt;li&gt;(It never works if it&#39;s just tacked on at the end of a project or has no money allocated to it.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Testing &lt;strong&gt;collaboration methods and deliverables&lt;/strong&gt; around motion to widen our process toolkit
+&lt;ul&gt;
+&lt;li&gt;(Spoiler: I don&#39;t think high-fidelity motion prototypes are helpful to anyone but the client.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I feel like THESE are the social, financial, and collaboration barriers that have to be overcome for any successful technology integration, but we seem to currently lack these tools for motion on the web.&lt;/p&gt;
+&lt;p&gt;We&#39;ve started a series over at Viget that I&#39;m excited about as we work to explore these topics. The first post is here: &lt;a href=&quot;https://www.viget.com/articles/building-motion-for-the-web-classifying/&quot;&gt;Building Motion for the Web: In the &#39;Zone&#39;&lt;/a&gt;. We explore classifications of motion characteristics in interfaces to start categorizing types of motion.&lt;/p&gt;
+&lt;p&gt;Check it out, it&#39;s only getting started...&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Vite Rapid Prototyping Starter Kits</title>
