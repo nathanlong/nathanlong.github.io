@@ -20,11 +20,11 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
   </head>
-  <body>
+  <body class="radial-mid">
     <script>
       // Prevent FART (look it up) by blocking render for a tiny bit...
       // First check for local settings, then check media queries, then apply fallback
@@ -70,7 +70,7 @@
     </script>
 
     <a class="sr-only sr-only-focus skip-link bg-editor relative z-4" href="#main">Skip to main content</a>
-<header class="header mt-1/2" data-module="nav" data-mobile="false" data-pref="false">
+<header class="header pt-1/2" data-module="nav" data-mobile="false" data-pref="false">
   <div class="logo">
     <a class="logo-link" href="/" title="Nathan Long">
       <span class="sr-only">Nathan Long</span>
@@ -424,11 +424,16 @@ cmp<span class="token punctuation">.</span><span class="token function">setup</s
 
 
 <div class="mt-2">
-  <p class="section-eyebrow m-0">Discussion</p>
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
 
   
-  <p>Want to discuss? Reply by:
-    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Setting up LSPs for Modern JavaScript Tooling in Neovim">Email</a>
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Setting up LSPs for Modern JavaScript Tooling in Neovim">Email Me</a>
   </p>
 </div>
 <div class="feature py-1 color-reduced mt-2">
@@ -456,7 +461,7 @@ cmp<span class="token punctuation">.</span><span class="token function">setup</s
           <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
           <li class="font-small"><a class="decoration-none" href="/blog/">Blog</a></li>
           <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
-
+          <li class="font-small"><a class="decoration-none" href="/newsletter">Newsletter</a></li>
           <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>
         </menu>
     </footer>

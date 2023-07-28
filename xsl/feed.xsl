@@ -15,7 +15,7 @@ This is a custom XSL stylesheet based off of these examples:
         <meta charset="utf-8"/>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" href="/css/index.css"/>
+        <link rel="stylesheet" href="/css/styles.css"/>
         <style type="text/css">
           img { max-width: 100%; }
           body { --gap: 5vw; margin: 0; line-height: 1.7; }
