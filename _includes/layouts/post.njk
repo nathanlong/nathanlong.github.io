@@ -1,6 +1,7 @@
 ---
 layout: layouts/base.njk
 templateClass: tmpl-post prose
+bodyClass: radial-mid
 ---
 
 <div class="mt-content feature text-center mb-2">
@@ -17,11 +18,16 @@ templateClass: tmpl-post prose
 {{ content | safe }}
 
 <div class="mt-2">
-  <p class="section-eyebrow m-0">Discussion</p>
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="{{ '/newsletter' | url }}">in your inbox?</a></p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
 
   {% set mailitems = ['mailto:', metadata.author.email, '?subject=Re:', title] %}
-  <p>Want to discuss? Reply by:
-    <a href="{{ mailitems | join }}">Email</a>
+  <p>Want to discuss this?
+    <a href="{{ mailitems | join }}">Email Me</a>
   </p>
 </div>
 

@@ -20,11 +20,11 @@
     <link rel="icon" href="{{ '/icon.svg' | url }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | url }}">
     <link rel="manifest" href="{{ '/site.webmanifest' | url }}">
-    <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
+    <link rel="stylesheet" href="{{ '/css/styles.css' | url }}">
     <link rel="alternate" href="{{ metadata.feed.path }}" type="application/atom+xml" title="{{ metadata.title }}">
     <link rel="alternate" href="{{ metadata.jsonfeed.path }}" type="application/json" title="{{ metadata.title }}">
   </head>
-  <body>
+  <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
     <script>
       // Prevent FART (look it up) by blocking render for a tiny bit...
       // First check for local settings, then check media queries, then apply fallback
@@ -83,7 +83,7 @@
           {%- for entry in collections.all | eleventyNavigation %}
           <li class="font-small"><a class="decoration-none" href="{{ entry.url | url }}">{{ entry.title }}</a></li>
           {%- endfor %}
-
+          <li class="font-small"><a class="decoration-none" href="{{ '/newsletter' | url }}">Newsletter</a></li>
           <li class="font-small"><a class="decoration-none" href="{{ '/feed/feed.xml' | url }}">RSS</a></li>
         </menu>
     </footer>
