@@ -42,33 +42,35 @@
 @font-face {
   font-family: Arial Narrow;
   src: local(Arial Narrow);
-  size-adjust: 105%;
+  size-adjust: 86%;
 }
 
+/* Gorgeous font from Mathieu Triay via: https://ateliertriay.github.io/bricolage/ */
 @font-face {
-  font-family: 'Fira Sans';
+  font-family: 'Bricolage Grotesque';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/fira-sans-400.woff2') format('woff2');
+  src: url('/fonts/BricolageGrotesque-Regular.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Fira Sans';
+  font-family: 'Bricolage Grotesque';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/fira-sans-700.woff2') format('woff2');
+  src: url('/fonts/BricolageGrotesque-Bold.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Fira Sans Extra Condensed';
+  font-family: 'Bricolage Grotesque 96pt Condensed';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/fira-sans-extra-condensed-700.woff2') format('woff2');
+  src: url('/fonts/BricolageGrotesque96ptCondensed-Bold.woff2') format('woff2');
 }
 
+/* JetBrains Mono is the best code font - FIGHT ME */
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
@@ -98,8 +100,8 @@
 
 :root {
   /* fonts */
-  --font-family: 'Fira Sans', Helvetica;
-  --font-family-accent: 'Fira Sans Extra Condensed', Arial Narrow, sans-serif;
+  --font-family: 'Bricolage Grotesque', Helvetica;
+  --font-family-accent: 'Bricolage Grotesque 96pt Condensed', Arial Narrow, sans-serif;
   --font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Source Code Pro',
     'IntelOne Mono', Inconsolata, Consolas, MonoLisa, Monoid, Menlo, Monaco,
     Andale Mono WT, Andale Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
@@ -377,7 +379,7 @@ h5,
 }
 
 strong {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 hr {
