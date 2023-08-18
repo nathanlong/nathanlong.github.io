@@ -1,16 +1,76 @@
-import '../vendor/party-js.2.2.0.min.js'
-import 'https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0'
+import * as PIXI from 'https://cdn.skypack.dev/pixi.js@7.2.1'
 
-// uses:
-// https://party.js.org/ (sets global `party` object)
-// TODO:
-// - disco ball? (could be audio control in lower left?)
-//
+const PARTICLE_COUNT = 30
+const DARK_COLORS = ['0x4361ee', '0x3a0ca3', '0x7209b7', '0xf72585']
+const LIGHT_COLORS = ['0xbde0fe', '0xa2d2ff', '0xffafcc', '0xffc8dd']
+
+// from: https://www.joshwcomeau.com/snippets/javascript/debounce/
+const debounce = (callback, wait) => {
+  let timeoutId = null;
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback.apply(null, args);
+    }, wait);
+  };
+}
+
+class Particle {
+  constructor(texture, radius, x, y, speed, bounds) {
+    this.radius = radius
+    this.sprite = PIXI.Sprite.from(texture)
+    this.sprite.anchor.set(0.5)
+    this.sprite.direction = Math.random() * Math.PI * 2
+    this.sprite.turnSpeed = Math.random() - 0.8
+    this.sprite.scale.set(1 + Math.random() * 0.3)
+    this.sprite.original = new PIXI.Point()
+    this.sprite.original.copyFrom(this.sprite.scale)
+    this.sprite.x = x
+    this.sprite.y = y
+    this.sprite.speed = speed
+    this.bounds = bounds
+    this.interactive = true
+    this.sprite.eventMode = 'static'
+    this.sprite.inertia = 0
+    this.scrollDelta = 0
+  }
+
+  move(delta, count) {
+    this.sprite.direction += this.sprite.turnSpeed * 0.01
+    this.sprite.x += Math.sin(this.sprite.direction) * this.sprite.speed
+    this.sprite.y += Math.cos(this.sprite.direction) * this.sprite.speed
+    this.sprite.rotation = -this.sprite.direction - Math.PI / 2
+
+    if (this.sprite.inertia > 0) {
+      const depthShift = (this.radius / 10) * this.scrollDelta * this.sprite.inertia
+      this.sprite.y += depthShift
+      this.sprite.inertia -= delta * 0.02
+    }
+
+    if (this.sprite.x < this.bounds.x) {
+      this.sprite.x += this.bounds.width
+    } else if (this.sprite.x > this.bounds.x + this.bounds.width) {
+      this.sprite.x -= this.bounds.width
+    }
+
+    if (this.sprite.y < this.bounds.y) {
+      this.sprite.y += this.bounds.height
+    } else if (this.sprite.y > this.bounds.y + this.bounds.height) {
+      this.sprite.y -= this.bounds.height
+    }
+  }
+
+  shift(amount) {
+    const depthShift = (this.radius / 10) * amount
+    this.sprite.y += depthShift
+  }
+}
 
 export default class partyTime {
   constructor() {
     this.setVars()
     this.init()
+    this.createParticles()
     this.bindEvents()
   }
 
@@ -18,235 +78,158 @@ export default class partyTime {
     return document.documentElement.classList.contains('light')
   }
 
-  get partySongProgress() {
-    return window.localStorage.getItem('party-progress')
-  }
-
-  get partySongIndex() {
-    return window.localStorage.getItem('party-song-index') ?? 0
-  }
-
-  setVars() {
-    this.motionPref =
+  get motionPref() {
+    return (
       getComputedStyle(document.documentElement).getPropertyValue(
         '--play-state'
       ) === 'running'
-    this.audioPref = window.localStorage.getItem('party-audio')
+    )
+  }
 
-    //set up audio
-    this.audioContext = new AudioContext()
-    this.sampleRate = this.audioContext.sampleRate
-    this.primaryGainControl = this.audioContext.createGain()
-    this.primaryGainControl.gain.setValueAtTime(0.2, 0)
-    this.primaryGainControl.connect(this.audioContext.destination)
-
-    //track progress
-
-    this.midiFiles = [
-      '../../audio/kakariko-party-mix.mid',
-      '../../audio/gerudo-valley.mid',
-      '../../audio/chrono-battle.mid',
-      '../../audio/koopa-theme.mid',
-      '../../audio/lost-woods-hot-v21.mid',
-      '../../audio/mmx-storm-eagle-4.mid',
-      '../../audio/ultra-pinball-11.mid',
-    ]
-
-    this.midiIndex = parseInt(this.partySongIndex)
-    this.midiSRC = this.midiFiles[this.midiIndex]
-    this.midiPlayer = document.createElement('midi-player')
-    this.midiPlayer.classList = 'w-full'
-    this.midiPlayer.src = this.midiSRC
-    this.midiPlayer.loop = true
-    this.midiPlayer.soundFont =
-      'https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus'
-    this.midiPlayer.dataset.index = 0
-
-    this.midiVisualizer = document.createElement('midi-visualizer')
-    this.midiVisualizer.src = this.midiSRC
-    this.midiVisualizer.classList = 'fixed inset-lower overflow-hidden w-full'
-
-    this.vizWidth = Math.max(100, Math.floor(window.innerWidth / 10))
-    this.vizActiveColor = this.isLightTheme ? '0, 235, 240' : '105, 15, 160'
-    this.vizNoteColor = this.isLightTheme ? '0, 245, 250' : '55, 0, 110'
-    console.log(this.vizActiveColor, this.vizNoteColor)
-    this.vizConfig = {
-      activeNoteRGB: this.vizActiveColor,
-      noteRGB: this.vizNoteColor,
-      noteHeight: 10,
-      pixelsPerTimeStep: this.vizWidth,
-    }
-    this.midiVisualizer.config = this.vizConfig
-
-    this.midiWrapper = document.createElement('div')
-    this.midiWrapper.classList =
-      'fixed flex flex-wrap inset-lower-right mr-1 mb-1 z-1'
-    this.playNext = document.createElement('button')
-    this.playNext.classList =
-      'btn bg-editor w-3 ml-1 mb-1 rounded-full text-center aspect-square'
-    this.playNext.dataset.direction = 'next'
-    this.playNext.innerHTML = '>>'
-    this.playPrev = document.createElement('button')
-    this.playPrev.classList =
-      'btn bg-editor w-3 ml-auto mb-1 rounded-full text-center aspect-square'
-    this.playPrev.dataset.direction = 'prev'
-    this.playPrev.innerHTML = '<<'
-    this.midiWrapper.appendChild(this.playPrev)
-    this.midiWrapper.appendChild(this.playNext)
+  setVars() {
+    this.particles = []
+    this.particleTotal = PARTICLE_COUNT
+    this.count = 0
+    this.background = this.isLightTheme ? 'cyan' : 'indigo'
+    this.scrollY
+    this.ticking = false
   }
 
   init() {
-    // if not set activate the song
-    if (typeof this.audioPref !== 'string') {
-      window.localStorage.setItem('party-audio', 'play')
-    }
+    this.pixi = new PIXI.Application({
+      background: this.background,
+      resizeTo: window,
+    })
+    document.body.appendChild(this.pixi.view)
+    this.pixi.stage.eventMode = 'dynamic'
+    this.pixi.stage.hitArea = this.pixi.screen
 
-    this.midiWrapper.appendChild(this.midiPlayer)
-    document.body.appendChild(this.midiWrapper)
-    document.body.appendChild(this.midiVisualizer)
-    // this.partySong()
+    this.container = new PIXI.Container()
+    this.pixi.stage.addChild(this.container)
+
+    this.padding = 50
+    this.bounds = new PIXI.Rectangle(
+      -this.padding,
+      -this.padding,
+      this.pixi.screen.width + this.padding * 2,
+      this.pixi.screen.height + this.padding * 2
+    )
+
+    this.createParticles()
+    this.pixi.ticker.add((delta) => this.tick(delta))
   }
 
   bindEvents() {
-    window.addEventListener('mousedown', this.handleClick)
-    window.addEventListener('beforeunload', this.saveAudioProgress)
     window.addEventListener('themeSwitch', this.handleSwitch)
-    this.playPrev.addEventListener('click', this.switchSong)
-    this.playNext.addEventListener('click', this.switchSong)
-    this.midiPlayer.addEventListener('load', this.resumeSong)
-    this.midiPlayer.addEventListener('loop', () => {
-      this.midiVisualizer.querySelector(
-        '.piano-roll-visualizer'
-      ).scrollLeft = 0
+    window.addEventListener('motionSwitch', this.handleMotion)
+    window.addEventListener('scroll', this.handleScroll)
+    this.pixi.renderer.on('resize', this.handleResize)
+  }
+
+  tick(delta) {
+    this.count += 0.2
+    this.particles.forEach((particle) => {
+      particle.move(delta, this.count)
     })
   }
 
-  handleClick = (e) => {
-    if (this.motionPref) {
-      party.confetti(e, {
-        count: party.variation.range(20, 40),
-      })
+  createParticles() {
+    if (this.particleContainer) {
+      return
     }
 
-    const jumpOscillator = this.audioContext.createOscillator()
-    jumpOscillator.type = 'triangle'
+    this.particleContainer = new PIXI.Container()
+    this.pixi.stage.addChild(this.particleContainer)
 
-    // exp ramp up like a mario jump
-    jumpOscillator.frequency.setValueAtTime(
-      this.getRandomInt(800, 1200),
-      this.audioContext.currentTime
-    )
-    jumpOscillator.frequency.exponentialRampToValueAtTime(
-      // 0.001,
-      this.getRandomInt(4000, 5000),
-      this.audioContext.currentTime + 0.5
-    )
+    for (let i = 0; i < this.particleTotal; i++) {
+      const circle = new PIXI.Graphics()
+      const colorTotal = this.isLightTheme
+        ? LIGHT_COLORS.length
+        : DARK_COLORS.length
+      const randomColor = Math.floor(Math.random() * colorTotal)
+      const x = Math.random() * this.pixi.screen.width
+      const y = Math.random() * this.pixi.screen.height
+      const radius = Math.random() * 10 + 4
+      const color = this.isLightTheme
+        ? LIGHT_COLORS[randomColor]
+        : DARK_COLORS[randomColor]
+      const speed = this.motionPref ? Math.random() : 0
 
-    // exp ramp gain to remove click
-    const jumpGain = this.audioContext.createGain()
-    jumpGain.gain.setValueAtTime(2, 0)
-    jumpGain.gain.exponentialRampToValueAtTime(
-      0.001,
-      this.audioContext.currentTime + 0.5
-    )
+      circle.beginFill(color)
+      circle.drawCircle(0, 0, radius)
+      circle.endFill()
 
-    jumpOscillator.connect(jumpGain)
-    jumpGain.connect(this.primaryGainControl)
-    jumpOscillator.start()
-    jumpOscillator.stop(this.audioContext.currentTime + 0.5)
+      const circleTexture = this.pixi.renderer.generateTexture(circle)
+      const particle = new Particle(
+        circleTexture,
+        radius,
+        x,
+        y,
+        speed,
+        this.bounds
+      )
+
+      this.particles.push(particle)
+      this.particleContainer.addChild(particle.sprite)
+    }
   }
+
+  handleResize = debounce((ev) => {
+    this.bounds.destroy
+    this.bounds = null
+    this.bounds = new PIXI.Rectangle(
+      -this.padding,
+      -this.padding,
+      this.pixi.screen.width + this.padding * 2,
+      this.pixi.screen.height + this.padding * 2
+    )
+
+    this.particleContainer.destroy()
+    this.particleContainer = null
+    this.createParticles()
+  }, 250)
 
   handleSwitch = () => {
-    console.log(this.isLightTheme)
-    this.vizActiveColor = this.isLightTheme ? '0, 235, 240' : '105, 15, 160'
-    this.vizNoteColor = this.isLightTheme ? '0, 245, 250' : '55, 0, 110'
-
-    this.vizConfig = {
-      activeNoteRGB: this.vizActiveColor,
-      noteRGB: this.vizNoteColor,
-      noteHeight: 10,
-      pixelsPerTimeStep: this.vizWidth,
-    }
-    this.midiVisualizer.config = this.vizConfig
-
-    this.midiVisualizer.redraw()
+    this.pixi.renderer.background.color = this.isLightTheme
+      ? '0x00FFFF'
+      : '0x4B0082'
+    this.particleContainer.destroy()
+    this.particleContainer = null
+    this.createParticles()
   }
 
-  saveAudioProgress = () => {
-    const progress = this.midiPlayer.currentTime ?? 0
-    const status = this.midiPlayer.playing ? 'play' : 'stop'
-    window.localStorage.setItem('party-audio', status)
-    window.localStorage.setItem('party-progress', progress)
+  handleMotion = () => {
+    this.particles.forEach((particle) => {
+      const speed = this.motionPref ? Math.random() : 0
+      particle.sprite.speed = speed
+    })
   }
 
-  partySong(song) {
-    this.midiPlayer.src = song
-    this.midiVisualizer.src = song
+  handleScroll = (e) => {
+    if (!this.ticking) {
+      window.requestAnimationFrame(() => {
+        let newScroll = window.scrollY
+        let scrollDelta = this.scrollY - newScroll
+        let delta = Math.floor(scrollDelta) || 0
+        this.scrollY = newScroll
+        this.particles.forEach((particle) => {
+          // particle.shift(delta)
+          particle.sprite.inertia = 1
+          particle.scrollDelta = delta
+        })
+        this.ticking = false
+      })
 
-    if (typeof this.audioPref === 'string' && this.audioPref === 'play') {
-      console.log('audio pref')
-      // this.resumeSong();
-      this.playButton.innerHTML = this.iconPause
-    } else {
-      // console.log('no audio pref')
-      // this.partySongSource.mediaElement.pause()
-      this.playButton.innerHTML = this.iconPlay
+      this.ticking = true
     }
-  }
-
-  switchSong = (e) => {
-    const prevIndex = parseInt(this.partySongIndex)
-    const dir = e.target.dataset.direction ?? 'next'
-    let newIndex
-
-    if (dir === 'next') {
-      console.log('next')
-      newIndex = prevIndex === this.midiFiles.length - 1 ? 0 : prevIndex + 1
-    } else {
-      console.log('prev')
-      newIndex = prevIndex === 0 ? this.midiFiles.length - 1 : prevIndex - 1
-    }
-
-    console.log(prevIndex, dir, newIndex)
-
-    window.localStorage.setItem('party-progress', 0)
-    this.midiPlayer.src = this.midiFiles[newIndex]
-    this.midiVisualizer.src = this.midiFiles[newIndex]
-    this.midiVisualizer.querySelector('.piano-roll-visualizer').scrollLeft = 0
-    window.localStorage.setItem('party-song-index', newIndex)
-  }
-
-  resumeSong = () => {
-    console.log('resume')
-    if (
-      typeof this.partySongProgress === 'string' &&
-      this.partySongProgress !== '0'
-    ) {
-      this.midiPlayer.currentTime = this.partySongProgress
-    }
-
-    this.midiPlayer.addVisualizer(this.midiVisualizer)
-
-    if (this.audioPref !== 'stop') {
-      this.midiPlayer.start()
-    }
-  }
-
-  getRandomInt(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
   }
 
   // Remove listeners, stop audio, and halt progress tracking
   cleanUp() {
     console.log('Party Time Over!!')
-    window.removeEventListener('mousedown', this.handleClick)
-    window.removeEventListener('beforeunload', this.saveAudioProgress)
-    this.midiPlayer.stop()
-    window.localStorage.removeItem('party-progress')
-    window.localStorage.removeItem('party-audio')
-    document.body.removeChild(this.midiWrapper)
-    document.body.removeChild(this.midiVisualizer)
+    window.addEventListener('themeSwitch', this.handleSwitch)
+    window.addEventListener('motionSwitch', this.handleMotion)
+    window.addEventListener('scroll', this.handleScroll)
+    document.body.removeChild(this.pixi.view)
   }
 }
