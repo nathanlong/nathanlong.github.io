@@ -77,6 +77,9 @@ export default class preferences {
     )
     this.root.classList.add(newValue)
 
+    const event = new CustomEvent('motionSwitch', { detail: value });
+    window.dispatchEvent(event)
+
     this.setControls()
   }
 

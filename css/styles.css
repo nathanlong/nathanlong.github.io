@@ -67,7 +67,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/BricolageGrotesque96ptCondensed-Bold.woff2') format('woff2');
+  src: url('/fonts/BricolageGrotesque96ptCondensed-Bold.woff2')
+    format('woff2');
 }
 
 /* JetBrains Mono is the best code font - FIGHT ME */
@@ -101,7 +102,8 @@
 :root {
   /* fonts */
   --font-family: 'Bricolage Grotesque', Helvetica;
-  --font-family-accent: 'Bricolage Grotesque 96pt Condensed', Arial Narrow, sans-serif;
+  --font-family-accent: 'Bricolage Grotesque 96pt Condensed', Arial Narrow,
+    sans-serif;
   --font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Source Code Pro',
     'IntelOne Mono', Inconsolata, Consolas, MonoLisa, Monoid, Menlo, Monaco,
     Andale Mono WT, Andale Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
@@ -1880,4 +1882,11 @@ a.color-reduced {
 .skip-link:focus {
   position: absolute;
   padding: 0.5rem;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
