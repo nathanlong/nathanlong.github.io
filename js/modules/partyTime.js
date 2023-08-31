@@ -1,4 +1,5 @@
-import * as PIXI from 'https://cdn.skypack.dev/pixi.js@7.2.1'
+// import * as PIXI from 'https://cdn.skypack.dev/pixi.js@7.2.1'
+import * as PIXI from 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.4/pixi.mjs'
 
 const PARTICLE_COUNT = 30
 const DARK_COLORS = ['0x4361ee', '0x3a0ca3', '0x7209b7', '0xf72585']
