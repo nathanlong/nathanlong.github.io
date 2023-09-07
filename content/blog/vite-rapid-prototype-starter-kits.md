@@ -83,6 +83,7 @@ We could transform all these one-line starter commands with `degit` into aliases
 
 Check out this `justfile`:
 
+{% raw %}
 ```sh
 # react prototype from the official vite docs
 react target:
@@ -105,6 +106,8 @@ vanilla target:
   cd {{target}} && npm install
   @echo 'Start dev with: npm run dev'
 ```
+{% endraw %}
+
 
 Now instead of even having to remember the repo paths you can plop into your ~~junk drawer~~ prototyping directory and start a prototype with something like:
 

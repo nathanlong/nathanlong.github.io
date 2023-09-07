@@ -1,6 +1,3 @@
-[warn] --jsx-bracket-same-line is deprecated.
-[warn] Ignored unknown option --loglevel=error. Did you mean --log-level?
-[warn] Ignored unknown option --stdin.
 /* CSS GOALS:
  * - No build step, vanilla can be tasty too!
  * - Fluid layout and type
@@ -70,8 +67,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/BricolageGrotesque96ptCondensed-Bold.woff2')
-    format('woff2');
+  src: url('/fonts/BricolageGrotesque96ptCondensed-Bold.woff2') format('woff2');
 }
 
 /* JetBrains Mono is the best code font - FIGHT ME */
