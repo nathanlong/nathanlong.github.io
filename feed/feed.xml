@@ -106,23 +106,23 @@
 &lt;p&gt;Check out this &lt;code&gt;justfile&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&quot;feature language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# react prototype from the official vite docs&lt;/span&gt;
 react target:
-  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating React prototype in …&#39;&lt;/span&gt;
-  &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; create vite@latest  -- &lt;span class=&quot;token parameter variable&quot;&gt;--template&lt;/span&gt; react
-  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating React prototype in {{target}}…&#39;&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; create vite@latest &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;target&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; -- &lt;span class=&quot;token parameter variable&quot;&gt;--template&lt;/span&gt; react
+  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;target&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
   @echo &lt;span class=&quot;token string&quot;&gt;&#39;Start dev with: npm run dev&#39;&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;# stimulus prototype (custom starter)&lt;/span&gt;
 stimulus target:
-  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating Stimulus prototype in …&#39;&lt;/span&gt;
-  degit jeremyfrank/vite-tailwind-stimulus-starter 
-  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating Stimulus prototype in {{target}}…&#39;&lt;/span&gt;
+  degit jeremyfrank/vite-tailwind-stimulus-starter &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;target&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;target&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
   @echo &lt;span class=&quot;token string&quot;&gt;&#39;Start dev with: npm run dev&#39;&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;# vanilla prototype (custom starter)&lt;/span&gt;
 vanilla target:
-  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating Vanilla prototype in …&#39;&lt;/span&gt;
-  degit nathanlong/vite-vanilla 
-  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  @echo &lt;span class=&quot;token string&quot;&gt;&#39;Creating Vanilla prototype in {{target}}…&#39;&lt;/span&gt;
+  degit nathanlong/vite-vanilla &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;target&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;target&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
   @echo &lt;span class=&quot;token string&quot;&gt;&#39;Start dev with: npm run dev&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now instead of even having to remember the repo paths you can plop into your &lt;s&gt;junk drawer&lt;/s&gt; prototyping directory and start a prototype with something like:&lt;/p&gt;
 &lt;pre class=&quot;feature language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;just stimulus my-awesome-prototype&lt;/code&gt;&lt;/pre&gt;

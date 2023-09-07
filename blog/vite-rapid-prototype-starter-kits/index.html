@@ -199,23 +199,23 @@
 <p>Check out this <code>justfile</code>:</p>
 <pre class="feature language-sh"><code class="language-sh"><span class="token comment"># react prototype from the official vite docs</span>
 react target:
-  @echo <span class="token string">'Creating React prototype in …'</span>
-  <span class="token function">npm</span> create vite@latest  -- <span class="token parameter variable">--template</span> react
-  <span class="token builtin class-name">cd</span>  <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> <span class="token function">install</span>
+  @echo <span class="token string">'Creating React prototype in {{target}}…'</span>
+  <span class="token function">npm</span> create vite@latest <span class="token punctuation">{</span><span class="token punctuation">{</span>target<span class="token punctuation">}</span><span class="token punctuation">}</span> -- <span class="token parameter variable">--template</span> react
+  <span class="token builtin class-name">cd</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>target<span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> <span class="token function">install</span>
   @echo <span class="token string">'Start dev with: npm run dev'</span>
 
 <span class="token comment"># stimulus prototype (custom starter)</span>
 stimulus target:
-  @echo <span class="token string">'Creating Stimulus prototype in …'</span>
-  degit jeremyfrank/vite-tailwind-stimulus-starter 
-  <span class="token builtin class-name">cd</span>  <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> <span class="token function">install</span>
+  @echo <span class="token string">'Creating Stimulus prototype in {{target}}…'</span>
+  degit jeremyfrank/vite-tailwind-stimulus-starter <span class="token punctuation">{</span><span class="token punctuation">{</span>target<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token builtin class-name">cd</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>target<span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> <span class="token function">install</span>
   @echo <span class="token string">'Start dev with: npm run dev'</span>
 
 <span class="token comment"># vanilla prototype (custom starter)</span>
 vanilla target:
-  @echo <span class="token string">'Creating Vanilla prototype in …'</span>
-  degit nathanlong/vite-vanilla 
-  <span class="token builtin class-name">cd</span>  <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> <span class="token function">install</span>
+  @echo <span class="token string">'Creating Vanilla prototype in {{target}}…'</span>
+  degit nathanlong/vite-vanilla <span class="token punctuation">{</span><span class="token punctuation">{</span>target<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token builtin class-name">cd</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>target<span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> <span class="token function">install</span>
   @echo <span class="token string">'Start dev with: npm run dev'</span></code></pre>
 <p>Now instead of even having to remember the repo paths you can plop into your <s>junk drawer</s> prototyping directory and start a prototype with something like:</p>
 <pre class="feature language-sh"><code class="language-sh">just stimulus my-awesome-prototype</code></pre>
