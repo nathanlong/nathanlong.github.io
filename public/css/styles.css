@@ -353,7 +353,6 @@ h6 {
 .heading-massive {
   font-size: 20vw;
 }
-
 h1,
 .heading-100 {
   font-size: 3em;
@@ -1384,6 +1383,8 @@ pre[class*='language-'] {
 /* @utility (Pseudo-Tailwind) */
 /* Because utility classes are awesome, fight me! */
 
+/* @util-border */
+
 /* @util-display */
 
 .inline-block {
@@ -1488,8 +1489,26 @@ pre[class*='language-'] {
   border-width: 0;
 }
 
+.border-1 {
+  border-width: 1px;
+}
+
+.border-divider {
+  border-color: var(--theme-divider);
+}
+
 .two-columns {
   columns: 2;
+}
+
+@media (min-width: 576px) {
+  .two-columns-md {
+    columns: 2;
+  }
+}
+
+.break-inside-avoid {
+  break-inside: avoid;
 }
 
 /* @util-color */
@@ -1537,6 +1556,10 @@ a.color-reduced {
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .inset-0 {
   top: 0;
   right: 0;
@@ -1557,6 +1580,22 @@ a.color-reduced {
 
 .relative {
   position: relative;
+}
+
+.top-1\/2 {
+  top: 0.5em;
+}
+
+.left-1\/2 {
+  left: 0.5em;
+}
+
+.top-1 {
+  top: 1em;
+}
+
+.left-1 {
+  left: 1em;
 }
 
 .lh-1 {
@@ -1617,6 +1656,10 @@ a.color-reduced {
 
 .mb-1\/4 {
   margin-bottom: 0.25em;
+}
+
+.mb-1\/2 {
+  margin-bottom: 0.5em;
 }
 
 .mb-1 {
@@ -1691,6 +1734,11 @@ a.color-reduced {
   padding-top: 0.5em;
 }
 
+.px-1\/2 {
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
 .px-1rem {
   padding-right: 1rem;
   padding-left: 1rem;
@@ -1706,9 +1754,18 @@ a.color-reduced {
   padding-bottom: 1em;
 }
 
+.py-2 {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
 .py-3 {
   padding-top: 3em;
   padding-bottom: 3em;
+}
+
+.pl-2 {
+  padding-left: 2em;
 }
 
 .space-x-1 > * + * {
@@ -1724,10 +1781,6 @@ a.color-reduced {
 }
 
 /* @util-type */
-
-.tracking-1 {
-  line-height: 1;
-}
 
 .list-none {
   list-style: none;
@@ -1771,6 +1824,18 @@ a.color-reduced {
 
 .leading-none {
   line-height: 0;
+}
+
+.leading-1 {
+  line-height: 1;
+}
+
+.leading-sm {
+  line-height: 1.125;
+}
+
+.leading-md {
+  line-height: 1.25;
 }
 
 .decoration-none {

@@ -88,8 +88,8 @@
     </footer>
 
     {% if extraJS %}
-    {%- for name, src in extraJS %}
-    <script name="{{name}}" src="{{ src | url }}"></script>
+    {%- for item in extraJS %}
+    <script name="{{item.name}}" src="{{ item.src | url }}"></script>
     {%- endfor %}
     {% endif %}
 
