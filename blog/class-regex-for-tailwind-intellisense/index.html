@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan Long</title>
-    <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <title>Custom Class Regex for Tailwind IntelliSense in Neovim</title>
+    <meta name="description" content="For when your templating language expects something that looks nothing like HTML.">
     <meta name="generator" content="Eleventy v2.0.1">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nathan-long.com/">
-    <meta property="og:title" content="Nathan Long">
-    <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="og:title" content="Custom Class Regex for Tailwind IntelliSense in Neovim">
+    <meta property="og:description" content="For when your templating language expects something that looks nothing like HTML.">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Nathan Long">
-    <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="twitter:title" content="Custom Class Regex for Tailwind IntelliSense in Neovim">
+    <meta property="twitter:description" content="For when your templating language expects something that looks nothing like HTML.">
     <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -83,7 +83,7 @@
     <menu class="nav m-0 p-0">
       <li class="nav-item"><a href="/about/">About</a></li>
       <li class="nav-item"><a href="/blog/">Blog</a></li>
-      <li class="nav-item nav-item-active"><a href="/lab/">Lab</a></li>
+      <li class="nav-item"><a href="/lab/">Lab</a></li>
       <li class="nav-item"><a href="/newsletter/">Newsletter</a></li>
       <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
     </menu>
@@ -150,143 +150,84 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-full">
+    <main id="main"  class="content text-content flow tmpl-post prose">
       
+<div class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2023-11-29">November 29, 2023</time>
+  <h1 class="mb-0">Custom Class Regex for Tailwind IntelliSense in Neovim</h1>
+  <span class="inline-block">
+  <a href="/tags/neovim/" class="post-tag">neovim</a>
+  </span>
+</div>
 
-<section class="mt-content feature text-center">
-  <h1>Lab</h1>
-  <p>Side projects, demos, random things I've built...</p>
-</section>
+<p>Sometimes while using Tailwind, you need to place classes into things that aren't structured like HTML elements. Take a look at this Twig snippet from a Craft site:</p>
+<pre class="feature language-twig"><code class="language-twig"><span class="token twig language-twig"><span class="token delimiter punctuation">{{</span> entry<span class="token punctuation">.</span>primaryDescription <span class="token operator">?</span> tag<span class="token punctuation">(</span><span class="token string"><span class="token punctuation">'</span>div<span class="token punctuation">'</span></span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  class<span class="token punctuation">:</span> <span class="token string"><span class="token punctuation">'</span>text-body-lg text-rich<span class="token punctuation">'</span></span><span class="token punctuation">,</span>
+  html<span class="token punctuation">:</span> entry<span class="token punctuation">.</span>primaryDescription<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token delimiter punctuation">}}</span></span></code></pre>
+<p>This checks for the existence of a field and wraps it in a <code>&lt;div&gt;</code> tag... But that little bit there as <code>class:</code>... If you're running Tailwind in Neovim like me, it doesn't recognize that as a trigger for autocomplete because it wants that sweet, sweet HTML <code>class=</code> attribute.</p>
+<p>And without IntelliSense/autocomplete you're missing a critical piece of the Tailwind authoring experience. You NEED autocomplete when working with Tailwind.</p>
+<p>The fine folks working on Tailwind realized this problem and have exposed some settings to allow custom triggers for whatever wacky format your templating language wants. In fact, they've exposed two methods for us:</p>
+<ol>
+<li>The <a href="https://github.com/tailwindlabs/tailwindcss-intellisense#tailwindcssclassattributes">class attribute</a> setting.</li>
+<li>The experimental <a href="https://www.paolotiu.com/blog/get-tailwind-intellisense-anywhere">class regex setting</a></li>
+</ol>
+<p>We're looking at the second one. Most guides will tell you to plop some JSON in your VSCode settings and it's not immediately clear where the equivalent of this is for Neovim. But hey, you're here now, so I'll show you. You stuff it into your LSP initialization settings for Tailwind, like this:</p>
+<pre class="feature language-lua"><code class="language-lua"><span class="token keyword">local</span> lspconfig <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'lspconfig'</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> capabilities <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'cmp_nvim_lsp'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">default_capabilities</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> on_attach <span class="token operator">=</span> <span class="token comment">--this is a custom function that sets several options</span>
 
-<hr class="mt-2 mb-2">
-
-
-<h2 class="border-0 flow-0">Featured: </h2>
-
-<ul class="lablist p-0 space-y-1">
-    
-    
-    
-    
-    
-      <li class="list-none flex items-start">
-  <div class="lablist-image aspect-square rounded-1 overflow-hidden">
-    <a class="lablist-image-link" href="/voices.xml">
-      <img src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/ce60dd05-ebb0-46e7-9501-306ca4f1dbc6" alt="Profile of a face speaking inside a web browser. Icon by Gregor Cresnar." class="w-full h-auto" width="172.5" height="172.5">
-    </a>
-  </div>
-  <div class="lablist-content">
-    <h2 class="mb-1/4 lablist-link heading-300">Web Voices</h2>
-
-    
-    <p class="mt-0 mb-1/4">My curated list of interesting websites. Powered by OPML and XSL.</p>
-    
-
-    <div class="flex space-x-1">
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="/voices.xml">View</a>
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://github.com/nathanlong/nathanlong.github.io/blob/main/public/xsl/voices.xsl">Source</a>
-    </div>
-  </div>
-</li>
-
-    
-</ul>
-
-<hr class="my-2" />
-
-<ul class="lablist p-0 m-0 mb-2 space-y-1">
-    
-      <li class="list-none flex items-start">
-  <div class="lablist-image aspect-square rounded-1 overflow-hidden">
-    <a class="lablist-image-link" href="https://nathan-long.com/sandclock/">
-      <img src="https://user-images.githubusercontent.com/623568/233101852-cc17b991-9360-4794-add9-51e5ce8ae4b9.png" alt="Construction crane with warning barricades. Icon by Eko Purnomo." class="w-full h-auto" width="172.5" height="172.5">
-    </a>
-  </div>
-  <div class="lablist-content">
-    <h2 class="mb-1/4 lablist-link heading-300">WIP: Sandclock</h2>
-
-    
-    <p class="mt-0 mb-1/4">A digital hourglass with simple timer functionality.</p>
-    
-
-    <div class="flex space-x-1">
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://nathan-long.com/sandclock/">View</a>
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://github.com/nathanlong/sandclock">Source</a>
-    </div>
-  </div>
-</li>
-
-    
-    
-    
-      <li class="list-none flex items-start">
-  <div class="lablist-image aspect-square rounded-1 overflow-hidden">
-    <a class="lablist-image-link" href="https://nathan-long.com/rules/">
-      <img src="https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png" alt="Playing card suit icons over a field of X&#39;s. Icon by Irene Hoffman" class="w-full h-auto" width="172.5" height="172.5">
-    </a>
-  </div>
-  <div class="lablist-content">
-    <h2 class="mb-1/4 lablist-link heading-300">Game Rules</h2>
-
-    
-    <p class="mt-0 mb-1/4">A personal reference for games (with house-rules) I play with my family.</p>
-    
-
-    <div class="flex space-x-1">
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://nathan-long.com/rules/">View</a>
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://github.com/nathanlong/rules">Source</a>
-    </div>
-  </div>
-</li>
-
-    
-    
-      <li class="list-none flex items-start">
-  <div class="lablist-image aspect-square rounded-1 overflow-hidden">
-    <a class="lablist-image-link" href="https://nathan-long.com/animation/">
-      <img src="https://user-images.githubusercontent.com/623568/207959370-a7a9d3ba-98a9-4787-9376-a8f3d1fae38e.png" alt="Curvy red path with two dots indicating motion" class="w-full h-auto" width="172.5" height="172.5">
-    </a>
-  </div>
-  <div class="lablist-content">
-    <h2 class="mb-1/4 lablist-link heading-300">Animation Playground</h2>
-
-    
-    <p class="mt-0 mb-1/4">Playing around with different techniques and animation stacks.</p>
-    
-
-    <div class="flex space-x-1">
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://nathan-long.com/animation/">View</a>
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://github.com">Source</a>
-    </div>
-  </div>
-</li>
-
-    
-    
-      <li class="list-none flex items-start">
-  <div class="lablist-image aspect-square rounded-1 overflow-hidden">
-    <a class="lablist-image-link" href="https://nathan-long.com/hero-dice/">
-      <img src="https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png" alt="The word &#39;Hero&#39; above a six-sided dice" class="w-full h-auto" width="172.5" height="172.5">
-    </a>
-  </div>
-  <div class="lablist-content">
-    <h2 class="mb-1/4 lablist-link heading-300">Hero Dice</h2>
-
-    
-    <p class="mt-0 mb-1/4">Dice roller app for self-made RPG system for kids: F.I.G. (Fantastical Imagination Game)</p>
-    
-
-    <div class="flex space-x-1">
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://nathan-long.com/hero-dice/">View</a>
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://github.com">Source</a>
-    </div>
-  </div>
-</li>
-
-    
-</ul>
+<span class="token comment">-- The initialization of TailwindCSS LSP</span>
+lspconfig<span class="token punctuation">.</span>tailwindcss<span class="token punctuation">.</span><span class="token function">setup</span> <span class="token punctuation">{</span>
+  on_attach <span class="token operator">=</span> on_attach<span class="token punctuation">,</span>
+  capabilities <span class="token operator">=</span> capabilities<span class="token punctuation">,</span>
+  settings <span class="token operator">=</span> <span class="token punctuation">{</span>
+    tailwindCSS <span class="token operator">=</span> <span class="token punctuation">{</span>
+      experimental <span class="token operator">=</span> <span class="token punctuation">{</span>
+        classRegex <span class="token operator">=</span> <span class="token punctuation">{</span>
+          <span class="token string">"(?:class: ?)(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"</span><span class="token punctuation">,</span> <span class="token comment">-- Twig, looks for string preceded by 'class:'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This setup assumes a few things:</p>
+<ol>
+<li>You're using <a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a> to connect to your LSPs.</li>
+<li>You're using <a href="https://github.com/hrsh7th/nvim-cmp">nvim-cmp</a> for autocomplete.</li>
+</ol>
+<p>You can check out my <a href="/blog/modern-javascript-tooling-in-neovim/">earlier post</a> on setting up LSP's or look at my <a href="https://github.com/nathanlong/dotfiles/blob/main/nvim/init.lua">init.lua</a> to see how I've set it up.</p>
+<p>The regex itself is looking for anything inside a string (either <code>&quot;&quot;</code> or <code>''</code>) preceded by <code>class:</code> and 0 to 1 spaces. Tailwind will now helpfully suggest classes once you kick open that string. If you need something different than what's listed here you can check out <a href="https://github.com/paolotiu/tailwind-intellisense-regex-list">this repository of sample regexes you can use</a> for different patterns.</p>
+<p>Happy autocompleting!</p>
 
 
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
+
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Custom Class Regex for Tailwind IntelliSense in Neovim">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/nathan-uses-this-2023-edition/" class="decoration-none font-thin font-bold">Nathan Uses This: 2023 Edition<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 

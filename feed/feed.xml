@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2023-09-20T00:00:00Z</updated>
+	<updated>2023-11-29T00:00:00Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,53 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Custom Class Regex for Tailwind IntelliSense in Neovim</title>
+		<link href="https://nathan-long.com/blog/class-regex-for-tailwind-intellisense/"/>
+		<updated>2023-11-29T00:00:00Z</updated>
+		<id>https://nathan-long.com/blog/class-regex-for-tailwind-intellisense/</id>
+		<content type="html">&lt;p&gt;Sometimes while using Tailwind, you need to place classes into things that aren&#39;t structured like HTML elements. Take a look at this Twig snippet from a Craft site:&lt;/p&gt;
+&lt;pre class=&quot;feature language-twig&quot;&gt;&lt;code class=&quot;language-twig&quot;&gt;&lt;span class=&quot;token twig language-twig&quot;&gt;&lt;span class=&quot;token delimiter punctuation&quot;&gt;{{&lt;/span&gt; entry&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;primaryDescription &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; tag&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&#39;&lt;/span&gt;div&lt;span class=&quot;token punctuation&quot;&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  class&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&#39;&lt;/span&gt;text-body-lg text-rich&lt;span class=&quot;token punctuation&quot;&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  html&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; entry&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;primaryDescription&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token delimiter punctuation&quot;&gt;}}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This checks for the existence of a field and wraps it in a &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; tag... But that little bit there as &lt;code&gt;class:&lt;/code&gt;... If you&#39;re running Tailwind in Neovim like me, it doesn&#39;t recognize that as a trigger for autocomplete because it wants that sweet, sweet HTML &lt;code&gt;class=&lt;/code&gt; attribute.&lt;/p&gt;
+&lt;p&gt;And without IntelliSense/autocomplete you&#39;re missing a critical piece of the Tailwind authoring experience. You NEED autocomplete when working with Tailwind.&lt;/p&gt;
+&lt;p&gt;The fine folks working on Tailwind realized this problem and have exposed some settings to allow custom triggers for whatever wacky format your templating language wants. In fact, they&#39;ve exposed two methods for us:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The &lt;a href=&quot;https://github.com/tailwindlabs/tailwindcss-intellisense#tailwindcssclassattributes&quot;&gt;class attribute&lt;/a&gt; setting.&lt;/li&gt;
+&lt;li&gt;The experimental &lt;a href=&quot;https://www.paolotiu.com/blog/get-tailwind-intellisense-anywhere&quot;&gt;class regex setting&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We&#39;re looking at the second one. Most guides will tell you to plop some JSON in your VSCode settings and it&#39;s not immediately clear where the equivalent of this is for Neovim. But hey, you&#39;re here now, so I&#39;ll show you. You stuff it into your LSP initialization settings for Tailwind, like this:&lt;/p&gt;
+&lt;pre class=&quot;feature language-lua&quot;&gt;&lt;code class=&quot;language-lua&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;local&lt;/span&gt; lspconfig &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;lspconfig&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;local&lt;/span&gt; capabilities &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;cmp_nvim_lsp&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;default_capabilities&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;local&lt;/span&gt; on_attach &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;--this is a custom function that sets several options&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;-- The initialization of TailwindCSS LSP&lt;/span&gt;
+lspconfig&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;tailwindcss&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setup&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  on_attach &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; on_attach&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  capabilities &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; capabilities&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  settings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    tailwindCSS &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      experimental &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        classRegex &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;token string&quot;&gt;&quot;(?:class: ?)(?:&#39;|&#92;&quot;|`)([^&#92;&quot;&#39;`]*)(?:&#39;|&#92;&quot;|`)&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;-- Twig, looks for string preceded by &#39;class:&#39;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This setup assumes a few things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;You&#39;re using &lt;a href=&quot;https://github.com/neovim/nvim-lspconfig&quot;&gt;nvim-lspconfig&lt;/a&gt; to connect to your LSPs.&lt;/li&gt;
+&lt;li&gt;You&#39;re using &lt;a href=&quot;https://github.com/hrsh7th/nvim-cmp&quot;&gt;nvim-cmp&lt;/a&gt; for autocomplete.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You can check out my &lt;a href=&quot;https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/&quot;&gt;earlier post&lt;/a&gt; on setting up LSP&#39;s or look at my &lt;a href=&quot;https://github.com/nathanlong/dotfiles/blob/main/nvim/init.lua&quot;&gt;init.lua&lt;/a&gt; to see how I&#39;ve set it up.&lt;/p&gt;
+&lt;p&gt;The regex itself is looking for anything inside a string (either &lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt; or &lt;code&gt;&#39;&#39;&lt;/code&gt;) preceded by &lt;code&gt;class:&lt;/code&gt; and 0 to 1 spaces. Tailwind will now helpfully suggest classes once you kick open that string. If you need something different than what&#39;s listed here you can check out &lt;a href=&quot;https://github.com/paolotiu/tailwind-intellisense-regex-list&quot;&gt;this repository of sample regexes you can use&lt;/a&gt; for different patterns.&lt;/p&gt;
+&lt;p&gt;Happy autocompleting!&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Nathan Uses This: 2023 Edition</title>
