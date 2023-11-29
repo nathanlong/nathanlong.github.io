@@ -1850,6 +1850,16 @@ a.color-reduced {
   text-transform: capitalize;
 }
 
+.wrap-balance {
+  text-wrap: balance;
+}
+
+.wrap-pretty {
+  text-wrap: pretty;
+}
+
+/* @util-divide */
+
 .divide-y > * + * {
   border-top: 1px solid var(--color-gray-90);
 }
