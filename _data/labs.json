@@ -8,7 +8,7 @@
     "dateModified": "ongoing",
     "image": "https://user-images.githubusercontent.com/623568/207959370-a7a9d3ba-98a9-4787-9376-a8f3d1fae38e.png",
     "imageAlt": "Curvy red path with two dots indicating motion",
-    "feature": true
+    "feature": false
   },
   {
     "name": "Hero Dice",
@@ -40,5 +40,15 @@
     "image": "https://user-images.githubusercontent.com/623568/233101852-cc17b991-9360-4794-add9-51e5ce8ae4b9.png",
     "imageAlt": "Construction crane with warning barricades. Icon by Eko Purnomo.",
     "feature": false
+  },
+  {
+    "name": "Web Voices",
+    "url": "/voices.xml",
+    "source": "https://github.com/nathanlong/nathanlong.github.io/blob/main/public/xsl/voices.xsl",
+    "description": "My curated list of interesting websites. Powered by OPML and XSL.",
+    "dateCreated": "2023-11-13",
+    "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/ce60dd05-ebb0-46e7-9501-306ca4f1dbc6",
+    "imageAlt": "Profile of a face speaking inside a web browser. Icon by Gregor Cresnar.",
+    "feature": true
   }
 ]
