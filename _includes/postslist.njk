@@ -1,7 +1,7 @@
 <ul class="postlist p-0 space-y-2">
   {% for post in postslist | reverse %}
   <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4"><a href="{{ post.url | url }}" class="font-thin m-0 font-bold decoration-none leading-1">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a></h2>
+    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="{{ post.url | url }}" class="font-thin m-0 font-bold decoration-none leading-1">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a></h2>
     <p class="postlist-meta m-0">
     <span class="divide-comma inline-block">
       {% for tag in post.data.tags | filterTagList %}

@@ -6,7 +6,7 @@ bodyClass: radial-mid
 
 <div class="mt-content feature text-center mb-2">
   <time class="text-small font-mono" datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
-  <h1 class="mb-0">{{ title }}</h1>
+  <h1 class="mb-0 wrap-balance">{{ title }}</h1>
   <span class="inline-block">
   {%- for tag in tags | filterTagList | sort() %}
   {%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
