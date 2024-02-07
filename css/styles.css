@@ -113,6 +113,7 @@
   /* colors */
   --color-gray-20: #e0e0e0;
   --color-gray-50: #c0c0c0;
+  --color-gray-60: #707070;
   --color-gray-70: #777779;
   --color-gray-90: #333;
   --color-gold: #fee0b4;
@@ -146,7 +147,7 @@
   --theme-glow: var(--color-robin-egg);
   --theme-text: var(--color-text-default);
   --theme-text-gray: var(--color-gray-70);
-  --theme-text-reduced: var(--color-text-reduced);
+  --theme-text-reduced: var(--color-gray-60);
   --theme-text-faint: var(--color-text-faint);
   --theme-editorbg: var(--color-white);
   /* theme constants (don't need rebinding) */
@@ -1550,6 +1551,10 @@ a.color-reduced {
   height: auto;
 }
 
+.h-full {
+  height: 100%;
+}
+
 /* @util-position */
 
 .fixed {
@@ -1576,6 +1581,12 @@ a.color-reduced {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.inset-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .relative {
@@ -1972,7 +1983,9 @@ a.color-reduced {
   padding: 0.5rem;
 }
 
-canvas {
+/* Party Animation */
+
+.pixi-canvas {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -2009,4 +2022,13 @@ canvas {
   .animation404-last {
     margin-left: -8vw;
   }
+}
+
+.hero-animation {
+  position: absolute;
+  right: 15vw;
+  top: 0;
+  bottom: 0;
+  width: auto;
+  height: 100%;
 }
