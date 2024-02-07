@@ -1,19 +1,19 @@
 [
   {
-    "name": "Animation Playground",
-    "url": "https://nathan-long.com/animation/",
-    "source": "https://github.com",
-    "description": "Playing around with different techniques and animation stacks.",
-    "dateCreated": "2022-06-01",
+    "name": "Experiments",
+    "url": "https://nathan-long.com/experiments/",
+    "source": "https://github.com/nathanlong/experiments",
+    "description": "A place to host experiments in motion, techniques, and other odd things.",
+    "dateCreated": "2024-02-07",
     "dateModified": "ongoing",
-    "image": "https://user-images.githubusercontent.com/623568/207959370-a7a9d3ba-98a9-4787-9376-a8f3d1fae38e.png",
-    "imageAlt": "Curvy red path with two dots indicating motion",
-    "feature": false
+    "image": "https://private-user-images.githubusercontent.com/623568/303050865-0c1009c9-34ab-418c-b504-c101fc4fe0f0.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDczMjI0MDMsIm5iZiI6MTcwNzMyMjEwMywicGF0aCI6Ii82MjM1NjgvMzAzMDUwODY1LTBjMTAwOWM5LTM0YWItNDE4Yy1iNTA0LWMxMDFmYzRmZTBmMC5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwMjA3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDIwN1QxNjA4MjNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wOWFjNTI2MGNhZDFmNmQ1YWY1MzU3YjYzNDQ2MjE3YjdiOTRjYTIzY2U4YmIxYjA2Yjk1YmNjODA1MDkwYjA0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.SvzNBqhWnnId2egYYPglhaMrVJf778-W_wZicFI3fg8",
+    "imageAlt": "A flask with bubbling liquid overlaid with scanlines like from an old CRT display",
+    "feature": true
   },
   {
     "name": "Hero Dice",
     "url": "https://nathan-long.com/hero-dice/",
-    "source": "https://github.com",
+    "source": "https://github.com/nathanlong/hero-dice",
     "description": "Dice roller app for self-made RPG system for kids: F.I.G. (Fantastical Imagination Game)",
     "dateCreated": "2021-11-16",
     "image": "https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png",
@@ -29,16 +29,6 @@
     "dateModified": "ongoing",
     "image": "https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png",
     "imageAlt": "Playing card suit icons over a field of X's. Icon by Irene Hoffman",
-    "feature": false
-  },
-  {
-    "name": "WIP: Sandclock",
-    "url": "https://nathan-long.com/sandclock/",
-    "source": "https://github.com/nathanlong/sandclock",
-    "description": "A digital hourglass with simple timer functionality.",
-    "dateCreated": "TBD",
-    "image": "https://user-images.githubusercontent.com/623568/233101852-cc17b991-9360-4794-add9-51e5ce8ae4b9.png",
-    "imageAlt": "Construction crane with warning barricades. Icon by Eko Purnomo.",
     "feature": false
   },
   {

@@ -102,6 +102,7 @@ export default class partyTime {
       resizeTo: window,
     })
     document.body.appendChild(this.pixi.view)
+    this.pixi.view.classList = 'pixi-canvas'
     this.pixi.stage.eventMode = 'dynamic'
     this.pixi.stage.hitArea = this.pixi.screen
 
