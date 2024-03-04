@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2023-11-29T00:00:00Z</updated>
+	<updated>2024-03-04T00:00:00Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,74 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Keeping a Project Log</title>
+		<link href="https://nathan-long.com/blog/keeping-a-project-log/"/>
+		<updated>2024-03-04T00:00:00Z</updated>
+		<id>https://nathan-long.com/blog/keeping-a-project-log/</id>
+		<content type="html">&lt;blockquote&gt;
+&lt;p&gt;Captain&#39;s Log, Stardate 41503.7. We have entered the Neutral Zone where a Talarian freighter has been severely damaged in a battle. I have sent an away team to investigate.&lt;/p&gt;
+&lt;p&gt;— Captain Jean Luc Picard (S1E20: Heart of Glory)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I grew up watching Star Trek (specifically reruns of The Next Generation) and listening to Captain Jean Luc Picard (the BEST captain, &lt;code&gt;fight me&lt;/code&gt;...) record the events of their explorations and adventures.&lt;/p&gt;
+&lt;p&gt;I used to wonder: who would listen to these logs? Were they for the captain&#39;s benefit? Was some poor schmoe&#39;s job at Starfleet to listen to long expositions on events? The internet tells me that the ship&#39;s logs were (are?) used to document speed, location, who was onboard, significant events, or anything else regarding the ship&#39;s operation. If something goes wrong, the log can help piece together the events leading up to the event.&lt;/p&gt;
+&lt;p&gt;But captains aren&#39;t the only folks to keep logs.&lt;/p&gt;
+&lt;p&gt;Scientists keep highly detailed logs in their &lt;a href=&quot;https://en.wikipedia.org/wiki/Lab_notebook&quot;&gt;lab notebooks&lt;/a&gt;, documenting their hypotheses and experiment results so they can be repeated and breakthroughs can be proven (and protected in the case of intellectual property). Researchers in descriptive sciences keep &lt;a href=&quot;https://en.wikipedia.org/wiki/Fieldnotes&quot;&gt;field notes&lt;/a&gt; to record observations and evidence to help create an understanding of a phenomenon.&lt;/p&gt;
+&lt;p&gt;As developers, should we keep logs? &lt;strong&gt;Short answer: Yes.&lt;/strong&gt; (And it&#39;s not a new idea...) We should keep &#39;project logs&#39;.&lt;/p&gt;
+&lt;p&gt;Great. Fantastic. I&#39;m sure you&#39;ll all get right on that and do fine. But if you&#39;re like me, perhaps a little more structure into WHAT EXACTLY to log would be helpful.&lt;/p&gt;
+&lt;h2 id=&quot;what-should-a-web-developer-s-log-look-like&quot; tabindex=&quot;-1&quot;&gt;What should a web developer&#39;s log look like? &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;We&#39;re not scientists, nor are we space explorers, but as developers, we navigate through series of problems and solutions in projects. We plot a course at the beginning of a project and then observe how that approach fails or succeeds.&lt;/p&gt;
+&lt;p&gt;If you&#39;re like me, this is all very timely information. Ask me again in 3 months and I will struggle to recall all but the key details of what happened.&lt;/p&gt;
+&lt;p&gt;A web developer project log should:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Be private, not publicly accessible.&lt;/li&gt;
+&lt;li&gt;Be organized by project.&lt;/li&gt;
+&lt;li&gt;Record goals and possible solutions upfront.&lt;/li&gt;
+&lt;li&gt;Record any supporting links and materials (designs, workspaces, external notes, etc.)&lt;/li&gt;
+&lt;li&gt;Contain a chronological log of quick updates on:
+&lt;ul&gt;
+&lt;li&gt;Decisions made, and the reasons for them.&lt;/li&gt;
+&lt;li&gt;Events, either internal or external that affect the build process.&lt;/li&gt;
+&lt;li&gt;Stray thoughts about future optimizations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Record final results and contrast them against the original goals and solutions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&#39;ll expand on each of these.&lt;/p&gt;
+&lt;h3 id=&quot;keep-it-private&quot; tabindex=&quot;-1&quot;&gt;Keep it Private &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Some developers, especially game developers, keep a public devlog. They can range from things like &lt;a href=&quot;https://itch.io/devlogs&quot;&gt;patch notes&lt;/a&gt;, to something &lt;a href=&quot;https://www.gridsagegames.com/blog/&quot;&gt;with more behind-the-scenes thinking&lt;/a&gt;, to &lt;a href=&quot;https://www.youtube.com/watch?v=OU3B3D-52us&quot;&gt;lavishly produced videos&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But game developers face different problems than we do as web developers. They have a game to sell in a saturated market. If they&#39;re a small team or indie dev, they may not have folks devoted to evangelizing their game to their audiences. A public devlog increases accountability and gets existing users excited about upcoming updates. It can expose balance notes that might change the &lt;a href=&quot;https://en.wikipedia.org/wiki/Metagame&quot;&gt;game meta&lt;/a&gt;. It can serve as a marketing tool. Because of these uses, a game devlog exists more for the USERS than for the DEVELOPER.&lt;/p&gt;
+&lt;p&gt;As web developers, we often sell our services by contract — we don&#39;t need the same type of audience-building efforts. In fact, we might even breach contract if we share technical details publicly. So if you keep a log, it will be for YOUR benefit.&lt;/p&gt;
+&lt;h3 id=&quot;organized-by-project&quot; tabindex=&quot;-1&quot;&gt;Organized by Project &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I want to make a distinction between a log and a journal. A journal is incredibly useful for stream-of-consciousness observations organized by day. However, using this approach for a project spreads information across a series of time-bound entries. If you&#39;re working on multiple projects simultaneously it can be difficult to gather that information back up in a usable way. You can tag it, sort it, segment it, or whatever, but when you go looking for you&#39;ll also be perusing entries that will cover a variety of topics in addition to the one you&#39;re looking for.&lt;/p&gt;
+&lt;p&gt;For maximum benefit, we&#39;ll be using these logs both during and after the build. For that reason, we&#39;ll make it easier for our future selves to organize these logs by project.&lt;/p&gt;
+&lt;h3 id=&quot;record-goals-and-approach&quot; tabindex=&quot;-1&quot;&gt;Record Goals and Approach &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This is one of the most important parts of a developer project log; it&#39;s the equivalent of our hypotheses. At the beginning of any project, the problem is explored and an approach is planned to solve it. But projects are not static, goals can change, and wrinkles are introduced by hidden requirements or obstacles that weren&#39;t known at the outset. It&#39;s much harder to see how far things have drifted if you don&#39;t record them first.&lt;/p&gt;
+&lt;p&gt;A project manager may record parts of this in shared documentation, but this also includes YOUR goals for the project -- things only you can know. This project log exists for your improvement so it&#39;s up to you to record these things yourself. PMs will move on, and you may not be paired again on the next project, so this is for you to develop a consistent practice in your approach.&lt;/p&gt;
+&lt;h3 id=&quot;record-supporting-links-and-materials&quot; tabindex=&quot;-1&quot;&gt;Record supporting links and materials &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If you put something out of sight, you won&#39;t use it. Part of increasing the use of this project log is to make it a handy dashboard. Stuff it full of the things you constantly have to look up: design files, meeting notes, links to specific tickets. Whatever you need. If you&#39;ve recorded it, it&#39;s all right there.&lt;/p&gt;
+&lt;h3 id=&quot;chronologically-record-process&quot; tabindex=&quot;-1&quot;&gt;Chronologically record process &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Every so often, at a cadence that makes sense to you, record progress on the build. What&#39;s happening? Did the client request something different? Was a problem found in the approach? Document decisions and events. Anything that influences the build should find its way in here. Give it a dated entry so you can piece together what happened when.&lt;/p&gt;
+&lt;h3 id=&quot;contrast-results-and-goals&quot; tabindex=&quot;-1&quot;&gt;Contrast results and goals &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;We built up our initial approach, we logged the changes and the path we wound up taking, and now, in the end, we can look back and see the difference between our start and end.&lt;/p&gt;
+&lt;p&gt;We can use this to figure out what worked and what didn&#39;t. Was there a particular event that helped or hindered the work? Did your collaboration with a teammate cause a new solution to present itself?&lt;/p&gt;
+&lt;p&gt;By logging and recognizing these things, we can work to reinforce the good and avoid repeating the bad. If your team runs retrospectives, your log will give you the ammunition to propose changes, highlight difficulties, or give genuine praise to your teammates.&lt;/p&gt;
+&lt;p&gt;It can also give you a moment to be proud of what you&#39;ve accomplished. Did you come up with a new technique? Did the project unlock a mental model of something? Use these things to fill out your &lt;a href=&quot;https://jvns.ca/blog/brag-documents/&quot;&gt;Brag Sheet&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;format&quot; tabindex=&quot;-1&quot;&gt;Format &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This is the least important part of the log, and the easiest one to get trapped in. The tool must facilitate the work, not dominate your time. Several tools fit the bill:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://tiddlywiki.com/&quot;&gt;TiddlyWiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://obsidian.md/&quot;&gt;Obsidian&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.notion.so/&quot;&gt;Notion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;... heck, even just some scripts and plaintext.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It just needs to be easy to call up and edit. I personally use TiddlyWiki as part of a larger personal wiki. I love being able to easily extend and format it with HTML/CSS/JS and all the data is stored in plaintext files (either as &lt;code&gt;.tid&lt;/code&gt; with WikiText syntax or as &lt;code&gt;.md&lt;/code&gt; with Markdown syntax).&lt;/p&gt;
+&lt;p&gt;But pick something that works for you.&lt;/p&gt;
+&lt;h2 id=&quot;warp-factor-two-engage&quot; tabindex=&quot;-1&quot;&gt;Warp Factor Two... Engage! &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/keeping-a-project-log/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;There. A little structure, a little advice, and now we have a tool to help meaningfully progress our technical chops one project at a time.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Custom Class Regex for Tailwind IntelliSense in Neovim</title>
