@@ -13,6 +13,14 @@
 	},
 	"items": [
 		{
+			"id": "https://nathan-long.com/blog/talk-motion-2024/",
+			"url": "https://nathan-long.com/blog/talk-motion-2024/",
+			"title": "Talking about Motion for the Web",
+			"content_html": "<p>I mentioned last year that I was working on a series on <a href=\"https://nathan-long.com/blog/building-motion-for-the-web/\">building motion for the web</a>. Well, that series turned into a talk, and we recorded it.</p>\n<p>In it, I talk about:</p>\n<ul>\n<li>Ways to <strong>Classify</strong> motion to help build shared language when talking about types of motion for the web.</li>\n<li>Building a '<strong>Complexity</strong> tier list' for motion to help assist in planning.</li>\n<li>Some recommended Collaboration methods for designing and implementing motion.</li>\n</ul>\n<p>(You see the 3 C's in there? Alliteration FTW 😎)</p>\n<p>You can check the full thing out below.</p>\n<div class=\"feature\">\n  <iframe style=\"width: 100%; height: auto; aspect-ratio: 16/9;\" src=\"https://player.vimeo.com/video/912728757?h=486c8974f8\" width=\"1280\" height=\"360\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen=\"\"></iframe>\n</div>\n",
+			"date_published": "2024-03-06T00:00:00Z"
+		}
+		,
+		{
 			"id": "https://nathan-long.com/blog/keeping-a-project-log/",
 			"url": "https://nathan-long.com/blog/keeping-a-project-log/",
 			"title": "Keeping a Project Log",

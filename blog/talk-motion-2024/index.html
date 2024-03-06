@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keeping a Project Log</title>
+    <title>Talking about Motion for the Web</title>
     <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta name="generator" content="Eleventy v2.0.1">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nathan-long.com/">
-    <meta property="og:title" content="Keeping a Project Log">
+    <meta property="og:title" content="Talking about Motion for the Web">
     <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Keeping a Project Log">
+    <meta property="twitter:title" content="Talking about Motion for the Web">
     <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
     <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -155,74 +155,25 @@
     <main id="main"  class="content text-content flow tmpl-post prose">
       
 <div class="mt-content feature text-center mb-2">
-  <time class="text-small font-mono" datetime="2024-03-04">March 04, 2024</time>
-  <h1 class="mb-0 wrap-balance">Keeping a Project Log</h1>
+  <time class="text-small font-mono" datetime="2024-03-06">March 06, 2024</time>
+  <h1 class="mb-0 wrap-balance">Talking about Motion for the Web</h1>
   <span class="inline-block">
-  <a href="/tags/process/" class="post-tag">process</a>
-  <a href="/tags/thoughts/" class="post-tag">thoughts</a>
+  <a href="/tags/motion/" class="post-tag">motion</a>
   </span>
 </div>
 
-<blockquote>
-<p>Captain's Log, Stardate 41503.7. We have entered the Neutral Zone where a Talarian freighter has been severely damaged in a battle. I have sent an away team to investigate.</p>
-<p>— Captain Jean Luc Picard (S1E20: Heart of Glory)</p>
-</blockquote>
-<p>I grew up watching Star Trek (specifically reruns of The Next Generation) and listening to Captain Jean Luc Picard (the BEST captain, <code>fight me</code>...) record the events of their explorations and adventures.</p>
-<p>I used to wonder: who would listen to these logs? Were they for the captain's benefit? Was some poor schmoe's job at Starfleet to listen to long expositions on events? The internet tells me that the ship's logs were (are?) used to document speed, location, who was onboard, significant events, or anything else regarding the ship's operation. If something goes wrong, the log can help piece together the events leading up to the event.</p>
-<p>But captains aren't the only folks to keep logs.</p>
-<p>Scientists keep highly detailed logs in their <a href="https://en.wikipedia.org/wiki/Lab_notebook">lab notebooks</a>, documenting their hypotheses and experiment results so they can be repeated and breakthroughs can be proven (and protected in the case of intellectual property). Researchers in descriptive sciences keep <a href="https://en.wikipedia.org/wiki/Fieldnotes">field notes</a> to record observations and evidence to help create an understanding of a phenomenon.</p>
-<p>As developers, should we keep logs? <strong>Short answer: Yes.</strong> (And it's not a new idea...) We should keep 'project logs'.</p>
-<p>Great. Fantastic. I'm sure you'll all get right on that and do fine. But if you're like me, perhaps a little more structure into WHAT EXACTLY to log would be helpful.</p>
-<h2 id="what-should-a-web-developer-s-log-look-like" tabindex="-1">What should a web developer's log look like? <a class="header-anchor" href="#what-should-a-web-developer-s-log-look-like">#</a></h2>
-<p>We're not scientists, nor are we space explorers, but as developers, we navigate through series of problems and solutions in projects. We plot a course at the beginning of a project and then observe how that approach fails or succeeds.</p>
-<p>If you're like me, this is all very timely information. Ask me again in 3 months and I will struggle to recall all but the key details of what happened.</p>
-<p>A web developer project log should:</p>
+<p>I mentioned last year that I was working on a series on <a href="../building-motion-for-the-web/">building motion for the web</a>. Well, that series turned into a talk, and we recorded it.</p>
+<p>In it, I talk about:</p>
 <ul>
-<li>Be private, not publicly accessible.</li>
-<li>Be organized by project.</li>
-<li>Record goals and possible solutions upfront.</li>
-<li>Record any supporting links and materials (designs, workspaces, external notes, etc.)</li>
-<li>Contain a chronological log of quick updates on:
-<ul>
-<li>Decisions made, and the reasons for them.</li>
-<li>Events, either internal or external that affect the build process.</li>
-<li>Stray thoughts about future optimizations.</li>
+<li>Ways to <strong>Classify</strong> motion to help build shared language when talking about types of motion for the web.</li>
+<li>Building a '<strong>Complexity</strong> tier list' for motion to help assist in planning.</li>
+<li>Some recommended Collaboration methods for designing and implementing motion.</li>
 </ul>
-</li>
-<li>Record final results and contrast them against the original goals and solutions.</li>
-</ul>
-<p>I'll expand on each of these.</p>
-<h3 id="keep-it-private" tabindex="-1">Keep it Private <a class="header-anchor" href="#keep-it-private">#</a></h3>
-<p>Some developers, especially game developers, keep a public devlog. They can range from things like <a href="https://itch.io/devlogs">patch notes</a>, to something <a href="https://www.gridsagegames.com/blog/">with more behind-the-scenes thinking</a>, to <a href="https://www.youtube.com/watch?v=OU3B3D-52us">lavishly produced videos</a>.</p>
-<p>But game developers face different problems than we do as web developers. They have a game to sell in a saturated market. If they're a small team or indie dev, they may not have folks devoted to evangelizing their game to their audiences. A public devlog increases accountability and gets existing users excited about upcoming updates. It can expose balance notes that might change the <a href="https://en.wikipedia.org/wiki/Metagame">game meta</a>. It can serve as a marketing tool. Because of these uses, a game devlog exists more for the USERS than for the DEVELOPER.</p>
-<p>As web developers, we often sell our services by contract — we don't need the same type of audience-building efforts. In fact, we might even breach contract if we share technical details publicly. So if you keep a log, it will be for YOUR benefit.</p>
-<h3 id="organized-by-project" tabindex="-1">Organized by Project <a class="header-anchor" href="#organized-by-project">#</a></h3>
-<p>I want to make a distinction between a log and a journal. A journal is incredibly useful for stream-of-consciousness observations organized by day. However, using this approach for a project spreads information across a series of time-bound entries. If you're working on multiple projects simultaneously it can be difficult to gather that information back up in a usable way. You can tag it, sort it, segment it, or whatever, but when you go looking for you'll also be perusing entries that will cover a variety of topics in addition to the one you're looking for.</p>
-<p>For maximum benefit, we'll be using these logs both during and after the build. For that reason, we'll make it easier for our future selves to organize these logs by project.</p>
-<h3 id="record-goals-and-approach" tabindex="-1">Record Goals and Approach <a class="header-anchor" href="#record-goals-and-approach">#</a></h3>
-<p>This is one of the most important parts of a developer project log; it's the equivalent of our hypotheses. At the beginning of any project, the problem is explored and an approach is planned to solve it. But projects are not static, goals can change, and wrinkles are introduced by hidden requirements or obstacles that weren't known at the outset. It's much harder to see how far things have drifted if you don't record them first.</p>
-<p>A project manager may record parts of this in shared documentation, but this also includes YOUR goals for the project -- things only you can know. This project log exists for your improvement so it's up to you to record these things yourself. PMs will move on, and you may not be paired again on the next project, so this is for you to develop a consistent practice in your approach.</p>
-<h3 id="record-supporting-links-and-materials" tabindex="-1">Record supporting links and materials <a class="header-anchor" href="#record-supporting-links-and-materials">#</a></h3>
-<p>If you put something out of sight, you won't use it. Part of increasing the use of this project log is to make it a handy dashboard. Stuff it full of the things you constantly have to look up: design files, meeting notes, links to specific tickets. Whatever you need. If you've recorded it, it's all right there.</p>
-<h3 id="chronologically-record-process" tabindex="-1">Chronologically record process <a class="header-anchor" href="#chronologically-record-process">#</a></h3>
-<p>Every so often, at a cadence that makes sense to you, record progress on the build. What's happening? Did the client request something different? Was a problem found in the approach? Document decisions and events. Anything that influences the build should find its way in here. Give it a dated entry so you can piece together what happened when.</p>
-<h3 id="contrast-results-and-goals" tabindex="-1">Contrast results and goals <a class="header-anchor" href="#contrast-results-and-goals">#</a></h3>
-<p>We built up our initial approach, we logged the changes and the path we wound up taking, and now, in the end, we can look back and see the difference between our start and end.</p>
-<p>We can use this to figure out what worked and what didn't. Was there a particular event that helped or hindered the work? Did your collaboration with a teammate cause a new solution to present itself?</p>
-<p>By logging and recognizing these things, we can work to reinforce the good and avoid repeating the bad. If your team runs retrospectives, your log will give you the ammunition to propose changes, highlight difficulties, or give genuine praise to your teammates.</p>
-<p>It can also give you a moment to be proud of what you've accomplished. Did you come up with a new technique? Did the project unlock a mental model of something? Use these things to fill out your <a href="https://jvns.ca/blog/brag-documents/">Brag Sheet</a>.</p>
-<h2 id="format" tabindex="-1">Format <a class="header-anchor" href="#format">#</a></h2>
-<p>This is the least important part of the log, and the easiest one to get trapped in. The tool must facilitate the work, not dominate your time. Several tools fit the bill:</p>
-<ul>
-<li><a href="https://tiddlywiki.com/">TiddlyWiki</a></li>
-<li><a href="https://obsidian.md/">Obsidian</a></li>
-<li><a href="https://www.notion.so/">Notion</a></li>
-<li>... heck, even just some scripts and plaintext.</li>
-</ul>
-<p>It just needs to be easy to call up and edit. I personally use TiddlyWiki as part of a larger personal wiki. I love being able to easily extend and format it with HTML/CSS/JS and all the data is stored in plaintext files (either as <code>.tid</code> with WikiText syntax or as <code>.md</code> with Markdown syntax).</p>
-<p>But pick something that works for you.</p>
-<h2 id="warp-factor-two-engage" tabindex="-1">Warp Factor Two... Engage! <a class="header-anchor" href="#warp-factor-two-engage">#</a></h2>
-<p>There. A little structure, a little advice, and now we have a tool to help meaningfully progress our technical chops one project at a time.</p>
+<p>(You see the 3 C's in there? Alliteration FTW 😎)</p>
+<p>You can check the full thing out below.</p>
+<div class="feature">
+  <iframe style="width: 100%; height: auto; aspect-ratio: 16/9;" src="https://player.vimeo.com/video/912728757?h=486c8974f8" width="1280" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 
 <div class="mt-2">
@@ -235,19 +186,19 @@
 
   
   <p>Want to discuss this?
-    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Keeping a Project Log">Email Me</a>
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Talking about Motion for the Web">Email Me</a>
   </p>
 </div>
 <div class="feature py-1 color-reduced mt-2">
   <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
     <li class="grow w-1/2">
       <span class="uppercase decoration-none text-small">Previous:</span><br/>
-        <a href="/blog/class-regex-for-tailwind-intellisense/" class="decoration-none font-thin font-bold">Custom Class Regex for Tailwind IntelliSense in Neovim<br/>&larr;</a></li>
+        <a href="/blog/keeping-a-project-log/" class="decoration-none font-thin font-bold">Keeping a Project Log<br/>&larr;</a></li>
       
     <li class="text-right grow w-1/2">
       <span class="uppercase decoration-none text-small">Next:</span>
       <br/>
-        <a href="/blog/talk-motion-2024/" class="decoration-none font-thin font-bold">Talking about Motion for the Web<br/>&rarr;</a>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
       
     </li>
   </ul>

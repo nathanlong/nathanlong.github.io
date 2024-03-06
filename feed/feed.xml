@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2024-03-04T00:00:00Z</updated>
+	<updated>2024-03-06T00:00:00Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,26 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Talking about Motion for the Web</title>
+		<link href="https://nathan-long.com/blog/talk-motion-2024/"/>
+		<updated>2024-03-06T00:00:00Z</updated>
+		<id>https://nathan-long.com/blog/talk-motion-2024/</id>
+		<content type="html">&lt;p&gt;I mentioned last year that I was working on a series on &lt;a href=&quot;https://nathan-long.com/blog/building-motion-for-the-web/&quot;&gt;building motion for the web&lt;/a&gt;. Well, that series turned into a talk, and we recorded it.&lt;/p&gt;
+&lt;p&gt;In it, I talk about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ways to &lt;strong&gt;Classify&lt;/strong&gt; motion to help build shared language when talking about types of motion for the web.&lt;/li&gt;
+&lt;li&gt;Building a &#39;&lt;strong&gt;Complexity&lt;/strong&gt; tier list&#39; for motion to help assist in planning.&lt;/li&gt;
+&lt;li&gt;Some recommended Collaboration methods for designing and implementing motion.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(You see the 3 C&#39;s in there? Alliteration FTW 😎)&lt;/p&gt;
+&lt;p&gt;You can check the full thing out below.&lt;/p&gt;
+&lt;div class=&quot;feature&quot;&gt;
+  &lt;iframe style=&quot;width: 100%; height: auto; aspect-ratio: 16/9;&quot; src=&quot;https://player.vimeo.com/video/912728757?h=486c8974f8&quot; width=&quot;1280&quot; height=&quot;360&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; fullscreen; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Keeping a Project Log</title>
