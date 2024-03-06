@@ -349,6 +349,7 @@ h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-top: 0;
+  text-wrap: pretty;
 }
 
 .heading-massive {
@@ -882,7 +883,8 @@ button {
 }
 
 .intro-title {
-  font-size: 3em;
+  font-size: 4em;
+  line-height: 1;
   margin-top: 0.25em;
 }
 
