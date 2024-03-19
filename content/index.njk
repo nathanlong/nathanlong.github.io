@@ -1,10 +1,14 @@
 ---
 layout: layouts/full.njk
+extraJS:
+- name: rive
+  src: https://unpkg.com/@rive-app/canvas@2.7.0
+
 ---
 
-<section class="intro full radial-bottom">
+<section class="intro full radial-bottom relative">
   <div class="content-inner mx-auto">
-    <div class="intro-content flow">
+    <div class="intro-content flow z-1 relative">
       <p class="intro-eyebrow lh-1">Nathan Long</p>
       <h1 class="intro-title">Designer brain,<br/>developer heart.</h1>
       <p>UI Developer at <a href="https://www.viget.com">Viget</a></p>
@@ -23,7 +27,7 @@ layout: layouts/full.njk
     {% set postslistCounter = collections.posts | length %}
     {% include "postslist.njk" %}
 
-    <a class="btn text-small flow-3" role="button" draggable="false" href="{{ '/posts/' | url }}" data-module="link-button">Archive &rarr;</a>
+    <a class="btn text-small flow-3" role="button" draggable="false" href="{{ '/blog/' | url }}" data-module="link-button">More Words &rarr;</a>
   </div>
 </section>
 
