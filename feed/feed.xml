@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2024-03-06T00:00:00Z</updated>
+	<updated>2024-03-21T13:16:32Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,79 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>These Are a Few of My Favorite CLI Things...</title>
+		<link href="https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/"/>
+		<updated>2024-03-21T13:16:32Z</updated>
+		<id>https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/</id>
+		<content type="html">&lt;p&gt;I&#39;ve recently been perusing the setups at &lt;a href=&quot;https://uses.tech/&quot;&gt;uses.tech&lt;/a&gt;. It&#39;s interesting to see where people have landed on hardware and software options, but I started thinking about some of the miscellaneous CLI utilities I&#39;ve tried and picked up along the way. My work LIVES inside the terminal (as a Vim user) and here are some of the small things I&#39;ve found to make it easier on myself (in no particular order):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;tig&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;exa&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;bashmarks&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;ffmpeg&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;degit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;just&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;asdf&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;&lt;code&gt;btop&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;tig&quot; tabindex=&quot;-1&quot;&gt;tig &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Site:&lt;/strong&gt; &lt;a href=&quot;https://jonas.github.io/tig/&quot;&gt;https://jonas.github.io/tig/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Git can be weird sometimes. While I don&#39;t use &lt;code&gt;tig&lt;/code&gt; to perform any git operations, I find the explorer view helpful to see what&#39;s going on in there. Have you rebased correctly? What did your teammates just commit, and what files did it affect? I run this constantly on active projects to keep a mental picture of what&#39;s going on.&lt;/p&gt;
+&lt;p&gt;(So what DO I do most of my git actions with? I use Tim Pope&#39;s excellent &lt;a href=&quot;https://github.com/tpope/vim-fugitive&quot;&gt;Fugitive&lt;/a&gt; Vim plugin, but that&#39;s more Vim-based, so it doesn&#39;t qualify for this article...)&lt;/p&gt;
+&lt;div class=&quot;feature rounded-1 overflow-hidden lh-0&quot;&gt;
+  &lt;video class=&quot;w-full h-auto&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot; playsinline=&quot;&quot;&gt;
+      &lt;source src=&quot;https://github.com/nathanlong/nathanlong.github.io/assets/623568/44491262-1f61-402d-b394-31c16aa65bcd&quot; type=&quot;video/mp4&quot;&gt;
+  &lt;/video&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;exa&quot; tabindex=&quot;-1&quot;&gt;exa &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Site:&lt;/strong&gt; &lt;a href=&quot;https://the.exa.website/&quot;&gt;https://the.exa.website/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;exa&lt;/code&gt; is a more colorful way to list files and directories. It may seem simple, but when you&#39;re navigating around, having color-coded items, as well as other pertinent information right at hand, is a nice quality-of-life improvement. This has completely replaced &lt;code&gt;ls -laF&lt;/code&gt; for me. I&#39;ve aliased the two modes I use the most to:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;alias&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;ll&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;exa --long --header --git --all&#39;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# long form, everything&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;alias&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;lt&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;exa --tree --level=2 --long --all&#39;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# tree view&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;feature rounded-1 overflow-hidden lh-0&quot;&gt;
+  &lt;video class=&quot;w-full h-auto&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot; playsinline=&quot;&quot;&gt;
+    &lt;source src=&quot;https://github.com/nathanlong/nathanlong.github.io/assets/623568/4faafda2-4c14-49ad-a48f-7f21bbf289dd&quot; type=&quot;video/mp4&quot;&gt;
+  &lt;/video&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;bashmarks&quot; tabindex=&quot;-1&quot;&gt;bashmarks &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Github:&lt;/strong&gt; &lt;a href=&quot;https://github.com/huyng/bashmarks&quot;&gt;https://github.com/huyng/bashmarks&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I found this bash script about 12 years ago and I&#39;ve used it every day since then. It&#39;s a very simple bookmarking system for navigating directories with tab completion and very short commands. &lt;code&gt;s&lt;/code&gt; saves the current directory with the name you give it, and &lt;code&gt;g&lt;/code&gt; + &lt;code&gt;name&lt;/code&gt; takes you right back to that path.&lt;/p&gt;
+&lt;p&gt;I&#39;ve tried fuzzy completion and other fancier bookmarking options, but this one is so simple and does just what I need that I&#39;ve wound up back at bashmarks several times. I&#39;ll save the fancy fuzzy searching for INSIDE projects, I&#39;d rather just teleport to where I need to go. I highly recommend this script if you need a simple navigation option.&lt;/p&gt;
+&lt;h2 id=&quot;ffmpeg&quot; tabindex=&quot;-1&quot;&gt;ffmpeg &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Site:&lt;/strong&gt; &lt;a href=&quot;https://ffmpeg.org/&quot;&gt;https://ffmpeg.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is an absolute monster of a video and audio tool. Need to compress a looping ambient hero video? Run it through &lt;code&gt;ffmpeg&lt;/code&gt;. Need to strip the audio from something? Run it through &lt;code&gt;ffmpeg&lt;/code&gt;. Need to quickly trim down a video? You guessed it, &lt;code&gt;ffmpeg&lt;/code&gt;. I have shaved innumerable megabytes of video data with this tool while processing assets for client projects.&lt;/p&gt;
+&lt;p&gt;The only beef I have with it is that writing out the arguments for proper compression is like trying to write an arcane spell. You need special knowledge of &lt;code&gt;ffmpeg&lt;/code&gt;&#39;s vast options and some knowledge of video codecs to make your way. Yet despite that, it remains an indispensable tool for front-end development.&lt;/p&gt;
+&lt;p&gt;The video screencaps in this article were captured with a normal Quicktime screen recording, but I have a special quickfire mov-to-mp4 command that uses the absolute basic mp4 defaults and still manages to make them 5-10% of the original &lt;code&gt;.mov&lt;/code&gt; size:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Quicktime mov files are so big!&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function-name function&quot;&gt;movtomp4&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token for-or-select variable&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; *.mov&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;do&lt;/span&gt; 
+		ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;$i&lt;/span&gt;&quot;&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;${i}&lt;/span&gt;.mp4&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+	&lt;span class=&quot;token keyword&quot;&gt;done&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At some point, I&#39;ll have to write up my cheatsheet for &lt;code&gt;ffmpeg&lt;/code&gt;...&lt;/p&gt;
+&lt;h2 id=&quot;degit&quot; tabindex=&quot;-1&quot;&gt;degit &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Github:&lt;/strong&gt; &lt;a href=&quot;https://github.com/Rich-Harris/degit&quot;&gt;https://github.com/Rich-Harris/degit&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I learned about &lt;code&gt;degit&lt;/code&gt; from the Vite docs, and it&#39;s become my go-to way for initializing a prototype kit. When I have an idea I want to try, I turn to &lt;code&gt;degit&lt;/code&gt; and let it grab all the configuration files for me. Need Tailwind? Grab a starter kit for that. Testing out something in React? There&#39;s a starter kit you can pull for that too.&lt;/p&gt;
+&lt;p&gt;In fact, I made a few &lt;a href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;starter kits of my own&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;just&quot; tabindex=&quot;-1&quot;&gt;just &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Github:&lt;/strong&gt; &lt;a href=&quot;https://github.com/casey/just&quot;&gt;https://github.com/casey/just&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Do you have a project that needs lots of arbitrary commands? Things you have to continually look up and paste back into your console? &lt;code&gt;just&lt;/code&gt; helps provide a unified layer on top of whatever system you&#39;re using. Unlike a Rakefile or Makefile, it&#39;s not bound to any specific language, you can just feed it whatever commands you&#39;d like and it&#39;ll run them for you.&lt;/p&gt;
+&lt;p&gt;It even pairs nicely with the previous utility, &lt;code&gt;degit&lt;/code&gt; to help form a rapid-start prototyping area with &lt;a href=&quot;https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/&quot;&gt;project templates&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;asdf&quot; tabindex=&quot;-1&quot;&gt;asdf &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Site:&lt;/strong&gt; &lt;a href=&quot;https://asdf-vm.com/&quot;&gt;https://asdf-vm.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It can be tough to make sure that your environments are in sync across projects, versions, and even programming languages. For a while, I was using language-specific version managers (&lt;code&gt;nvm&lt;/code&gt;, &lt;code&gt;rvm&lt;/code&gt;, with all the shims that come with it) but Viget introduced me to &lt;code&gt;asdf&lt;/code&gt; as an all-in-one way to manage all these different languages in a way that didn&#39;t have me pulling my hair out.&lt;/p&gt;
+&lt;h2 id=&quot;btop&quot; tabindex=&quot;-1&quot;&gt;btop &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Github:&lt;/strong&gt; &lt;a href=&quot;https://github.com/aristocratos/btop&quot;&gt;https://github.com/aristocratos/btop&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Think Activity Monitor, but way cooler looking and accessible without clicking a bunch of things. &lt;code&gt;btop&lt;/code&gt; is a pleasing way to see just what is making your computer slow down to a crawl (shakes fist at Docker).&lt;/p&gt;
+&lt;div class=&quot;feature rounded-1 overflow-hidden lh-0&quot;&gt;
+&lt;video class=&quot;w-full h-auto&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot; playsinline=&quot;&quot;&gt;
+      &lt;source src=&quot;https://github.com/nathanlong/nathanlong.github.io/assets/623568/15fc78f3-a1d3-4e30-acca-a070f4fea860&quot; type=&quot;video/mp4&quot;&gt;
+&lt;/video&gt;
+&lt;/div&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Talking about Motion for the Web</title>

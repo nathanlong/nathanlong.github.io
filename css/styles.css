@@ -1611,6 +1611,10 @@ a.color-reduced {
   left: 1em;
 }
 
+.lh-0 {
+  line-height: 0;
+}
+
 .lh-1 {
   line-height: 1;
 }

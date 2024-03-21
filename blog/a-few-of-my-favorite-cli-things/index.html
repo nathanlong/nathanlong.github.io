@@ -3,20 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talking about Motion for the Web</title>
-    <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <title>These Are a Few of My Favorite CLI Things...</title>
+    <meta name="description" content="I take a look at a few of the CLI utilities I&#39;ve picked up along the way.">
     <meta name="generator" content="Eleventy v2.0.1">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nathan-long.com/">
-    <meta property="og:title" content="Talking about Motion for the Web">
-    <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="og:title" content="These Are a Few of My Favorite CLI Things...">
+    <meta property="og:description" content="I take a look at a few of the CLI utilities I&#39;ve picked up along the way.">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Talking about Motion for the Web">
-    <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="twitter:title" content="These Are a Few of My Favorite CLI Things...">
+    <meta property="twitter:description" content="I take a look at a few of the CLI utilities I&#39;ve picked up along the way.">
     <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -155,24 +155,77 @@
     <main id="main"  class="content text-content flow tmpl-post prose">
       
 <div class="mt-content feature text-center mb-2">
-  <time class="text-small font-mono" datetime="2024-03-06">March 06, 2024</time>
-  <h1 class="mb-0 wrap-balance">Talking about Motion for the Web</h1>
+  <time class="text-small font-mono" datetime="2024-03-21">March 21, 2024</time>
+  <h1 class="mb-0 wrap-balance">These Are a Few of My Favorite CLI Things...</h1>
   <span class="inline-block">
-  <a href="/tags/motion/" class="post-tag">motion</a>
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
   </span>
 </div>
 
-<p>I mentioned last year that I was working on a series on <a href="../building-motion-for-the-web/">building motion for the web</a>. Well, that series turned into a talk, and we recorded it.</p>
-<p>In it, I talk about:</p>
+<p>I've recently been perusing the setups at <a href="https://uses.tech/">uses.tech</a>. It's interesting to see where people have landed on hardware and software options, but I started thinking about some of the miscellaneous CLI utilities I've tried and picked up along the way. My work LIVES inside the terminal (as a Vim user) and here are some of the small things I've found to make it easier on myself (in no particular order):</p>
 <ul>
-<li>Ways to <strong>Classify</strong> motion to help build shared language when talking about types of motion for the web.</li>
-<li>Building a '<strong>Complexity</strong> tier list' for motion to help assist in planning.</li>
-<li>Some recommended Collaboration methods for designing and implementing motion.</li>
+<li><a href="#tig"><code>tig</code></a></li>
+<li><a href="#exa"><code>exa</code></a></li>
+<li><a href="#bashmarks"><code>bashmarks</code></a></li>
+<li><a href="#ffmpeg"><code>ffmpeg</code></a></li>
+<li><a href="#degit"><code>degit</code></a></li>
+<li><a href="#just"><code>just</code></a></li>
+<li><a href="#asdf"><code>asdf</code></a></li>
+<li><a href="#btop"><code>btop</code></a></li>
 </ul>
-<p>(You see the 3 C's in there? Alliteration FTW 😎)</p>
-<p>You can check the full thing out below.</p>
-<div class="feature">
-  <iframe style="width: 100%; height: auto; aspect-ratio: 16/9;" src="https://player.vimeo.com/video/912728757?h=486c8974f8" width="1280" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<h2 id="tig" tabindex="-1">tig <a class="header-anchor" href="#tig">#</a></h2>
+<p><strong>Site:</strong> <a href="https://jonas.github.io/tig/">https://jonas.github.io/tig/</a></p>
+<p>Git can be weird sometimes. While I don't use <code>tig</code> to perform any git operations, I find the explorer view helpful to see what's going on in there. Have you rebased correctly? What did your teammates just commit, and what files did it affect? I run this constantly on active projects to keep a mental picture of what's going on.</p>
+<p>(So what DO I do most of my git actions with? I use Tim Pope's excellent <a href="https://github.com/tpope/vim-fugitive">Fugitive</a> Vim plugin, but that's more Vim-based, so it doesn't qualify for this article...)</p>
+<div class="feature rounded-1 overflow-hidden lh-0">
+  <video class="w-full h-auto" autoplay muted loop playsinline>
+      <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/44491262-1f61-402d-b394-31c16aa65bcd" type="video/mp4" />
+  </video>
+</div>
+<h2 id="exa" tabindex="-1">exa <a class="header-anchor" href="#exa">#</a></h2>
+<p><strong>Site:</strong> <a href="https://the.exa.website/">https://the.exa.website/</a></p>
+<p><code>exa</code> is a more colorful way to list files and directories. It may seem simple, but when you're navigating around, having color-coded items, as well as other pertinent information right at hand, is a nice quality-of-life improvement. This has completely replaced <code>ls -laF</code> for me. I've aliased the two modes I use the most to:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token builtin class-name">alias</span> <span class="token assign-left variable">ll</span><span class="token operator">=</span><span class="token string">'exa --long --header --git --all'</span> <span class="token comment"># long form, everything</span>
+<span class="token builtin class-name">alias</span> <span class="token assign-left variable">lt</span><span class="token operator">=</span><span class="token string">'exa --tree --level=2 --long --all'</span> <span class="token comment"># tree view</span></code></pre>
+<div class="feature rounded-1 overflow-hidden lh-0">
+  <video class="w-full h-auto" autoplay muted loop playsinline>
+    <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/4faafda2-4c14-49ad-a48f-7f21bbf289dd" type="video/mp4" />
+  </video>
+</div>
+<h2 id="bashmarks" tabindex="-1">bashmarks <a class="header-anchor" href="#bashmarks">#</a></h2>
+<p><strong>Github:</strong> <a href="https://github.com/huyng/bashmarks">https://github.com/huyng/bashmarks</a></p>
+<p>I found this bash script about 12 years ago and I've used it every day since then. It's a very simple bookmarking system for navigating directories with tab completion and very short commands. <code>s</code> saves the current directory with the name you give it, and <code>g</code> + <code>name</code> takes you right back to that path.</p>
+<p>I've tried fuzzy completion and other fancier bookmarking options, but this one is so simple and does just what I need that I've wound up back at bashmarks several times. I'll save the fancy fuzzy searching for INSIDE projects, I'd rather just teleport to where I need to go. I highly recommend this script if you need a simple navigation option.</p>
+<h2 id="ffmpeg" tabindex="-1">ffmpeg <a class="header-anchor" href="#ffmpeg">#</a></h2>
+<p><strong>Site:</strong> <a href="https://ffmpeg.org/">https://ffmpeg.org/</a></p>
+<p>This is an absolute monster of a video and audio tool. Need to compress a looping ambient hero video? Run it through <code>ffmpeg</code>. Need to strip the audio from something? Run it through <code>ffmpeg</code>. Need to quickly trim down a video? You guessed it, <code>ffmpeg</code>. I have shaved innumerable megabytes of video data with this tool while processing assets for client projects.</p>
+<p>The only beef I have with it is that writing out the arguments for proper compression is like trying to write an arcane spell. You need special knowledge of <code>ffmpeg</code>'s vast options and some knowledge of video codecs to make your way. Yet despite that, it remains an indispensable tool for front-end development.</p>
+<p>The video screencaps in this article were captured with a normal Quicktime screen recording, but I have a special quickfire mov-to-mp4 command that uses the absolute basic mp4 defaults and still manages to make them 5-10% of the original <code>.mov</code> size:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token comment"># Quicktime mov files are so big!</span>
+<span class="token keyword">function</span> <span class="token function-name function">movtomp4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> *.mov<span class="token punctuation">;</span> <span class="token keyword">do</span> 
+		ffmpeg <span class="token parameter variable">-i</span> <span class="token string">"<span class="token variable">$i</span>"</span> <span class="token string">"<span class="token variable">${i}</span>.mp4"</span><span class="token punctuation">;</span> 
+	<span class="token keyword">done</span>
+<span class="token punctuation">}</span></code></pre>
+<p>At some point, I'll have to write up my cheatsheet for <code>ffmpeg</code>...</p>
+<h2 id="degit" tabindex="-1">degit <a class="header-anchor" href="#degit">#</a></h2>
+<p><strong>Github:</strong> <a href="https://github.com/Rich-Harris/degit">https://github.com/Rich-Harris/degit</a></p>
+<p>I learned about <code>degit</code> from the Vite docs, and it's become my go-to way for initializing a prototype kit. When I have an idea I want to try, I turn to <code>degit</code> and let it grab all the configuration files for me. Need Tailwind? Grab a starter kit for that. Testing out something in React? There's a starter kit you can pull for that too.</p>
+<p>In fact, I made a few <a href="/blog/vite-rapid-prototype-starter-kits/">starter kits of my own</a>.</p>
+<h2 id="just" tabindex="-1">just <a class="header-anchor" href="#just">#</a></h2>
+<p><strong>Github:</strong> <a href="https://github.com/casey/just">https://github.com/casey/just</a></p>
+<p>Do you have a project that needs lots of arbitrary commands? Things you have to continually look up and paste back into your console? <code>just</code> helps provide a unified layer on top of whatever system you're using. Unlike a Rakefile or Makefile, it's not bound to any specific language, you can just feed it whatever commands you'd like and it'll run them for you.</p>
+<p>It even pairs nicely with the previous utility, <code>degit</code> to help form a rapid-start prototyping area with <a href="/blog/vite-rapid-prototype-starter-kits/">project templates</a></p>
+<h2 id="asdf" tabindex="-1">asdf <a class="header-anchor" href="#asdf">#</a></h2>
+<p><strong>Site:</strong> <a href="https://asdf-vm.com/">https://asdf-vm.com/</a></p>
+<p>It can be tough to make sure that your environments are in sync across projects, versions, and even programming languages. For a while, I was using language-specific version managers (<code>nvm</code>, <code>rvm</code>, with all the shims that come with it) but Viget introduced me to <code>asdf</code> as an all-in-one way to manage all these different languages in a way that didn't have me pulling my hair out.</p>
+<h2 id="btop" tabindex="-1">btop <a class="header-anchor" href="#btop">#</a></h2>
+<p><strong>Github:</strong> <a href="https://github.com/aristocratos/btop">https://github.com/aristocratos/btop</a></p>
+<p>Think Activity Monitor, but way cooler looking and accessible without clicking a bunch of things. <code>btop</code> is a pleasing way to see just what is making your computer slow down to a crawl (shakes fist at Docker).</p>
+<div class="feature rounded-1 overflow-hidden lh-0">
+<video class="w-full h-auto" autoplay muted loop playsinline>
+      <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/15fc78f3-a1d3-4e30-acca-a070f4fea860" type="video/mp4" />
+</video>
 </div>
 
 
@@ -186,19 +239,19 @@
 
   
   <p>Want to discuss this?
-    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Talking about Motion for the Web">Email Me</a>
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:These Are a Few of My Favorite CLI Things...">Email Me</a>
   </p>
 </div>
 <div class="feature py-1 color-reduced mt-2">
   <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
     <li class="grow w-1/2">
       <span class="uppercase decoration-none text-small">Previous:</span><br/>
-        <a href="/blog/keeping-a-project-log/" class="decoration-none font-thin font-bold">Keeping a Project Log<br/>&larr;</a></li>
+        <a href="/blog/talk-motion-2024/" class="decoration-none font-thin font-bold">Talking about Motion for the Web<br/>&larr;</a></li>
       
     <li class="text-right grow w-1/2">
       <span class="uppercase decoration-none text-small">Next:</span>
       <br/>
-        <a href="/blog/a-few-of-my-favorite-cli-things/" class="decoration-none font-thin font-bold">These Are a Few of My Favorite CLI Things...<br/>&rarr;</a>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
       
     </li>
   </ul>
