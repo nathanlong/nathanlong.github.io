@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2024-03-21T13:16:32Z</updated>
+	<updated>2024-03-27T16:44:55Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,161 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>ffmpeg Basics and Recipes</title>
+		<link href="https://nathan-long.com/blog/ffmpeg-basics-and-recipes/"/>
+		<updated>2024-03-27T16:44:55Z</updated>
+		<id>https://nathan-long.com/blog/ffmpeg-basics-and-recipes/</id>
+		<content type="html">&lt;p&gt;Recently I wrote about &lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;ffmpeg&lt;/a&gt;, a Swiss-army knife command-line utility for media. While I find it incredibly handy NOW, it took time to build up a working knowledge of the tool to handle certain tasks with confidence. The downside of having a versatile tool is that it can do an awful lot of things!&lt;/p&gt;
+&lt;p&gt;So let&#39;s break down how it works and I&#39;ll share some of my most common recipes for converting media.&lt;/p&gt;
+&lt;h2 id=&quot;installing&quot; tabindex=&quot;-1&quot;&gt;Installing &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The easiest way to install (on a Mac) is with &lt;a href=&quot;https://brew.sh/&quot;&gt;homebrew&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;brew install ffmpeg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can also download directly from &lt;a href=&quot;https://ffmpeg.org/download.html&quot;&gt;their site&lt;/a&gt;, but that&#39;s a tad more involved. Homebrew drops it into your path, ready to go.&lt;/p&gt;
+&lt;h2 id=&quot;basics&quot; tabindex=&quot;-1&quot;&gt;Basics &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;An &lt;code&gt;ffmpeg&lt;/code&gt; command will take:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;An &lt;strong&gt;input file,&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;several sets of &lt;strong&gt;options&lt;/strong&gt;,&lt;/li&gt;
+&lt;li&gt;and an &lt;strong&gt;output file&lt;/strong&gt; to spit everything out into.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A basic command will look something like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input-file &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;lots of options here&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; output-file&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;compression&quot; tabindex=&quot;-1&quot;&gt;Compression &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;One of the handiest things &lt;code&gt;ffmpeg&lt;/code&gt; can do is give you fine-grained control over video compression. Not only can you pick the method of compression, you can choose what codec to use.&lt;/p&gt;
+&lt;p&gt;There are several methods of compression, but two of the main ones you&#39;ll see are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-b:v&lt;/code&gt; Sets a fixed &lt;strong&gt;bitrate&lt;/strong&gt; of the output, measured in kb (ex. 1200kb) or megabytes (ex. 2M). You&#39;ll typically see values between 1200-6000kb. The lower the number, the less &#39;bits&#39; will be used.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-crf&lt;/code&gt; Sets a &lt;strong&gt;Constant Rate Factor&lt;/strong&gt; (available for &lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt;, &lt;a href=&quot;http://x265.org/&quot;&gt;x265&lt;/a&gt; and &lt;a href=&quot;https://www.webmproject.org/code/&quot;&gt;libvpx&lt;/a&gt;). This is a smart value between 0 and 51 that attempts to vary the bitrate per frame for better-looking results (less artifacts). For x264, sane values are between 18 (better quality, larger file) and 28 (lower quality, larger file). The default is 23, so you can use this as a starting point.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bitrates can get quite complicated but give you a lot of control. They&#39;re useful in situations for streaming videos or where you need to specify a minimum, maximum, or ensure a constant bitrate. Because I use &lt;code&gt;ffmpeg&lt;/code&gt; to operate on smaller videos I gravitate towards &lt;code&gt;-crf&lt;/code&gt; values.&lt;/p&gt;
+&lt;p&gt;Read more on &lt;a href=&quot;https://slhck.info/video/2017/02/24/crf-guide.html&quot;&gt;how CRF works&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;convert-to-h264-mp4&quot; tabindex=&quot;-1&quot;&gt;Convert to h264 mp4 &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If you need to share a video, you can&#39;t go wrong with an mp4. It&#39;s widely supported and everything except ancient devices should be able to play it. Here&#39;s a good default compression recipe:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mov &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libx264 &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-preset&lt;/span&gt; very slow output.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Option descriptions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-c:v&lt;/code&gt; selects the compression format to &lt;code&gt;libx264&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-crf 28&lt;/code&gt; sets a decent constant rate factor.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-preset&lt;/code&gt; sets a series of options that will provide a certain encoding speed to compression ratio, slower speeds mean more compression.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One benefit of H264 compression is it&#39;s FAST and pretty efficient. I can usually get a &lt;code&gt;.mov&lt;/code&gt; file down to about 10% of its size with this recipe.&lt;/p&gt;
+&lt;p&gt;Read more about &lt;a href=&quot;https://trac.ffmpeg.org/wiki/Encode/H.264&quot;&gt;H264 compression&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;convert-to-webm&quot; tabindex=&quot;-1&quot;&gt;Convert to webm &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;webm is now &lt;a href=&quot;https://caniuse.com/webm&quot;&gt;fully supported in modern browsers&lt;/a&gt; but is a little more finicky to encode, it&#39;s quite easy to set some options and wind up with large webm files. I find webm&#39;s to be slightly larger than well-compressed mp4s.&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libvpx-vp9 &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-b:v&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; output.webm&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-c:v&lt;/code&gt; selects the compression format to &lt;code&gt;libvpx-vp9&lt;/code&gt; which is the latest webm codec.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-b:v&lt;/code&gt; is set to 0 (required) to allow constant quality settings with:&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-crf 30&lt;/code&gt; which follows the CRF numbers outlined above&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;They recommend that you use a two-pass method on webm for the best results, but it is QUITE slow, so grab a coffee while you wait:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libvpx-vp9 &lt;span class=&quot;token parameter variable&quot;&gt;-b:v&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-pass&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-an&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-f&lt;/span&gt; null /dev/null &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libvpx-vp9 &lt;span class=&quot;token parameter variable&quot;&gt;-b:v&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-pass&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-c:a&lt;/span&gt; libopus output.webm&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-pass {number}&lt;/code&gt; lets it know that we&#39;re doing some multipass business here.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-f&lt;/code&gt; forces output, in this case &lt;code&gt;null&lt;/code&gt; to prevent the first pass from outputting anything&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; is a normal bash/zsh command to run the second command if the first command is successful.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Read more on &lt;a href=&quot;https://trac.ffmpeg.org/wiki/Encode/VP9&quot;&gt;VP9 compression here&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Heads Up!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;When you do a two-pass encoding, the first pass will LOOK like nothing is happening, just be patient, it will eventually start showing progress and spit out your file.&lt;/p&gt;
+&lt;p&gt;I&#39;ll also state that I haven&#39;t found much difference between the single pass and the double pass methods, but I also think I&#39;m not operating at the size and length of video files to see the difference. If it&#39;s a smaller file, the single pass is probably good enough for your needs.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;common-recipes&quot; tabindex=&quot;-1&quot;&gt;Common Recipes &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Now we&#39;ve talked about compression, what are some other things you can do? Here are a few of the tasks I find myself running.&lt;/p&gt;
+&lt;h3 id=&quot;scale-video-by-height&quot; tabindex=&quot;-1&quot;&gt;Scale Video by Height &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;One of the easiest ways to shrink file size is to reduce the size of the video, especially if you&#39;ve got a mondo-sized source file. To produce a 1080p video:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;-1:1080 output.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-vf&lt;/code&gt; is an alias for &lt;code&gt;-filter:v&lt;/code&gt; (video filter)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;scale=-1:1080&lt;/code&gt;resizes the video to &#39;&#39;whatever&#39;&#39; (the -1) by 1080 pixels high. If the video is 16:9, the width would then be 1920. If you ran &lt;code&gt;-1:720&lt;/code&gt; the output would be 1280x720 for a 16:9 video.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Common resolutions for 16:9 video are: 1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080, 2560×1440 and 3840×2160. You can use these as some numbers to start with.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;trim-video-by-timecode&quot; tabindex=&quot;-1&quot;&gt;Trim Video by Timecode &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Sometimes you only need a slice of a video, or you need to just shave off the first few seconds of something. Here&#39;s how you trim by timecode:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-ss&lt;/span&gt; 00:01:02.500 &lt;span class=&quot;token parameter variable&quot;&gt;-t&lt;/span&gt; 00:01:03.250 &lt;span class=&quot;token parameter variable&quot;&gt;-c&lt;/span&gt; copy output.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-ss&lt;/code&gt; indicates start time in seconds (with decimals for sub-second times)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-to&lt;/code&gt; is the end time in &lt;code&gt;hh:mm:ss&lt;/code&gt; format&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt; copies existing formats&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-ss&lt;/span&gt; 00:00:03 output.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Not providing a &lt;code&gt;-to&lt;/code&gt; means it runs to the end of the file. This example will trim off the first 3 seconds of the file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;remove-audio&quot; tabindex=&quot;-1&quot;&gt;Remove Audio &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; example.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-c&lt;/span&gt; copy &lt;span class=&quot;token parameter variable&quot;&gt;-an&lt;/span&gt; example-nosound.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-an&lt;/code&gt; removes audio&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt; copies existing formats&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;boost-volume&quot; tabindex=&quot;-1&quot;&gt;Boost Volume &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Note that this can work on audio files, not just videos.&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.wav &lt;span class=&quot;token parameter variable&quot;&gt;-af&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;volume=1.5&quot;&lt;/span&gt; output.wav&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-af&lt;/code&gt; set audio filters&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;volume=1.5&lt;/code&gt; and boost the volume to 150% of the original. This can be proportional or in decibels: &lt;code&gt;volume=-5dB&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;create-a-poster-image&quot; tabindex=&quot;-1&quot;&gt;Create a Poster Image &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Embedding an HTML video and don&#39;t have a poster image? Rather than trying to awkwardly screengrab something, you can use this to create an image at a specific timestamp.&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; example.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-ss&lt;/span&gt; 00:00:00.000 &lt;span class=&quot;token parameter variable&quot;&gt;-vframes&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;thumb.png&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-ss&lt;/code&gt; seeks to where we’re pulling a frame (in this case, the start of the video)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-vframes&lt;/code&gt; sets the number of frames to output&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*.png&lt;/code&gt; (in output file extension) converts it to a PNG image&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;advanced-recipes&quot; tabindex=&quot;-1&quot;&gt;Advanced Recipes &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Here are some of the more complicated recipes I use that string together some of the operations I&#39;ve already covered.&lt;/p&gt;
+&lt;h3 id=&quot;create-ambient-video-mp4&quot; tabindex=&quot;-1&quot;&gt;Create Ambient Video MP4 &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Need to load up a looping ambient video, but you&#39;re given a 200+MB file?&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libx264 &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-preset&lt;/span&gt; veryslow &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;-1:720 &lt;span class=&quot;token parameter variable&quot;&gt;-movflags&lt;/span&gt; +faststart &lt;span class=&quot;token parameter variable&quot;&gt;-an&lt;/span&gt; output.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses H264 compression&lt;/li&gt;
+&lt;li&gt;Uses a Constant Rate of 28&lt;/li&gt;
+&lt;li&gt;Uses the &lt;code&gt;veryslow&lt;/code&gt; preset for better compression&lt;/li&gt;
+&lt;li&gt;Reduces to 1080x720 dimensions&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-movflags +faststart&lt;/code&gt; moves the metadata to the front of the video allowing immediate streaming (rather than waiting for the whole file to load)&lt;/li&gt;
+&lt;li&gt;Removes audio channels since it will be playing muted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;gif-to-mp4&quot; tabindex=&quot;-1&quot;&gt;GIF to MP4 &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Want a GIF, but not with the filesize overhead?&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; animated.gif &lt;span class=&quot;token parameter variable&quot;&gt;-movflags&lt;/span&gt; +faststart &lt;span class=&quot;token parameter variable&quot;&gt;-pix_fmt&lt;/span&gt; yuv420p &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;scale=trunc(iw/2)*2:trunc(ih/2)*2&quot;&lt;/span&gt; video.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-movflags +faststart&lt;/code&gt; to move metadata to the front for streaming&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-pix_fmt yuv420p&lt;/code&gt; use the pixel format of &lt;code&gt;yuv420p&lt;/code&gt; which is a chroma subsampling scheme.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-vf&lt;/code&gt; starts a filter. The formula in the string will upscale the resolution by 2x.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;mp4-to-gif&quot; tabindex=&quot;-1&quot;&gt;MP4 to GIF &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Going the other way is a bit more involved because we need to take a full-color video and restrict it to 256 colors for a GIF. First, we&#39;ll need to generate a color palette from the video:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-ss&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;fps&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;,scale&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;320&lt;/span&gt;:-1:flags&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;lanczos,palettegen palette.png&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Generates a PNG color palette&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-ss&lt;/code&gt; seeks to timecode for what frame to sample the palette from&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then, using that palette, we&#39;ll convert the video into the best-fit gif.&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; palette.png &lt;span class=&quot;token parameter variable&quot;&gt;-filter_complex&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;fps=10,scale=-1:480:flags=lanczos[x];[x][1:v]paletteuse&quot;&lt;/span&gt; output.gif&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Notice the two inputs, we grab the video and the palette&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-filter-complex&lt;/code&gt; Sets up a filter that: sets the fps to 10, scales it to 480 pixels high, and uses the palette we specified earlier.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;max-compatibility&quot; tabindex=&quot;-1&quot;&gt;Max Compatibility &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/ffmpeg-basics-and-recipes/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I hardly use this recipe anymore since MOST devices can handle mp4&#39;s just fine. But just in case you need to get something running on an older device:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; input.mp4 &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libx264 &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-profile:v&lt;/span&gt; baseline &lt;span class=&quot;token parameter variable&quot;&gt;-level&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3.0&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-pix_fmt&lt;/span&gt; yuv420p &lt;span class=&quot;token parameter variable&quot;&gt;-c:a&lt;/span&gt; aac &lt;span class=&quot;token parameter variable&quot;&gt;-ac&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-b:a&lt;/span&gt; 128k &lt;span class=&quot;token parameter variable&quot;&gt;-movflags&lt;/span&gt; +faststart output.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;H.264 video and AAC audio is the best combination for broad support. Ancient browsers that do not have H.264 decoders however will need a VP8/Vorbis video.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;-profile:v&lt;/code&gt; baseline and &lt;code&gt;-level 3.0&lt;/code&gt; options are only needed for old mobile devices that cannot handle CPU-intensive features of H.264.&lt;/li&gt;
+&lt;li&gt;Uses a constant rate of 23.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-movflags +faststart&lt;/code&gt; moves the metadata to the front of the video allowing immediate streaming&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;If you&#39;ve come across other recipes, or you see a way how these could be improved, shoot me a note! I&#39;m constantly improving and adding to this list.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>These Are a Few of My Favorite CLI Things...</title>

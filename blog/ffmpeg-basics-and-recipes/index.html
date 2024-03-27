@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ffmpeg Basics and Recipes</title>
+    <meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta name="generator" content="Eleventy v2.0.1">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nathan-long.com/">
+    <meta property="og:title" content="ffmpeg Basics and Recipes">
+    <meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="og:image" content="/icon-512.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nathan-long.com/">
+    <meta property="twitter:title" content="ffmpeg Basics and Recipes">
+    <meta property="twitter:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy">
+    <meta property="twitter:image" content="/icon-512.jpg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
+  </head>
+  <body class="radial-mid">
+    <script>
+      // Prevent FART (look it up) by blocking render for a tiny bit...
+      // First check for local settings, then check media queries, then apply fallback
+      function getColor() {
+        const colorPref = window.localStorage.getItem('color-mode');
+        if (typeof colorPref === 'string') {
+          return colorPref;
+        }
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'dark' : 'light';
+        }
+        return 'light';
+      }
+
+      function getMotion() {
+        const motionPref = window.localStorage.getItem('motion-mode');
+        if (typeof motionPref === 'string') {
+          return motionPref;
+        }
+        const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'no-preference' : 'reduced'
+        }
+        return 'no-preference';
+      }
+
+      function getParty() {
+        const partyPref = window.localStorage.getItem('party-mode')
+        if (typeof partyPref === 'string') {
+          return partyPref;
+        }
+        return 'no-party';
+      }
+
+      const colorMode = getColor();
+      const motionMode = getMotion();
+      const partyMode = getParty();
+      const root = document.documentElement;
+      root.classList.add(colorMode, partyMode, motionMode);
+      root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
+      root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
+    </script>
+
+    <a class="sr-only sr-only-focus skip-link bg-editor relative z-4" href="#main">Skip to main content</a>
+<header class="header pt-1/2" data-module="nav" data-mobile="false" data-pref="false">
+  <div class="logo">
+    <a class="logo-link" href="/" title="Nathan Long">
+      <span class="sr-only">Nathan Long</span>
+      <svg class="logo-svg" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M26.6213 1.87259C25.4497 0.701019 23.5502 0.701018 22.3787 1.87259L1.87258 22.3787C0.701003 23.5503 0.701003 25.4498 1.87258 26.6213L22.3787 47.1274C23.5502 48.299 25.4497 48.299 26.6213 47.1274L47.1274 26.6213C48.299 25.4498 48.299 23.5503 47.1274 22.3787L26.6213 1.87259ZM30.1666 31.472C30.8226 31.824 31.5826 32 32.4466 32H36.6466V29.288H32.6626C32.1826 29.288 31.7986 29.152 31.5106 28.88C31.2386 28.592 31.1026 28.208 31.1026 27.728V14.48H23.8786V17.192H28.1026V27.728C28.1026 28.576 28.2866 29.328 28.6546 29.984C29.0226 30.624 29.5266 31.12 30.1666 31.472ZM12.848 18.8V32H15.848V23.744C15.848 22.912 16.056 22.272 16.472 21.824C16.904 21.376 17.488 21.152 18.224 21.152C18.976 21.152 19.56 21.368 19.976 21.8C20.392 22.232 20.6 22.848 20.6 23.648V32H23.6V23.336C23.6 21.88 23.208 20.72 22.424 19.856C21.656 18.992 20.624 18.56 19.328 18.56C18.224 18.56 17.352 18.864 16.712 19.472C16.228 19.9436 15.9317 20.5596 15.8231 21.32H15.776V18.8H12.848Z" fill="#9ECE6A"/>
+      </svg>
+    </a>
+  </div>
+  <nav class="nav-wrapper" data-nav-target>
+    <menu class="nav m-0 p-0">
+      <li class="nav-item"><a href="/about/">About</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
+      <li class="nav-item"><a href="/lab/">Lab</a></li>
+      <li class="nav-item"><a href="/newsletter/">Newsletter</a></li>
+      <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
+    </menu>
+
+    <div class="preferences relative">
+      <button class="preferences-trigger btn btn-square btn-borderless z-1" data-pref-trigger>
+        <span class="sr-only">Prefs</span>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/></svg>
+      </button>
+      <div class="preferences-detail rounded" data-state="closed" data-pref-target data-module="preferences">
+        <p>Color Theme</p>
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
+            <span>☀️</span>
+            <span>Light</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
+            <span>🌙</span>
+            <span>Dark</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Motion Preferences</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
+            <span>👍</span>
+            <span>Allow</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
+            <span>🚫</span>
+            <span>Reduce</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Party Mode</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
+            <span>🎉</span>
+            <span>Party</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
+            <span>🛑</span>
+            <span>PLZ NO</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <button class="btn btn-square nav-toggle" aria-label="Open Mobile Nav" data-mobile-trigger>
+    <div class="nav-toggle-line-top"></div>
+    <div class="nav-toggle-line-mid"></div>
+    <div class="nav-toggle-line-bottom"></div>
+  </button>
+</header>
+
+
+    <main id="main"  class="content text-content flow tmpl-post prose">
+      
+<div class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2024-03-27">March 27, 2024</time>
+  <h1 class="mb-0 wrap-balance">ffmpeg Basics and Recipes</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
+</div>
+
+<p>Recently I wrote about <a href="https://www.ffmpeg.org/">ffmpeg</a>, a Swiss-army knife command-line utility for media. While I find it incredibly handy NOW, it took time to build up a working knowledge of the tool to handle certain tasks with confidence. The downside of having a versatile tool is that it can do an awful lot of things!</p>
+<p>So let's break down how it works and I'll share some of my most common recipes for converting media.</p>
+<h2 id="installing" tabindex="-1">Installing <a class="header-anchor" href="#installing">#</a></h2>
+<p>The easiest way to install (on a Mac) is with <a href="https://brew.sh/">homebrew</a>:</p>
+<p><code>brew install ffmpeg</code></p>
+<p>You can also download directly from <a href="https://ffmpeg.org/download.html">their site</a>, but that's a tad more involved. Homebrew drops it into your path, ready to go.</p>
+<h2 id="basics" tabindex="-1">Basics <a class="header-anchor" href="#basics">#</a></h2>
+<p>An <code>ffmpeg</code> command will take:</p>
+<ol>
+<li>An <strong>input file,</strong></li>
+<li>several sets of <strong>options</strong>,</li>
+<li>and an <strong>output file</strong> to spit everything out into.</li>
+</ol>
+<p>A basic command will look something like:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input-file <span class="token punctuation">{</span>lots of options here<span class="token punctuation">}</span> output-file</code></pre>
+<h2 id="compression" tabindex="-1">Compression <a class="header-anchor" href="#compression">#</a></h2>
+<p>One of the handiest things <code>ffmpeg</code> can do is give you fine-grained control over video compression. Not only can you pick the method of compression, you can choose what codec to use.</p>
+<p>There are several methods of compression, but two of the main ones you'll see are:</p>
+<ul>
+<li><code>-b:v</code> Sets a fixed <strong>bitrate</strong> of the output, measured in kb (ex. 1200kb) or megabytes (ex. 2M). You'll typically see values between 1200-6000kb. The lower the number, the less 'bits' will be used.</li>
+<li><code>-crf</code> Sets a <strong>Constant Rate Factor</strong> (available for <a href="http://www.videolan.org/developers/x264.html">x264</a>, <a href="http://x265.org/">x265</a> and <a href="https://www.webmproject.org/code/">libvpx</a>). This is a smart value between 0 and 51 that attempts to vary the bitrate per frame for better-looking results (less artifacts). For x264, sane values are between 18 (better quality, larger file) and 28 (lower quality, larger file). The default is 23, so you can use this as a starting point.</li>
+</ul>
+<p>Bitrates can get quite complicated but give you a lot of control. They're useful in situations for streaming videos or where you need to specify a minimum, maximum, or ensure a constant bitrate. Because I use <code>ffmpeg</code> to operate on smaller videos I gravitate towards <code>-crf</code> values.</p>
+<p>Read more on <a href="https://slhck.info/video/2017/02/24/crf-guide.html">how CRF works</a>.</p>
+<h3 id="convert-to-h264-mp4" tabindex="-1">Convert to h264 mp4 <a class="header-anchor" href="#convert-to-h264-mp4">#</a></h3>
+<p>If you need to share a video, you can't go wrong with an mp4. It's widely supported and everything except ancient devices should be able to play it. Here's a good default compression recipe:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mov <span class="token parameter variable">-c:v</span> libx264 <span class="token parameter variable">-crf</span> <span class="token number">28</span> <span class="token parameter variable">-preset</span> very slow output.mp4</code></pre>
+<p>Option descriptions:</p>
+<ul>
+<li><code>-c:v</code> selects the compression format to <code>libx264</code></li>
+<li><code>-crf 28</code> sets a decent constant rate factor.</li>
+<li><code>-preset</code> sets a series of options that will provide a certain encoding speed to compression ratio, slower speeds mean more compression.</li>
+</ul>
+<p>One benefit of H264 compression is it's FAST and pretty efficient. I can usually get a <code>.mov</code> file down to about 10% of its size with this recipe.</p>
+<p>Read more about <a href="https://trac.ffmpeg.org/wiki/Encode/H.264">H264 compression</a>.</p>
+<h3 id="convert-to-webm" tabindex="-1">Convert to webm <a class="header-anchor" href="#convert-to-webm">#</a></h3>
+<p>webm is now <a href="https://caniuse.com/webm">fully supported in modern browsers</a> but is a little more finicky to encode, it's quite easy to set some options and wind up with large webm files. I find webm's to be slightly larger than well-compressed mp4s.</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libvpx-vp9 <span class="token parameter variable">-crf</span> <span class="token number">30</span> <span class="token parameter variable">-b:v</span> <span class="token number">0</span> output.webm</code></pre>
+<ul>
+<li><code>-c:v</code> selects the compression format to <code>libvpx-vp9</code> which is the latest webm codec.</li>
+<li><code>-b:v</code> is set to 0 (required) to allow constant quality settings with:</li>
+<li><code>-crf 30</code> which follows the CRF numbers outlined above</li>
+</ul>
+<p>They recommend that you use a two-pass method on webm for the best results, but it is QUITE slow, so grab a coffee while you wait:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libvpx-vp9 <span class="token parameter variable">-b:v</span> <span class="token number">0</span> <span class="token parameter variable">-crf</span> <span class="token number">30</span> <span class="token parameter variable">-pass</span> <span class="token number">1</span> <span class="token parameter variable">-an</span> <span class="token parameter variable">-f</span> null /dev/null <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>
+ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libvpx-vp9 <span class="token parameter variable">-b:v</span> <span class="token number">0</span> <span class="token parameter variable">-crf</span> <span class="token number">30</span> <span class="token parameter variable">-pass</span> <span class="token number">2</span> <span class="token parameter variable">-c:a</span> libopus output.webm</code></pre>
+<ul>
+<li><code>-pass {number}</code> lets it know that we're doing some multipass business here.</li>
+<li><code>-f</code> forces output, in this case <code>null</code> to prevent the first pass from outputting anything</li>
+<li><code>&amp;&amp;</code> is a normal bash/zsh command to run the second command if the first command is successful.</li>
+</ul>
+<p>Read more on <a href="https://trac.ffmpeg.org/wiki/Encode/VP9">VP9 compression here</a>.</p>
+<blockquote>
+<p><strong>Heads Up!</strong></p>
+<p>When you do a two-pass encoding, the first pass will LOOK like nothing is happening, just be patient, it will eventually start showing progress and spit out your file.</p>
+<p>I'll also state that I haven't found much difference between the single pass and the double pass methods, but I also think I'm not operating at the size and length of video files to see the difference. If it's a smaller file, the single pass is probably good enough for your needs.</p>
+</blockquote>
+<h2 id="common-recipes" tabindex="-1">Common Recipes <a class="header-anchor" href="#common-recipes">#</a></h2>
+<p>Now we've talked about compression, what are some other things you can do? Here are a few of the tasks I find myself running.</p>
+<h3 id="scale-video-by-height" tabindex="-1">Scale Video by Height <a class="header-anchor" href="#scale-video-by-height">#</a></h3>
+<p>One of the easiest ways to shrink file size is to reduce the size of the video, especially if you've got a mondo-sized source file. To produce a 1080p video:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-vf</span> <span class="token assign-left variable">scale</span><span class="token operator">=</span>-1:1080 output.mp4</code></pre>
+<ul>
+<li><code>-vf</code> is an alias for <code>-filter:v</code> (video filter)</li>
+<li><code>scale=-1:1080</code>resizes the video to ''whatever'' (the -1) by 1080 pixels high. If the video is 16:9, the width would then be 1920. If you ran <code>-1:720</code> the output would be 1280x720 for a 16:9 video.</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Common resolutions for 16:9 video are: 1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080, 2560×1440 and 3840×2160. You can use these as some numbers to start with.</p>
+</blockquote>
+<h3 id="trim-video-by-timecode" tabindex="-1">Trim Video by Timecode <a class="header-anchor" href="#trim-video-by-timecode">#</a></h3>
+<p>Sometimes you only need a slice of a video, or you need to just shave off the first few seconds of something. Here's how you trim by timecode:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-ss</span> 00:01:02.500 <span class="token parameter variable">-t</span> 00:01:03.250 <span class="token parameter variable">-c</span> copy output.mp4</code></pre>
+<ul>
+<li><code>-ss</code> indicates start time in seconds (with decimals for sub-second times)</li>
+<li><code>-to</code> is the end time in <code>hh:mm:ss</code> format</li>
+<li><code>-c</code> copies existing formats</li>
+</ul>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-ss</span> 00:00:03 output.mp4</code></pre>
+<ul>
+<li>Not providing a <code>-to</code> means it runs to the end of the file. This example will trim off the first 3 seconds of the file.</li>
+</ul>
+<h3 id="remove-audio" tabindex="-1">Remove Audio <a class="header-anchor" href="#remove-audio">#</a></h3>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> example.mp4 <span class="token parameter variable">-c</span> copy <span class="token parameter variable">-an</span> example-nosound.mp4</code></pre>
+<ul>
+<li><code>-an</code> removes audio</li>
+<li><code>-c</code> copies existing formats</li>
+</ul>
+<h3 id="boost-volume" tabindex="-1">Boost Volume <a class="header-anchor" href="#boost-volume">#</a></h3>
+<p>Note that this can work on audio files, not just videos.</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.wav <span class="token parameter variable">-af</span> <span class="token string">"volume=1.5"</span> output.wav</code></pre>
+<ul>
+<li><code>-af</code> set audio filters</li>
+<li><code>volume=1.5</code> and boost the volume to 150% of the original. This can be proportional or in decibels: <code>volume=-5dB</code></li>
+</ul>
+<h3 id="create-a-poster-image" tabindex="-1">Create a Poster Image <a class="header-anchor" href="#create-a-poster-image">#</a></h3>
+<p>Embedding an HTML video and don't have a poster image? Rather than trying to awkwardly screengrab something, you can use this to create an image at a specific timestamp.</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> example.mp4 <span class="token parameter variable">-ss</span> 00:00:00.000 <span class="token parameter variable">-vframes</span> <span class="token number">1</span> <span class="token string">'thumb.png'</span></code></pre>
+<ul>
+<li><code>-ss</code> seeks to where we’re pulling a frame (in this case, the start of the video)</li>
+<li><code>-vframes</code> sets the number of frames to output</li>
+<li><code>*.png</code> (in output file extension) converts it to a PNG image</li>
+</ul>
+<h2 id="advanced-recipes" tabindex="-1">Advanced Recipes <a class="header-anchor" href="#advanced-recipes">#</a></h2>
+<p>Here are some of the more complicated recipes I use that string together some of the operations I've already covered.</p>
+<h3 id="create-ambient-video-mp4" tabindex="-1">Create Ambient Video MP4 <a class="header-anchor" href="#create-ambient-video-mp4">#</a></h3>
+<p>Need to load up a looping ambient video, but you're given a 200+MB file?</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libx264 <span class="token parameter variable">-crf</span> <span class="token number">28</span> <span class="token parameter variable">-preset</span> veryslow <span class="token parameter variable">-vf</span> <span class="token assign-left variable">scale</span><span class="token operator">=</span>-1:720 <span class="token parameter variable">-movflags</span> +faststart <span class="token parameter variable">-an</span> output.mp4</code></pre>
+<ul>
+<li>Uses H264 compression</li>
+<li>Uses a Constant Rate of 28</li>
+<li>Uses the <code>veryslow</code> preset for better compression</li>
+<li>Reduces to 1080x720 dimensions</li>
+<li><code>-movflags +faststart</code> moves the metadata to the front of the video allowing immediate streaming (rather than waiting for the whole file to load)</li>
+<li>Removes audio channels since it will be playing muted.</li>
+</ul>
+<h3 id="gif-to-mp4" tabindex="-1">GIF to MP4 <a class="header-anchor" href="#gif-to-mp4">#</a></h3>
+<p>Want a GIF, but not with the filesize overhead?</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> animated.gif <span class="token parameter variable">-movflags</span> +faststart <span class="token parameter variable">-pix_fmt</span> yuv420p <span class="token parameter variable">-vf</span> <span class="token string">"scale=trunc(iw/2)*2:trunc(ih/2)*2"</span> video.mp4</code></pre>
+<ul>
+<li><code>-movflags +faststart</code> to move metadata to the front for streaming</li>
+<li><code>-pix_fmt yuv420p</code> use the pixel format of <code>yuv420p</code> which is a chroma subsampling scheme.</li>
+<li><code>-vf</code> starts a filter. The formula in the string will upscale the resolution by 2x.</li>
+</ul>
+<h3 id="mp4-to-gif" tabindex="-1">MP4 to GIF <a class="header-anchor" href="#mp4-to-gif">#</a></h3>
+<p>Going the other way is a bit more involved because we need to take a full-color video and restrict it to 256 colors for a GIF. First, we'll need to generate a color palette from the video:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-y</span> <span class="token parameter variable">-ss</span> <span class="token number">10</span> <span class="token parameter variable">-vf</span> <span class="token assign-left variable">fps</span><span class="token operator">=</span><span class="token number">10</span>,scale<span class="token operator">=</span><span class="token number">320</span>:-1:flags<span class="token operator">=</span>lanczos,palettegen palette.png</code></pre>
+<ul>
+<li>Generates a PNG color palette</li>
+<li><code>-ss</code> seeks to timecode for what frame to sample the palette from</li>
+</ul>
+<p>Then, using that palette, we'll convert the video into the best-fit gif.</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-i</span> palette.png <span class="token parameter variable">-filter_complex</span> <span class="token string">"fps=10,scale=-1:480:flags=lanczos[x];[x][1:v]paletteuse"</span> output.gif</code></pre>
+<ul>
+<li>Notice the two inputs, we grab the video and the palette</li>
+<li><code>-filter-complex</code> Sets up a filter that: sets the fps to 10, scales it to 480 pixels high, and uses the palette we specified earlier.</li>
+</ul>
+<h3 id="max-compatibility" tabindex="-1">Max Compatibility <a class="header-anchor" href="#max-compatibility">#</a></h3>
+<p>I hardly use this recipe anymore since MOST devices can handle mp4's just fine. But just in case you need to get something running on an older device:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libx264 <span class="token parameter variable">-crf</span> <span class="token number">23</span> <span class="token parameter variable">-profile:v</span> baseline <span class="token parameter variable">-level</span> <span class="token number">3.0</span> <span class="token parameter variable">-pix_fmt</span> yuv420p <span class="token parameter variable">-c:a</span> aac <span class="token parameter variable">-ac</span> <span class="token number">2</span> <span class="token parameter variable">-b:a</span> 128k <span class="token parameter variable">-movflags</span> +faststart output.mp4</code></pre>
+<ul>
+<li>H.264 video and AAC audio is the best combination for broad support. Ancient browsers that do not have H.264 decoders however will need a VP8/Vorbis video.</li>
+<li>The <code>-profile:v</code> baseline and <code>-level 3.0</code> options are only needed for old mobile devices that cannot handle CPU-intensive features of H.264.</li>
+<li>Uses a constant rate of 23.</li>
+<li><code>-movflags +faststart</code> moves the metadata to the front of the video allowing immediate streaming</li>
+</ul>
+<hr>
+<p>If you've come across other recipes, or you see a way how these could be improved, shoot me a note! I'm constantly improving and adding to this list.</p>
+
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
+
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:ffmpeg Basics and Recipes">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/a-few-of-my-favorite-cli-things/" class="decoration-none font-thin font-bold">These Are a Few of My Favorite CLI Things...<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
+
+    </main>
+
+    <footer class="footer full w-full flex flex-col-to-row justify-between items-center px-1rem py-1 items-center mt-content gap-1">
+      <p class="color-reduced font-small m-0"><a class="color-reduced" href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC-SA 4.0</a> 2023 &copy; Nathan Long.</p>
+
+      <nav class="nav-footer no-shrink">
+        <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
+          <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
+          <li class="font-small"><a class="decoration-none" href="/blog/">Blog</a></li>
+          <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
+          <li class="font-small"><a class="decoration-none" href="/newsletter/">Newsletter</a></li>
+          <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>
+        </menu>
+    </footer>
+
+    
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

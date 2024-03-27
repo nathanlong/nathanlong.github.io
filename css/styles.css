@@ -474,8 +474,7 @@ blockquote {
   background-color: var(--theme-editorbg);
   padding: 2ch;
   margin-left: 0;
-  font-size: 1.25em;
-  font-family: var(--font-family-accent);
+  font-size: 1.125em;
   border-radius: 2ch;
 }
 
