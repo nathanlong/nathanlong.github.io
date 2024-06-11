@@ -5,7 +5,7 @@
 	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2024-03-27T16:44:55Z</updated>
+	<updated>2024-06-11T19:50:21Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,94 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Colorschemes for the Discerning Developer</title>
+		<link href="https://nathan-long.com/blog/colorschemes-for-the-discerning-developer/"/>
+		<updated>2024-06-11T19:50:21Z</updated>
+		<id>https://nathan-long.com/blog/colorschemes-for-the-discerning-developer/</id>
+		<content type="html">&lt;p&gt;That colorscheme in your editor...&lt;/p&gt;
+&lt;p&gt;...how long have you been looking at it? When did you change it last?&lt;/p&gt;
+&lt;p&gt;Years? Yeah, me too. 😅&lt;/p&gt;
+&lt;p&gt;I recently took a spin to see what was new out there, and boy, are there some cool colorschemes!&lt;/p&gt;
+&lt;p&gt;I eventually settled on a lovely theme called &lt;a href=&quot;https://catppuccin.com/&quot;&gt;Catppuccin&lt;/a&gt; (specifically the Mocha variant, the darkest one). But here are some of the others I came across. Maybe there&#39;s something here to give your editor a nice new coat of paint as well!&lt;/p&gt;
+&lt;h2 id=&quot;multi-editor-colorschemes&quot; tabindex=&quot;-1&quot;&gt;Multi-Editor Colorschemes &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/colorschemes-for-the-discerning-developer/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;These colorschemes have multiple ports, making them a nice way to extend it across all your tooling.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://catppuccin.com/&quot;&gt;Catppuccin&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Beautifully balanced pastels pop off a dark blue background. It also has one of the nicest light variants I&#39;ve seen.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://rosepinetheme.com/&quot;&gt;Rosé Pine&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Another balanced theme with multiple variations... This palette trends towards warmer natural colors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/folke/tokyonight.nvim&quot;&gt;Tokyo Night&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;This was my pick before Catppuccin. I liked it so much that I used some of the colors here on my site! It celebrates the neon of Tokyo nights.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://draculatheme.com/&quot;&gt;Dracula&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;A nice dark scheme with an amazing amount of ports and implementations. Slightly darker than Catppuccin and Rosé Pine. The purple and orange feel especially thematic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://www.nordtheme.com/&quot;&gt;Nord&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;The power of BLUE! It&#39;s bold and STRONG.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://ethanschoonover.com/solarized/&quot;&gt;Solarized&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;This was the OG theme that felt like real consideration had been put into the colors. I consider this the predecessor of most of these themes and it&#39;s STILL a pretty solid choice.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/voronianski/oceanic-next-color-scheme&quot;&gt;Oceanic Next&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;A slightly desaturated palette, this sits somewhere in between Solarized and Tomorrow Night.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/chriskempson/tomorrow-theme&quot;&gt;Tomorrow Night&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Bold color choices, and nice if you don&#39;t want a blue background.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/cocopon/iceberg.vim&quot;&gt;Iceberg&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;High contrast, bluish theme. Feels like if you turned down the lights on Nord a bit.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/sonph/onehalf&quot;&gt;One Half&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Based on Atom&#39;s &#39;One&#39; colorscheme, a practical mix of colors on a gray (or light gray!) background.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;neovim-only&quot; tabindex=&quot;-1&quot;&gt;NeoVim Only &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/colorschemes-for-the-discerning-developer/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;These colorschemes are mostly for Vim/NeoVim, but many have other ports.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/rebelot/kanagawa.nvim&quot;&gt;Kanagawa&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Based on the Katsushika Hokusai painting of the same name, this theme has some unique colors giving it a different feel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/navarasu/onedark.nvim&quot;&gt;OneDark&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Another Atom One Dark successor, with TreeSitter support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/morhetz/gruvbox&quot;&gt;Gruvbox&lt;/a&gt;&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;One of the few themes that feels like distinctly its own thing. It has retro vibes that make me nostalgic for the green and amber-colored displays of the past.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;decorating-your-personalized-development-environment&quot; tabindex=&quot;-1&quot;&gt;Decorating your &#39;Personalized Development Environment&#39; &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/colorschemes-for-the-discerning-developer/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I have always liked TJ DeVrie&#39;s concept of the &lt;a href=&quot;https://www.youtube.com/watch?v=QMVIJhC9Veg&quot;&gt;PDE&lt;/a&gt;, of creating an ENVIRONMENT that&#39;s JUST YOURS and a joy to use. One of the best ways I know of to personalize a space is with color. So what does YOUR colorscheme say about you? If it&#39;s not speaking to YOU, maybe it&#39;s time to change it up!&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>ffmpeg Basics and Recipes</title>
