@@ -32,6 +32,16 @@
     "feature": false
   },
   {
+    "name": "Run Papa Rara Run",
+    "url": "https://nathanlong.itch.io/run-papa-rara-run",
+    "description": "A very simple game in which you are a weird potato. And you run.",
+    "dateCreated": "2024-07-05",
+    "dateModified": "ongoing",
+    "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/49c0a275-00a3-4559-9a18-04ce0dc41814",
+    "imageAlt": "A smiling potato on a field of grass, a castle barely visible in the distance. The potato's glassy eyes hide a hidden depth.",
+    "feature": true
+  },
+  {
     "name": "Web Voices",
     "url": "/voices.xml",
     "source": "https://github.com/nathanlong/nathanlong.github.io/blob/main/public/xsl/voices.xsl",
@@ -39,6 +49,6 @@
     "dateCreated": "2023-11-13",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/ce60dd05-ebb0-46e7-9501-306ca4f1dbc6",
     "imageAlt": "Profile of a face speaking inside a web browser. Icon by Gregor Cresnar.",
-    "feature": true
+    "feature": false
   }
 ]

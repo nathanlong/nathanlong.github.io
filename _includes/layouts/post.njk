@@ -40,7 +40,7 @@ bodyClass: radial-mid
     <li class="grow w-1/2">
       <span class="uppercase decoration-none text-small">Previous:</span><br/>
       {%- if previousPost %}
-        <a href="{{ previousPost.url | url }}" class="decoration-none font-thin font-bold">{{ previousPost.data.title }}<br/>&larr;</a></li>
+        <a href="{{ previousPost.url | url }}" class="block decoration-none font-thin font-bold wrap-balance">{{ previousPost.data.title }}<br/>&larr;</a></li>
       {% else %}
         <span class="font-thin font-bold">You're at the very beginning!<br/>🙃</span>
         </li>
@@ -49,7 +49,7 @@ bodyClass: radial-mid
       <span class="uppercase decoration-none text-small">Next:</span>
       <br/>
       {%- if nextPost %}
-        <a href="{{ nextPost.url | url }}" class="decoration-none font-thin font-bold">{{ nextPost.data.title }}<br/>&rarr;</a>
+        <a href="{{ nextPost.url | url }}" class="block decoration-none font-thin font-bold wrap-balance">{{ nextPost.data.title }}<br/>&rarr;</a>
       {% else %}
         <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
       {% endif %}
