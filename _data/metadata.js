@@ -2,9 +2,9 @@ module.exports = {
   "title": "Nathan Long",
   "url": "https://nathan-long.com/",
   "language": "en",
-  "description": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
+  "description": "The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.",
   "feed": {
-    "subtitle": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
+    "subtitle": "The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.",
     "filename": "feed.xml",
     "path": "/feed/feed.xml",
     "id": "https://nathan-long.com/"

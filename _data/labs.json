@@ -15,7 +15,7 @@
     "url": "https://nathan-long.com/hero-dice/",
     "source": "https://github.com/nathanlong/hero-dice",
     "description": "Dice roller app for self-made RPG system for kids: F.I.G. (Fantastical Imagination Game)",
-    "dateCreated": "2021-11-16",
+    "dateCreated": "2024-05-03",
     "image": "https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png",
     "imageAlt": "The word 'Hero' above a six-sided dice",
     "feature": false
@@ -34,6 +34,7 @@
   {
     "name": "Run Papa Rara Run",
     "url": "https://nathanlong.itch.io/run-papa-rara-run",
+    "source": "https://github.com/nathanlong/game-papa-rara-run",
     "description": "A very simple game in which you are a weird potato. And you run.",
     "dateCreated": "2024-07-05",
     "dateModified": "ongoing",

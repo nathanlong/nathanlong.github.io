@@ -1,7 +1,7 @@
 <h2 class="border-0 flow-0">Featured: </h2>
 
 <ul class="lablist p-0 space-y-1">
-  {%- for lab in lablist %}
+  {%- for lab in lablist | sort(false, true, 'dateCreated') | reverse %}
     {% if lab.feature %}
       {% include "labitem.njk" %}
     {% endif %}
@@ -9,6 +9,8 @@
 </ul>
 
 <hr class="my-2" />
+
+<p class="uppercase decoration-none text-small font-bold mt-0 mb-2 color-reduced">By Release Date &darr;</p>
 
 <ul class="lablist p-0 m-0 mb-2 space-y-1">
   {%- for lab in lablist | sort(false, true, 'dateCreated') | reverse %}
