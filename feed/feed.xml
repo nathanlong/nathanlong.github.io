@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xsl/feed.xsl" type="text/xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="en">
 	<title>Nathan Long</title>
-	<subtitle>A digital-garden/dumpster fire handcrafted by some ordinary web guy</subtitle>
+	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
 	<updated>2024-06-28T20:55:09Z</updated>
