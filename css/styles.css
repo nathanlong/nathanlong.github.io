@@ -269,6 +269,16 @@ img {
   height: auto;
 }
 
+input {
+  padding: 0.5em;
+  font-family: var(--font-family-monospace);
+}
+
+input[type="text"], input[type="email"] {
+  border: 1px solid var(--theme-divider);
+  border-radius: 0;
+}
+
 /* @grid - Grid with Breakouts
  * from https://ryanmulligan.dev/blog/layout-breakouts/ */
 
@@ -285,7 +295,7 @@ img {
   font-size: 18px;
 }
 
-.text-content {
+.text-content, input {
   font-size: clamp(1.125rem, 0.625vw + 0.875rem, 1.625rem);
 }
 
@@ -504,6 +514,7 @@ button {
   display: inline-block;
   font-family: var(--font-family-accent);
   color: var(--theme-text);
+  background-color: var(--theme-background);
   padding: 0.375em 0.75em;
   font-weight: 700;
   text-decoration: none;
@@ -1109,7 +1120,7 @@ code {
   font-weight: 400;
 }
 
-pre {
+pre, .code-bg {
   line-height: 1.5;
   box-shadow: 0 0 2em var(--theme-glow);
 }
@@ -1118,7 +1129,7 @@ code {
   word-break: break-all;
 }
 
-code:not([class*='language']) {
+code:not([class*='language']), .code-bg {
   background-color: var(--theme-editorbg);
   border-radius: 0.5ch;
   font-size: 0.9em;
@@ -1126,7 +1137,7 @@ code:not([class*='language']) {
   border: 1px solid var(--theme-divider);
 }
 
-.light code:not([class*='language']) {
+.light code:not([class*='language']), .light .code-bg {
   box-shadow: 0 0 1.5ch var(--theme-glow);
 }
 
@@ -1497,6 +1508,10 @@ pre[class*='language-'] {
 
 .border-divider {
   border-color: var(--theme-divider);
+}
+
+.border-standard {
+  border: 1px solid var(--theme-divider);
 }
 
 .two-columns {
@@ -1924,6 +1939,10 @@ a.color-reduced {
   width: 3em;
 }
 
+.w-7 {
+  width: 7em;
+}
+
 .aspect-square {
   aspect-ratio: 1/1;
 }
@@ -2027,13 +2046,4 @@ a.color-reduced {
   .animation404-last {
     margin-left: -8vw;
   }
-}
-
-.hero-animation {
-  position: absolute;
-  right: 15vw;
-  top: 0;
-  bottom: 0;
-  width: auto;
-  height: 100%;
 }
