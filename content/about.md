@@ -31,10 +31,9 @@ Looking for more? Here's more about:
 
 Yep. I originally thought I was going to be a **[Sequential Artist](https://en.wikipedia.org/wiki/Sequential_art)** and work at Marvel ... BUT in a dash of prudence unbecoming of my younger self I decided to diversify and found graphic design which combined my love of art AND computers. I finished school and went into marketing and advertising.
 
-I had been playing around with **Flash** (oh Flash, I both miss you dearly and yet not at all...) at the time, but started to learn **HTML** and **CSS** on the side. A real turning point for me was **[Ethan Marcotte](https://ethanmarcotte.com/)'s** article on **[Responsive Design](https://alistapart.com/article/responsive-web-design/)** and the realization of how fluid the web could be! I soon after bamboozled my way into an agency as a **Designer-Who-Codes** and spent several years there doing more and more code (and loving every minute of it)...
+I had been playing around with **Flash** at the time (remember Flash? No? Oh... 👴), but started to learn **HTML** and **CSS** on the side. A real turning point for me was **[Ethan Marcotte](https://ethanmarcotte.com/)'s** article on **[Responsive Design](https://alistapart.com/article/responsive-web-design/)** and the realization of how fluid the web could be! I soon after bamboozled my way into an agency as a **Designer-Who-Codes** and spent many years there doing more and more code (and loving every minute of it)...
 
 I eventually went `full developer` in 2022 at **[Viget](https://www.viget.com/about/team/nlong/)** where I work now as a **UI Developer**.
-
 </div>
 </details>
 
