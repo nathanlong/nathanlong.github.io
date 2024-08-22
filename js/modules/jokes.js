@@ -67,6 +67,10 @@ const jokes = [
     joke: 'How do you know when your clock is still hungry?',
     punchline: 'It goes back four seconds.',
   },
+  {
+    joke: 'A Möbius strip is sobbing, and its friend asks, "what’s wrong?"',
+    punchline: 'It says, "Where do I even begin?"',
+  },
 ]
 
 export default class EmailHider {

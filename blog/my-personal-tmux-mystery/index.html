@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan Long</title>
+    <title>My Personal tmux Mystery</title>
     <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta name="generator" content="Eleventy v2.0.1">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nathan-long.com/">
-    <meta property="og:title" content="Nathan Long">
+    <meta property="og:title" content="My Personal tmux Mystery">
     <meta property="og:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Nathan Long">
+    <meta property="twitter:title" content="My Personal tmux Mystery">
     <meta property="twitter:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -85,7 +85,7 @@
   <nav class="nav-wrapper" data-nav-target>
     <menu class="nav m-0 p-0">
       <li class="nav-item"><a href="/about/">About</a></li>
-      <li class="nav-item nav-item-active"><a href="/blog/">Blog</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
       <li class="nav-item"><a href="/lab/">Lab</a></li>
       <li class="nav-item"><a href="/newsletter/">Newsletter</a></li>
       <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
@@ -153,212 +153,79 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-full">
+    <main id="main"  class="content text-content flow tmpl-post prose">
       
-
-<div class="mt-content feature text-center">
-  <h1 class="m-1">Blog</h1>
-  <p class="">Sometimes I write about things like:</p>
-  <div class="mt-1">
-  
-    
-    <a href="/tags/motion/" class="post-tag">motion</a>
-  
-    
-    <a href="/tags/neovim/" class="post-tag">neovim</a>
-  
-    
-    <a href="/tags/process/" class="post-tag">process</a>
-  
-    
-    <a href="/tags/thoughts/" class="post-tag">thoughts</a>
-  
-    
-    <a href="/tags/tooling/" class="post-tag">tooling</a>
-  
-  </div>
+<div class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2024-08-22">August 22, 2024</time>
+  <h1 class="mb-0 wrap-balance">My Personal tmux Mystery</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
 </div>
 
-<hr class="mt-2 mb-2">
+<p>Roll in enough Vim circles and you'll hear people sing the praises of <code>tmux</code>, the <a href="https://github.com/tmux/tmux/wiki">terminal multiplexer</a>. And to be honest... I've never really quite gotten it.</p>
+<p>I tried it and didn't get why it was great. Recently, Adam Stacoviak from the <a href="https://changelog.com/">Changelog</a> mirrored my thoughts in this short clip:</p>
+<div class="feature">
+<iframe style="aspect-ratio: 560/315; width: 100%; height: auto;" width="560" height="315" src="https://www.youtube.com/embed/nAc_kxlGXFY?si=RCzaLBzFXO6GYA4m" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p>The selling points that Nick and Jared make for <code>tmux</code> actually made me realize why it's never quite fit for me. Their two main points:</p>
+<ol>
+<li><code>tmux</code> sessions are a great way to manage projects and window arrangements.</li>
+<li><code>tmux</code> allows persistent processes over an SSH connection.</li>
+</ol>
+<p>It made me realize that my normal workflow differs from what they describe. Which made me start to wonder, &quot;Am I the outlier here?&quot;</p>
+<p>So here's a quick overview of how my workflow differs.</p>
+<ol>
+<li>I don't use complex window arrangements and have other ways to manage projects.</li>
+<li>(The big one) Most of my development is local-only.</li>
+</ol>
+<h2 id="projects-and-window-arrangement" tabindex="-1">Projects and Window Arrangement <a class="header-anchor" href="#projects-and-window-arrangement">#</a></h2>
+<p>To open up a project I:</p>
+<ol>
+<li>Open up WezTerm</li>
+<li>Type the shortcut saved from my <a href="https://github.com/huyng/bashmarks">bashmarks script</a></li>
+<li>Open <code>nvim</code></li>
+<li>Use the amazing <a href="https://github.com/nvim-telescope/telescope.nvim">Telescope plugin</a> to pull up any files I need.</li>
+<li>Start coding.</li>
+</ol>
+<p>Once I'm in the project I typically work with a single full-screen window. I use lots of window splits to compare files, put them side by side, keep one open as a reference, or whatever ... but that's all internal to NeoVim. I manage my git history through the <a href="https://github.com/tpope/vim-fugitive">Fugitive plugin</a>. If I need to run a quick command I have a <a href="https://github.com/voldikss/vim-floaterm">floating terminal</a> bound to a function key that I can quickly bring up and dismiss without leaving NeoVim. Once I'm IN NeoVim, I don't need to leave it.</p>
+<p>Adam jokingly (seriously?) says halfway through the video, &quot;What's wrong with multiple tabs?&quot; And ... 😳 ... that's EXACTLY what I do when I need to run a separate process in the background, I kick open a new tab on WezTerm and then leave it running. Need to fire off a container that's not detached? Open a new tab. Need to run my local <a href="https://tiddlywiki.com/">node-based wiki</a> in the background? Open a new tab and fire off the process.</p>
+<p>The tabs act as my expander and window management. Because I start fresh each time with a simple arrangement, I don't need to save the session and the project. I just need to get there in the command line and open NeoVim.</p>
+<p>I realize many people don't work in this one-window-at-a-time-in-fullscreen mode like I do. If there was a lot of setup or tear down between projects I could see sessions being useful, I just don't think it will help me much.</p>
+<h2 id="local-only-development" tabindex="-1">Local Only Development <a class="header-anchor" href="#local-only-development">#</a></h2>
+<p>This is the main reason of that makes <code>tmux</code> not a real boost for me — I simply don't often work through an SSH connection.</p>
+<p>Most of my development work happens on a local checkout of a project, running on local containers. Occasionally I'll need to SSH into something and run a few commands, but typically they're relatively minor and quick — I've never had a command disconnect on me.</p>
+<p>IF I did more work on remote boxes I could see this being a critical part, but it's simply not a large part of my workflow.</p>
+<p>So I'm not crazy, I'm just not who <code>tmux</code> is for.</p>
 
 
-<ul class="postlist p-0 space-y-2">
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/my-personal-tmux-mystery/" class="font-thin m-0 font-bold decoration-none leading-1">My Personal tmux Mystery</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-08-22">August 22, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/console-cowboys-in-cyberspace/" class="font-thin m-0 font-bold decoration-none leading-1">Console Cowboys In Cyberspace</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-06-28">June 28, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/colorschemes-for-the-discerning-developer/" class="font-thin m-0 font-bold decoration-none leading-1">Colorschemes for the Discerning Developer</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-06-11">June 11, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/ffmpeg-basics-and-recipes/" class="font-thin m-0 font-bold decoration-none leading-1">ffmpeg Basics and Recipes</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-27">March 27, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/a-few-of-my-favorite-cli-things/" class="font-thin m-0 font-bold decoration-none leading-1">These Are a Few of My Favorite CLI Things...</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-21">March 21, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/talk-motion-2024/" class="font-thin m-0 font-bold decoration-none leading-1">Talking about Motion for the Web</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/motion/" class="post-tag py-1/2">motion</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-06">March 06, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/keeping-a-project-log/" class="font-thin m-0 font-bold decoration-none leading-1">Keeping a Project Log</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-      
-      <a href="/tags/process/" class="post-tag py-1/2">process</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-04">March 04, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/class-regex-for-tailwind-intellisense/" class="font-thin m-0 font-bold decoration-none leading-1">Custom Class Regex for Tailwind IntelliSense in Neovim</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/neovim/" class="post-tag py-1/2">neovim</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-11-29">November 29, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/nathan-uses-this-2023-edition/" class="font-thin m-0 font-bold decoration-none leading-1">Nathan Uses This: 2023 Edition</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-09-20">September 20, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/building-motion-for-the-web/" class="font-thin m-0 font-bold decoration-none leading-1">Building Motion for the Web</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/motion/" class="post-tag py-1/2">motion</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-07-14">July 14, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/vite-rapid-prototype-starter-kits/" class="font-thin m-0 font-bold decoration-none leading-1">Vite Rapid Prototyping Starter Kits</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-06-16">June 16, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/modern-javascript-tooling-in-neovim/" class="font-thin m-0 font-bold decoration-none leading-1">Setting up LSPs for Modern JavaScript Tooling in Neovim</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/neovim/" class="post-tag py-1/2">neovim</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-02-23">February 23, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/owning-my-voice/" class="font-thin m-0 font-bold decoration-none leading-1">Owning My Voice</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-01-31">January 31, 2023</time>
-    </p>
-  </li>
-  
-</ul>
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
 
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
 
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:My Personal tmux Mystery">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/console-cowboys-in-cyberspace/" class="block decoration-none font-thin font-bold wrap-balance">Console Cowboys In Cyberspace<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 

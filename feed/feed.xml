@@ -5,7 +5,7 @@
 	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2024-06-28T20:55:09Z</updated>
+	<updated>2024-08-22T15:23:23Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,48 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>My Personal tmux Mystery</title>
+		<link href="https://nathan-long.com/blog/my-personal-tmux-mystery/"/>
+		<updated>2024-08-22T15:23:23Z</updated>
+		<id>https://nathan-long.com/blog/my-personal-tmux-mystery/</id>
+		<content type="html">&lt;p&gt;Roll in enough Vim circles and you&#39;ll hear people sing the praises of &lt;code&gt;tmux&lt;/code&gt;, the &lt;a href=&quot;https://github.com/tmux/tmux/wiki&quot;&gt;terminal multiplexer&lt;/a&gt;. And to be honest... I&#39;ve never really quite gotten it.&lt;/p&gt;
+&lt;p&gt;I tried it and didn&#39;t get why it was great. Recently, Adam Stacoviak from the &lt;a href=&quot;https://changelog.com/&quot;&gt;Changelog&lt;/a&gt; mirrored my thoughts in this short clip:&lt;/p&gt;
+&lt;div class=&quot;feature&quot;&gt;
+&lt;iframe style=&quot;aspect-ratio: 560/315; width: 100%; height: auto;&quot; width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/nAc_kxlGXFY?si=RCzaLBzFXO6GYA4m&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;p&gt;The selling points that Nick and Jared make for &lt;code&gt;tmux&lt;/code&gt; actually made me realize why it&#39;s never quite fit for me. Their two main points:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;tmux&lt;/code&gt; sessions are a great way to manage projects and window arrangements.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tmux&lt;/code&gt; allows persistent processes over an SSH connection.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;It made me realize that my normal workflow differs from what they describe. Which made me start to wonder, &amp;quot;Am I the outlier here?&amp;quot;&lt;/p&gt;
+&lt;p&gt;So here&#39;s a quick overview of how my workflow differs.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;I don&#39;t use complex window arrangements and have other ways to manage projects.&lt;/li&gt;
+&lt;li&gt;(The big one) Most of my development is local-only.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;projects-and-window-arrangement&quot; tabindex=&quot;-1&quot;&gt;Projects and Window Arrangement &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/my-personal-tmux-mystery/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;To open up a project I:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open up WezTerm&lt;/li&gt;
+&lt;li&gt;Type the shortcut saved from my &lt;a href=&quot;https://github.com/huyng/bashmarks&quot;&gt;bashmarks script&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Open &lt;code&gt;nvim&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Use the amazing &lt;a href=&quot;https://github.com/nvim-telescope/telescope.nvim&quot;&gt;Telescope plugin&lt;/a&gt; to pull up any files I need.&lt;/li&gt;
+&lt;li&gt;Start coding.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Once I&#39;m in the project I typically work with a single full-screen window. I use lots of window splits to compare files, put them side by side, keep one open as a reference, or whatever ... but that&#39;s all internal to NeoVim. I manage my git history through the &lt;a href=&quot;https://github.com/tpope/vim-fugitive&quot;&gt;Fugitive plugin&lt;/a&gt;. If I need to run a quick command I have a &lt;a href=&quot;https://github.com/voldikss/vim-floaterm&quot;&gt;floating terminal&lt;/a&gt; bound to a function key that I can quickly bring up and dismiss without leaving NeoVim. Once I&#39;m IN NeoVim, I don&#39;t need to leave it.&lt;/p&gt;
+&lt;p&gt;Adam jokingly (seriously?) says halfway through the video, &amp;quot;What&#39;s wrong with multiple tabs?&amp;quot; And ... 😳 ... that&#39;s EXACTLY what I do when I need to run a separate process in the background, I kick open a new tab on WezTerm and then leave it running. Need to fire off a container that&#39;s not detached? Open a new tab. Need to run my local &lt;a href=&quot;https://tiddlywiki.com/&quot;&gt;node-based wiki&lt;/a&gt; in the background? Open a new tab and fire off the process.&lt;/p&gt;
+&lt;p&gt;The tabs act as my expander and window management. Because I start fresh each time with a simple arrangement, I don&#39;t need to save the session and the project. I just need to get there in the command line and open NeoVim.&lt;/p&gt;
+&lt;p&gt;I realize many people don&#39;t work in this one-window-at-a-time-in-fullscreen mode like I do. If there was a lot of setup or tear down between projects I could see sessions being useful, I just don&#39;t think it will help me much.&lt;/p&gt;
+&lt;h2 id=&quot;local-only-development&quot; tabindex=&quot;-1&quot;&gt;Local Only Development &lt;a class=&quot;header-anchor&quot; href=&quot;https://nathan-long.com/blog/my-personal-tmux-mystery/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This is the main reason of that makes &lt;code&gt;tmux&lt;/code&gt; not a real boost for me — I simply don&#39;t often work through an SSH connection.&lt;/p&gt;
+&lt;p&gt;Most of my development work happens on a local checkout of a project, running on local containers. Occasionally I&#39;ll need to SSH into something and run a few commands, but typically they&#39;re relatively minor and quick — I&#39;ve never had a command disconnect on me.&lt;/p&gt;
+&lt;p&gt;IF I did more work on remote boxes I could see this being a critical part, but it&#39;s simply not a large part of my workflow.&lt;/p&gt;
+&lt;p&gt;So I&#39;m not crazy, I&#39;m just not who &lt;code&gt;tmux&lt;/code&gt; is for.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Console Cowboys In Cyberspace</title>
