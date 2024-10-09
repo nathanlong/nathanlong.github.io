@@ -2,6 +2,7 @@
   "name": "Nathans Super Cool Personal Site",
   "version": "1.0.0",
   "description": "A digital-garden/dumpster fire handcrafted by some ordinary web guy",
+  "type": "module",
   "scripts": {
     "build": "npx @11ty/eleventy",
     "bench": "DEBUG=Eleventy:Benchmark* npx @11ty/eleventy",
@@ -26,18 +27,18 @@
   },
   "homepage": "https://nathan-long.com",
   "dependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^3.0.0",
     "@11ty/eleventy-navigation": "^0.3.5",
-    "@11ty/eleventy-plugin-rss": "^1.2.0",
+    "@11ty/eleventy-plugin-rss": "^2.0.2",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-    "luxon": "^3.4.1",
-    "markdown-it": "^13.0.1",
-    "markdown-it-anchor": "^8.6.7"
+    "luxon": "^3.5.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0"
   },
   "devDependencies": {
-    "eslint": "^8.47.0",
-    "prettier": "^3.0.2",
-    "stylelint": "^15.10.3",
-    "stylelint-config-standard": "^34.0.0"
+    "eslint": "^9.12.0",
+    "prettier": "^3.3.3",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1"
   }
 }

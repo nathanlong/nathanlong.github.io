@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "title": "Nathan Long",
   "url": "https://nathan-long.com/",
   "language": "en",
