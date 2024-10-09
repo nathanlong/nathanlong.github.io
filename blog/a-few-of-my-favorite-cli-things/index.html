@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>These Are a Few of My Favorite CLI Things...</title>
     <meta name="description" content="I take a look at a few of the CLI utilities I&#39;ve picked up along the way.">
-    <meta name="generator" content="Eleventy v2.0.1">
+    <meta name="generator" content="Eleventy v3.0.0">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
@@ -174,7 +174,7 @@
 <li><a href="#asdf"><code>asdf</code></a></li>
 <li><a href="#btop"><code>btop</code></a></li>
 </ul>
-<h2 id="tig" tabindex="-1">tig <a class="header-anchor" href="#tig">#</a></h2>
+<h2>tig</h2>
 <p><strong>Site:</strong> <a href="https://jonas.github.io/tig/">https://jonas.github.io/tig/</a></p>
 <p>Git can be weird sometimes. While I don't use <code>tig</code> to perform any git operations, I find the explorer view helpful to see what's going on in there. Have you rebased correctly? What did your teammates just commit, and what files did it affect? I run this constantly on active projects to keep a mental picture of what's going on.</p>
 <p>(So what DO I do most of my git actions with? I use Tim Pope's excellent <a href="https://github.com/tpope/vim-fugitive">Fugitive</a> Vim plugin, but that's more Vim-based, so it doesn't qualify for this article...)</p>
@@ -183,7 +183,7 @@
       <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/44491262-1f61-402d-b394-31c16aa65bcd" type="video/mp4" />
   </video>
 </div>
-<h2 id="exa" tabindex="-1">exa <a class="header-anchor" href="#exa">#</a></h2>
+<h2>exa</h2>
 <p><strong>Site:</strong> <a href="https://the.exa.website/">https://the.exa.website/</a></p>
 <p><code>exa</code> is a more colorful way to list files and directories. It may seem simple, but when you're navigating around, having color-coded items, as well as other pertinent information right at hand, is a nice quality-of-life improvement. This has completely replaced <code>ls -laF</code> for me. I've aliased the two modes I use the most to:</p>
 <pre class="feature language-bash"><code class="language-bash"><span class="token builtin class-name">alias</span> <span class="token assign-left variable">ll</span><span class="token operator">=</span><span class="token string">'exa --long --header --git --all'</span> <span class="token comment"># long form, everything</span>
@@ -193,11 +193,11 @@
     <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/4faafda2-4c14-49ad-a48f-7f21bbf289dd" type="video/mp4" />
   </video>
 </div>
-<h2 id="bashmarks" tabindex="-1">bashmarks <a class="header-anchor" href="#bashmarks">#</a></h2>
+<h2>bashmarks</h2>
 <p><strong>Github:</strong> <a href="https://github.com/huyng/bashmarks">https://github.com/huyng/bashmarks</a></p>
 <p>I found this bash script about 12 years ago and I've used it every day since then. It's a very simple bookmarking system for navigating directories with tab completion and very short commands. <code>s</code> saves the current directory with the name you give it, and <code>g</code> + <code>name</code> takes you right back to that path.</p>
 <p>I've tried fuzzy completion and other fancier bookmarking options, but this one is so simple and does just what I need that I've wound up back at bashmarks several times. I'll save the fancy fuzzy searching for INSIDE projects, I'd rather just teleport to where I need to go. I highly recommend this script if you need a simple navigation option.</p>
-<h2 id="ffmpeg" tabindex="-1">ffmpeg <a class="header-anchor" href="#ffmpeg">#</a></h2>
+<h2>ffmpeg</h2>
 <p><strong>Site:</strong> <a href="https://ffmpeg.org/">https://ffmpeg.org/</a></p>
 <p>This is an absolute monster of a video and audio tool. Need to compress a looping ambient hero video? Run it through <code>ffmpeg</code>. Need to strip the audio from something? Run it through <code>ffmpeg</code>. Need to quickly trim down a video? You guessed it, <code>ffmpeg</code>. I have shaved innumerable megabytes of video data with this tool while processing assets for client projects.</p>
 <p>The only beef I have with it is that writing out the arguments for proper compression is like trying to write an arcane spell. You need special knowledge of <code>ffmpeg</code>'s vast options and some knowledge of video codecs to make your way. Yet despite that, it remains an indispensable tool for front-end development.</p>
@@ -209,18 +209,18 @@
 	<span class="token keyword">done</span>
 <span class="token punctuation">}</span></code></pre>
 <p>At some point, I'll have to write up my cheatsheet for <code>ffmpeg</code>...</p>
-<h2 id="degit" tabindex="-1">degit <a class="header-anchor" href="#degit">#</a></h2>
+<h2>degit</h2>
 <p><strong>Github:</strong> <a href="https://github.com/Rich-Harris/degit">https://github.com/Rich-Harris/degit</a></p>
 <p>I learned about <code>degit</code> from the Vite docs, and it's become my go-to way for initializing a prototype kit. When I have an idea I want to try, I turn to <code>degit</code> and let it grab all the configuration files for me. Need Tailwind? Grab a starter kit for that. Testing out something in React? There's a starter kit you can pull for that too.</p>
 <p>In fact, I made a few <a href="/blog/vite-rapid-prototype-starter-kits/">starter kits of my own</a>.</p>
-<h2 id="just" tabindex="-1">just <a class="header-anchor" href="#just">#</a></h2>
+<h2>just</h2>
 <p><strong>Github:</strong> <a href="https://github.com/casey/just">https://github.com/casey/just</a></p>
 <p>Do you have a project that needs lots of arbitrary commands? Things you have to continually look up and paste back into your console? <code>just</code> helps provide a unified layer on top of whatever system you're using. Unlike a Rakefile or Makefile, it's not bound to any specific language, you can just feed it whatever commands you'd like and it'll run them for you.</p>
 <p>It even pairs nicely with the previous utility, <code>degit</code> to help form a rapid-start prototyping area with <a href="/blog/vite-rapid-prototype-starter-kits/">project templates</a></p>
-<h2 id="asdf" tabindex="-1">asdf <a class="header-anchor" href="#asdf">#</a></h2>
+<h2>asdf</h2>
 <p><strong>Site:</strong> <a href="https://asdf-vm.com/">https://asdf-vm.com/</a></p>
 <p>It can be tough to make sure that your environments are in sync across projects, versions, and even programming languages. For a while, I was using language-specific version managers (<code>nvm</code>, <code>rvm</code>, with all the shims that come with it) but Viget introduced me to <code>asdf</code> as an all-in-one way to manage all these different languages in a way that didn't have me pulling my hair out.</p>
-<h2 id="btop" tabindex="-1">btop <a class="header-anchor" href="#btop">#</a></h2>
+<h2>btop</h2>
 <p><strong>Github:</strong> <a href="https://github.com/aristocratos/btop">https://github.com/aristocratos/btop</a></p>
 <p>Think Activity Monitor, but way cooler looking and accessible without clicking a bunch of things. <code>btop</code> is a pleasing way to see just what is making your computer slow down to a crawl (shakes fist at Docker).</p>
 <div class="feature rounded-1 overflow-hidden lh-0">

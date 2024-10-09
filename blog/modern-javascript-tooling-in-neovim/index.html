@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Setting up LSPs for Modern JavaScript Tooling in Neovim</title>
     <meta name="description" content="Installing LSPs, snippets, and Intellisense-style autocompletion">
-    <meta name="generator" content="Eleventy v2.0.1">
+    <meta name="generator" content="Eleventy v3.0.0">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
@@ -184,7 +184,7 @@
 <li>A little bit of <strong>Lua</strong> code (don't worry, if I can parse it you can too).</li>
 <li>Some familiarity with installing utilities via the <strong>command line</strong>.</li>
 </ul>
-<h2 id="lsp-s-you-magical-beasties" tabindex="-1">LSP's, you magical beasties... <a class="header-anchor" href="#lsp-s-you-magical-beasties">#</a></h2>
+<h2>LSP's, you magical beasties...</h2>
 <p>A lot of the features we're interested in come from the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a> or LSP developed by Microsoft. They act as language-specific 'brains' that an editor (like Visual Studio Code) can communicate with for all sorts of handy language features.</p>
 <p>This is the tech behind <strong>Intellisense</strong> completion, and it's also supported in Neovim. We're going to be nabbing these brains for ourselves with the help of NPM.</p>
 <p>There are 4 LSP's that we're interested in today:</p>
@@ -198,14 +198,14 @@
 <pre class="feature language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> typescript-language-server typescript vscode-langservers-extracted @tailwindcss/language-server</code></pre>
 <p>(I'm using <code>npm</code> to install modules in this example, but you can use whatever package manager you prefer. The point is you just need these globally installed so you can access them from Neovim. These LSP's are just a small sampling of what's available, see the docs at <a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a> for ways to install and configure more LSPs)</p>
 <p>Now that we have these magical language 🧠's available globally we need to connect them to Neovim.</p>
-<h2 id="connecting-neovim" tabindex="-1">Connecting Neovim <a class="header-anchor" href="#connecting-neovim">#</a></h2>
+<h2>Connecting Neovim</h2>
 <p>We'll be installing Neovim plugins to help attach everything. The plugin manager I'm using here is <a href="https://github.com/wbthomason/packer.nvim">Packer</a>, but these will work with any other plugin manager as well.</p>
 <p>We're also going to be writing the setup and configurations of these plugins in Lua because most of them are written in Lua themselves. However, there's no need to swap out your <code>init.vim</code> (vimscript-based config equivalent of <code>.vimrc</code> for Neovim) for <code>init.lua</code> just yet. Neovim gives you the option to write Lua blocks inside of Vimscript like:</p>
 <pre class="feature language-lua"><code class="language-lua">lua <span class="token operator">&lt;&lt;</span> EOF
   <span class="token comment">-- all your lua config here</span>
 <span class="token keyword">end</span></code></pre>
 <p>So if you're rocking Vimscript, make sure to wrap the following setup in the Lua markers.</p>
-<h3 id="install-the-plugins" tabindex="-1">Install the plugins <a class="header-anchor" href="#install-the-plugins">#</a></h3>
+<h3>Install the plugins</h3>
 <pre class="feature language-lua"><code class="language-lua"><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'packer'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">startup</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token keyword">function</span><span class="token punctuation">(</span>use<span class="token punctuation">)</span>
   <span class="token comment">-- ...other plugins before and after...</span>
   <span class="token comment">--</span>
@@ -262,10 +262,10 @@
 </tbody>
 </table>
 <p><strong>One note about Prettier:</strong> You may have noticed we did not install Prettier globally. TYPICALLY you'll be running Prettier from a local project installation, and this setup will hook into a project that has Prettier installed. But if you want to use Prettier outside of a project config, you can also install a version globally that you can use without modifying project dependencies. We'll come back to Prettier a little later on.</p>
-<h3 id="activate-the-plugins" tabindex="-1">Activate the plugins <a class="header-anchor" href="#activate-the-plugins">#</a></h3>
+<h3>Activate the plugins</h3>
 <p>If you haven't worked with Lua plugins before they differ from traditional Vim plugins in the fact that they're not active by default, you have to call them (and optionally pass configuration options) before they'll attach themselves to your session. This allows for you to selectively load plugins per filetype or any other fancy options you might need.</p>
 <p>Inside of your <code>init.vim</code> or <code>init.lua</code> add the following:</p>
-<h4 id="lsp-config" tabindex="-1">LSP Config <a class="header-anchor" href="#lsp-config">#</a></h4>
+<h4>LSP Config</h4>
 <pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- LSP Mappings + Settings -----------------------------------------------------</span>
 <span class="token comment">-- modified from: https://github.com/neovim/nvim-lspconfig#suggested-configuration</span>
 <span class="token keyword">local</span> opts <span class="token operator">=</span> <span class="token punctuation">{</span> noremap<span class="token operator">=</span><span class="token keyword">true</span><span class="token punctuation">,</span> silent<span class="token operator">=</span><span class="token keyword">true</span> <span class="token punctuation">}</span>
@@ -325,7 +325,7 @@ lspconfig<span class="token punctuation">.</span>html<span class="token punctuat
   capabilities <span class="token operator">=</span> capabilities
 <span class="token punctuation">}</span></code></pre>
 <p>Awesome, that's the LSP setup. We now have LSP's activated and attached -- but they're not going to autocompleting yet. We need to set up <code>nvim-cmp</code>. But to do that we also need to specify a snippet engine.</p>
-<h4 id="snippet-setup" tabindex="-1">Snippet Setup <a class="header-anchor" href="#snippet-setup">#</a></h4>
+<h4>Snippet Setup</h4>
 <p>Now, you don't NEED <code>LuaSnip</code> specifically for <code>nvim-cmp</code>, but you do need A snippet engine (<code>nvim-cmp</code> requires one 🤷). I've chosen <code>LuaSnip</code> for it's ease of use and power, which I may cover in a future article. For now let's set it up:</p>
 <pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- Luasnip ---------------------------------------------------------------------</span>
 <span class="token comment">-- Load as needed by filetype by the luasnippets folder in the config dir</span>
@@ -341,7 +341,7 @@ vim<span class="token punctuation">.</span>api<span class="token punctuation">.<
   <span class="token keyword">local</span> line<span class="token punctuation">,</span> col <span class="token operator">=</span> <span class="token function">unpack</span><span class="token punctuation">(</span>vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_win_get_cursor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
   <span class="token keyword">return</span> col <span class="token operator">~=</span> <span class="token number">0</span> <span class="token keyword">and</span> vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_buf_get_lines</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> line <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">,</span> <span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token function">sub</span><span class="token punctuation">(</span>col<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">nil</span>
 <span class="token keyword">end</span></code></pre>
-<h4 id="autocomplete-setup" tabindex="-1">Autocomplete Setup <a class="header-anchor" href="#autocomplete-setup">#</a></h4>
+<h4>Autocomplete Setup</h4>
 <p>Almost done! Now we just need to activate <code>nvim-cmp</code> and feed it both our LSP and other sources, and create some keymappings:</p>
 <pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- CMP - Autocompletion --------------------------------------------------------</span>
 <span class="token keyword">local</span> cmp <span class="token operator">=</span> require <span class="token string">'cmp'</span>
@@ -393,18 +393,18 @@ cmp<span class="token punctuation">.</span><span class="token function">setup</s
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Aaaaay, now we have LSP-assisted autocomplete working! 😎 We've set up some smart mappings specifically around <code>&lt;Tab&gt;</code> and <code>&lt;S-Tab&gt;</code> to allow <code>nvim-cmp</code> to quickly cycle through options, and we've fed all of our sources into the completion engine.</p>
-<h3 id="prettier-setup" tabindex="-1">Prettier Setup <a class="header-anchor" href="#prettier-setup">#</a></h3>
+<h3>Prettier Setup</h3>
 <p>And lastly, lets activate and make some keybindings for Prettier:</p>
 <pre class="feature language-lua"><code class="language-lua"><span class="token comment">-- Prettier</span>
 <span class="token function">keymap</span><span class="token punctuation">(</span><span class="token string">"n"</span><span class="token punctuation">,</span> <span class="token string">"&lt;leader>re"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Plug>(Prettier)"</span><span class="token punctuation">,</span> opts<span class="token punctuation">)</span>
 <span class="token function">keymap</span><span class="token punctuation">(</span><span class="token string">"v"</span><span class="token punctuation">,</span> <span class="token string">"&lt;leader>re"</span><span class="token punctuation">,</span> <span class="token string">":PrettierFragment&lt;cr>"</span><span class="token punctuation">,</span> opts<span class="token punctuation">)</span></code></pre>
 <p>If it's more helpful to see everything all together, you can take a peek at <a href="https://github.com/nathanlong/dotfiles/blob/main/nvim/init.lua">my personal Neovim config</a>, just know that it may deviate slightly from these instructions as I'm always tinkering.</p>
-<h2 id="that-s-great-but-what-can-i-do-with-these-things" tabindex="-1">That's great, but what can I DO with these things? <a class="header-anchor" href="#that-s-great-but-what-can-i-do-with-these-things">#</a></h2>
+<h2>That's great, but what can I DO with these things?</h2>
 <p>Each one of these things we just installed and connected will allow to some truly magical actions.</p>
-<h3 id="language-powered-extensible-autocompletion-nvim-cmp-lsp" tabindex="-1">Language-Powered Extensible autocompletion (nvim-cmp + LSP) <a class="header-anchor" href="#language-powered-extensible-autocompletion-nvim-cmp-lsp">#</a></h3>
+<h3>Language-Powered Extensible autocompletion (nvim-cmp + LSP)</h3>
 <p>If you've seen someone use VSCode, you have seen this in action. Language keywords are automatically provided for you as you type, and more than that: it KNOWS your code base. If you've correctly formatted your code, the autocomplete popups will be able to tell you what types of arguments the function requires, grab methods and functions from imported code, and just overall better autocomplete.</p>
 <p>But YOU get to pick what goes in there. If you need something like Elixir and Erlang support, there are <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#elixirls">LSP's for that</a>. This system will allow you to grab whatever completion brains you want and plug them into your new system.</p>
-<h3 id="super-language-powers" tabindex="-1">Super Language Powers <a class="header-anchor" href="#super-language-powers">#</a></h3>
+<h3>Super Language Powers</h3>
 <p>There are a lot of powerful features hidden in the LSPs that are not obvious at first. We bound a lot of these commands to key mappings in our config files, here are a few of them explained:</p>
 <ul>
 <li><strong>Buffer Hover</strong> = Display a tooltip for what your cursor is on. Helpful for things like seeing the expanded Tailwind CSS definitions or a bit of info about a piece of code. Very handy.</li>
@@ -417,13 +417,13 @@ cmp<span class="token punctuation">.</span><span class="token function">setup</s
 <li><strong>Buffer Reference</strong> = Create a quickfix window for all references for what your cursor is on.</li>
 <li><strong>Buffer Format</strong> = This one can also be pretty magical. This command can do some basic clean up and formatting for you. Think of it as Prettier-Lite™️</li>
 </ul>
-<h3 id="linting-in-context" tabindex="-1">Linting In Context <a class="header-anchor" href="#linting-in-context">#</a></h3>
+<h3>Linting In Context</h3>
 <p>We didn't address it directly, but part of the <code>vscode-langservers-extracted</code> package included <code>eslint</code>. Through the LSP integration, diagnostics will output directly alongside your JavaScript so you can see <s>when you've made a terrible mistake</s> when your code could be improved. This setup also gives you an easy way to navigate through diagnostic errors (We bound them to <code>[d</code> and <code>]d</code> in the config files) and even have some quick LSP-assisted resolution through Code Actions.</p>
-<h3 id="auto-formatting-prettier" tabindex="-1">Auto-formatting (Prettier) <a class="header-anchor" href="#auto-formatting-prettier">#</a></h3>
+<h3>Auto-formatting (Prettier)</h3>
 <p>Alright, this is more subjective than the other benefits, but stick with me here for a 🔥 <strong>hot take</strong> 🔥.</p>
 <p>While <a href="https://prettier.io/">Prettier</a> isn't perfect, it does have a valuable function: it completely removes arbitrary and subjective formatting differences when working on a team.</p>
 <p>Tabs/Spaces? (Foh-get a-bout eet) Spaces around argument options? (Naht to woo-ray, hun). Entire PR's littered with whitespace adjustments? (Ne-vah agaihns). Write the code how you want to while you're hacking away, then, when you're done, have the formatter clean it up and snap it into alignment with team standards (collected in the <code>.pretterrc</code>). It's like a robot butler for your code, and while it may not put everything back where YOU would put it you can also know that it's doing the same thing for everyone else. And that's a lot harder to get stuck on.</p>
-<h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion">#</a></h2>
+<h2>Conclusion</h2>
 <p>The support of LSP's is one of the main reasons I hopped onboard the Neovim train. After seeing how nice the JavaScript experience is in Visual Studio Code and the power of what LSP's allow you to do with your code I was sold. When you're styling a user interface in TailwindCSS or working in a Next.js app, having the lightning fast autocomplete along with quick hopping, output previews, and contextual linting... It turns Neovim into a rocket ship for writing modern JavaScript!</p>
 
 

@@ -1,128 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/owning-my-voice/</loc>
     <lastmod>2023-01-31</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/</loc>
     <lastmod>2023-02-23</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/vite-rapid-prototype-starter-kits/</loc>
     <lastmod>2023-06-16</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/building-motion-for-the-web/</loc>
     <lastmod>2023-07-14</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/nathan-uses-this-2023-edition/</loc>
     <lastmod>2023-09-20</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/class-regex-for-tailwind-intellisense/</loc>
     <lastmod>2023-11-29</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/keeping-a-project-log/</loc>
     <lastmod>2024-03-04</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/talk-motion-2024/</loc>
     <lastmod>2024-03-06</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/</loc>
     <lastmod>2024-03-21</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/ffmpeg-basics-and-recipes/</loc>
     <lastmod>2024-03-27</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/colorschemes-for-the-discerning-developer/</loc>
     <lastmod>2024-06-11</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/console-cowboys-in-cyberspace/</loc>
     <lastmod>2024-06-28</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/my-personal-tmux-mystery/</loc>
     <lastmod>2024-08-22</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/about/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/blog/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/lab/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/newsletter/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/tags/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/tags/tooling/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/tags/motion/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/tags/neovim/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/tags/thoughts/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/tags/process/</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
-  
+	
   <url>
     <loc>https://nathan-long.com/voices.xml</loc>
-    <lastmod>2024-08-22</lastmod>
+    <lastmod>2024-10-09</lastmod>
   </url>
 </urlset>

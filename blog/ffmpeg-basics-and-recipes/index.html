@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ffmpeg Basics and Recipes</title>
     <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
-    <meta name="generator" content="Eleventy v2.0.1">
+    <meta name="generator" content="Eleventy v3.0.0">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
@@ -165,11 +165,11 @@
 
 <p>Recently I wrote about <a href="https://www.ffmpeg.org/">ffmpeg</a>, a Swiss-army knife command-line utility for media. While I find it incredibly handy NOW, it took time to build up a working knowledge of the tool to handle certain tasks with confidence. The downside of having a versatile tool is that it can do an awful lot of things!</p>
 <p>So let's break down how it works and I'll share some of my most common recipes for converting media.</p>
-<h2 id="installing" tabindex="-1">Installing <a class="header-anchor" href="#installing">#</a></h2>
+<h2>Installing</h2>
 <p>The easiest way to install (on a Mac) is with <a href="https://brew.sh/">homebrew</a>:</p>
 <p><code>brew install ffmpeg</code></p>
 <p>You can also download directly from <a href="https://ffmpeg.org/download.html">their site</a>, but that's a tad more involved. Homebrew drops it into your path, ready to go.</p>
-<h2 id="basics" tabindex="-1">Basics <a class="header-anchor" href="#basics">#</a></h2>
+<h2>Basics</h2>
 <p>An <code>ffmpeg</code> command will take:</p>
 <ol>
 <li>An <strong>input file,</strong></li>
@@ -178,7 +178,7 @@
 </ol>
 <p>A basic command will look something like:</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input-file <span class="token punctuation">{</span>lots of options here<span class="token punctuation">}</span> output-file</code></pre>
-<h2 id="compression" tabindex="-1">Compression <a class="header-anchor" href="#compression">#</a></h2>
+<h2>Compression</h2>
 <p>One of the handiest things <code>ffmpeg</code> can do is give you fine-grained control over video compression. Not only can you pick the method of compression, you can choose what codec to use.</p>
 <p>There are several methods of compression, but two of the main ones you'll see are:</p>
 <ul>
@@ -187,7 +187,7 @@
 </ul>
 <p>Bitrates can get quite complicated but give you a lot of control. They're useful in situations for streaming videos or where you need to specify a minimum, maximum, or ensure a constant bitrate. Because I use <code>ffmpeg</code> to operate on smaller videos I gravitate towards <code>-crf</code> values.</p>
 <p>Read more on <a href="https://slhck.info/video/2017/02/24/crf-guide.html">how CRF works</a>.</p>
-<h3 id="convert-to-h264-mp4" tabindex="-1">Convert to h264 mp4 <a class="header-anchor" href="#convert-to-h264-mp4">#</a></h3>
+<h3>Convert to h264 mp4</h3>
 <p>If you need to share a video, you can't go wrong with an mp4. It's widely supported and everything except ancient devices should be able to play it. Here's a good default compression recipe:</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mov <span class="token parameter variable">-c:v</span> libx264 <span class="token parameter variable">-crf</span> <span class="token number">28</span> <span class="token parameter variable">-preset</span> very slow output.mp4</code></pre>
 <p>Option descriptions:</p>
@@ -198,7 +198,7 @@
 </ul>
 <p>One benefit of H264 compression is it's FAST and pretty efficient. I can usually get a <code>.mov</code> file down to about 10% of its size with this recipe.</p>
 <p>Read more about <a href="https://trac.ffmpeg.org/wiki/Encode/H.264">H264 compression</a>.</p>
-<h3 id="convert-to-webm" tabindex="-1">Convert to webm <a class="header-anchor" href="#convert-to-webm">#</a></h3>
+<h3>Convert to webm</h3>
 <p>webm is now <a href="https://caniuse.com/webm">fully supported in modern browsers</a> but is a little more finicky to encode, it's quite easy to set some options and wind up with large webm files. I find webm's to be slightly larger than well-compressed mp4s.</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libvpx-vp9 <span class="token parameter variable">-crf</span> <span class="token number">30</span> <span class="token parameter variable">-b:v</span> <span class="token number">0</span> output.webm</code></pre>
 <ul>
@@ -220,9 +220,9 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <p>When you do a two-pass encoding, the first pass will LOOK like nothing is happening, just be patient, it will eventually start showing progress and spit out your file.</p>
 <p>I'll also state that I haven't found much difference between the single pass and the double pass methods, but I also think I'm not operating at the size and length of video files to see the difference. If it's a smaller file, the single pass is probably good enough for your needs.</p>
 </blockquote>
-<h2 id="common-recipes" tabindex="-1">Common Recipes <a class="header-anchor" href="#common-recipes">#</a></h2>
+<h2>Common Recipes</h2>
 <p>Now we've talked about compression, what are some other things you can do? Here are a few of the tasks I find myself running.</p>
-<h3 id="scale-video-by-height" tabindex="-1">Scale Video by Height <a class="header-anchor" href="#scale-video-by-height">#</a></h3>
+<h3>Scale Video by Height</h3>
 <p>One of the easiest ways to shrink file size is to reduce the size of the video, especially if you've got a mondo-sized source file. To produce a 1080p video:</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-vf</span> <span class="token assign-left variable">scale</span><span class="token operator">=</span>-1:1080 output.mp4</code></pre>
 <ul>
@@ -232,7 +232,7 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <blockquote>
 <p><strong>Note:</strong> Common resolutions for 16:9 video are: 1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080, 2560×1440 and 3840×2160. You can use these as some numbers to start with.</p>
 </blockquote>
-<h3 id="trim-video-by-timecode" tabindex="-1">Trim Video by Timecode <a class="header-anchor" href="#trim-video-by-timecode">#</a></h3>
+<h3>Trim Video by Timecode</h3>
 <p>Sometimes you only need a slice of a video, or you need to just shave off the first few seconds of something. Here's how you trim by timecode:</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-ss</span> 00:01:02.500 <span class="token parameter variable">-t</span> 00:01:03.250 <span class="token parameter variable">-c</span> copy output.mp4</code></pre>
 <ul>
@@ -244,20 +244,20 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <ul>
 <li>Not providing a <code>-to</code> means it runs to the end of the file. This example will trim off the first 3 seconds of the file.</li>
 </ul>
-<h3 id="remove-audio" tabindex="-1">Remove Audio <a class="header-anchor" href="#remove-audio">#</a></h3>
+<h3>Remove Audio</h3>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> example.mp4 <span class="token parameter variable">-c</span> copy <span class="token parameter variable">-an</span> example-nosound.mp4</code></pre>
 <ul>
 <li><code>-an</code> removes audio</li>
 <li><code>-c</code> copies existing formats</li>
 </ul>
-<h3 id="boost-volume" tabindex="-1">Boost Volume <a class="header-anchor" href="#boost-volume">#</a></h3>
+<h3>Boost Volume</h3>
 <p>Note that this can work on audio files, not just videos.</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.wav <span class="token parameter variable">-af</span> <span class="token string">"volume=1.5"</span> output.wav</code></pre>
 <ul>
 <li><code>-af</code> set audio filters</li>
 <li><code>volume=1.5</code> and boost the volume to 150% of the original. This can be proportional or in decibels: <code>volume=-5dB</code></li>
 </ul>
-<h3 id="create-a-poster-image" tabindex="-1">Create a Poster Image <a class="header-anchor" href="#create-a-poster-image">#</a></h3>
+<h3>Create a Poster Image</h3>
 <p>Embedding an HTML video and don't have a poster image? Rather than trying to awkwardly screengrab something, you can use this to create an image at a specific timestamp.</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> example.mp4 <span class="token parameter variable">-ss</span> 00:00:00.000 <span class="token parameter variable">-vframes</span> <span class="token number">1</span> <span class="token string">'thumb.png'</span></code></pre>
 <ul>
@@ -265,9 +265,9 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <li><code>-vframes</code> sets the number of frames to output</li>
 <li><code>*.png</code> (in output file extension) converts it to a PNG image</li>
 </ul>
-<h2 id="advanced-recipes" tabindex="-1">Advanced Recipes <a class="header-anchor" href="#advanced-recipes">#</a></h2>
+<h2>Advanced Recipes</h2>
 <p>Here are some of the more complicated recipes I use that string together some of the operations I've already covered.</p>
-<h3 id="create-ambient-video-mp4" tabindex="-1">Create Ambient Video MP4 <a class="header-anchor" href="#create-ambient-video-mp4">#</a></h3>
+<h3>Create Ambient Video MP4</h3>
 <p>Need to load up a looping ambient video, but you're given a 200+MB file?</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libx264 <span class="token parameter variable">-crf</span> <span class="token number">28</span> <span class="token parameter variable">-preset</span> veryslow <span class="token parameter variable">-vf</span> <span class="token assign-left variable">scale</span><span class="token operator">=</span>-1:720 <span class="token parameter variable">-movflags</span> +faststart <span class="token parameter variable">-an</span> output.mp4</code></pre>
 <ul>
@@ -278,7 +278,7 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <li><code>-movflags +faststart</code> moves the metadata to the front of the video allowing immediate streaming (rather than waiting for the whole file to load)</li>
 <li>Removes audio channels since it will be playing muted.</li>
 </ul>
-<h3 id="gif-to-mp4" tabindex="-1">GIF to MP4 <a class="header-anchor" href="#gif-to-mp4">#</a></h3>
+<h3>GIF to MP4</h3>
 <p>Want a GIF, but not with the filesize overhead?</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> animated.gif <span class="token parameter variable">-movflags</span> +faststart <span class="token parameter variable">-pix_fmt</span> yuv420p <span class="token parameter variable">-vf</span> <span class="token string">"scale=trunc(iw/2)*2:trunc(ih/2)*2"</span> video.mp4</code></pre>
 <ul>
@@ -286,7 +286,7 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <li><code>-pix_fmt yuv420p</code> use the pixel format of <code>yuv420p</code> which is a chroma subsampling scheme.</li>
 <li><code>-vf</code> starts a filter. The formula in the string will upscale the resolution by 2x.</li>
 </ul>
-<h3 id="mp4-to-gif" tabindex="-1">MP4 to GIF <a class="header-anchor" href="#mp4-to-gif">#</a></h3>
+<h3>MP4 to GIF</h3>
 <p>Going the other way is a bit more involved because we need to take a full-color video and restrict it to 256 colors for a GIF. First, we'll need to generate a color palette from the video:</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-y</span> <span class="token parameter variable">-ss</span> <span class="token number">10</span> <span class="token parameter variable">-vf</span> <span class="token assign-left variable">fps</span><span class="token operator">=</span><span class="token number">10</span>,scale<span class="token operator">=</span><span class="token number">320</span>:-1:flags<span class="token operator">=</span>lanczos,palettegen palette.png</code></pre>
 <ul>
@@ -299,7 +299,7 @@ ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="t
 <li>Notice the two inputs, we grab the video and the palette</li>
 <li><code>-filter-complex</code> Sets up a filter that: sets the fps to 10, scales it to 480 pixels high, and uses the palette we specified earlier.</li>
 </ul>
-<h3 id="max-compatibility" tabindex="-1">Max Compatibility <a class="header-anchor" href="#max-compatibility">#</a></h3>
+<h3>Max Compatibility</h3>
 <p>I hardly use this recipe anymore since MOST devices can handle mp4's just fine. But just in case you need to get something running on an older device:</p>
 <pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> input.mp4 <span class="token parameter variable">-c:v</span> libx264 <span class="token parameter variable">-crf</span> <span class="token number">23</span> <span class="token parameter variable">-profile:v</span> baseline <span class="token parameter variable">-level</span> <span class="token number">3.0</span> <span class="token parameter variable">-pix_fmt</span> yuv420p <span class="token parameter variable">-c:a</span> aac <span class="token parameter variable">-ac</span> <span class="token number">2</span> <span class="token parameter variable">-b:a</span> 128k <span class="token parameter variable">-movflags</span> +faststart output.mp4</code></pre>
 <ul>
