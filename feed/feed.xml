@@ -329,16 +329,6 @@ ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; in
 		<updated>2024-03-21T13:16:32Z</updated>
 		<id>https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/</id>
 		<content type="html">&lt;p&gt;I&#39;ve recently been perusing the setups at &lt;a href=&quot;https://uses.tech/&quot;&gt;uses.tech&lt;/a&gt;. It&#39;s interesting to see where people have landed on hardware and software options, but I started thinking about some of the miscellaneous CLI utilities I&#39;ve tried and picked up along the way. My work LIVES inside the terminal (as a Vim user) and here are some of the small things I&#39;ve found to make it easier on myself (in no particular order):&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#tig&quot;&gt;&lt;code&gt;tig&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#exa&quot;&gt;&lt;code&gt;exa&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#bashmarks&quot;&gt;&lt;code&gt;bashmarks&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#ffmpeg&quot;&gt;&lt;code&gt;ffmpeg&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#degit&quot;&gt;&lt;code&gt;degit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#just&quot;&gt;&lt;code&gt;just&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#asdf&quot;&gt;&lt;code&gt;asdf&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nathan-long.com/blog/a-few-of-my-favorite-cli-things/#btop&quot;&gt;&lt;code&gt;btop&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;h2&gt;tig&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Site:&lt;/strong&gt; &lt;a href=&quot;https://jonas.github.io/tig/&quot;&gt;https://jonas.github.io/tig/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Git can be weird sometimes. While I don&#39;t use &lt;code&gt;tig&lt;/code&gt; to perform any git operations, I find the explorer view helpful to see what&#39;s going on in there. Have you rebased correctly? What did your teammates just commit, and what files did it affect? I run this constantly on active projects to keep a mental picture of what&#39;s going on.&lt;/p&gt;
@@ -369,8 +359,8 @@ ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; in
 &lt;p&gt;The video screencaps in this article were captured with a normal Quicktime screen recording, but I have a special quickfire mov-to-mp4 command that uses the absolute basic mp4 defaults and still manages to make them 5-10% of the original &lt;code&gt;.mov&lt;/code&gt; size:&lt;/p&gt;
 &lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Quicktime mov files are so big!&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function-name function&quot;&gt;movtomp4&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token for-or-select variable&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; *.mov&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;do&lt;/span&gt; 
-		ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;$i&lt;/span&gt;&quot;&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;${i}&lt;/span&gt;.mp4&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+	&lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token for-or-select variable&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; *.mov&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;do&lt;/span&gt;
+		ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;$i&lt;/span&gt;&quot;&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;${i}&lt;/span&gt;.mp4&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;token keyword&quot;&gt;done&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At some point, I&#39;ll have to write up my cheatsheet for &lt;code&gt;ffmpeg&lt;/code&gt;...&lt;/p&gt;

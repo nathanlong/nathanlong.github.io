@@ -164,16 +164,6 @@
 </div>
 
 <p>I've recently been perusing the setups at <a href="https://uses.tech/">uses.tech</a>. It's interesting to see where people have landed on hardware and software options, but I started thinking about some of the miscellaneous CLI utilities I've tried and picked up along the way. My work LIVES inside the terminal (as a Vim user) and here are some of the small things I've found to make it easier on myself (in no particular order):</p>
-<ul>
-<li><a href="#tig"><code>tig</code></a></li>
-<li><a href="#exa"><code>exa</code></a></li>
-<li><a href="#bashmarks"><code>bashmarks</code></a></li>
-<li><a href="#ffmpeg"><code>ffmpeg</code></a></li>
-<li><a href="#degit"><code>degit</code></a></li>
-<li><a href="#just"><code>just</code></a></li>
-<li><a href="#asdf"><code>asdf</code></a></li>
-<li><a href="#btop"><code>btop</code></a></li>
-</ul>
 <h2>tig</h2>
 <p><strong>Site:</strong> <a href="https://jonas.github.io/tig/">https://jonas.github.io/tig/</a></p>
 <p>Git can be weird sometimes. While I don't use <code>tig</code> to perform any git operations, I find the explorer view helpful to see what's going on in there. Have you rebased correctly? What did your teammates just commit, and what files did it affect? I run this constantly on active projects to keep a mental picture of what's going on.</p>
@@ -204,8 +194,8 @@
 <p>The video screencaps in this article were captured with a normal Quicktime screen recording, but I have a special quickfire mov-to-mp4 command that uses the absolute basic mp4 defaults and still manages to make them 5-10% of the original <code>.mov</code> size:</p>
 <pre class="feature language-bash"><code class="language-bash"><span class="token comment"># Quicktime mov files are so big!</span>
 <span class="token keyword">function</span> <span class="token function-name function">movtomp4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> *.mov<span class="token punctuation">;</span> <span class="token keyword">do</span> 
-		ffmpeg <span class="token parameter variable">-i</span> <span class="token string">"<span class="token variable">$i</span>"</span> <span class="token string">"<span class="token variable">${i}</span>.mp4"</span><span class="token punctuation">;</span> 
+	<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> *.mov<span class="token punctuation">;</span> <span class="token keyword">do</span>
+		ffmpeg <span class="token parameter variable">-i</span> <span class="token string">"<span class="token variable">$i</span>"</span> <span class="token string">"<span class="token variable">${i}</span>.mp4"</span><span class="token punctuation">;</span>
 	<span class="token keyword">done</span>
 <span class="token punctuation">}</span></code></pre>
 <p>At some point, I'll have to write up my cheatsheet for <code>ffmpeg</code>...</p>
