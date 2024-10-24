@@ -7,15 +7,6 @@ tags: [tooling]
 
 I've recently been perusing the setups at [uses.tech](https://uses.tech/). It's interesting to see where people have landed on hardware and software options, but I started thinking about some of the miscellaneous CLI utilities I've tried and picked up along the way. My work LIVES inside the terminal (as a Vim user) and here are some of the small things I've found to make it easier on myself (in no particular order):
 
-- [`tig`](#tig)
-- [`exa`](#exa)
-- [`bashmarks`](#bashmarks)
-- [`ffmpeg`](#ffmpeg)
-- [`degit`](#degit)
-- [`just`](#just)
-- [`asdf`](#asdf)
-- [`btop`](#btop)
-
 ## tig
 
 **Site:** [https://jonas.github.io/tig/](https://jonas.github.io/tig/)
@@ -69,8 +60,8 @@ The video screencaps in this article were captured with a normal Quicktime scree
 ```bash
 # Quicktime mov files are so big!
 function movtomp4() {
-	for i in *.mov; do 
-		ffmpeg -i "$i" "${i}.mp4"; 
+	for i in *.mov; do
+		ffmpeg -i "$i" "${i}.mp4";
 	done
 }
 ```
