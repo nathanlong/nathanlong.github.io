@@ -5,7 +5,6 @@ const PARTICLE_COUNT = 30
 const DARK_COLORS = ['0x4361ee', '0x3a0ca3', '0x7209b7', '0xf72585']
 const LIGHT_COLORS = ['0xbde0fe', '0xa2d2ff', '0xffafcc', '0xffc8dd']
 
-// from: https://www.joshwcomeau.com/snippets/javascript/debounce/
 const debounce = (callback, wait) => {
   let timeoutId = null;
   return (...args) => {
@@ -92,7 +91,6 @@ export default class partyTime {
     this.particleTotal = PARTICLE_COUNT
     this.count = 0
     this.background = this.isLightTheme ? 'cyan' : 'indigo'
-    this.scrollY
     this.ticking = false
   }
 
@@ -143,18 +141,16 @@ export default class partyTime {
     this.particleContainer = new PIXI.Container()
     this.pixi.stage.addChild(this.particleContainer)
 
+    const colors = this.isLightTheme ? LIGHT_COLORS : DARK_COLORS
+    const colorTotal = colors.length
+
     for (let i = 0; i < this.particleTotal; i++) {
       const circle = new PIXI.Graphics()
-      const colorTotal = this.isLightTheme
-        ? LIGHT_COLORS.length
-        : DARK_COLORS.length
       const randomColor = Math.floor(Math.random() * colorTotal)
       const x = Math.random() * this.pixi.screen.width
       const y = Math.random() * this.pixi.screen.height
       const radius = Math.random() * 10 + 4
-      const color = this.isLightTheme
-        ? LIGHT_COLORS[randomColor]
-        : DARK_COLORS[randomColor]
+      const color = colors[randomColor]
       const speed = this.motionPref ? Math.random() : 0
 
       circle.beginFill(color)
@@ -177,8 +173,6 @@ export default class partyTime {
   }
 
   handleResize = debounce((ev) => {
-    this.bounds.destroy
-    this.bounds = null
     this.bounds = new PIXI.Rectangle(
       -this.padding,
       -this.padding,
@@ -215,7 +209,6 @@ export default class partyTime {
         let delta = Math.floor(scrollDelta) || 0
         this.scrollY = newScroll
         this.particles.forEach((particle) => {
-          // particle.shift(delta)
           particle.sprite.inertia = 1
           particle.scrollDelta = delta
         })
@@ -226,12 +219,11 @@ export default class partyTime {
     }
   }
 
-  // Remove listeners, stop audio, and halt progress tracking
   cleanUp() {
     console.log('Party Time Over!!')
-    window.addEventListener('themeSwitch', this.handleSwitch)
-    window.addEventListener('motionSwitch', this.handleMotion)
-    window.addEventListener('scroll', this.handleScroll)
+    window.removeEventListener('themeSwitch', this.handleSwitch)
+    window.removeEventListener('motionSwitch', this.handleMotion)
+    window.removeEventListener('scroll', this.handleScroll)
     document.body.removeChild(this.pixi.view)
   }
 }

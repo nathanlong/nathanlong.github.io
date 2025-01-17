@@ -94,59 +94,46 @@ export default class Nav {
   }
 
   togglePrefs = () => {
-    if (this.prefOpen) {
-      this.prefTrigger.ariaPressed = false
-      if (this.motionPref) {
-        this.prefAnimation.playbackRate = -1
-        this.prefAnimation.play()
-        this.prefAnimation.finished.then(() => {
-          this.el.dataset.pref = 'false'
-        })
-      } else {
-        this.el.dataset.pref = 'false'
-      }
+    const isOpen = this.prefOpen
+    this.prefTrigger.ariaPressed = !isOpen
+    if (this.motionPref) {
+      // we have to set the data attr first if it's not open
+      !isOpen ? this.el.dataset.pref = 'true' : null
+      this.prefAnimation.playbackRate = isOpen ? -1 : 1
+      this.prefAnimation.play()
+      this.prefAnimation.finished.then(() => {
+        this.el.dataset.pref = isOpen ? 'false' : 'true'
+      })
     } else {
-      this.el.dataset.pref = 'true'
-      this.prefTrigger.ariaPressed = true
-      if (this.motionPref) {
-        this.prefAnimation.playbackRate = 1
-        this.prefAnimation.play()
-      }
+      this.el.dataset.pref = isOpen ? 'false' : 'true'
     }
   }
 
   toggleMobile = () => {
-    console.log(this.mobileOpen)
-    if (this.mobileOpen) {
-      // close
-      if (this.motionPref) {
-        console.log('close yes anim')
-        this.mobileAnimation.playbackRate = -1
-        this.mobileAnimation.play()
-        this.mobileAnimation.finished.then(() => {
-          this.mobileTrigger.ariaPressed = false
-          this.el.dataset.mobile = false
-        })
-      } else {
-        this.mobileTrigger.ariaPressed = false
-        this.el.dataset.mobile = false
-      }
+    const isOpen = this.mobileOpen
+    this.mobileTrigger.ariaPressed = !isOpen
+    this.el.dataset.mobile = !isOpen
+    if (this.motionPref) {
+      isOpen ? this.el.dataset.mobile = true : null
+      this.mobileAnimation.playbackRate = isOpen ? -1 : 1
+      this.mobileAnimation.play()
+      this.mobileAnimation.finished.then(() => {
+        if (!isOpen) {
+          this.navTarget.focus()
+        } else {
+          this.el.dataset.mobile = false;
+        }
+      })
+    } else {
+      this.el.dataset.mobile = !isOpen
+    }
+    if (isOpen) {
       enableBodyScroll(this.navTarget)
       this.el.removeEventListener('keydown', this.focusTrap)
       document.activeElement.blur()
     } else {
-      // open
-      this.mobileTrigger.ariaPressed = true
-      this.el.dataset.mobile = true
-      if (this.motionPref) {
-        this.mobileAnimation.playbackRate = 1
-        this.mobileAnimation.play()
-        this.mobileAnimation.finished.then(() => {
-          this.navTarget.focus()
-        })
-      }
-      this.el.addEventListener('keydown', this.focusTrap)
       disableBodyScroll(this.navTarget)
+      this.el.addEventListener('keydown', this.focusTrap)
     }
   }
 

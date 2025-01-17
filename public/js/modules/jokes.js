@@ -73,7 +73,7 @@ const jokes = [
   },
 ]
 
-export default class EmailHider {
+export default class Jokes {
   constructor(el) {
     this.el = el
     this.joke = el.querySelector('[data-joke]')
