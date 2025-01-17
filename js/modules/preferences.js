@@ -19,21 +19,31 @@ export default class preferences {
 
   bindEvents() {
     this.toggles.forEach((toggle) =>
-      toggle.addEventListener('click', this.triageChange, false)
+      toggle.addEventListener('click', this.triageChange, false),
     )
   }
 
   triageChange = (e) => {
-    const setting = e.target.closest('button').dataset.prefSetting
-    const value = e.target.closest('button').dataset.prefValue
+    const button = e.target.closest('button')
+    const setting = button?.dataset.prefSetting
+    const value = button?.dataset.prefValue
 
-    setting === 'color-mode' ? this.setColor(value) : null
-    setting === 'motion-mode' ? this.setMotion(value) : null
-    setting === 'party-mode' ? this.setParty(value) : null
+    switch (setting) {
+      case 'color-mode':
+        this.setColor(value)
+        break
+      case 'motion-mode':
+        this.setMotion(value)
+        break
+      case 'party-mode':
+        this.setParty(value)
+        break
+    }
   }
 
   setColor(value) {
     this.root.classList.remove('light', 'dark')
+
     if (value === 'auto') {
       const mql = window.matchMedia('(prefers-color-scheme: dark)')
       const autoValue = mql.matches ? 'dark' : 'light'
@@ -46,9 +56,7 @@ export default class preferences {
       this.root.classList.add(value)
     }
 
-    const event = new CustomEvent('themeSwitch', { detail: value });
-    window.dispatchEvent(event)
-
+    this.dispatchEvent('themeSwitch', value)
     this.setControls()
   }
 
@@ -69,17 +77,15 @@ export default class preferences {
     this.root.classList.remove('no-preference', 'reduced')
     this.root.style.setProperty(
       '--play-state',
-      newValue === 'reduced' ? 'paused' : 'running'
+      newValue === 'reduced' ? 'paused' : 'running',
     )
     this.root.style.setProperty(
       '--transition-toggle',
-      newValue === 'reduced' ? '0' : '1'
+      newValue === 'reduced' ? '0' : '1',
     )
     this.root.classList.add(newValue)
 
-    const event = new CustomEvent('motionSwitch', { detail: value });
-    window.dispatchEvent(event)
-
+    this.dispatchEvent('motionSwitch', value)
     this.setControls()
   }
 
@@ -100,59 +106,21 @@ export default class preferences {
       toggle.dataset.pressed = false
     })
 
-    if (this.colorPref === null) {
-      activeTargets.push(
-        document.querySelector(
-          '[data-pref-setting="color-mode"][data-pref-value="auto"]'
-        )
-      )
-    } else {
-      activeTargets.push(
-        document.querySelector(
-          `[data-pref-setting="color-mode"][data-pref-value="${this.colorPref}"]`
-        )
-      )
-    }
-
-    if (this.motionPref === null) {
-      activeTargets.push(
-        document.querySelector(
-          '[data-pref-setting="motion-mode"][data-pref-value="auto"]'
-        )
-      )
-    } else {
-      activeTargets.push(
-        document.querySelector(
-          `[data-pref-setting="motion-mode"][data-pref-value="${this.motionPref}"]`
-        )
-      )
-    }
-
-    if (this.partyPref == null) {
-      activeTargets.push(
-        document.querySelector(
-          '[data-pref-setting="party-mode"][data-pref-value="no-party"]'
-        )
-      )
-    } else {
-      activeTargets.push(
-        document.querySelector(
-          `[data-pref-setting="party-mode"][data-pref-value="${this.partyPref}"]`
-        )
-      )
-    }
+    activeTargets.push(this.getActiveTarget('color-mode', this.colorPref))
+    activeTargets.push(this.getActiveTarget('motion-mode', this.motionPref))
+    activeTargets.push(
+      this.getActiveTarget('party-mode', this.partyPref ?? 'no-party'),
+    )
 
     activeTargets.forEach((target) => {
-      target.ariaPressed = true
-      target.dataset.pressed = true
+      if (target) {
+        target.ariaPressed = true
+        target.dataset.pressed = true
+      }
     })
   }
 
   togglePartyMode() {
-    if (this.partyPref === null) {
-      return
-    }
-
     if (this.partyPref === 'no-party' && this.partyMode !== null) {
       this.partyMode.cleanUp()
       this.partyMode = null
@@ -161,5 +129,18 @@ export default class preferences {
         this.partyMode = new module.default()
       })
     }
+  }
+
+  // Helpers
+
+  getActiveTarget(setting, value) {
+    return document.querySelector(
+      `[data-pref-setting="${setting}"][data-pref-value="${value ?? 'auto'}"]`,
+    )
+  }
+
+  dispatchEvent(eventName, detail) {
+    const event = new CustomEvent(eventName, { detail })
+    window.dispatchEvent(event)
   }
 }
