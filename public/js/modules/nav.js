@@ -2,8 +2,25 @@ import { debounce } from '../util/debounce.js'
 import {
   disableBodyScroll,
   enableBodyScroll,
-  clearAllBodyScrollLocks,
 } from '../vendor/bodyScrollLock.esm.js'
+
+// Constants
+const BREAKPOINT = '(min-width: 576px)';
+const ANIMATION_TIMING = {
+  duration: 500,
+  fill: 'both',
+  iterations: 1,
+  easing: 'cubic-bezier(0.33, 1, 0.68, 1)',
+};
+const ANIMATION_UP = [
+  { transform: 'translateY(1rem)', opacity: 0 },
+  { transform: 'translateY(0)', opacity: 1 },
+];
+const ANIMATION_DOWN = [
+  { transform: 'translateY(-2rem)', opacity: 0 },
+  { transform: 'translateY(0)', opacity: 1 },
+];
+
 
 export default class Nav {
   constructor(el) {
@@ -11,25 +28,6 @@ export default class Nav {
     this.setVars()
     this.bindEvents()
     this.buildAnimations()
-  }
-
-  // animation keyframe values
-  openingUp = [
-    { transform: 'translateY(10px)', opacity: 0 },
-    { transform: 'translateY(0)', opacity: 1 },
-  ]
-
-  openingNav = [
-    { transform: 'translateY(-2rem)', opacity: 0 },
-    { transform: 'translateY(0)', opacity: 1 },
-  ]
-
-  // animation keyframe options
-  defaultTiming = {
-    duration: 500,
-    fill: 'both',
-    iterations: 1,
-    easing: 'cubic-bezier(0.33, 1, 0.68, 1)', //easeOutCubic
   }
 
   get motionPref() {
@@ -48,9 +46,8 @@ export default class Nav {
     return this.el.dataset.pref === 'true'
   }
 
-  mql = window.matchMedia('(min-width: 576px)')
-
   setVars() {
+    this.mql = window.matchMedia(BREAKPOINT)
     this.navTarget = this.el.querySelector('[data-nav-target]')
     this.prefTrigger = this.el.querySelector('[data-pref-trigger]')
     this.prefTarget = this.el.querySelector('[data-pref-target]')
@@ -60,6 +57,7 @@ export default class Nav {
     )
     this.focusFirst = this.focusableEls[0]
     this.focusLast = this.focusableEls[this.focusableEls.length - 1]
+
     this.resizeObserver = new ResizeObserver((entries) => {
       for (const _entry of entries) {
         if (this.mql.matches) {
@@ -70,7 +68,7 @@ export default class Nav {
   }
 
   bindEvents() {
-    window.addEventListener('click', this.checkClickOutside, false)
+    window.addEventListener('click', this.checkClickOutside)
     this.prefTrigger.addEventListener('click', this.togglePrefs.bind(this))
     this.mobileTrigger.addEventListener('click', this.toggleMobile.bind(this))
     this.resizeObserver.observe(this.el)
@@ -80,15 +78,15 @@ export default class Nav {
   buildAnimations() {
     const keyframesPref = new KeyframeEffect(
       this.prefTarget,
-      this.openingUp,
-      this.defaultTiming
+      ANIMATION_UP,
+      ANIMATION_TIMING
     )
     this.prefAnimation = new Animation(keyframesPref, document.timeline)
 
     const keyframesMobile = new KeyframeEffect(
       this.navTarget,
-      this.openingNav,
-      this.defaultTiming
+      ANIMATION_DOWN,
+      ANIMATION_TIMING
     )
     this.mobileAnimation = new Animation(keyframesMobile, document.timeline)
   }
@@ -184,8 +182,7 @@ export default class Nav {
       return
     }
 
-    // NOTE: may need better normalization of keycodes? 27 = ESC (mostly)
-    if (e.keyCode === 27) {
+    if (e.key === 'Escape' || e.keyCode === '27') {
       this.clearNavs()
     }
   }
