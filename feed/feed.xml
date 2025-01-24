@@ -5,7 +5,7 @@
 	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2024-08-22T15:23:23Z</updated>
+	<updated>2025-01-24T22:36:19Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,52 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Testing AI Value</title>
+		<link href="https://nathan-long.com/blog/testing-ai-value/"/>
+		<updated>2025-01-24T22:36:19Z</updated>
+		<id>https://nathan-long.com/blog/testing-ai-value/</id>
+		<content type="html">&lt;p&gt;I was disappointed when &lt;a href=&quot;https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol&quot;&gt;AlphaGo beat Lee Sedol&lt;/a&gt; in 2016, but intrigued when it influenced opening strategies that had been set for decades (or even centuries). I was alarmed by how confidently AI spouted hallucinations with no factual basis but amused that it enabled me to create a haiku about my love of cheese effortlessly.&lt;/p&gt;
+&lt;p&gt;I&#39;ve been an AI skeptic, but it&#39;s frickin&#39; everywhere. The Pragmatic Engineer newsletter tracked the &lt;a href=&quot;https://newsletter.pragmaticengineer.com/p/are-llms-making-stackoverflow-irrelevant&quot;&gt;decline of StackOverflow with the rise of ChatGPT&lt;/a&gt;. Anthropic is raising capital at a &lt;a href=&quot;https://techcrunch.com/2025/01/07/anthropic-reportedly-in-talks-to-raise-2b-at-60b-valuation-led-by-lightspeed/&quot;&gt;valuation of $60B&lt;/a&gt;. AI even recently popped up as a way to help my kid &lt;a href=&quot;https://blog.duolingo.com/duolingo-max/&quot;&gt;learn Spanish&lt;/a&gt;... AI is everywhere, seemingly in everyTHING, and it does not look like it&#39;s going away soon.&lt;/p&gt;
+&lt;p&gt;I like Cal Newport&#39;s concept of &lt;a href=&quot;https://calnewport.com/on-digital-minimalism/&quot;&gt;digital minimalism&lt;/a&gt; when dealing with disruptive technology: aggressively clearing away digital clutter and keeping only the tools that bring value to your life. I think of it as digital &lt;a href=&quot;https://konmari.com/about-the-konmari-method/&quot;&gt;KonMari&lt;/a&gt;. (Literally why I slid out of most social media, minimal value there for me, folks.)&lt;/p&gt;
+&lt;p&gt;So what value does AI bring a web developer? Addy Osmani has a &lt;a href=&quot;https://newsletter.pragmaticengineer.com/p/how-ai-will-change-software-engineering&quot;&gt;few opinions&lt;/a&gt; on that. Addy defines two effective patterns of AI usage he&#39;s seen engineers use:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Bootstrappers&lt;/strong&gt; - Use AI to rapidly develop the initial codebase for a working prototype of a rough concept — good enough for initial user feedback.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iterators&lt;/strong&gt; - Daily use for code completion, refactoring, generating tests and documentation, and as a virtual &#39;pair programmer&#39;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;It&#39;s the second pattern that speaks to me.&lt;/p&gt;
+&lt;p&gt;I&#39;m not OK with AI doing serious writing FOR me, but I am OK with having it help check my grammar and sentence structure: &lt;a href=&quot;https://www.youtube.com/watch?v=3kcQzCzSDvc&quot;&gt;Clippy&lt;/a&gt; is reborn (but maybe... more useful this time).&lt;/p&gt;
+&lt;p&gt;I&#39;m not OK with AI coding FOR me, but I am OK with AI helping me fix flaws in my code and find efficiency gains: my coding robot &lt;a href=&quot;https://www.youtube.com/watch?v=4j2xEwEHbrE&quot;&gt;buddy and me&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Addy notes that for effective use, engineers need to identify when the model is making errors, making it more valuable to senior-level engineers who can validate, strengthen, and handle edge cases. AI becomes an accelerator, a proof-checker, a sounding board.&lt;/p&gt;
+&lt;p&gt;This feels like enough value to test, but I still have some reservations:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Working as a remote employee is isolating enough. Replacing human collaboration with AI collaboration could silently diminish connection in a space where it&#39;s already at a premium.&lt;/li&gt;
+&lt;li&gt;Obfuscating the actual workings with &#39;magic&#39; feels dangerous. If we don&#39;t know WHY it works, we will not be able to fix it when it breaks.&lt;/li&gt;
+&lt;li&gt;Fear is a bad reason to adopt something: either to prevent being &#39;left behind&#39; or to stay relevant in today&#39;s job market. Some things are just OK to skip. (Remember how WEB3 was going to change the world?)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;The Test&lt;/h2&gt;
+&lt;p&gt;So we test it. But we set some boundaries:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;I do the work. The AI must function as an assistant to counteract the temptation to rely on it too heavily&lt;/li&gt;
+&lt;li&gt;It remains opt-in. No inline recommendations. This interface must only come when called.&lt;/li&gt;
+&lt;li&gt;I must understand everything I commit. If I don&#39;t understand it, or can&#39;t reach an understanding, the recommendation gets nuked.&lt;/li&gt;
+&lt;li&gt;Data must remain reasonably protected and not be used for training data. This one comes from my peers at Viget and I wholeheartedly agree. This code is my work product and must be legally protected within the bounds of our contracts.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And then we review:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Does it improve my work product like catching errors or improving clarity?&lt;/li&gt;
+&lt;li&gt;Does it make me more efficient?&lt;/li&gt;
+&lt;li&gt;Does it introduce errors?&lt;/li&gt;
+&lt;li&gt;How expensive is it?&lt;/li&gt;
+&lt;li&gt;Does the result justify the cost?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;The Implementation&lt;/h2&gt;
+&lt;p&gt;After reviewing several options I&#39;ve settled on the &lt;a href=&quot;https://github.com/olimorris/codecompanion.nvim&quot;&gt;CodeCompanion&lt;/a&gt; plugin for NeoVim. In particular, its chat interface will let me send the contents of a buffer to the LLM, and I can control the level of access it has. This fits the pattern I&#39;m looking for.&lt;/p&gt;
+&lt;p&gt;This will also allow me to test different LLMs. I plan to start with &lt;a href=&quot;https://www.anthropic.com/claude/sonnet&quot;&gt;Claude 3.5 Sonnet&lt;/a&gt; as it&#39;s aimed at the type of work I do and Anthropic honors my #4 boundary of not using my data for training purposes for commercial products.&lt;/p&gt;
+&lt;p&gt;So, we&#39;ll see. If it proves valuable, I&#39;ll keep it around. If not, well then...&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>My Personal tmux Mystery</title>

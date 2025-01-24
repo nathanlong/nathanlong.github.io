@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan Long</title>
+    <title>Testing AI Value</title>
     <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta name="generator" content="Eleventy v3.0.0">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nathan-long.com/">
-    <meta property="og:title" content="Nathan Long">
+    <meta property="og:title" content="Testing AI Value">
     <meta property="og:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta property="og:image" content="/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Nathan Long">
+    <meta property="twitter:title" content="Testing AI Value">
     <meta property="twitter:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta property="twitter:image" content="/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -85,7 +85,7 @@
   <nav class="nav-wrapper" data-nav-target>
     <menu class="nav m-0 p-0">
       <li class="nav-item"><a href="/about/">About</a></li>
-      <li class="nav-item nav-item-active"><a href="/blog/">Blog</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
       <li class="nav-item"><a href="/lab/">Lab</a></li>
       <li class="nav-item"><a href="/newsletter/">Newsletter</a></li>
       <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
@@ -153,225 +153,83 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-full">
+    <main id="main"  class="content text-content flow tmpl-post prose">
       
-
-<div class="mt-content feature text-center">
-  <h1 class="m-1">Blog</h1>
-  <p class="">Sometimes I write about things like:</p>
-  <div class="mt-1">
-  
-    
-    <a href="/tags/motion/" class="post-tag">motion</a>
-  
-    
-    <a href="/tags/neovim/" class="post-tag">neovim</a>
-  
-    
-    <a href="/tags/process/" class="post-tag">process</a>
-  
-    
-    <a href="/tags/thoughts/" class="post-tag">thoughts</a>
-  
-    
-    <a href="/tags/tooling/" class="post-tag">tooling</a>
-  
-  </div>
+<div class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2025-01-24">January 24, 2025</time>
+  <h1 class="mb-0 wrap-balance">Testing AI Value</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
 </div>
 
-<hr class="mt-2 mb-2">
+<p>I was disappointed when <a href="https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol">AlphaGo beat Lee Sedol</a> in 2016, but intrigued when it influenced opening strategies that had been set for decades (or even centuries). I was alarmed by how confidently AI spouted hallucinations with no factual basis but amused that it enabled me to create a haiku about my love of cheese effortlessly.</p>
+<p>I've been an AI skeptic, but it's frickin' everywhere. The Pragmatic Engineer newsletter tracked the <a href="https://newsletter.pragmaticengineer.com/p/are-llms-making-stackoverflow-irrelevant">decline of StackOverflow with the rise of ChatGPT</a>. Anthropic is raising capital at a <a href="https://techcrunch.com/2025/01/07/anthropic-reportedly-in-talks-to-raise-2b-at-60b-valuation-led-by-lightspeed/">valuation of $60B</a>. AI even recently popped up as a way to help my kid <a href="https://blog.duolingo.com/duolingo-max/">learn Spanish</a>... AI is everywhere, seemingly in everyTHING, and it does not look like it's going away soon.</p>
+<p>I like Cal Newport's concept of <a href="https://calnewport.com/on-digital-minimalism/">digital minimalism</a> when dealing with disruptive technology: aggressively clearing away digital clutter and keeping only the tools that bring value to your life. I think of it as digital <a href="https://konmari.com/about-the-konmari-method/">KonMari</a>. (Literally why I slid out of most social media, minimal value there for me, folks.)</p>
+<p>So what value does AI bring a web developer? Addy Osmani has a <a href="https://newsletter.pragmaticengineer.com/p/how-ai-will-change-software-engineering">few opinions</a> on that. Addy defines two effective patterns of AI usage he's seen engineers use:</p>
+<ol>
+<li><strong>Bootstrappers</strong> - Use AI to rapidly develop the initial codebase for a working prototype of a rough concept — good enough for initial user feedback.</li>
+<li><strong>Iterators</strong> - Daily use for code completion, refactoring, generating tests and documentation, and as a virtual 'pair programmer'.</li>
+</ol>
+<p>It's the second pattern that speaks to me.</p>
+<p>I'm not OK with AI doing serious writing FOR me, but I am OK with having it help check my grammar and sentence structure: <a href="https://www.youtube.com/watch?v=3kcQzCzSDvc">Clippy</a> is reborn (but maybe... more useful this time).</p>
+<p>I'm not OK with AI coding FOR me, but I am OK with AI helping me fix flaws in my code and find efficiency gains: my coding robot <a href="https://www.youtube.com/watch?v=4j2xEwEHbrE">buddy and me</a>.</p>
+<p>Addy notes that for effective use, engineers need to identify when the model is making errors, making it more valuable to senior-level engineers who can validate, strengthen, and handle edge cases. AI becomes an accelerator, a proof-checker, a sounding board.</p>
+<p>This feels like enough value to test, but I still have some reservations:</p>
+<ol>
+<li>Working as a remote employee is isolating enough. Replacing human collaboration with AI collaboration could silently diminish connection in a space where it's already at a premium.</li>
+<li>Obfuscating the actual workings with 'magic' feels dangerous. If we don't know WHY it works, we will not be able to fix it when it breaks.</li>
+<li>Fear is a bad reason to adopt something: either to prevent being 'left behind' or to stay relevant in today's job market. Some things are just OK to skip. (Remember how WEB3 was going to change the world?)</li>
+</ol>
+<h2>The Test</h2>
+<p>So we test it. But we set some boundaries:</p>
+<ol>
+<li>I do the work. The AI must function as an assistant to counteract the temptation to rely on it too heavily</li>
+<li>It remains opt-in. No inline recommendations. This interface must only come when called.</li>
+<li>I must understand everything I commit. If I don't understand it, or can't reach an understanding, the recommendation gets nuked.</li>
+<li>Data must remain reasonably protected and not be used for training data. This one comes from my peers at Viget and I wholeheartedly agree. This code is my work product and must be legally protected within the bounds of our contracts.</li>
+</ol>
+<p>And then we review:</p>
+<ol>
+<li>Does it improve my work product like catching errors or improving clarity?</li>
+<li>Does it make me more efficient?</li>
+<li>Does it introduce errors?</li>
+<li>How expensive is it?</li>
+<li>Does the result justify the cost?</li>
+</ol>
+<h2>The Implementation</h2>
+<p>After reviewing several options I've settled on the <a href="https://github.com/olimorris/codecompanion.nvim">CodeCompanion</a> plugin for NeoVim. In particular, its chat interface will let me send the contents of a buffer to the LLM, and I can control the level of access it has. This fits the pattern I'm looking for.</p>
+<p>This will also allow me to test different LLMs. I plan to start with <a href="https://www.anthropic.com/claude/sonnet">Claude 3.5 Sonnet</a> as it's aimed at the type of work I do and Anthropic honors my #4 boundary of not using my data for training purposes for commercial products.</p>
+<p>So, we'll see. If it proves valuable, I'll keep it around. If not, well then...</p>
 
 
-<ul class="postlist p-0 space-y-2">
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/testing-ai-value/" class="font-thin m-0 font-bold decoration-none leading-1">Testing AI Value</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2025-01-24">January 24, 2025</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/my-personal-tmux-mystery/" class="font-thin m-0 font-bold decoration-none leading-1">My Personal tmux Mystery</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-08-22">August 22, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/console-cowboys-in-cyberspace/" class="font-thin m-0 font-bold decoration-none leading-1">Console Cowboys In Cyberspace</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-06-28">June 28, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/colorschemes-for-the-discerning-developer/" class="font-thin m-0 font-bold decoration-none leading-1">Colorschemes for the Discerning Developer</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-06-11">June 11, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/ffmpeg-basics-and-recipes/" class="font-thin m-0 font-bold decoration-none leading-1">ffmpeg Basics and Recipes</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-27">March 27, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/a-few-of-my-favorite-cli-things/" class="font-thin m-0 font-bold decoration-none leading-1">These Are a Few of My Favorite CLI Things...</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-21">March 21, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/talk-motion-2024/" class="font-thin m-0 font-bold decoration-none leading-1">Talking about Motion for the Web</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/motion/" class="post-tag py-1/2">motion</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-06">March 06, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/keeping-a-project-log/" class="font-thin m-0 font-bold decoration-none leading-1">Keeping a Project Log</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-      
-      <a href="/tags/process/" class="post-tag py-1/2">process</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-04">March 04, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/class-regex-for-tailwind-intellisense/" class="font-thin m-0 font-bold decoration-none leading-1">Custom Class Regex for Tailwind IntelliSense in Neovim</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/neovim/" class="post-tag py-1/2">neovim</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-11-29">November 29, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/nathan-uses-this-2023-edition/" class="font-thin m-0 font-bold decoration-none leading-1">Nathan Uses This: 2023 Edition</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-09-20">September 20, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/building-motion-for-the-web/" class="font-thin m-0 font-bold decoration-none leading-1">Building Motion for the Web</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/motion/" class="post-tag py-1/2">motion</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-07-14">July 14, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/vite-rapid-prototype-starter-kits/" class="font-thin m-0 font-bold decoration-none leading-1">Vite Rapid Prototyping Starter Kits</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-06-16">June 16, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/modern-javascript-tooling-in-neovim/" class="font-thin m-0 font-bold decoration-none leading-1">Setting up LSPs for Modern JavaScript Tooling in Neovim</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/neovim/" class="post-tag py-1/2">neovim</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-02-23">February 23, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/owning-my-voice/" class="font-thin m-0 font-bold decoration-none leading-1">Owning My Voice</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-01-31">January 31, 2023</time>
-    </p>
-  </li>
-  
-</ul>
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
 
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
 
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Testing AI Value">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/my-personal-tmux-mystery/" class="block decoration-none font-thin font-bold wrap-balance">My Personal tmux Mystery<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 
