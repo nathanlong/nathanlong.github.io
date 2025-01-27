@@ -24,7 +24,7 @@
 		<link href="https://nathan-long.com/blog/testing-ai-value/"/>
 		<updated>2025-01-24T22:36:19Z</updated>
 		<id>https://nathan-long.com/blog/testing-ai-value/</id>
-		<content type="html">&lt;p&gt;I was disappointed when &lt;a href=&quot;https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol&quot;&gt;AlphaGo beat Lee Sedol&lt;/a&gt; in 2016, but intrigued when it influenced opening strategies that had been set for decades (or even centuries). I was alarmed by how confidently AI spouted hallucinations with no factual basis but amused that it enabled me to create a haiku about my love of cheese effortlessly.&lt;/p&gt;
+		<content type="html">&lt;p&gt;I was disappointed when &lt;a href=&quot;https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol&quot;&gt;AlphaGo beat Lee Sedol&lt;/a&gt; in 2016, but intrigued when it influenced opening strategies that had been set for decades (or even centuries). I was alarmed in 2022 by how confidently ChatGPT spouted hallucinations with no factual basis but amused that it enabled me to create a haiku about my love of cheese effortlessly.&lt;/p&gt;
 &lt;p&gt;I&#39;ve been an AI skeptic, but it&#39;s frickin&#39; everywhere. The Pragmatic Engineer newsletter tracked the &lt;a href=&quot;https://newsletter.pragmaticengineer.com/p/are-llms-making-stackoverflow-irrelevant&quot;&gt;decline of StackOverflow with the rise of ChatGPT&lt;/a&gt;. Anthropic is raising capital at a &lt;a href=&quot;https://techcrunch.com/2025/01/07/anthropic-reportedly-in-talks-to-raise-2b-at-60b-valuation-led-by-lightspeed/&quot;&gt;valuation of $60B&lt;/a&gt;. AI even recently popped up as a way to help my kid &lt;a href=&quot;https://blog.duolingo.com/duolingo-max/&quot;&gt;learn Spanish&lt;/a&gt;... AI is everywhere, seemingly in everyTHING, and it does not look like it&#39;s going away soon.&lt;/p&gt;
 &lt;p&gt;I like Cal Newport&#39;s concept of &lt;a href=&quot;https://calnewport.com/on-digital-minimalism/&quot;&gt;digital minimalism&lt;/a&gt; when dealing with disruptive technology: aggressively clearing away digital clutter and keeping only the tools that bring value to your life. I think of it as digital &lt;a href=&quot;https://konmari.com/about-the-konmari-method/&quot;&gt;KonMari&lt;/a&gt;. (Literally why I slid out of most social media, minimal value there for me, folks.)&lt;/p&gt;
 &lt;p&gt;So what value does AI bring a web developer? Addy Osmani has a &lt;a href=&quot;https://newsletter.pragmaticengineer.com/p/how-ai-will-change-software-engineering&quot;&gt;few opinions&lt;/a&gt; on that. Addy defines two effective patterns of AI usage he&#39;s seen engineers use:&lt;/p&gt;
@@ -45,7 +45,7 @@
 &lt;h2&gt;The Test&lt;/h2&gt;
 &lt;p&gt;So we test it. But we set some boundaries:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;I do the work. The AI must function as an assistant to counteract the temptation to rely on it too heavily&lt;/li&gt;
+&lt;li&gt;I do the work. The AI must function as an assistant to counteract the temptation to rely on it too heavily.&lt;/li&gt;
 &lt;li&gt;It remains opt-in. No inline recommendations. This interface must only come when called.&lt;/li&gt;
 &lt;li&gt;I must understand everything I commit. If I don&#39;t understand it, or can&#39;t reach an understanding, the recommendation gets nuked.&lt;/li&gt;
 &lt;li&gt;Data must remain reasonably protected and not be used for training data. This one comes from my peers at Viget and I wholeheartedly agree. This code is my work product and must be legally protected within the bounds of our contracts.&lt;/li&gt;
