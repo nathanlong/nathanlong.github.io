@@ -5,7 +5,7 @@ date: 2025-01-24T17:36:19-0500
 tags: [tooling]
 ---
 
-I was disappointed when [AlphaGo beat Lee Sedol](https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol) in 2016, but intrigued when it influenced opening strategies that had been set for decades (or even centuries). I was alarmed by how confidently AI spouted hallucinations with no factual basis but amused that it enabled me to create a haiku about my love of cheese effortlessly.
+I was disappointed when [AlphaGo beat Lee Sedol](https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol) in 2016, but intrigued when it influenced opening strategies that had been set for decades (or even centuries). I was alarmed in 2022 by how confidently ChatGPT spouted hallucinations with no factual basis but amused that it enabled me to create a haiku about my love of cheese effortlessly.
 
 I've been an AI skeptic, but it's frickin' everywhere. The Pragmatic Engineer newsletter tracked the [decline of StackOverflow with the rise of ChatGPT](https://newsletter.pragmaticengineer.com/p/are-llms-making-stackoverflow-irrelevant). Anthropic is raising capital at a [valuation of $60B](https://techcrunch.com/2025/01/07/anthropic-reportedly-in-talks-to-raise-2b-at-60b-valuation-led-by-lightspeed/). AI even recently popped up as a way to help my kid [learn Spanish](https://blog.duolingo.com/duolingo-max/)... AI is everywhere, seemingly in everyTHING, and it does not look like it's going away soon.
 
@@ -34,7 +34,7 @@ This feels like enough value to test, but I still have some reservations:
 
 So we test it. But we set some boundaries:
 
-1. I do the work. The AI must function as an assistant to counteract the temptation to rely on it too heavily
+1. I do the work. The AI must function as an assistant to counteract the temptation to rely on it too heavily.
 2. It remains opt-in. No inline recommendations. This interface must only come when called.
 3. I must understand everything I commit. If I don't understand it, or can't reach an understanding, the recommendation gets nuked.
 4. Data must remain reasonably protected and not be used for training data. This one comes from my peers at Viget and I wholeheartedly agree. This code is my work product and must be legally protected within the bounds of our contracts.
