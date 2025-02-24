@@ -71,7 +71,7 @@ The goal is to:
 
           <section class="mt-content text-center">
             <h1 class="mb-1/4">Web Voices</h1>
-            <p>(A Currently Unorganized) Collection of Personal Websites and RSS Feeds</p>
+            <p>A Collection of Websites and Feeds from the Web Industry</p>
           </section>
           <xsl:for-each select="body/outline">
             <xsl:sort select="@text" order="ascending" />

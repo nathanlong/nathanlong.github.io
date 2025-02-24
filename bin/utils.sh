@@ -40,29 +40,3 @@ is_confirmed() {
   fi
   return 1
 }
-
-# Test whether we're in a git repo
-is_git_repo() {
-  $(git rev-parse --is-inside-work-tree &> /dev/null)
-}
-
-# Test whether a command exists
-# $1 - cmd to test
-type_exists() {
-  if [ $(type -P $1) ]; then
-    return 0
-  fi
-  return 1
-}
-
-# Test whether a Homebrew formula is already installed
-# $1 - formula name (may include options)
-formula_exists() {
-  if $(brew list $1 >/dev/null); then
-    printf "%s already installed.\n" "$1"
-    return 0
-  fi
-
-  e_warning "Missing formula: $1"
-  return 1
-}

@@ -1,6 +1,6 @@
 ---
 title: Testing AI Value
-description:
+description: I've been an AI skeptic, but it's time to test AI for myself... with a few boundaries.
 date: 2025-01-24T17:36:19-0500
 tags: [tooling]
 ---

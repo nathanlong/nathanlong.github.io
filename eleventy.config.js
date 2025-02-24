@@ -97,6 +97,15 @@ export default async function (eleventyConfig) {
     )
   })
 
+  eleventyConfig.addFilter('absoluteUrl', function absoluteUrl(href, base="https://nathan-long.com") {
+    try {
+      return new URL(href, base).href
+    } catch (err) {
+      console.error(err)
+      return href
+    }
+  })
+
   eleventyConfig.addShortcode('year', () => `${new Date().getFullYear()}`)
 }
 
