@@ -1010,13 +1010,14 @@ a[href].header-anchor:focus:visited,
 
 .about-inset {
   --border-color: var(--theme-background);
-  width: 20vw;
+  width: 30vw;
   position: absolute;
   top: -3rem;
   right: -1rem;
   animation: bounce 20s infinite ease-in-out;
   animation-play-state: var(--play-state);
   border: 0.5em solid var(--border-color);
+  max-width: 14rem;
 }
 
 .dark .about-inset {
@@ -1032,9 +1033,10 @@ a[href].header-anchor:focus:visited,
 
 .svg-inset {
   position: absolute;
-  width: 33vw;
+  width: 40vw;
   bottom: -2rem;
   left: -3rem;
+  max-width: 18rem;
   /* mix-blend-mode: overlay; */
   opacity: 0.8;
   color: var(--color-gold);

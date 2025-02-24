@@ -5,7 +5,7 @@
 	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2025-01-24T22:36:19Z</updated>
+	<updated>2025-02-21T18:58:30Z</updated>
 	<id>https://nathan-long.com/</id>
   <image>
     <url>https://nathan-long.com/icon-512.png</url>
@@ -18,6 +18,64 @@
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Git: Fixing Mistakes</title>
+		<link href="https://nathan-long.com/blog/git-fixing-mistakes/"/>
+		<updated>2025-02-21T18:58:30Z</updated>
+		<id>https://nathan-long.com/blog/git-fixing-mistakes/</id>
+		<content type="html">&lt;p&gt;Git—love it or hate it, you&#39;ll be using it nearly every day as a developer. When I started using Git, I felt like I was one bad command from blowing up a project history. Now, I still blow things up regularly, but now I know how to fix them. 😎 (Usually.)&lt;/p&gt;
+&lt;p&gt;Mistakes happen—pretty much all the time. Knowing how to back out of them is like knowing where the brakes are on a car. It lets you try things with confidence, knowing that if it goes sideways you can back out and start over.&lt;/p&gt;
+&lt;p&gt;Here are some ways to fix your mistakes in Git.&lt;/p&gt;
+&lt;h2&gt;Forgot something small? Amend the commit.&lt;/h2&gt;
+&lt;p&gt;Sometimes you&#39;ve forgotten about that one file, or there&#39;s one small change you forgot to put in. Rather than creating a new commit you can stage the change as if you&#39;re going to make a new commit and then run:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit &lt;span class=&quot;token parameter variable&quot;&gt;--amend&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will bring up the last commit message and smoosh the change in, making only one commit instead of two.&lt;/p&gt;
+&lt;p&gt;If you don&#39;t need to rewrite the commit message, just add the file you can use:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit &lt;span class=&quot;token parameter variable&quot;&gt;--amend&lt;/span&gt; --no-edit&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In both cases, because we&#39;re rewriting history, you&#39;ll need to run:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; push --force-with-lease&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &#39;force&#39; part tells Git that, yes, you meant to do this, and the &#39;lease&#39; part checks to make sure that there are no additional commits on the branch that your system doesn&#39;t know about.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTE: As a general rule, force push on your own stuff with confidence BUT if it&#39;s a shared branch, MAKE SURE to check with your team first.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Tangled or accidentally deleted a single file? Revert it.&lt;/h2&gt;
+&lt;p&gt;Sometimes, you need to reset one file in particular. You can do that with:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout origin/main -- path/to/file&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This resets the specified file to the current version on a branch on the remote. If you need to reset it to a different branch, swap out &lt;code&gt;origin/main&lt;/code&gt; to &lt;code&gt;origin/whatever-you-need&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If rather than a branch, you need the file from a different point in the timeline, you can replace &lt;code&gt;origin/main&lt;/code&gt; with a commit hash like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout 345e8bb2 -- path/to/file&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Burn it all down 🔥&lt;/h2&gt;
+&lt;p&gt;Sometimes, things go wrong, and you want to dump your work, find the exit, and start over. There are two levels: the minor nuke and the major nuke.&lt;/p&gt;
+&lt;h3&gt;Minor Nuke&lt;/h3&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; reset &lt;span class=&quot;token parameter variable&quot;&gt;--hard&lt;/span&gt; HEAD&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is your minor nuke. It resets your current branch to the last commit (the HEAD) and discards every change made since then. This is useful if there&#39;s been a lot of accidental churn or something got updated that you didn&#39;t mean to.&lt;/p&gt;
+&lt;h3&gt;Major Nuke&lt;/h3&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# while on the branch to reset, pull the lastest from the remote&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; fetch origin
+&lt;span class=&quot;token comment&quot;&gt;# hard reset branch to remote branch&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; reset &lt;span class=&quot;token parameter variable&quot;&gt;--hard&lt;/span&gt; origin/&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;branch&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# remove untracked files&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; clean &lt;span class=&quot;token parameter variable&quot;&gt;-df&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is your major nuke, where &lt;code&gt;&amp;lt;branch&amp;gt;&lt;/code&gt; is the name of your current branch. This discards any changes you have locally that aren&#39;t on the remote. It also force cleans any untracked directories. If you have things go very poorly&lt;/p&gt;
+&lt;p&gt;If you choose a different branch to reset to, your current branch will become an exact match of what you&#39;re pulling from. This can be what you want if you need to start over or reset something like an environment branch.&lt;/p&gt;
+&lt;h2&gt;Rewind Time&lt;/h2&gt;
+&lt;p&gt;If you&#39;ve committed to a branch you didn&#39;t mean to or need to move backward in time:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# find the commit you need&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; log
+&lt;span class=&quot;token comment&quot;&gt;# reset to that commit&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; revert &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;commit-hash&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Timeline Surgery!&lt;/h2&gt;
+&lt;p&gt;It doesn&#39;t happen often, but if you ever need to delete a commit with a surgical judo chop that happened BEFORE or IN-BETWEEN commits, you can do some interactive rebasing:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; rebase &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; HEAD~4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will bring up a dialog of the last 4 commits. Delete (or comment out) the lines corresponding to the commits you wish to delete, like so:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;pick 2f05aba &lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;. &lt;span class=&quot;token comment&quot;&gt;#will be preserved&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#pick 3371cec ... #will be deleted&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#pick daed25c ... #will be deleted&lt;/span&gt;
+pick e2b2a84 &lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;. &lt;span class=&quot;token comment&quot;&gt;#will be preserved&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once you&#39;ve finished, the commits you&#39;ve selected to be deleted will be wiped from the repository&#39;s history. Because we&#39;re modifying history again, you will need to force push (but remember our general rule of force pushing!)&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Testing AI Value</title>

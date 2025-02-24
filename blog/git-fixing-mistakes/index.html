@@ -3,22 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tagged “thoughts”</title>
-    <meta name="title" content="Tagged “thoughts”">
-    <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <title>Git: Fixing Mistakes</title>
+    <meta name="title" content="Git: Fixing Mistakes">
+    <meta name="description" content="Like knowing where the brakes are on a car, knowing how to fix Git mistakes lets you try things with confidence.">
     <meta name="author" content="Nathan Long">
     <meta name="generator" content="Eleventy v3.0.0">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
-    <meta property="og:title" content="Tagged “thoughts”">
+    <meta property="og:title" content="Git: Fixing Mistakes">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com/tags/thoughts/">
-    <meta property="og:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <meta property="og:url" content="https://nathan-long.com/blog/git-fixing-mistakes/">
+    <meta property="og:description" content="Like knowing where the brakes are on a car, knowing how to fix Git mistakes lets you try things with confidence.">
     <meta property="og:image" content="https://nathan-long.com/icon-512.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Tagged “thoughts”">
-    <meta property="twitter:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <meta property="twitter:title" content="Git: Fixing Mistakes">
+    <meta property="twitter:description" content="Like knowing where the brakes are on a car, knowing how to fix Git mistakes lets you try things with confidence.">
     <meta property="twitter:image" content="https://nathan-long.com/icon-512.jpg">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -29,7 +29,7 @@
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
     <link rel="me" href="https://github.com/nathanlong" />
   </head>
-  <body>
+  <body class="radial-mid">
     <script>
       // Prevent FART (look it up) by blocking render for a tiny bit...
       // First check for local settings, then check media queries, then apply fallback
@@ -155,66 +155,95 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-full">
+    <main id="main"  class="content text-content flow tmpl-post prose">
       
-<section class="mt-content feature text-center">
-  <h1 class="m-0">Topic: thoughts</h1>
-  <p>See <a href="/tags/">all topics</a>.</p>
-</section>
-
-<hr class="mt-2 mb-2">
-
-
-<ul class="postlist p-0 space-y-2">
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/console-cowboys-in-cyberspace/" class="font-thin m-0 font-bold decoration-none leading-1">Console Cowboys In Cyberspace</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-06-28">June 28, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/keeping-a-project-log/" class="font-thin m-0 font-bold decoration-none leading-1">Keeping a Project Log</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-      
-      <a href="/tags/process/" class="post-tag py-1/2">process</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-04">March 04, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/owning-my-voice/" class="font-thin m-0 font-bold decoration-none leading-1">Owning My Voice</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/thoughts/" class="post-tag py-1/2">thoughts</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-01-31">January 31, 2023</time>
-    </p>
-  </li>
-  
-</ul>
-
-
-
+<div class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2025-02-21">February 21, 2025</time>
+  <h1 class="mb-0 wrap-balance">Git: Fixing Mistakes</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
 </div>
 
+<p>Git—love it or hate it, you'll be using it nearly every day as a developer. When I started using Git, I felt like I was one bad command from blowing up a project history. Now, I still blow things up regularly, but now I know how to fix them. 😎 (Usually.)</p>
+<p>Mistakes happen—pretty much all the time. Knowing how to back out of them is like knowing where the brakes are on a car. It lets you try things with confidence, knowing that if it goes sideways you can back out and start over.</p>
+<p>Here are some ways to fix your mistakes in Git.</p>
+<h2>Forgot something small? Amend the commit.</h2>
+<p>Sometimes you've forgotten about that one file, or there's one small change you forgot to put in. Rather than creating a new commit you can stage the change as if you're going to make a new commit and then run:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> commit <span class="token parameter variable">--amend</span></code></pre>
+<p>This will bring up the last commit message and smoosh the change in, making only one commit instead of two.</p>
+<p>If you don't need to rewrite the commit message, just add the file you can use:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> commit <span class="token parameter variable">--amend</span> --no-edit</code></pre>
+<p>In both cases, because we're rewriting history, you'll need to run:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> push --force-with-lease</code></pre>
+<p>The 'force' part tells Git that, yes, you meant to do this, and the 'lease' part checks to make sure that there are no additional commits on the branch that your system doesn't know about.</p>
+<blockquote>
+<p>NOTE: As a general rule, force push on your own stuff with confidence BUT if it's a shared branch, MAKE SURE to check with your team first.</p>
+</blockquote>
+<h2>Tangled or accidentally deleted a single file? Revert it.</h2>
+<p>Sometimes, you need to reset one file in particular. You can do that with:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> checkout origin/main -- path/to/file</code></pre>
+<p>This resets the specified file to the current version on a branch on the remote. If you need to reset it to a different branch, swap out <code>origin/main</code> to <code>origin/whatever-you-need</code></p>
+<p>If rather than a branch, you need the file from a different point in the timeline, you can replace <code>origin/main</code> with a commit hash like:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> checkout 345e8bb2 -- path/to/file</code></pre>
+<h2>Burn it all down 🔥</h2>
+<p>Sometimes, things go wrong, and you want to dump your work, find the exit, and start over. There are two levels: the minor nuke and the major nuke.</p>
+<h3>Minor Nuke</h3>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> reset <span class="token parameter variable">--hard</span> HEAD</code></pre>
+<p>This is your minor nuke. It resets your current branch to the last commit (the HEAD) and discards every change made since then. This is useful if there's been a lot of accidental churn or something got updated that you didn't mean to.</p>
+<h3>Major Nuke</h3>
+<pre class="feature language-bash"><code class="language-bash"><span class="token comment"># while on the branch to reset, pull the lastest from the remote</span>
+<span class="token function">git</span> fetch origin
+<span class="token comment"># hard reset branch to remote branch</span>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span> origin/<span class="token operator">&lt;</span>branch<span class="token operator">></span>
+<span class="token comment"># remove untracked files</span>
+<span class="token function">git</span> clean <span class="token parameter variable">-df</span></code></pre>
+<p>This is your major nuke, where <code>&lt;branch&gt;</code> is the name of your current branch. This discards any changes you have locally that aren't on the remote. It also force cleans any untracked directories. If you have things go very poorly</p>
+<p>If you choose a different branch to reset to, your current branch will become an exact match of what you're pulling from. This can be what you want if you need to start over or reset something like an environment branch.</p>
+<h2>Rewind Time</h2>
+<p>If you've committed to a branch you didn't mean to or need to move backward in time:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token comment"># find the commit you need</span>
+<span class="token function">git</span> log
+<span class="token comment"># reset to that commit</span>
+<span class="token function">git</span> revert <span class="token operator">&lt;</span>commit-hash<span class="token operator">></span></code></pre>
+<h2>Timeline Surgery!</h2>
+<p>It doesn't happen often, but if you ever need to delete a commit with a surgical judo chop that happened BEFORE or IN-BETWEEN commits, you can do some interactive rebasing:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> rebase <span class="token parameter variable">-i</span> HEAD~4</code></pre>
+<p>This will bring up a dialog of the last 4 commits. Delete (or comment out) the lines corresponding to the commits you wish to delete, like so:</p>
+<pre class="feature language-bash"><code class="language-bash">pick 2f05aba <span class="token punctuation">..</span>. <span class="token comment">#will be preserved</span>
+<span class="token comment">#pick 3371cec ... #will be deleted</span>
+<span class="token comment">#pick daed25c ... #will be deleted</span>
+pick e2b2a84 <span class="token punctuation">..</span>. <span class="token comment">#will be preserved</span></code></pre>
+<p>Once you've finished, the commits you've selected to be deleted will be wiped from the repository's history. Because we're modifying history again, you will need to force push (but remember our general rule of force pushing!)</p>
+
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
+
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Git: Fixing Mistakes">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/testing-ai-value/" class="block decoration-none font-thin font-bold wrap-balance">Testing AI Value<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 
