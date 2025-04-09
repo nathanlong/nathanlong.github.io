@@ -4,7 +4,7 @@ templateClass: tmpl-post prose
 bodyClass: radial-mid
 ---
 
-<div class="mt-content feature text-center mb-2">
+<section class="mt-content feature text-center mb-2">
   <time class="text-small font-mono" datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
   <h1 class="mb-0 wrap-balance">{{ title }}</h1>
   <span class="inline-block">
@@ -13,7 +13,7 @@ bodyClass: radial-mid
   <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
   {%- endfor %}
   </span>
-</div>
+</section>
 
 {{ content | safe }}
 
