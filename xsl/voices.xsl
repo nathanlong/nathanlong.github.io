@@ -72,6 +72,7 @@ The goal is to:
           <section class="mt-content text-center">
             <h1 class="mb-1/4">Web Voices</h1>
             <p>A Collection of Websites and Feeds from the Web Industry</p>
+            <p class="text-small">Download the <a href="/voices/feed.opml">OPML file</a> to import into your feed reader of choice.</p>
           </section>
           <xsl:for-each select="body/outline">
             <xsl:sort select="@text" order="ascending" />
