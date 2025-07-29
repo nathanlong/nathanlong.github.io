@@ -10,6 +10,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ favicons: '/' })
   eleventyConfig.addPassthroughCopy('CNAME')
   eleventyConfig.addPassthroughCopy('site.webmanifest')
+  eleventyConfig.addPassthroughCopy('content/voices/feed.opml')
 
   // Watch content images for the image pipeline.
   eleventyConfig.addWatchTarget('content/**/*.{svg,webp,png,jpeg}')
