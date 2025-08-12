@@ -24,6 +24,12 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="preload" href="/fonts/BricolageGrotesque-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/BricolageGrotesque-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/BricolageGrotesque96ptCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/JetBrainsMono-Italic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/JetBrainsMono-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
@@ -168,9 +174,12 @@
   method="post"
   target="popupwindow"
   onsubmit="window.open('https://buttondown.email/nathanlong', 'popupwindow')"
-  class="embeddable-buttondown-form flow text-center p-1 flex flex-col items-center rounded-1 border-1 border-standard bg-background-offset popout"
+  class="embeddable-buttondown-form flow text-center p-1 flex flex-col items-center rounded-1 border-1 mt-4 border-standard bg-background-offset popout"
 >
-  <label for="bd-email">Enter your email</label>
+  <img class="rounded-full w-7 mt-4-neg" src="https://github.com/user-attachments/assets/fc883491-4f35-406c-a42b-021de0d35327" />
+  <h2 class="mt-0">Net Noodlings with Nathan</h2>
+
+  <label for="bd-email">Enter your email to sign up</label>
   <input type="email" name="email" id="bd-email" class="flow-0 block w-full" />
   <input class="btn block" type="submit" value="Subscribe" />
   <p class="font-xsmall">

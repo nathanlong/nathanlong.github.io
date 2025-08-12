@@ -1701,6 +1701,10 @@ a.color-reduced {
   margin-top: 4em;
 }
 
+.mt-4-neg {
+  margin-top: -4.5em;
+}
+
 .mt-content {
   margin-top: 2rem;
 }
