@@ -10,7 +10,7 @@ e_question "What's the title? (string)"
 read title
 e_question "What's the description? (string)"
 read description
-e_question "What tags? array:[motion, neovim, process, thoughts, tooling]"
+e_question "What tags? array:[motion, neovim, process, talks, thoughts, tooling]"
 read tags
 new_path="content/blog/${slug}.md"
 # Use ISO timestamp: https://rknight.me/blog/eleventy-post-dates/

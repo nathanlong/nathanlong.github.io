@@ -2,7 +2,7 @@
 title: Talking about Motion for the Web
 description:
 date: 2024-03-06
-tags: [motion]
+tags: [motion, talks]
 ---
 
 I mentioned last year that I was working on a series on [building motion for the web](../building-motion-for-the-web/). Well, that series turned into a talk, and we recorded it.
