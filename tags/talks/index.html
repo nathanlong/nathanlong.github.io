@@ -3,22 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Class Regex for Tailwind IntelliSense in Neovim</title>
-    <meta name="title" content="Custom Class Regex for Tailwind IntelliSense in Neovim">
-    <meta name="description" content="For when your templating language expects something that looks nothing like HTML.">
+    <title>Tagged “talks”</title>
+    <meta name="title" content="Tagged “talks”">
+    <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta name="author" content="Nathan Long">
     <meta name="generator" content="Eleventy v3.1.2">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
-    <meta property="og:title" content="Custom Class Regex for Tailwind IntelliSense in Neovim">
+    <meta property="og:title" content="Tagged “talks”">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com/blog/class-regex-for-tailwind-intellisense/">
-    <meta property="og:description" content="For when your templating language expects something that looks nothing like HTML.">
+    <meta property="og:url" content="https://nathan-long.com/tags/talks/">
+    <meta property="og:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta property="og:image" content="https://nathan-long.com/icon-512.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Custom Class Regex for Tailwind IntelliSense in Neovim">
-    <meta property="twitter:description" content="For when your templating language expects something that looks nothing like HTML.">
+    <meta property="twitter:title" content="Tagged “talks”">
+    <meta property="twitter:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
     <meta property="twitter:image" content="https://nathan-long.com/icon-512.png">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -35,7 +35,7 @@
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
     <link rel="me" href="https://github.com/nathanlong" />
   </head>
-  <body class="radial-mid">
+  <body>
     <script>
       // Prevent FART (look it up) by blocking render for a tiny bit...
       // First check for local settings, then check media queries, then apply fallback
@@ -161,84 +161,40 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-post prose">
+    <main id="main"  class="content text-content flow tmpl-full">
       
-<section class="mt-content feature text-center mb-2">
-  <time class="text-small font-mono" datetime="2023-11-29">November 29, 2023</time>
-  <h1 class="mb-0 wrap-balance">Custom Class Regex for Tailwind IntelliSense in Neovim</h1>
-  <span class="inline-block">
-  <a href="/tags/neovim/" class="post-tag">neovim</a>
-  </span>
+<section class="mt-content feature text-center">
+  <h1 class="m-0">Topic: talks</h1>
+  <p>See <a href="/tags/">all topics</a>.</p>
 </section>
 
-<p>Sometimes while using Tailwind, you need to place classes into things that aren't structured like HTML elements. Take a look at this Twig snippet from a Craft site:</p>
-<pre class="feature language-twig"><code class="language-twig"><span class="token twig language-twig"><span class="token delimiter punctuation">{{</span> entry<span class="token punctuation">.</span>primaryDescription <span class="token operator">?</span> tag<span class="token punctuation">(</span><span class="token string"><span class="token punctuation">'</span>div<span class="token punctuation">'</span></span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  class<span class="token punctuation">:</span> <span class="token string"><span class="token punctuation">'</span>text-body-lg text-rich<span class="token punctuation">'</span></span><span class="token punctuation">,</span>
-  html<span class="token punctuation">:</span> entry<span class="token punctuation">.</span>primaryDescription<span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token delimiter punctuation">}}</span></span></code></pre>
-<p>This checks for the existence of a field and wraps it in a <code>&lt;div&gt;</code> tag... But that little bit there as <code>class:</code>... If you're running Tailwind in Neovim like me, it doesn't recognize that as a trigger for autocomplete because it wants that sweet, sweet HTML <code>class=</code> attribute.</p>
-<p>And without IntelliSense/autocomplete you're missing a critical piece of the Tailwind authoring experience. You NEED autocomplete when working with Tailwind.</p>
-<p>The fine folks working on Tailwind realized this problem and have exposed some settings to allow custom triggers for whatever wacky format your templating language wants. In fact, they've exposed two methods for us:</p>
-<ol>
-<li>The <a href="https://github.com/tailwindlabs/tailwindcss-intellisense#tailwindcssclassattributes">class attribute</a> setting.</li>
-<li>The experimental <a href="https://www.paolotiu.com/blog/get-tailwind-intellisense-anywhere">class regex setting</a></li>
-</ol>
-<p>We're looking at the second one. Most guides will tell you to plop some JSON in your VSCode settings and it's not immediately clear where the equivalent of this is for Neovim. But hey, you're here now, so I'll show you. You stuff it into your LSP initialization settings for Tailwind, like this:</p>
-<pre class="feature language-lua"><code class="language-lua"><span class="token keyword">local</span> lspconfig <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'lspconfig'</span><span class="token punctuation">)</span>
-<span class="token keyword">local</span> capabilities <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'cmp_nvim_lsp'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">default_capabilities</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">local</span> on_attach <span class="token operator">=</span> <span class="token comment">--this is a custom function that sets several options</span>
-
-<span class="token comment">-- The initialization of TailwindCSS LSP</span>
-lspconfig<span class="token punctuation">.</span>tailwindcss<span class="token punctuation">.</span><span class="token function">setup</span> <span class="token punctuation">{</span>
-  on_attach <span class="token operator">=</span> on_attach<span class="token punctuation">,</span>
-  capabilities <span class="token operator">=</span> capabilities<span class="token punctuation">,</span>
-  settings <span class="token operator">=</span> <span class="token punctuation">{</span>
-    tailwindCSS <span class="token operator">=</span> <span class="token punctuation">{</span>
-      experimental <span class="token operator">=</span> <span class="token punctuation">{</span>
-        classRegex <span class="token operator">=</span> <span class="token punctuation">{</span>
-          <span class="token string">"(?:class: ?)(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"</span><span class="token punctuation">,</span> <span class="token comment">-- Twig, looks for string preceded by 'class:'</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>This setup assumes a few things:</p>
-<ol>
-<li>You're using <a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a> to connect to your LSPs.</li>
-<li>You're using <a href="https://github.com/hrsh7th/nvim-cmp">nvim-cmp</a> for autocomplete.</li>
-</ol>
-<p>You can check out my <a href="/blog/modern-javascript-tooling-in-neovim/">earlier post</a> on setting up LSP's or look at my <a href="https://github.com/nathanlong/dotfiles/blob/main/nvim/init.lua">init.lua</a> to see how I've set it up.</p>
-<p>The regex itself is looking for anything inside a string (either <code>&quot;&quot;</code> or <code>''</code>) preceded by <code>class:</code> and 0 to 1 spaces. Tailwind will now helpfully suggest classes once you kick open that string. If you need something different than what's listed here you can check out <a href="https://github.com/paolotiu/tailwind-intellisense-regex-list">this repository of sample regexes you can use</a> for different patterns.</p>
-<p>Happy autocompleting!</p>
+<hr class="mt-2 mb-2">
 
 
-<div class="mt-2">
-  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
-  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
-</div>
-
-<div class="mt-2">
-  <p class="section-eyebrow m-0 color-accent">Discussion</p>
-
+<ul class="postlist p-0 space-y-2">
   
-  <p>Want to discuss this?
-    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Custom Class Regex for Tailwind IntelliSense in Neovim">Email Me</a>
-  </p>
-</div>
-<div class="feature py-1 color-reduced mt-2">
-  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
-    <li class="grow w-1/2">
-      <span class="uppercase decoration-none text-small">Previous:</span><br/>
-        <a href="/blog/nathan-uses-this-2023-edition/" class="block decoration-none font-thin font-bold wrap-balance">Nathan Uses This: 2023 Edition<br/>&larr;</a></li>
+  <li class="flex flex-col items-baseline">
+    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/talk-motion-2024/" class="font-thin m-0 font-bold decoration-none leading-1">Talking about Motion for the Web</a></h2>
+    <p class="postlist-meta m-0">
+    <span class="divide-comma inline-block">
       
-    <li class="text-right grow w-1/2">
-      <span class="uppercase decoration-none text-small">Next:</span>
-      <br/>
-        <a href="/blog/keeping-a-project-log/" class="block decoration-none font-thin font-bold wrap-balance">Keeping a Project Log<br/>&rarr;</a>
       
-    </li>
-  </ul>
+      <a href="/tags/motion/" class="post-tag py-1/2">motion</a>
+      
+      
+      <a href="/tags/talks/" class="post-tag py-1/2">talks</a>
+      
+    </span>
+    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-06">March 06, 2024</time>
+    </p>
+  </li>
+  
+</ul>
+
+
+
 </div>
+
 
     </main>
 
