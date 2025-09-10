@@ -11,13 +11,6 @@ permalink: /feed/feed.xml
 	<link href="{{ metadata.url | addPathPrefixToFullUrl }}"/>
 	<updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
 	<id>{{ metadata.url }}</id>
-  <image>
-    <url>{{ metadata.url }}icon-512.png</url>
-    <title>{{ metadata.title }}</title>
-    <link>{{ metadata.url }}</link>
-    <width>192</width>
-    <height>192</height>
-  </image>
 	<author>
 		<name>{{ metadata.author.name }}</name>
 		<email>{{ metadata.author.email }}</email>
@@ -29,7 +22,7 @@ permalink: /feed/feed.xml
 		<link href="{{ absolutePostUrl }}"/>
 		<updated>{{ post.date | dateToRfc3339 }}</updated>
 		<id>{{ absolutePostUrl }}</id>
-		<content type="html">{{ post.templateContent | transformWithHtmlBase(absolutePostUrl, post.url) }}</content>
+		<content type="html">{{ post.content | renderTransforms(post.data.page, metadata.url) }}</content>
 	</entry>
 	{%- endfor %}
 </feed>
