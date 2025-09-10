@@ -1006,6 +1006,42 @@ a[href].header-anchor:focus:visited,
   color: #aaa;
 }
 
+/* Slides */
+
+.slide {
+  grid-column: feature;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  --flow-space: 2em;
+}
+
+.slide-image, .slide-text {
+  flex-basis: 100%;
+}
+
+.slide-image figcaption {
+  font-size: 0.75em;
+  font-style: italic;
+  color: var(--color-text-reduced);
+}
+
+.slide-text {
+  --flow-space: 1em;
+}
+
+@media all and (min-width: 768px) {
+  .slide {
+    flex-direction: row;
+    gap: 2em;
+    --flow-space: 3em;
+  }
+
+  .slide-image, .slide-text {
+    flex-basis: 50%;
+  }
+}
+
 /* @random */
 
 .about-inset {
