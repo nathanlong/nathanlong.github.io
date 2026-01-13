@@ -5,12 +5,196 @@
 	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2025-09-10T14:05:36Z</updated>
+	<updated>2026-01-13T15:04:09Z</updated>
 	<id>https://nathan-long.com/</id>
 	<author>
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Responsive Ambient Videos with AV1 and HEVC/H.265 Compression</title>
+		<link href="https://nathan-long.com/blog/responsive-ambient-videos-av1-hevc/"/>
+		<updated>2026-01-13T15:04:09Z</updated>
+		<id>https://nathan-long.com/blog/responsive-ambient-videos-av1-hevc/</id>
+		<content type="html">&lt;p&gt;Ambient videos, or &amp;quot;short looping videos as a background element,&amp;quot; are both common and tricky to get right. They can add a lot of visual texture to a design, but are often large, chunky elements that can slow down your performance.&lt;/p&gt;
+&lt;p&gt;But this is 2026! We have some new tools to help with video compression! We&#39;re going to utilize some of the techniques &lt;a href=&quot;https://evilmartians.com/chronicles/better-web-video-with-av1-codec&quot;&gt;Evil Martians demonstrated with AV1 encoding&lt;/a&gt; and combine them with responsive video techniques that &lt;a href=&quot;https://scottjehl.com/posts/using-responsive-video/&quot;&gt;Scott Jehl explains well&lt;/a&gt; over on his blog.&lt;/p&gt;
+&lt;p&gt;There are a few assumptions I&#39;m making: you will be processing the video manually, and you have &lt;code&gt;ffmpeg&lt;/code&gt; installed (I recommend &lt;a href=&quot;https://brew.sh/&quot;&gt;Homebrew&lt;/a&gt; on a Mac).&lt;/p&gt;
+&lt;p&gt;At the end of this, we&#39;ll have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A vertically formatted AV1 (for mobile)&lt;/li&gt;
+&lt;li&gt;A vertically formatted HEVC/H.265 (mobile fallback)&lt;/li&gt;
+&lt;li&gt;720p AV1 (for tablet/small desktop)&lt;/li&gt;
+&lt;li&gt;720p HEVC/H.265 (tablet/small desktop fallback)&lt;/li&gt;
+&lt;li&gt;1080p AV1 (large desktop)&lt;/li&gt;
+&lt;li&gt;1080p HEVC/H.265 (large desktop fallback)&lt;/li&gt;
+&lt;li&gt;A poster image generated from the first frame of the video&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We&#39;ll tie it all together in an HTML &lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; element and implement some accessibility features.&lt;/p&gt;
+&lt;h2&gt;Disclaimer&lt;/h2&gt;
+&lt;p&gt;But first... a disclaimer:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;No amount of compression is going to make a 180+ second video performant as an ambient video! Optimization starts at the communication level.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If an ambient video is being considered, consider the following guidelines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;20 seconds or less.&lt;/li&gt;
+&lt;li&gt;Avoid wide-panning, rotating, or otherwise big movement shots (helps prevent folks from getting motion-sick or just being jarring in general).&lt;/li&gt;
+&lt;li&gt;Avoid flashes if possible (3 or fewer per second per &lt;a href=&quot;https://www.digitala11y.com/understanding-sc-2-3-1-three-flashes-or-below-threshold/&quot;&gt;WCAG SC 2.3.1&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Start with the highest resolution output feasible (as it makes it easier to slice and dice).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once we have a reasonable starting point, we can work on smooshing these down to a nice size.&lt;/p&gt;
+&lt;h2&gt;AV1&lt;/h2&gt;
+&lt;p&gt;AV1 is our champion video compression codec that does &lt;a href=&quot;https://people.xiph.org/~xiphmont/demo/av1/demo1.shtml&quot;&gt;some smart things&lt;/a&gt; to reduce filesize. But as with all nice, new things, it&#39;s &lt;a href=&quot;https://caniuse.com/av1&quot;&gt;not fully supported yet&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To make an AV1 from our reasonable starting point, we can run the following:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; INPUT.mov &lt;span class=&quot;token parameter variable&quot;&gt;-map_metadata&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-an&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libsvtav1 &lt;span class=&quot;token parameter variable&quot;&gt;-qp&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;40&lt;/span&gt; -tile-columns &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt; -tile-rows &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-pix_fmt&lt;/span&gt; yuv420p &lt;span class=&quot;token parameter variable&quot;&gt;-movflags&lt;/span&gt; +faststart &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;-1:1080 output.av1.1080.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&#39;s a breakdown of what&#39;s happening:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-i INPUT.mov&lt;/code&gt; sets the source video file for input. FFmpeg will take video and audio streams from this file, convert them, and pack them into a new container.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-map_metadata -1&lt;/code&gt; will remove video metadata (like the name of a tool that was used initially to create a video). Sometimes metadata is useful, but for web development, this is rarely the case.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-an&lt;/code&gt; removes all audio. It will be muted to allow looping anyway.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-c:v libsvtav1&lt;/code&gt; selects the AV1 video codec.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-qp 40&lt;/code&gt; sets your size/quality balance for AV1. Lower numbers mean better quality and bigger size.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-tile-columns 2 -tile-rows 2&lt;/code&gt; is for speed enhancements at the cost of a small loss in compression efficiency.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-pix_fmt yuv420p&lt;/code&gt; sets a pixel format that helps reduce filesize by using full resolution for brightness and a smaller resolution for color. Read up on &lt;a href=&quot;https://en.wikipedia.org/wiki/Chroma_subsampling&quot;&gt;chroma subsampling&lt;/a&gt; to learn more. Pretty wild!&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-movflags +faststart&lt;/code&gt; moves the important information to the beginning of the file. It allows the browser to start playing while the video is still downloading.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-vf scale=-1:1080&lt;/code&gt; Scales down the image to whatever by 1080 pixels. If you want a different size, put in the desired height instead of 1080.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;output.av1.1080.mp4&lt;/code&gt; sets the name for the output file. Why an MP4? Aren&#39;t we making AV1&#39;s?! We are! But MP4 is a CONTAINER format, and it&#39;s the most widely supported one. Just like in life, it&#39;s what&#39;s on the inside that matters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You will likely need to adjust the &lt;code&gt;-qp&lt;/code&gt; settings and your output resolutions to get the right mix.&lt;/p&gt;
+&lt;h2&gt;HEVC/H.265&lt;/h2&gt;
+&lt;p&gt;We still need a fallback, but we don&#39;t have to go all the way back to H.264. Safari supports the &lt;a href=&quot;https://caniuse.com/hevc&quot;&gt;HEVC/H.265 codec&lt;/a&gt;, which is like H.264 but ... sleeker. 30-50% smaller than H.264 (with AV1 being 30% smaller than HEVC).&lt;/p&gt;
+&lt;p&gt;This one is going to take much longer, so grab some coffee and run:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; INPUT.mov &lt;span class=&quot;token parameter variable&quot;&gt;-map_metadata&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-an&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-c:v&lt;/span&gt; libx265 &lt;span class=&quot;token parameter variable&quot;&gt;-crf&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-preset&lt;/span&gt; veryslow &lt;span class=&quot;token parameter variable&quot;&gt;-pix_fmt&lt;/span&gt; yuv420p &lt;span class=&quot;token parameter variable&quot;&gt;-movflags&lt;/span&gt; +faststart &lt;span class=&quot;token parameter variable&quot;&gt;-tag:v&lt;/span&gt; hvc1 &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;-1:1080 video.hevc.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Many of the same flags appear as before, but there are a few new ones:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-c:v libx265&lt;/code&gt; selects the HEVC/H.265 codec&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-preset veryslow&lt;/code&gt; forces HEVC/H.265 codec to generate a smaller video file even if it will be much longer.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-crf 28&lt;/code&gt; stands for &#39;Constant Rate Factor&#39; and sets your size/quality balance. Lower numbers mean better quality and bigger size. The CRF scale goes from 0 to 51.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Again, you may need to adjust your &lt;code&gt;-crf&lt;/code&gt; rate to get the right amount of compression and quality. The output resolution should match the AV1 file.&lt;/p&gt;
+&lt;h2&gt;Small Desktop / Tablet Versions&lt;/h2&gt;
+&lt;p&gt;To generate smaller videos, reuse the same commands from before, but change your scaling command. Something like:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;-vf scale=-1:720&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will output videos that are 720 pixels tall.&lt;/p&gt;
+&lt;p&gt;If your video is a weird size, you may get errors if the numbers don&#39;t divide cleanly when scaling down. If that happens, choose a new size or run the math on your own to find what numbers are going to work.&lt;/p&gt;
+&lt;h2&gt;Mobile Versions&lt;/h2&gt;
+&lt;p&gt;Most likely, your starting video will be in a wide 16:9 format, but that&#39;s a good amount of pixels you&#39;ll never see on a mobile screen! We&#39;re going to make a vertical crop of the video to minimize our wasted pixels.&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; INPUT.mov &lt;span class=&quot;token parameter variable&quot;&gt;-vf&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;crop=ih*9/16:ih&quot;&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-c:a&lt;/span&gt; copy output.vertical.mp4&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-vf &amp;quot;crop=ih*9/16:ih&amp;quot;&lt;/code&gt; Calculates the new width based on the input height (ih) to maintain a 9:16 aspect ratio. Since x and y coordinates are not specified, ffmpeg defaults to cropping from the center of the frame (which is what we want). If you want a different ratio, enter your own numbers instead of &lt;code&gt;9/16&lt;/code&gt;, where the first number is the width and the second is the height.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c:a copy&lt;/code&gt; Not strictly necessary, it just copies any audio settings without modifying them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now that we have a vertical file, we can make AV1 and HEVC/H.265 videos like the previous steps. Since we have less overall data, you can likely get away with something like &lt;code&gt;-vf scale=-1:1620&lt;/code&gt; to give those high-density pixel displays a nice video while still being small.&lt;/p&gt;
+&lt;h2&gt;Making a poster image&lt;/h2&gt;
+&lt;p&gt;We also need a static poster image that will display if the video is loading over slow connections:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;ffmpeg &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; INPUT.mov &lt;span class=&quot;token parameter variable&quot;&gt;-ss&lt;/span&gt; 00:00:00.000 &lt;span class=&quot;token parameter variable&quot;&gt;-vframes&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; thumb.png&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-ss 00:00:00.000&lt;/code&gt; seeks to a specific timestamp in the video. Here&#39;s it at the very beginning.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-vframes 1&lt;/code&gt; tells ffmpeg output one frame.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;thumb.png&lt;/code&gt; saves that frame as a PNG.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You&#39;ll want to size and compress that image into a reasonable format (WEBP or AVIF). Smaller is better here.&lt;/p&gt;
+&lt;h2&gt;Rendering the video&lt;/h2&gt;
+&lt;p&gt;Now that we have all the pieces, we can load them into a &lt;code&gt;video&lt;/code&gt; element:&lt;/p&gt;
+&lt;pre class=&quot;feature language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;video&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;autoplay&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;playsinline&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;muted&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;loop&lt;/span&gt;
+  &lt;span class=&quot;token attr-name&quot;&gt;poster&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.poster.avif&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;source&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.vert.av1.1280.mp4&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;media&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;(max-width: 769px)&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video/mp4;
+    codecs=av01.0.05M.08,opus&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;source&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.vert.hevc.1280.mp4&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;media&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;(max-width: 769px)&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video/mp4; codecs=hvc1&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;source&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.av1.720.mp4&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;media&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;(max-width:1441px)&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video/mp4; codecs=av01.0.05M.08,opus&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;source&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.hevc.720.mp4&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;media&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;(max-width:1441px)&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video/mp4; codecs=hvc1&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;source&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.av1.1080.mp4&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video/mp4; codecs=av01.0.05M.08,opus&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;source&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/video/output.hevc.1080.mp4&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video/mp4; codecs=hvc1&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;video&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ensure these attributes are on your &lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; element:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;autoplay&lt;/code&gt; starts the video as soon as there is enough data to do so.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;playsinline&lt;/code&gt; tells the browser that the video is to be played in the element&#39;s playback area. Required for ambient videos in Safari.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;muted&lt;/code&gt; Insures no audio is output. Required by all browsers to autoplay.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loop&lt;/code&gt; Restarts the video when it reaches the end.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;poster&lt;/code&gt; points to the image to load while the video is loading or if no data can be provided.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And in addition to &lt;code&gt;src&lt;/code&gt; on our &lt;code&gt;&amp;lt;source&amp;gt;&lt;/code&gt; elements, we set:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;media&lt;/code&gt; which allows media queries, just like the &lt;code&gt;&amp;lt;picture&amp;gt;&lt;/code&gt; element. No match-y no load-y.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type=&amp;quot;codecs=av01.0.05M.08,opus&amp;quot;&lt;/code&gt; tells the browser this is an AV1 video&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type=&amp;quot;video/mp4; codecs=hvc1&amp;quot;&lt;/code&gt; tells the browser this is an HEVC/H.265 video.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that I used &lt;code&gt;max-width&lt;/code&gt; queries, but you could just as easily build them with &lt;code&gt;min-width&lt;/code&gt; queries; just be aware that the browser will use the first item that matches.&lt;/p&gt;
+&lt;h2&gt;A11Y Considerations&lt;/h2&gt;
+&lt;p&gt;We have an ambient video, but there&#39;s still some accessibility we need to ensure. There are two features we need to enable.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&quot;https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-pause.html&quot;&gt;WCAC SC 2.2.2 &amp;quot;Pause, Stop, Hide&amp;quot;&lt;/a&gt; criteria states that something longer than 5 seconds (which we likely qualify for) needs some sort of control to stop the motion. The simplest implementation is a play/pause toggle button.&lt;/p&gt;
+&lt;p&gt;How you enable it will vary on how you&#39;re handling interactivity on your project, but a very simple Vanilla JavaScript implementation could look like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// the awesome button you made to toggle the video&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; videoToggleButton &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; document&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;querySelector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;your-button-selector-here&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// the video itself&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; video &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; document&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;querySelector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;your-video-selector-here&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// toggle the play state of the video&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;handleVideoToggle&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  video&lt;span class=&quot;token operator&quot;&gt;?.&lt;/span&gt;paused &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; video&lt;span class=&quot;token operator&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;play&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; video&lt;span class=&quot;token operator&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;pause&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// also whatever you&#39;re doing to toggle the play/pause icons&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// listen for clicks&lt;/span&gt;
+videoToggleButton&lt;span class=&quot;token operator&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;click&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; handleVideoToggle&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is over-simplified, but you get the idea. Change the selector to whatever you&#39;re using to identify your elements.&lt;/p&gt;
+&lt;p&gt;Also, unless your video is extremely subtle, we need to prevent it from autoplaying if users have &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion&quot;&gt;prefers-reduced-motion&lt;/a&gt; set. You COULD hide it with a CSS media query, but &#39;reduced motion&#39; does not mean &#39;no motion&#39;. I prefer that users have the option to still engage with it as they want.&lt;/p&gt;
+&lt;pre class=&quot;feature language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// Check if the prefers-reduced-motion media query matches &#39;reduce&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; prefersReducedMotion &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;matchMedia&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;(prefers-reduced-motion: reduce)&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;matches&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// grab the video if you haven&#39;t already&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; video &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; document&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;querySelector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;your-selector-here&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;prefersReducedMotion &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; video&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;video&lt;span class=&quot;token operator&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;pause&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;video&lt;span class=&quot;token operator&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;removeAttribute&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;autoplay&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// also whatever you&#39;re doing to toggle the play/pause icons&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And there we have it: a responsive, accessible, highly compressed ambient video!&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Creating While Adulting</title>

@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Ambient Videos with AV1 and HEVC/H.265 Compression</title>
+    <meta name="title" content="Responsive Ambient Videos with AV1 and HEVC/H.265 Compression">
+    <meta name="description" content="Encode and compress videos like it&#39;s 2026">
+    <meta name="author" content="Nathan Long">
+    <meta name="generator" content="Eleventy v3.1.2">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
+    <meta property="og:title" content="Responsive Ambient Videos with AV1 and HEVC/H.265 Compression">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nathan-long.com/blog/responsive-ambient-videos-av1-hevc/">
+    <meta property="og:description" content="Encode and compress videos like it&#39;s 2026">
+    <meta property="og:image" content="https://nathan-long.com/icon-512.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nathan-long.com/">
+    <meta property="twitter:title" content="Responsive Ambient Videos with AV1 and HEVC/H.265 Compression">
+    <meta property="twitter:description" content="Encode and compress videos like it&#39;s 2026">
+    <meta property="twitter:image" content="https://nathan-long.com/icon-512.png">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preload" href="/fonts/BricolageGrotesque-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/BricolageGrotesque-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/BricolageGrotesque96ptCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/JetBrainsMono-Italic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/JetBrainsMono-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Nathan Long">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
+    <link rel="me" href="https://github.com/nathanlong" />
+  </head>
+  <body class="radial-mid">
+    <script>
+      // Prevent FART (look it up) by blocking render for a tiny bit...
+      // First check for local settings, then check media queries, then apply fallback
+      function getColor() {
+        const colorPref = window.localStorage.getItem('color-mode');
+        if (typeof colorPref === 'string') {
+          return colorPref;
+        }
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'dark' : 'light';
+        }
+        return 'light';
+      }
+
+      function getMotion() {
+        const motionPref = window.localStorage.getItem('motion-mode');
+        if (typeof motionPref === 'string') {
+          return motionPref;
+        }
+        const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (typeof mql.matches === 'boolean') {
+          return mql.matches ? 'no-preference' : 'reduced'
+        }
+        return 'no-preference';
+      }
+
+      function getParty() {
+        const partyPref = window.localStorage.getItem('party-mode')
+        if (typeof partyPref === 'string') {
+          return partyPref;
+        }
+        return 'no-party';
+      }
+
+      const colorMode = getColor();
+      const motionMode = getMotion();
+      const partyMode = getParty();
+      const root = document.documentElement;
+      root.classList.add(colorMode, partyMode, motionMode);
+      root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
+      root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
+    </script>
+
+    <a class="sr-only sr-only-focus skip-link bg-editor relative z-4" href="#main">Skip to main content</a>
+<header class="header pt-1/2" data-module="nav" data-mobile="false" data-pref="false">
+  <div class="logo">
+    <a class="logo-link" href="/" title="Nathan Long">
+      <span class="sr-only">Nathan Long</span>
+      <svg class="logo-svg" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M26.6213 1.87259C25.4497 0.701019 23.5502 0.701018 22.3787 1.87259L1.87258 22.3787C0.701003 23.5503 0.701003 25.4498 1.87258 26.6213L22.3787 47.1274C23.5502 48.299 25.4497 48.299 26.6213 47.1274L47.1274 26.6213C48.299 25.4498 48.299 23.5503 47.1274 22.3787L26.6213 1.87259ZM30.1666 31.472C30.8226 31.824 31.5826 32 32.4466 32H36.6466V29.288H32.6626C32.1826 29.288 31.7986 29.152 31.5106 28.88C31.2386 28.592 31.1026 28.208 31.1026 27.728V14.48H23.8786V17.192H28.1026V27.728C28.1026 28.576 28.2866 29.328 28.6546 29.984C29.0226 30.624 29.5266 31.12 30.1666 31.472ZM12.848 18.8V32H15.848V23.744C15.848 22.912 16.056 22.272 16.472 21.824C16.904 21.376 17.488 21.152 18.224 21.152C18.976 21.152 19.56 21.368 19.976 21.8C20.392 22.232 20.6 22.848 20.6 23.648V32H23.6V23.336C23.6 21.88 23.208 20.72 22.424 19.856C21.656 18.992 20.624 18.56 19.328 18.56C18.224 18.56 17.352 18.864 16.712 19.472C16.228 19.9436 15.9317 20.5596 15.8231 21.32H15.776V18.8H12.848Z" fill="#9ECE6A"/>
+      </svg>
+    </a>
+  </div>
+  <nav class="nav-wrapper" data-nav-target>
+    <menu class="nav m-0 p-0">
+      <li class="nav-item"><a href="/about/">About</a></li>
+      <li class="nav-item"><a href="/blog/">Blog</a></li>
+      <li class="nav-item"><a href="/lab/">Lab</a></li>
+      <li class="nav-item"><a href="/newsletter/">Newsletter</a></li>
+      <li class="nav-item"><a href="/feed/feed.xml">RSS</a></li>
+    </menu>
+
+    <div class="preferences relative">
+      <button class="preferences-trigger btn btn-square btn-borderless z-1" data-pref-trigger>
+        <span class="sr-only">Prefs</span>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/></svg>
+      </button>
+      <div class="preferences-detail rounded" data-state="closed" data-pref-target data-module="preferences">
+        <p>Color Theme</p>
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="light">
+            <span>☀️</span>
+            <span>Light</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="dark">
+            <span>🌙</span>
+            <span>Dark</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch"aria-pressed="false" data-pref-toggle data-pref-setting="color-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Motion Preferences</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="no-preference">
+            <span>👍</span>
+            <span>Allow</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="reduced">
+            <span>🚫</span>
+            <span>Reduce</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="motion-mode" data-pref-value="auto">
+            <span>🤖</span>
+            <span>Auto</span>
+          </button>
+        </div>
+
+        <p class="mt-1">Party Mode</p>
+
+        <div class="flex btn-group">
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="party">
+            <span>🎉</span>
+            <span>Party</span>
+          </button>
+          <button class="btn font-thin flex flex-row-to-col items-center gap-1/2 min-w-5" role="switch" aria-pressed="false" data-pref-toggle data-pref-setting="party-mode" data-pref-value="no-party">
+            <span>🛑</span>
+            <span>PLZ NO</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <button class="btn btn-square nav-toggle" aria-label="Open Mobile Nav" data-mobile-trigger>
+    <div class="nav-toggle-line-top"></div>
+    <div class="nav-toggle-line-mid"></div>
+    <div class="nav-toggle-line-bottom"></div>
+  </button>
+</header>
+
+
+    <main id="main"  class="content text-content flow tmpl-post prose">
+      
+<section class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2026-01-13">January 13, 2026</time>
+  <h1 class="mb-0 wrap-balance">Responsive Ambient Videos with AV1 and HEVC/H.265 Compression</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
+</section>
+
+<p>Ambient videos, or &quot;short looping videos as a background element,&quot; are both common and tricky to get right. They can add a lot of visual texture to a design, but are often large, chunky elements that can slow down your performance.</p>
+<p>But this is 2026! We have some new tools to help with video compression! We're going to utilize some of the techniques <a href="https://evilmartians.com/chronicles/better-web-video-with-av1-codec">Evil Martians demonstrated with AV1 encoding</a> and combine them with responsive video techniques that <a href="https://scottjehl.com/posts/using-responsive-video/">Scott Jehl explains well</a> over on his blog.</p>
+<p>There are a few assumptions I'm making: you will be processing the video manually, and you have <code>ffmpeg</code> installed (I recommend <a href="https://brew.sh/">Homebrew</a> on a Mac).</p>
+<p>At the end of this, we'll have:</p>
+<ul>
+<li>A vertically formatted AV1 (for mobile)</li>
+<li>A vertically formatted HEVC/H.265 (mobile fallback)</li>
+<li>720p AV1 (for tablet/small desktop)</li>
+<li>720p HEVC/H.265 (tablet/small desktop fallback)</li>
+<li>1080p AV1 (large desktop)</li>
+<li>1080p HEVC/H.265 (large desktop fallback)</li>
+<li>A poster image generated from the first frame of the video</li>
+</ul>
+<p>We'll tie it all together in an HTML <code>&lt;video&gt;</code> element and implement some accessibility features.</p>
+<h2>Disclaimer</h2>
+<p>But first... a disclaimer:</p>
+<p><strong>No amount of compression is going to make a 180+ second video performant as an ambient video! Optimization starts at the communication level.</strong></p>
+<p>If an ambient video is being considered, consider the following guidelines:</p>
+<ul>
+<li>20 seconds or less.</li>
+<li>Avoid wide-panning, rotating, or otherwise big movement shots (helps prevent folks from getting motion-sick or just being jarring in general).</li>
+<li>Avoid flashes if possible (3 or fewer per second per <a href="https://www.digitala11y.com/understanding-sc-2-3-1-three-flashes-or-below-threshold/">WCAG SC 2.3.1</a>).</li>
+<li>Start with the highest resolution output feasible (as it makes it easier to slice and dice).</li>
+</ul>
+<p>Once we have a reasonable starting point, we can work on smooshing these down to a nice size.</p>
+<h2>AV1</h2>
+<p>AV1 is our champion video compression codec that does <a href="https://people.xiph.org/~xiphmont/demo/av1/demo1.shtml">some smart things</a> to reduce filesize. But as with all nice, new things, it's <a href="https://caniuse.com/av1">not fully supported yet</a>.</p>
+<p>To make an AV1 from our reasonable starting point, we can run the following:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> INPUT.mov <span class="token parameter variable">-map_metadata</span> <span class="token parameter variable">-1</span> <span class="token parameter variable">-an</span> <span class="token parameter variable">-c:v</span> libsvtav1 <span class="token parameter variable">-qp</span> <span class="token number">40</span> -tile-columns <span class="token number">2</span> -tile-rows <span class="token number">2</span> <span class="token parameter variable">-pix_fmt</span> yuv420p <span class="token parameter variable">-movflags</span> +faststart <span class="token parameter variable">-vf</span> <span class="token assign-left variable">scale</span><span class="token operator">=</span>-1:1080 output.av1.1080.mp4</code></pre>
+<p>Here's a breakdown of what's happening:</p>
+<ul>
+<li>
+<p><code>-i INPUT.mov</code> sets the source video file for input. FFmpeg will take video and audio streams from this file, convert them, and pack them into a new container.</p>
+</li>
+<li>
+<p><code>-map_metadata -1</code> will remove video metadata (like the name of a tool that was used initially to create a video). Sometimes metadata is useful, but for web development, this is rarely the case.</p>
+</li>
+<li>
+<p><code>-an</code> removes all audio. It will be muted to allow looping anyway.</p>
+</li>
+<li>
+<p><code>-c:v libsvtav1</code> selects the AV1 video codec.</p>
+</li>
+<li>
+<p><code>-qp 40</code> sets your size/quality balance for AV1. Lower numbers mean better quality and bigger size.</p>
+</li>
+<li>
+<p><code>-tile-columns 2 -tile-rows 2</code> is for speed enhancements at the cost of a small loss in compression efficiency.</p>
+</li>
+<li>
+<p><code>-pix_fmt yuv420p</code> sets a pixel format that helps reduce filesize by using full resolution for brightness and a smaller resolution for color. Read up on <a href="https://en.wikipedia.org/wiki/Chroma_subsampling">chroma subsampling</a> to learn more. Pretty wild!</p>
+</li>
+<li>
+<p><code>-movflags +faststart</code> moves the important information to the beginning of the file. It allows the browser to start playing while the video is still downloading.</p>
+</li>
+<li>
+<p><code>-vf scale=-1:1080</code> Scales down the image to whatever by 1080 pixels. If you want a different size, put in the desired height instead of 1080.</p>
+</li>
+<li>
+<p><code>output.av1.1080.mp4</code> sets the name for the output file. Why an MP4? Aren't we making AV1's?! We are! But MP4 is a CONTAINER format, and it's the most widely supported one. Just like in life, it's what's on the inside that matters.</p>
+</li>
+</ul>
+<p>You will likely need to adjust the <code>-qp</code> settings and your output resolutions to get the right mix.</p>
+<h2>HEVC/H.265</h2>
+<p>We still need a fallback, but we don't have to go all the way back to H.264. Safari supports the <a href="https://caniuse.com/hevc">HEVC/H.265 codec</a>, which is like H.264 but ... sleeker. 30-50% smaller than H.264 (with AV1 being 30% smaller than HEVC).</p>
+<p>This one is going to take much longer, so grab some coffee and run:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> INPUT.mov <span class="token parameter variable">-map_metadata</span> <span class="token parameter variable">-1</span> <span class="token parameter variable">-an</span> <span class="token parameter variable">-c:v</span> libx265 <span class="token parameter variable">-crf</span> <span class="token number">28</span> <span class="token parameter variable">-preset</span> veryslow <span class="token parameter variable">-pix_fmt</span> yuv420p <span class="token parameter variable">-movflags</span> +faststart <span class="token parameter variable">-tag:v</span> hvc1 <span class="token parameter variable">-vf</span> <span class="token assign-left variable">scale</span><span class="token operator">=</span>-1:1080 video.hevc.mp4</code></pre>
+<p>Many of the same flags appear as before, but there are a few new ones:</p>
+<ul>
+<li><code>-c:v libx265</code> selects the HEVC/H.265 codec</li>
+<li><code>-preset veryslow</code> forces HEVC/H.265 codec to generate a smaller video file even if it will be much longer.</li>
+<li><code>-crf 28</code> stands for 'Constant Rate Factor' and sets your size/quality balance. Lower numbers mean better quality and bigger size. The CRF scale goes from 0 to 51.</li>
+</ul>
+<p>Again, you may need to adjust your <code>-crf</code> rate to get the right amount of compression and quality. The output resolution should match the AV1 file.</p>
+<h2>Small Desktop / Tablet Versions</h2>
+<p>To generate smaller videos, reuse the same commands from before, but change your scaling command. Something like:</p>
+<p><code>-vf scale=-1:720</code></p>
+<p>This will output videos that are 720 pixels tall.</p>
+<p>If your video is a weird size, you may get errors if the numbers don't divide cleanly when scaling down. If that happens, choose a new size or run the math on your own to find what numbers are going to work.</p>
+<h2>Mobile Versions</h2>
+<p>Most likely, your starting video will be in a wide 16:9 format, but that's a good amount of pixels you'll never see on a mobile screen! We're going to make a vertical crop of the video to minimize our wasted pixels.</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> INPUT.mov <span class="token parameter variable">-vf</span> <span class="token string">"crop=ih*9/16:ih"</span> <span class="token parameter variable">-c:a</span> copy output.vertical.mp4</code></pre>
+<ul>
+<li><code>-vf &quot;crop=ih*9/16:ih&quot;</code> Calculates the new width based on the input height (ih) to maintain a 9:16 aspect ratio. Since x and y coordinates are not specified, ffmpeg defaults to cropping from the center of the frame (which is what we want). If you want a different ratio, enter your own numbers instead of <code>9/16</code>, where the first number is the width and the second is the height.</li>
+<li><code>-c:a copy</code> Not strictly necessary, it just copies any audio settings without modifying them.</li>
+</ul>
+<p>Now that we have a vertical file, we can make AV1 and HEVC/H.265 videos like the previous steps. Since we have less overall data, you can likely get away with something like <code>-vf scale=-1:1620</code> to give those high-density pixel displays a nice video while still being small.</p>
+<h2>Making a poster image</h2>
+<p>We also need a static poster image that will display if the video is loading over slow connections:</p>
+<pre class="feature language-bash"><code class="language-bash">ffmpeg <span class="token parameter variable">-i</span> INPUT.mov <span class="token parameter variable">-ss</span> 00:00:00.000 <span class="token parameter variable">-vframes</span> <span class="token number">1</span> thumb.png</code></pre>
+<ul>
+<li><code>-ss 00:00:00.000</code> seeks to a specific timestamp in the video. Here's it at the very beginning.</li>
+<li><code>-vframes 1</code> tells ffmpeg output one frame.</li>
+<li><code>thumb.png</code> saves that frame as a PNG.</li>
+</ul>
+<p>You'll want to size and compress that image into a reasonable format (WEBP or AVIF). Smaller is better here.</p>
+<h2>Rendering the video</h2>
+<p>Now that we have all the pieces, we can load them into a <code>video</code> element:</p>
+<pre class="feature language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name">autoplay</span> <span class="token attr-name">playsinline</span> <span class="token attr-name">muted</span> <span class="token attr-name">loop</span>
+  <span class="token attr-name">poster</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.poster.avif<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span>
+    <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.vert.av1.1280.mp4<span class="token punctuation">"</span></span>
+    <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>(max-width: 769px)<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>video/mp4;
+    codecs=av01.0.05M.08,opus<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span>
+    <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.vert.hevc.1280.mp4<span class="token punctuation">"</span></span>
+    <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>(max-width: 769px)<span class="token punctuation">"</span></span>
+    <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>video/mp4; codecs=hvc1<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span>
+    <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.av1.720.mp4<span class="token punctuation">"</span></span>
+    <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>(max-width:1441px)<span class="token punctuation">"</span></span>
+    <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>video/mp4; codecs=av01.0.05M.08,opus<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span>
+    <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.hevc.720.mp4<span class="token punctuation">"</span></span>
+    <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>(max-width:1441px)<span class="token punctuation">"</span></span>
+    <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>video/mp4; codecs=hvc1<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span>
+    <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.av1.1080.mp4<span class="token punctuation">"</span></span>
+    <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>video/mp4; codecs=av01.0.05M.08,opus<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span>
+    <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/assets/video/output.hevc.1080.mp4<span class="token punctuation">"</span></span>
+    <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>video/mp4; codecs=hvc1<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video</span><span class="token punctuation">></span></span></code></pre>
+<p>Ensure these attributes are on your <code>&lt;video&gt;</code> element:</p>
+<ul>
+<li><code>autoplay</code> starts the video as soon as there is enough data to do so.</li>
+<li><code>playsinline</code> tells the browser that the video is to be played in the element's playback area. Required for ambient videos in Safari.</li>
+<li><code>muted</code> Insures no audio is output. Required by all browsers to autoplay.</li>
+<li><code>loop</code> Restarts the video when it reaches the end.</li>
+<li><code>poster</code> points to the image to load while the video is loading or if no data can be provided.</li>
+</ul>
+<p>And in addition to <code>src</code> on our <code>&lt;source&gt;</code> elements, we set:</p>
+<ul>
+<li><code>media</code> which allows media queries, just like the <code>&lt;picture&gt;</code> element. No match-y no load-y.</li>
+<li><code>type=&quot;codecs=av01.0.05M.08,opus&quot;</code> tells the browser this is an AV1 video</li>
+<li><code>type=&quot;video/mp4; codecs=hvc1&quot;</code> tells the browser this is an HEVC/H.265 video.</li>
+</ul>
+<p>Note that I used <code>max-width</code> queries, but you could just as easily build them with <code>min-width</code> queries; just be aware that the browser will use the first item that matches.</p>
+<h2>A11Y Considerations</h2>
+<p>We have an ambient video, but there's still some accessibility we need to ensure. There are two features we need to enable.</p>
+<p>The <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-pause.html">WCAC SC 2.2.2 &quot;Pause, Stop, Hide&quot;</a> criteria states that something longer than 5 seconds (which we likely qualify for) needs some sort of control to stop the motion. The simplest implementation is a play/pause toggle button.</p>
+<p>How you enable it will vary on how you're handling interactivity on your project, but a very simple Vanilla JavaScript implementation could look like:</p>
+<pre class="feature language-javascript"><code class="language-javascript"><span class="token comment">// the awesome button you made to toggle the video</span>
+<span class="token keyword">const</span> videoToggleButton <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"your-button-selector-here"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// the video itself</span>
+<span class="token keyword">const</span> video <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"your-video-selector-here"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// toggle the play state of the video</span>
+<span class="token keyword">const</span> <span class="token function-variable function">handleVideoToggle</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  video<span class="token operator">?.</span>paused <span class="token operator">?</span> video<span class="token operator">?.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> video<span class="token operator">?.</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// also whatever you're doing to toggle the play/pause icons</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// listen for clicks</span>
+videoToggleButton<span class="token operator">?.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"click"</span><span class="token punctuation">,</span> handleVideoToggle<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>This is over-simplified, but you get the idea. Change the selector to whatever you're using to identify your elements.</p>
+<p>Also, unless your video is extremely subtle, we need to prevent it from autoplaying if users have <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion">prefers-reduced-motion</a> set. You COULD hide it with a CSS media query, but 'reduced motion' does not mean 'no motion'. I prefer that users have the option to still engage with it as they want.</p>
+<pre class="feature language-javascript"><code class="language-javascript"><span class="token comment">// Check if the prefers-reduced-motion media query matches 'reduce'</span>
+<span class="token keyword">const</span> prefersReducedMotion <span class="token operator">=</span> window<span class="token punctuation">.</span><span class="token function">matchMedia</span><span class="token punctuation">(</span><span class="token string">'(prefers-reduced-motion: reduce)'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>matches<span class="token punctuation">;</span>
+
+<span class="token comment">// grab the video if you haven't already</span>
+<span class="token keyword">const</span> video <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"your-selector-here"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>prefersReducedMotion <span class="token operator">&amp;&amp;</span> video<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>video<span class="token operator">?.</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>video<span class="token operator">?.</span><span class="token function">removeAttribute</span><span class="token punctuation">(</span><span class="token string">"autoplay"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// also whatever you're doing to toggle the play/pause icons</span>
+<span class="token punctuation">}</span></code></pre>
+<p>And there we have it: a responsive, accessible, highly compressed ambient video!</p>
+
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
+
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
+
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Responsive Ambient Videos with AV1 and HEVC/H.265 Compression">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/creating-while-adulting/" class="block decoration-none font-thin font-bold wrap-balance">Creating While Adulting<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
+
+    </main>
+
+    <footer class="footer full w-full flex flex-col-to-row justify-between items-center px-1rem py-1 items-center mt-content gap-1">
+      <p class="color-reduced font-small m-0">&copy; 2026 Nathan Long. <a class="color-reduced" href="/trackerless/">Certified Trackerless Web-Burger</a>.</p>
+
+      <nav class="nav-footer no-shrink">
+        <menu class="nav m-0 p-0 flex flex-row list-none space-x-1">
+          <li class="font-small"><a class="decoration-none" href="/about/">About</a></li>
+          <li class="font-small"><a class="decoration-none" href="/blog/">Blog</a></li>
+          <li class="font-small"><a class="decoration-none" href="/lab/">Lab</a></li>
+          <li class="font-small"><a class="decoration-none" href="/newsletter/">Newsletter</a></li>
+          <li class="font-small"><a class="decoration-none" href="/feed/feed.xml">RSS</a></li>
+        </menu>
+    </footer>
+
+    
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

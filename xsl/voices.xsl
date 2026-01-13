@@ -73,6 +73,7 @@ The goal is to:
             <h1 class="mb-1/4">Web Voices</h1>
             <p>A Collection of Websites and Feeds from the Web Industry</p>
             <p class="text-small">Download the <a href="/voices/feed.opml">OPML file</a> to import into your feed reader of choice.</p>
+            <p class="text-small color-reduced">Updated on <xsl:value-of select="substring(head/dateCreated, 6, 11)"/></p>
           </section>
           <xsl:for-each select="body/outline">
             <xsl:sort select="@text" order="ascending" />
