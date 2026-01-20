@@ -5,12 +5,79 @@
 	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2026-01-13T15:04:09Z</updated>
+	<updated>2026-01-20T22:17:28Z</updated>
 	<id>https://nathan-long.com/</id>
 	<author>
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>How to Run FreshRSS Locally With Docker</title>
+		<link href="https://nathan-long.com/blog/run-freshrss-locally-with-docker/"/>
+		<updated>2026-01-20T22:17:28Z</updated>
+		<id>https://nathan-long.com/blog/run-freshrss-locally-with-docker/</id>
+		<content type="html">&lt;p&gt;I love RSS.&lt;/p&gt;
+&lt;p&gt;I love that it gives me a direct line to what people are publishing. No algorithm, no intermediary, just me and the voices I choose—and there are so many interesting voices out there!&lt;/p&gt;
+&lt;p&gt;Managing the feeds is the real drag. Since they pulled the plug on Google Reader, there hasn’t been one app that I could really get behind. Fortunately, a group of folks who love RSS even more than I do have created an open-source RSS reader,  &lt;a href=&quot;https://freshrss.org/index.html&quot;&gt;FreshRSS&lt;/a&gt;. Which is great! But how do you run it?&lt;/p&gt;
+&lt;p&gt;If you’re like me, you don’t need to host it publicly; you just want to run the app locally. Turns out the FreshRSS team has helped make this easy by hosting a &lt;a href=&quot;https://hub.docker.com/r/freshrss/freshrss&quot;&gt;well-maintained public Docker image&lt;/a&gt; of the application. All you will need is a local container service, like &lt;a href=&quot;https://www.docker.com/products/docker-desktop/&quot;&gt;Docker Desktop&lt;/a&gt; or &lt;a href=&quot;https://orbstack.dev/&quot;&gt;Orbstack&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;&lt;strong&gt;Installing FreshRSS locally&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Create a folder somewhere you can easily manage and navigate to in the terminal.&lt;/p&gt;
+&lt;p&gt;Create a new &lt;code&gt;docker-compose.yml&lt;/code&gt; in that folder with the contents of:&lt;/p&gt;
+&lt;pre class=&quot;feature language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;extensions&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+
+&lt;span class=&quot;token key atrule&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;freshrss&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;# Grab latest docker image from hub.docker.com&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; freshrss/freshrss&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;latest
+    &lt;span class=&quot;token key atrule&quot;&gt;container_name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; freshrss
+    &lt;span class=&quot;token key atrule&quot;&gt;hostname&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; freshrss
+    &lt;span class=&quot;token key atrule&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; unless&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;stopped
+    &lt;span class=&quot;token key atrule&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;max-size&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 10m
+    &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; 8080&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;# set up location for data persistence&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; data&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;/var/www/FreshRSS/data
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; extensions&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;/var/www/FreshRSS/extensions
+    &lt;span class=&quot;token key atrule&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;TZ&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; America/New_York
+      &lt;span class=&quot;token comment&quot;&gt;# cron syntax for: update every 30 minutes&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;CRON_MIN&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;*/30&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s break down what’s happening here.&lt;/p&gt;
+&lt;p&gt;The first three lines define Docker volumes, which are persistent storage that live OUTSIDE the container. This is important as they’ll persist beyond the container starting and stopping (kinda important unless you want to re-index each feed!)&lt;/p&gt;
+&lt;p&gt;We then define the &lt;code&gt;freshrss&lt;/code&gt; service, point it to that fancy Docker Hub image, name it, set some reasonable defaults, attach it to a port, and then point to where the named volumes will be attached.&lt;/p&gt;
+&lt;p&gt;If you’re in a different timezone than East Coast US, change the &lt;code&gt;environment.TZ&lt;/code&gt; field to match your location. If you’re not sure of the specific name, &lt;a href=&quot;https://en.wikipedia.org/wiki/List_of_tz_database_time_zones&quot;&gt;find your timezone here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;&lt;strong&gt;Starting your local FreshRSS container&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Now navigate to that folder you created and run:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker compose up&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The container will spin up and bring you to the installation screen of FreshRSS. Follow the install instructions and PRESTO! Self-hosted RSS! (To stop the process, hit CTRL-C).&lt;/p&gt;
+&lt;p&gt;The app should be available at &lt;code&gt;http://localhost:8080/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can also run it in ‘detached’ mode with &lt;code&gt;docker compose up -d&lt;/code&gt;, but you’ll need to remember to stop the container when you’re done. (I like keeping my containers attached in a terminal tab so I can remember what I have running.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If you delete the container, you will also delete the data FreshRSS has been saving for you. Just start/stop, don’t destroy the container unless you also want to wipe your data. FreshRSS has lots of archiving options if you want to set up a backup system.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;&lt;strong&gt;Time to fill it with some voices!&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Now that you have a locally running RSS reader, you need voices to fill it with! I &lt;a href=&quot;https://nathan-long.com/voices.xml&quot;&gt;publish a list of web industry voices&lt;/a&gt; that I continually update. You can scan the list and pick what you want, or you can &lt;a href=&quot;https://nathan-long.com/voices/feed.opml&quot;&gt;download and import my OPML file&lt;/a&gt; to get your feeds started!&lt;/p&gt;
+&lt;h2&gt;&lt;strong&gt;A few RSS Tips&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;As you add more and more voices, it can become overwhelming to keep track of them. To keep your feed from being stressful, I have found you have to &lt;strong&gt;become OK with the idea that you will not read every post in your feed&lt;/strong&gt;. Really! It’s OK! I used to struggle with the feeling that I would “miss” something important, but those pieces tend to have a reverb effect across the blogosphere—if something’s important, it will show up in other places as well!&lt;/p&gt;
+&lt;p&gt;There are a few strategies I use when organizing my feed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If a person writes under a site name (like Harry Roberts at CSS Wizardry), consider labeling the feed by the author’s name so you start to get a feel for who’s writing what.&lt;/li&gt;
+&lt;li&gt;Group voices by interest or industry topic (Design, a11y, etc) so that you can get a feel for what topics are emerging in what category.&lt;/li&gt;
+&lt;li&gt;FreshRSS has an &#39;Important Feeds&#39; visibility category you can set for the people you&#39;re most interested in hearing from to help cut through the noise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And then a few tips for reading my feed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scanning is your friend. Start with the titles and only move into the ones that interest you.&lt;/li&gt;
+&lt;li&gt;If the unread numbers get really big, pick just one category or voice to start with. Scan the entries, read what’s interesting, and then mark everything else read. Rinse and repeat as time allows.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Responsive Ambient Videos with AV1 and HEVC/H.265 Compression</title>

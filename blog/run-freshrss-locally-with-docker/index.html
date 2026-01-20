@@ -3,22 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan Long</title>
-    <meta name="title" content="Nathan Long">
-    <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <title>How to Run FreshRSS Locally With Docker</title>
+    <meta name="title" content="How to Run FreshRSS Locally With Docker">
+    <meta name="description" content="A short guide on how to run FreshRSS locally for that self-hosted RSS joy.">
     <meta name="author" content="Nathan Long">
     <meta name="generator" content="Eleventy v3.1.2">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
-    <meta property="og:title" content="Nathan Long">
+    <meta property="og:title" content="How to Run FreshRSS Locally With Docker">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com/">
-    <meta property="og:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <meta property="og:url" content="https://nathan-long.com/blog/run-freshrss-locally-with-docker/">
+    <meta property="og:description" content="A short guide on how to run FreshRSS locally for that self-hosted RSS joy.">
     <meta property="og:image" content="https://nathan-long.com/icon-512.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Nathan Long">
-    <meta property="twitter:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <meta property="twitter:title" content="How to Run FreshRSS Locally With Docker">
+    <meta property="twitter:description" content="A short guide on how to run FreshRSS locally for that self-hosted RSS joy.">
     <meta property="twitter:image" content="https://nathan-long.com/icon-512.png">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -35,7 +35,7 @@
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
     <link rel="me" href="https://github.com/nathanlong" />
   </head>
-  <body>
+  <body class="radial-mid">
     <script>
       // Prevent FART (look it up) by blocking render for a tiny bit...
       // First check for local settings, then check media queries, then apply fallback
@@ -161,112 +161,104 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-full">
+    <main id="main"  class="content text-content flow tmpl-post prose">
       
-
-<section class="intro full radial-bottom relative">
-  <div class="content-inner mx-auto">
-    <div class="intro-content flow z-1 relative">
-      <p class="intro-eyebrow lh-1">Nathan Long</p>
-      <h1 class="intro-title">Designer brain,<br/>developer heart.</h1>
-      <p>UI Developer at <a href="https://www.viget.com">Viget</a></p>
-      <a class="intro-link btn text-small flow-3/2" role="button" draggable="false" href="/about/" data-module="link-button">About Me &rarr;</a>
-    </div>
-  </div>
+<section class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2026-01-20">January 20, 2026</time>
+  <h1 class="mb-0 wrap-balance">How to Run FreshRSS Locally With Docker</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
 </section>
 
-<section class="full flow-0">
-  <div class="content-inner mx-auto flow">
+<p>I love RSS.</p>
+<p>I love that it gives me a direct line to what people are publishing. No algorithm, no intermediary, just me and the voices I choose—and there are so many interesting voices out there!</p>
+<p>Managing the feeds is the real drag. Since they pulled the plug on Google Reader, there hasn’t been one app that I could really get behind. Fortunately, a group of folks who love RSS even more than I do have created an open-source RSS reader,  <a href="https://freshrss.org/index.html">FreshRSS</a>. Which is great! But how do you run it?</p>
+<p>If you’re like me, you don’t need to host it publicly; you just want to run the app locally. Turns out the FreshRSS team has helped make this easy by hosting a <a href="https://hub.docker.com/r/freshrss/freshrss">well-maintained public Docker image</a> of the application. All you will need is a local container service, like <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> or <a href="https://orbstack.dev/">Orbstack</a>.</p>
+<h2><strong>Installing FreshRSS locally</strong></h2>
+<p>Create a folder somewhere you can easily manage and navigate to in the terminal.</p>
+<p>Create a new <code>docker-compose.yml</code> in that folder with the contents of:</p>
+<pre class="feature language-yaml"><code class="language-yaml"><span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+  <span class="token key atrule">data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">extensions</span><span class="token punctuation">:</span>
 
-    
-    <p class="section-eyebrow">Writing</p>
-
-    
-    
-    <ul class="postlist p-0 space-y-2">
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/run-freshrss-locally-with-docker/" class="font-thin m-0 font-bold decoration-none leading-1">How to Run FreshRSS Locally With Docker</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2026-01-20">January 20, 2026</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/responsive-ambient-videos-av1-hevc/" class="font-thin m-0 font-bold decoration-none leading-1">Responsive Ambient Videos with AV1 and HEVC/H.265 Compression</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2026-01-13">January 13, 2026</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/creating-while-adulting/" class="font-thin m-0 font-bold decoration-none leading-1">Creating While Adulting</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/talks/" class="post-tag py-1/2">talks</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2025-09-10">September 10, 2025</time>
-    </p>
-  </li>
-  
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">freshrss</span><span class="token punctuation">:</span>
+    <span class="token comment"># Grab latest docker image from hub.docker.com</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> freshrss/freshrss<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> freshrss
+    <span class="token key atrule">hostname</span><span class="token punctuation">:</span> freshrss
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> unless<span class="token punctuation">-</span>stopped
+    <span class="token key atrule">logging</span><span class="token punctuation">:</span>
+      <span class="token key atrule">options</span><span class="token punctuation">:</span>
+        <span class="token key atrule">max-size</span><span class="token punctuation">:</span> 10m
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8080<span class="token punctuation">:</span><span class="token number">80</span>
+    <span class="token comment"># set up location for data persistence</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> data<span class="token punctuation">:</span>/var/www/FreshRSS/data
+      <span class="token punctuation">-</span> extensions<span class="token punctuation">:</span>/var/www/FreshRSS/extensions
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">TZ</span><span class="token punctuation">:</span> America/New_York
+      <span class="token comment"># cron syntax for: update every 30 minutes</span>
+      <span class="token key atrule">CRON_MIN</span><span class="token punctuation">:</span> <span class="token string">'*/30'</span></code></pre>
+<p>Let’s break down what’s happening here.</p>
+<p>The first three lines define Docker volumes, which are persistent storage that live OUTSIDE the container. This is important as they’ll persist beyond the container starting and stopping (kinda important unless you want to re-index each feed!)</p>
+<p>We then define the <code>freshrss</code> service, point it to that fancy Docker Hub image, name it, set some reasonable defaults, attach it to a port, and then point to where the named volumes will be attached.</p>
+<p>If you’re in a different timezone than East Coast US, change the <code>environment.TZ</code> field to match your location. If you’re not sure of the specific name, <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">find your timezone here</a>.</p>
+<h2><strong>Starting your local FreshRSS container</strong></h2>
+<p>Now navigate to that folder you created and run:</p>
+<p><code>docker compose up</code></p>
+<p>The container will spin up and bring you to the installation screen of FreshRSS. Follow the install instructions and PRESTO! Self-hosted RSS! (To stop the process, hit CTRL-C).</p>
+<p>The app should be available at <code>http://localhost:8080/</code></p>
+<p>You can also run it in ‘detached’ mode with <code>docker compose up -d</code>, but you’ll need to remember to stop the container when you’re done. (I like keeping my containers attached in a terminal tab so I can remember what I have running.)</p>
+<blockquote>
+<p><strong>NOTE:</strong> If you delete the container, you will also delete the data FreshRSS has been saving for you. Just start/stop, don’t destroy the container unless you also want to wipe your data. FreshRSS has lots of archiving options if you want to set up a backup system.</p>
+</blockquote>
+<h2><strong>Time to fill it with some voices!</strong></h2>
+<p>Now that you have a locally running RSS reader, you need voices to fill it with! I <a href="https://nathan-long.com/voices.xml">publish a list of web industry voices</a> that I continually update. You can scan the list and pick what you want, or you can <a href="https://nathan-long.com/voices/feed.opml">download and import my OPML file</a> to get your feeds started!</p>
+<h2><strong>A few RSS Tips</strong></h2>
+<p>As you add more and more voices, it can become overwhelming to keep track of them. To keep your feed from being stressful, I have found you have to <strong>become OK with the idea that you will not read every post in your feed</strong>. Really! It’s OK! I used to struggle with the feeling that I would “miss” something important, but those pieces tend to have a reverb effect across the blogosphere—if something’s important, it will show up in other places as well!</p>
+<p>There are a few strategies I use when organizing my feed:</p>
+<ul>
+<li>If a person writes under a site name (like Harry Roberts at CSS Wizardry), consider labeling the feed by the author’s name so you start to get a feel for who’s writing what.</li>
+<li>Group voices by interest or industry topic (Design, a11y, etc) so that you can get a feel for what topics are emerging in what category.</li>
+<li>FreshRSS has an 'Important Feeds' visibility category you can set for the people you're most interested in hearing from to help cut through the noise.</li>
+</ul>
+<p>And then a few tips for reading my feed:</p>
+<ul>
+<li>Scanning is your friend. Start with the titles and only move into the ones that interest you.</li>
+<li>If the unread numbers get really big, pick just one category or voice to start with. Scan the entries, read what’s interesting, and then mark everything else read. Rinse and repeat as time allows.</li>
 </ul>
 
 
-    <a class="btn text-small flow-3" role="button" draggable="false" href="/blog/" data-module="link-button">More Words &rarr;</a>
-  </div>
-</section>
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
+</div>
 
-<section class="py-3 mt-3 radial-top full">
-  <div class="content-inner mx-auto flow">
-    <p class="section-eyebrow">Labs</p>
-    <ul class="lablist p-0 m-0 mb-2 space-y-1">
-        
-          <li class="list-none flex items-start">
-  <div class="lablist-image aspect-square rounded-1 overflow-hidden">
-    <a class="lablist-image-link" href="https://nathan-long.com/experiments/">
-      <img src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/0c1009c9-34ab-418c-b504-c101fc4fe0f0" alt="A flask with bubbling liquid overlaid with scanlines from an old CRT display" class="w-full h-auto" width="172.5" height="172.5">
-    </a>
-  </div>
-  <div class="lablist-content">
-    <h2 class="mb-1/4 lablist-link heading-300">Experiments</h2>
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
 
-    
-    <p class="mt-0 mb-1/4">A place to host experiments in motion, techniques, and other odd things.</p>
-    
-
-    <div class="flex space-x-1">
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://nathan-long.com/experiments/">View</a>
-      <a class="font-thin font-bold uppercase text-small decoration-none" href="https://github.com/nathanlong/experiments">Source</a>
-    </div>
-  </div>
-</li>
-
-        
-        
-        
-        
-        
-    </ul>
-
-    <a class="btn text-small" role="button" draggable="false" href="/lab/" data-module="link-button">More Projects &rarr;</a>
-  </div>
-</section>
-
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:How to Run FreshRSS Locally With Docker">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/responsive-ambient-videos-av1-hevc/" class="block decoration-none font-thin font-bold wrap-balance">Responsive Ambient Videos with AV1 and HEVC/H.265 Compression<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 
