@@ -421,7 +421,7 @@ p,
 
 ul,
 ol {
-  padding-left: 0.825em;
+  padding-inline-start: 1lh;
 }
 
 li::marker {
