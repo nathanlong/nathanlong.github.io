@@ -3,22 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tagged “tooling”</title>
-    <meta name="title" content="Tagged “tooling”">
-    <meta name="description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <title>Git: Remove Dead Branches</title>
+    <meta name="title" content="Git: Remove Dead Branches">
+    <meta name="description" content="A quick command to get rid of stale git branches.">
     <meta name="author" content="Nathan Long">
     <meta name="generator" content="Eleventy v3.1.2">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070707" />
-    <meta property="og:title" content="Tagged “tooling”">
+    <meta property="og:title" content="Git: Remove Dead Branches">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nathan-long.com/tags/tooling/">
-    <meta property="og:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <meta property="og:url" content="https://nathan-long.com/blog/git-remove-dead-branches/">
+    <meta property="og:description" content="A quick command to get rid of stale git branches.">
     <meta property="og:image" content="https://nathan-long.com/icon-512.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nathan-long.com/">
-    <meta property="twitter:title" content="Tagged “tooling”">
-    <meta property="twitter:description" content="The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.">
+    <meta property="twitter:title" content="Git: Remove Dead Branches">
+    <meta property="twitter:description" content="A quick command to get rid of stale git branches.">
     <meta property="twitter:image" content="https://nathan-long.com/icon-512.png">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -35,7 +35,7 @@
     <link rel="alternate" href="/feed/feed.json" type="application/json" title="Nathan Long">
     <link rel="me" href="https://github.com/nathanlong" />
   </head>
-  <body>
+  <body class="radial-mid">
     <script>
       // Prevent FART (look it up) by blocking render for a tiny bit...
       // First check for local settings, then check media queries, then apply fallback
@@ -161,180 +161,92 @@
 </header>
 
 
-    <main id="main"  class="content text-content flow tmpl-full">
+    <main id="main"  class="content text-content flow tmpl-post prose">
       
-<section class="mt-content feature text-center">
-  <h1 class="m-0">Topic: tooling</h1>
-  <p>See <a href="/tags/">all topics</a>.</p>
+<section class="mt-content feature text-center mb-2">
+  <time class="text-small font-mono" datetime="2026-03-10">March 10, 2026</time>
+  <h1 class="mb-0 wrap-balance">Git: Remove Dead Branches</h1>
+  <span class="inline-block">
+  <a href="/tags/tooling/" class="post-tag">tooling</a>
+  </span>
 </section>
 
-<hr class="mt-2 mb-2">
+<p>It's very common near the end of a project to have a hot pile of <strong>dead branches</strong>: branches that originally tracked something upstream but have since been deleted.</p>
+<p>Your original <code>super-awesome-feature</code> branch was merged via PR (pull request) on GitHub and deleted there after review, but you still have it locally, which means the branch is now considered dead. Manually cleaning up these branches can be tedious. I use a small script to clean up my local branches:</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> fetch <span class="token parameter variable">-p</span> <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> branch <span class="token parameter variable">--format</span> <span class="token string">'%(refname:short) %(upstream:track)'</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'$2=="[gone]" {print $1}'</span> <span class="token operator">|</span> <span class="token function">xargs</span> <span class="token parameter variable">-r</span> <span class="token function">git</span> branch <span class="token parameter variable">-D</span></code></pre>
+<p>To break it down, the script:</p>
+<ol>
+<li>Updates your remote references</li>
+<li>List local branches and their upstream tracking status</li>
+<li>Filter branches whose upstream is <code>[gone]</code></li>
+<li>Force-delete those branches</li>
+</ol>
+<p>And in more detail:</p>
+<h2>Fetch and Prune</h2>
+<pre class="feature language-bash"><code class="language-bash"><span class="token function">git</span> fetch <span class="token parameter variable">-p</span></code></pre>
+<p>This downloads updates from the remote repository but does not merge them. The <code>-p</code> flag removes stale remote-tracking references.</p>
+<h2>Chain a command</h2>
+<p><code>&amp;&amp;</code></p>
+<p>The double-ampersand is a bash control operator that only moves onto the next part if the previous command succeeds. (If it exits with a status of 0).</p>
+<h2>List local branches</h2>
+<pre class="feature language-git"><code class="language-git">git branch --format <span class="token string">'%(refname:short) %(upstream:track)'</span></code></pre>
+<p>This will return a list of local branches formatted with the short branch name and the upstream tracking status. Something like:</p>
+<pre class="feature language-markup"><code class="language-markup">main [ahead 1]
+feature-login [behind 2]
+feature-api [gone]
+old-feature [gone]
+super-awesome-feature [gone]</code></pre>
+<p>The <code>[gone]</code> here means that at one point, the branch tracked something upstream, but that upstream branch no longer exists.</p>
+<h2>Filter the branch list</h2>
+<pre class="feature language-bash"><code class="language-bash"><span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'$2=="[gone]" {print $1}'</span></code></pre>
+<p>This uses the bash pipe operator (<code>|</code>) to feed the branch list into <code>awk</code>, which splits on whitespace and processes the input line by line.</p>
+<p>So an item like:</p>
+<pre class="feature language-markup"><code class="language-markup">feature-api [gone]</code></pre>
+<p>turns into:</p>
+<pre class="feature language-markup"><code class="language-markup">$1 = feature-api
+$2 = [gone]</code></pre>
+<p>However, we have a condition of <code>$2==&quot;[gone]&quot;</code> which makes <code>awk</code> only process lines with the second field of <code>[gone]</code>. It discards the ones that don't match.</p>
+<pre class="feature language-bash"><code class="language-bash"><span class="token punctuation">{</span>print <span class="token variable">$1</span><span class="token punctuation">}</span></code></pre>
+<p>We then only output the first field, in this case, <code>feature-api</code>, to form a new list of just the dead branches.</p>
+<h2>Delete dead branches</h2>
+<pre class="feature language-bash"><code class="language-bash"><span class="token operator">|</span> <span class="token function">xargs</span> <span class="token parameter variable">-r</span> <span class="token function">git</span> branch <span class="token parameter variable">-D</span></code></pre>
+<p>The final part of the script pipes our new dead branch list into <code>xargs</code>, which converts input into command arguments. The <code>-r</code> flag here is a safety measure to not run the command if there's no input.</p>
+<p>So <code>xargs</code> will receive a list like:</p>
+<pre class="feature language-markup"><code class="language-markup">feature-api
+old-feature</code></pre>
+<p>Which gets turned into:</p>
+<pre class="feature language-git"><code class="language-git">git branch -D feature-api old-feature</code></pre>
+<p>And then <code>git</code> force deletes those branches.</p>
+<p>Handy!</p>
 
 
-<ul class="postlist p-0 space-y-2">
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/git-remove-dead-branches/" class="font-thin m-0 font-bold decoration-none leading-1">Git: Remove Dead Branches</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2026-03-10">March 10, 2026</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/2026-techo-kaigi/" class="font-thin m-0 font-bold decoration-none leading-1">2026 Techo Kaigi</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2026-02-24">February 24, 2026</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/run-freshrss-locally-with-docker/" class="font-thin m-0 font-bold decoration-none leading-1">How to Run FreshRSS Locally With Docker</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2026-01-20">January 20, 2026</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/responsive-ambient-videos-av1-hevc/" class="font-thin m-0 font-bold decoration-none leading-1">Responsive Ambient Videos with AV1 and HEVC/H.265 Compression</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2026-01-13">January 13, 2026</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/git-fixing-mistakes/" class="font-thin m-0 font-bold decoration-none leading-1">Git: Fixing Mistakes</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2025-02-21">February 21, 2025</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/testing-ai-value/" class="font-thin m-0 font-bold decoration-none leading-1">Testing AI Value</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2025-01-24">January 24, 2025</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/my-personal-tmux-mystery/" class="font-thin m-0 font-bold decoration-none leading-1">My Personal tmux Mystery</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-08-22">August 22, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/colorschemes-for-the-discerning-developer/" class="font-thin m-0 font-bold decoration-none leading-1">Colorschemes for the Discerning Developer</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-06-11">June 11, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/ffmpeg-basics-and-recipes/" class="font-thin m-0 font-bold decoration-none leading-1">ffmpeg Basics and Recipes</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-27">March 27, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/a-few-of-my-favorite-cli-things/" class="font-thin m-0 font-bold decoration-none leading-1">These Are a Few of My Favorite CLI Things...</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2024-03-21">March 21, 2024</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/nathan-uses-this-2023-edition/" class="font-thin m-0 font-bold decoration-none leading-1">Nathan Uses This: 2023 Edition</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-09-20">September 20, 2023</time>
-    </p>
-  </li>
-  
-  <li class="flex flex-col items-baseline">
-    <h2 class="heading-200 mb-1/4 wrap-pretty"><a href="/blog/vite-rapid-prototype-starter-kits/" class="font-thin m-0 font-bold decoration-none leading-1">Vite Rapid Prototyping Starter Kits</a></h2>
-    <p class="postlist-meta m-0">
-    <span class="divide-comma inline-block">
-      
-      
-      <a href="/tags/tooling/" class="post-tag py-1/2">tooling</a>
-      
-    </span>
-    <time class="postlist-date font-xsmall font-mono" datetime="2023-06-16">June 16, 2023</time>
-    </p>
-  </li>
-  
-</ul>
-
-
-
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Newsletter</p>
+  <p>Want to receive these thoughts and others <a href="/newsletter">in your inbox?</a></p>
 </div>
 
+<div class="mt-2">
+  <p class="section-eyebrow m-0 color-accent">Discussion</p>
+
+  
+  <p>Want to discuss this?
+    <a href="mailto:nlong5+blog@gmail.com?subject=Re:Git: Remove Dead Branches">Email Me</a>
+  </p>
+</div>
+<div class="feature py-1 color-reduced mt-2">
+  <ul class="content-inner flex justify-between list-none p-0 m-0 w-full">
+    <li class="grow w-1/2">
+      <span class="uppercase decoration-none text-small">Previous:</span><br/>
+        <a href="/blog/2026-techo-kaigi/" class="block decoration-none font-thin font-bold wrap-balance">2026 Techo Kaigi<br/>&larr;</a></li>
+      
+    <li class="text-right grow w-1/2">
+      <span class="uppercase decoration-none text-small">Next:</span>
+      <br/>
+        <span class="font-thin font-bold">You're all caught up!<br/>😎</span>
+      
+    </li>
+  </ul>
+</div>
 
     </main>
 

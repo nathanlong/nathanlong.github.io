@@ -5,12 +5,67 @@
 	<subtitle>The personal digital-garden/dumpster fire of Nathan Long: former designer turned Front-End Developer, motion design tinkerer, and Senior UI Developer at Viget.</subtitle>
 	<link href="https://nathan-long.com/feed/feed.xml" rel="self"/>
 	<link href="https://nathan-long.com/"/>
-	<updated>2026-02-24T15:41:22Z</updated>
+	<updated>2026-03-10T20:37:00Z</updated>
 	<id>https://nathan-long.com/</id>
 	<author>
 		<name>Nathan Long</name>
 		<email>nlong5+blog@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Git: Remove Dead Branches</title>
+		<link href="https://nathan-long.com/blog/git-remove-dead-branches/"/>
+		<updated>2026-03-10T20:37:00Z</updated>
+		<id>https://nathan-long.com/blog/git-remove-dead-branches/</id>
+		<content type="html">&lt;p&gt;It&#39;s very common near the end of a project to have a hot pile of &lt;strong&gt;dead branches&lt;/strong&gt;: branches that originally tracked something upstream but have since been deleted.&lt;/p&gt;
+&lt;p&gt;Your original &lt;code&gt;super-awesome-feature&lt;/code&gt; branch was merged via PR (pull request) on GitHub and deleted there after review, but you still have it locally, which means the branch is now considered dead. Manually cleaning up these branches can be tedious. I use a small script to clean up my local branches:&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; fetch &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; branch &lt;span class=&quot;token parameter variable&quot;&gt;--format&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;%(refname:short) %(upstream:track)&#39;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;$2==&quot;[gone]&quot; {print $1}&#39;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;xargs&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; branch &lt;span class=&quot;token parameter variable&quot;&gt;-D&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To break it down, the script:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Updates your remote references&lt;/li&gt;
+&lt;li&gt;List local branches and their upstream tracking status&lt;/li&gt;
+&lt;li&gt;Filter branches whose upstream is &lt;code&gt;[gone]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Force-delete those branches&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And in more detail:&lt;/p&gt;
+&lt;h2&gt;Fetch and Prune&lt;/h2&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; fetch &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This downloads updates from the remote repository but does not merge them. The &lt;code&gt;-p&lt;/code&gt; flag removes stale remote-tracking references.&lt;/p&gt;
+&lt;h2&gt;Chain a command&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The double-ampersand is a bash control operator that only moves onto the next part if the previous command succeeds. (If it exits with a status of 0).&lt;/p&gt;
+&lt;h2&gt;List local branches&lt;/h2&gt;
+&lt;pre class=&quot;feature language-git&quot;&gt;&lt;code class=&quot;language-git&quot;&gt;git branch --format &lt;span class=&quot;token string&quot;&gt;&#39;%(refname:short) %(upstream:track)&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will return a list of local branches formatted with the short branch name and the upstream tracking status. Something like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-markup&quot;&gt;&lt;code class=&quot;language-markup&quot;&gt;main [ahead 1]
+feature-login [behind 2]
+feature-api [gone]
+old-feature [gone]
+super-awesome-feature [gone]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;[gone]&lt;/code&gt; here means that at one point, the branch tracked something upstream, but that upstream branch no longer exists.&lt;/p&gt;
+&lt;h2&gt;Filter the branch list&lt;/h2&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;$2==&quot;[gone]&quot; {print $1}&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This uses the bash pipe operator (&lt;code&gt;|&lt;/code&gt;) to feed the branch list into &lt;code&gt;awk&lt;/code&gt;, which splits on whitespace and processes the input line by line.&lt;/p&gt;
+&lt;p&gt;So an item like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-markup&quot;&gt;&lt;code class=&quot;language-markup&quot;&gt;feature-api [gone]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;turns into:&lt;/p&gt;
+&lt;pre class=&quot;feature language-markup&quot;&gt;&lt;code class=&quot;language-markup&quot;&gt;$1 = feature-api
+$2 = [gone]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, we have a condition of &lt;code&gt;$2==&amp;quot;[gone]&amp;quot;&lt;/code&gt; which makes &lt;code&gt;awk&lt;/code&gt; only process lines with the second field of &lt;code&gt;[gone]&lt;/code&gt;. It discards the ones that don&#39;t match.&lt;/p&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;print &lt;span class=&quot;token variable&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We then only output the first field, in this case, &lt;code&gt;feature-api&lt;/code&gt;, to form a new list of just the dead branches.&lt;/p&gt;
+&lt;h2&gt;Delete dead branches&lt;/h2&gt;
+&lt;pre class=&quot;feature language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;xargs&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; branch &lt;span class=&quot;token parameter variable&quot;&gt;-D&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The final part of the script pipes our new dead branch list into &lt;code&gt;xargs&lt;/code&gt;, which converts input into command arguments. The &lt;code&gt;-r&lt;/code&gt; flag here is a safety measure to not run the command if there&#39;s no input.&lt;/p&gt;
+&lt;p&gt;So &lt;code&gt;xargs&lt;/code&gt; will receive a list like:&lt;/p&gt;
+&lt;pre class=&quot;feature language-markup&quot;&gt;&lt;code class=&quot;language-markup&quot;&gt;feature-api
+old-feature&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which gets turned into:&lt;/p&gt;
+&lt;pre class=&quot;feature language-git&quot;&gt;&lt;code class=&quot;language-git&quot;&gt;git branch -D feature-api old-feature&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And then &lt;code&gt;git&lt;/code&gt; force deletes those branches.&lt;/p&gt;
+&lt;p&gt;Handy!&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>2026 Techo Kaigi</title>
