@@ -18,6 +18,6 @@ new_date="$(date '+%Y-%m-%dT%H:%M:%S%z')"
 touch ${new_path}
 
 # Prepend yaml, we have to rewrite the file back in tho :(
-echo -e "---\ntitle: ${title}\ndescription: ${description}\ndate: ${new_date}\ntags: ${tags}\n---\n" > "${new_path}"
+echo -e "---\ntitle: ${title}\ndescription: ${description}\npubDate: ${new_date}\ntags: ${tags}\n---\n" > "${new_path}"
 
 e_success "New entry created!"
