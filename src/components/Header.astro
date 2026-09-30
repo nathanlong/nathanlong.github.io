@@ -1,0 +1,66 @@
+---
+import { SITE_TITLE } from '../consts';
+import { Image } from 'astro:assets';
+import Profile from "../assets/images/saitama-bald-1550-transparent.png"
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header class="grid-layout">
+	<nav>
+    <div>
+      <a href="/" class="site-title">
+        <Image src={Profile} class="site-title-image" alt="Smiling, unassuming bald man" />
+        <span> {SITE_TITLE}</span>
+      </a>
+    </div>
+		<div class="internal-links">
+			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/lab">Lab</HeaderLink>
+			<HeaderLink href="/newsletter">Newsletter</HeaderLink>
+		</div>
+	</nav>
+</header>
+<style>
+  .site-title {
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+  }
+
+  .site-title:hover {
+    color: var(--accent);
+  }
+
+  .site-title-image {
+    height: 1.5em;
+    width: auto;
+  }
+
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+  .internal-links {
+    display: flex;
+    gap: 0.5em;
+  }
+</style>

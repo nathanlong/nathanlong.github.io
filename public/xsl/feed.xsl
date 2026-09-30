@@ -52,11 +52,11 @@ This is a custom XSL stylesheet based off of these examples:
               <span>nathan-long.com</span>
             </h1>
             <p class="py-1">
-              <xsl:value-of select="/atom:feed/atom:subtitle"/>
+              <xsl:value-of select="/rss/channel/description"/>
             </p>
             <a>
               <xsl:attribute name="href">
-                <xsl:value-of select="/atom:feed/atom:link[2]/@href"/>
+                <xsl:value-of select="/rss/channel/link"/>
               </xsl:attribute>
               Visit Website &#x2192;
             </a>
@@ -64,20 +64,20 @@ This is a custom XSL stylesheet based off of these examples:
 
           <section class="recent">
             <h2>Recent blog posts</h2>
-            <xsl:for-each select="/atom:feed/atom:entry">
+            <xsl:for-each select="/rss/channel/item">
               <div class="pb-5">
                 <div class="text-4 font-bold">
                   <a>
                     <xsl:attribute name="href">
-                      <xsl:value-of select="atom:link/@href"/>
+                      <xsl:value-of select="link"/>
                     </xsl:attribute>
-                    <xsl:value-of select="atom:title"/>
+                    <xsl:value-of select="title"/>
                   </a>
                 </div>
 
                 <div class="color-gray text-small">
                   Published on
-                  <xsl:value-of select="substring(atom:updated, 0, 11)" />
+                  <xsl:value-of select="pubDate" />
                 </div>
               </div>
             </xsl:for-each>

@@ -1,0 +1,80 @@
+---
+import Parser from 'rss-parser';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const experiments = (await getCollection('lab'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const parser = new Parser();
+const newsletter = await parser.parseURL(
+  'https://buttondown.com/nathanlong/rss',
+);
+const latestNews = newsletter.items.slice(0, 3);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="grid-layout flow">
+      <section>
+        <h1>Designer brain, developer heart</h1>
+        <p>Ordinary web bloke.</p>
+      </section>
+      <h2>Blog</h2>
+      {/* turn into component */}
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.id}/`}>
+              <h4 class="title">{post.data.title}</h4>
+              <p class="date">
+                <FormattedDate date={post.data.pubDate} />
+              </p>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <h2>Lab</h2>
+      <ul>
+        {experiments.map((experiment) => (
+          <li>
+            <h4 class="title">{experiment.data.name}</h4>
+            <p class="date">
+              <FormattedDate date={experiment.data.pubDate} />
+            </p>
+          </li>
+        ))}
+      </ul>
+      <h2>Newsletter</h2>
+      <ul>
+        {latestNews.map((item) => (
+          <li>
+            <a href={item.link}>
+              <h4 class="title">{item.title}</h4>
+              <p class="date">
+                <FormattedDate
+                  date={new Date(item.pubDate || item.isoDate || '')}
+                />
+              </p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </main>
+    <Footer />
+  </body>
+</html>

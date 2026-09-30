@@ -22,50 +22,6 @@ The goal is to:
         </style>
       </head>
       <body>
-        <!-- this is to preserve color settings from elsewhere on my site, remove if you're pulling this for your own -->
-        <script>
-          // Prevent FART (look it up) by blocking render for a tiny bit...
-          // First check for local settings, then check media queries, then apply fallback
-          function getColor() {
-            const colorPref = window.localStorage.getItem('color-mode');
-            if (typeof colorPref === 'string') {
-              return colorPref;
-            }
-            const mql = window.matchMedia('(prefers-color-scheme: dark)');
-            if (typeof mql.matches === 'boolean') {
-              return mql.matches ? 'dark' : 'light';
-            }
-            return 'light';
-          }
-
-          function getMotion() {
-            const motionPref = window.localStorage.getItem('motion-mode');
-            if (typeof motionPref === 'string') {
-              return motionPref;
-            }
-            const mql = window.matchMedia('(prefers-reduced-motion: no-preference)');
-            if (typeof mql.matches === 'boolean') {
-              return mql.matches ? 'no-preference' : 'reduced'
-            }
-            return 'no-preference';
-          }
-
-          function getParty() {
-            const partyPref = window.localStorage.getItem('party-mode')
-            if (typeof partyPref === 'string') {
-              return partyPref;
-            }
-            return 'no-party';
-          }
-
-          const colorMode = getColor();
-          const motionMode = getMotion();
-          const partyMode = getParty();
-          const root = document.documentElement;
-          root.classList.add(colorMode, partyMode, motionMode);
-          root.style.setProperty('--play-state', motionMode === "reduced" ? "paused" : "running")
-          root.style.setProperty('--transition-toggle', motionMode === "reduced" ? "0" : "1")
-        </script>
         <main class="content text-content flow mb-4">
           <a class="absolute top-1/2 left-1 text-small" href="/">← Return to Site</a>
 
