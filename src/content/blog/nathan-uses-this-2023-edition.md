@@ -1,7 +1,7 @@
 ---
 title: "Nathan Uses This: 2023 Edition"
 description: Some things I use
-pubDate: 2023-09-20
+pubDate: 2023-09-20T12:00:00-0400
 tags: [tooling]
 ---
 

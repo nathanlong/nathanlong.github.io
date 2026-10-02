@@ -1,11 +1,12 @@
 ---
 // src/pages/tags/[tag].astro
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import BaseHead from '@components/BaseHead.astro';
+import Footer from '@components/Footer.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+import Header from '@components/Header.astro';
+import ListItemPost from '@/components/ListItemPost.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 
 // 1. Generate paths for all unique tags at build time
 export async function getStaticPaths() {
@@ -44,17 +45,14 @@ const { posts } = Astro.props;
   <body>
     <Header />
     <main class="grid-layout">
-      <p>Tagged with {tag}</p>
-      <ul>
+      <h2>Tagged with {tag}</h2>
+      <ul class="list-item">
         {posts.map((post) => (
-          <li>
-            <a href={`/blog/${post.id}/`}>
-              <h4 class="title">{post.data.title}</h4>
-              <p class="date">
-                <FormattedDate date={post.data.pubDate} />
-              </p>
-            </a>
-          </li>
+          <ListItemPost
+            id={post.id}
+            title={post.data.title}
+            date={post.data.pubDate}
+          />
         ))}
       </ul>
     </main>

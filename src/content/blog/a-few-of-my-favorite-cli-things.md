@@ -1,7 +1,7 @@
 ---
 title: "These Are a Few of My Favorite CLI Things..."
 description: "I take a look at a few of the CLI utilities I've picked up along the way."
-pubDate: 2024-03-21
+pubDate: 2024-03-21T12:00:00-0400
 tags: [tooling]
 ---
 

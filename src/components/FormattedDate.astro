@@ -1,4 +1,6 @@
 ---
+import { SITE_TIMEZONE } from '@/consts';
+
 interface Props {
 	date: Date;
 }
@@ -12,6 +14,7 @@ const { date } = Astro.props;
 			year: 'numeric',
 			month: 'short',
 			day: 'numeric',
+			timeZone: SITE_TIMEZONE,
 		})
 	}
 </time>

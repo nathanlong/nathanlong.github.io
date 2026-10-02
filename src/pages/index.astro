@@ -1,11 +1,12 @@
 ---
 import Parser from 'rss-parser';
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from '@components/BaseHead.astro';
+import Footer from '@components/Footer.astro';
+import Header from '@components/Header.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+import ListItemPost from '@components/ListItemPost.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -19,8 +20,39 @@ const parser = new Parser();
 const newsletter = await parser.parseURL(
   'https://buttondown.com/nathanlong/rss',
 );
-const latestNews = newsletter.items.slice(0, 3);
+// Feed fields are all optional, so skip anything incomplete and parse dates
+const latestNews = newsletter.items
+  .flatMap(({ link, title, isoDate, pubDate }) => {
+    const date = isoDate ?? pubDate;
+    return link && title && date
+      ? [{ href: link, title, date: new Date(date) }]
+      : [];
+  })
+  .slice(0, 3);
 ---
+
+<style>
+  .list-item__lab {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .list-item__lab__image {
+    aspect-ratio: 1/1;
+    width: 5rem;
+    border-radius: 0.5rem;
+    background-color: rgb(var(--light-gray));
+  }
+
+  .list-item__meta-list {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.825rem;
+  }
+</style>
 
 <!doctype html>
 <html lang="en">
@@ -31,47 +63,54 @@ const latestNews = newsletter.items.slice(0, 3);
     <Header />
     <main class="grid-layout flow">
       <section>
-        <h1>Designer brain, developer heart</h1>
-        <p>Ordinary web bloke.</p>
+        <p>
+          UI Designer at <a href="https://www.viget.com">Viget</a>. Keeping the
+          internet weird one website at a time.
+        </p>
       </section>
+      <hr />
       <h2>Blog</h2>
       {/* turn into component */}
-      <ul>
+      <ul class="list-item">
         {posts.map((post) => (
-          <li>
-            <a href={`/blog/${post.id}/`}>
-              <h4 class="title">{post.data.title}</h4>
-              <p class="date">
-                <FormattedDate date={post.data.pubDate} />
-              </p>
-            </a>
-          </li>
+          <ListItemPost
+            id={post.id}
+            section="blog"
+            title={post.data.title}
+            date={post.data.pubDate}
+          />
         ))}
       </ul>
+      <hr />
       <h2>Lab</h2>
-      <ul>
+      <ul class="list-item">
         {experiments.map((experiment) => (
-          <li>
-            <h4 class="title">{experiment.data.name}</h4>
-            <p class="date">
-              <FormattedDate date={experiment.data.pubDate} />
-            </p>
+          <li class="list-item__lab">
+            <img
+              class="list-item__lab__image"
+              src={experiment.data.image}
+              alt={experiment.data.imageAlt}
+            />
+            <div>
+              <h4 class="list-item__title">{experiment.data.name}</h4>
+              <div class="list-item__meta-list">
+                <p class="list-item__date">
+                  <FormattedDate date={experiment.data.pubDate} />
+                </p>
+                {experiment.data.url && <a href={experiment.data.url}>View</a>}
+                {experiment.data.source && (
+                  <a href={experiment.data.source}>Source</a>
+                )}
+              </div>
+            </div>
           </li>
         ))}
       </ul>
+      <hr />
       <h2>Newsletter</h2>
-      <ul>
+      <ul class="list-item">
         {latestNews.map((item) => (
-          <li>
-            <a href={item.link}>
-              <h4 class="title">{item.title}</h4>
-              <p class="date">
-                <FormattedDate
-                  date={new Date(item.pubDate || item.isoDate || '')}
-                />
-              </p>
-            </a>
-          </li>
+          <ListItemPost href={item.href} title={item.title} date={item.date} />
         ))}
       </ul>
     </main>

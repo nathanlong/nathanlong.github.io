@@ -1,7 +1,7 @@
 ---
 title: Vite Rapid Prototyping Starter Kits
 description: Creating quick one-line commands to get a local sandbox up and running.
-pubDate: 2023-06-16
+pubDate: 2023-06-16T12:00:00-0400
 tags: [tooling]
 ---
 

@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import BaseHead from '@components/BaseHead.astro';
+import Footer from '@components/Footer.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+import Header from '@components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -54,5 +54,35 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
       </article>
     </main>
     <Footer />
+    <script>
+      // Only one code block is expanded at a time. Each change fades the
+      // block out, swaps its grid column, then fades it back in.
+      let expanded: HTMLElement | null = null;
+
+      async function setExpanded(block: HTMLElement, isExpanded: boolean) {
+        const button = block.querySelector<HTMLButtonElement>('.code-toggle');
+        block.classList.add('is-fading');
+        // getAnimations() is empty when transitions are off (reduced motion)
+        await Promise.all(block.getAnimations().map((a) => a.finished));
+        block.classList.toggle('is-expanded', isExpanded);
+        if (button) button.textContent = isExpanded ? 'Collapse' : 'Expand';
+        block.classList.remove('is-fading');
+      }
+
+      document.querySelectorAll<HTMLElement>('.code-block').forEach((block) => {
+        const button = block.querySelector<HTMLButtonElement>('.code-toggle');
+        if (!button) return;
+        button.hidden = false;
+        button.addEventListener('click', () => {
+          if (expanded) setExpanded(expanded, false);
+          if (expanded === block) {
+            expanded = null;
+          } else {
+            setExpanded(block, true);
+            expanded = block;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
