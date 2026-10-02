@@ -1,7 +1,7 @@
 ---
 title: Building Motion for the Web
 description: Finding ways to improve motion process in building web interfaces.
-pubDate: 2023-07-14
+pubDate: 2023-07-14T12:00:00-0400
 tags: [motion]
 ---
 

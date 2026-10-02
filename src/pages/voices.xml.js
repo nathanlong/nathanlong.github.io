@@ -1,23 +1,18 @@
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-export async function GET(context) {
-  // 1. Convert import.meta.url to a normal absolute file path string
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
+// The OPML stays in public/ so it can also be downloaded as-is. Resolve it from
+// the project root: at build time this file runs from a bundled chunk in dist/,
+// so paths relative to import.meta.url point to the wrong place.
+const opmlPath = path.join(process.cwd(), 'public/data/feed.opml');
 
-  // 2. Safely resolve the relative path to your OPML file
-  // Adjust the path climbs ('../') depending on where your feed.opml lives relative to pages/
-  const opmlPath = path.resolve(__dirname, '../../public/data/feed.opml');
+export async function GET() {
+  // Strip the OPML's own XML declaration; ours goes first, with the stylesheet
+  const opmlContent = fs
+    .readFileSync(opmlPath, 'utf-8')
+    .replace(/<\?xml[^>]*\?>/g, '')
+    .trim();
 
-  // 3. Read using a clean absolute path string
-  let opmlContent = fs.readFileSync(opmlPath, 'utf-8');
-
-  // Strip the XML declarations
-  opmlContent = opmlContent.replace(/<\?xml[^>]*\?>/g, '').trim();
-
-  // 3. String-interpolate the clean XML into your parent feed body
   const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xsl/voices.xsl"?>
     ${opmlContent}

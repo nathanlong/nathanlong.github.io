@@ -1,7 +1,7 @@
 ---
 title: Setting up LSPs for Modern JavaScript Tooling in Neovim
 description: Installing LSPs, snippets, and Intellisense-style autocompletion
-pubDate: 2023-02-23
+pubDate: 2023-02-23T12:00:00-0500
 tags: [neovim]
 ---
 

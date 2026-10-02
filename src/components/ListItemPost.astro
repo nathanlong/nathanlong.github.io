@@ -1,0 +1,53 @@
+---
+import FormattedDate from '@components/FormattedDate.astro';
+
+type Props = {
+  title: string;
+  date: Date;
+} & (
+  | { href: string; id?: never; section?: never }
+  | { id: string; section?: string; href?: never }
+);
+
+const { id, section = 'blog', href, title, date } = Astro.props;
+const link = href ?? `/${section}/${id}/`;
+---
+
+<style is:global>
+  .list-item__post * {
+    text-decoration: none;
+  }
+
+  .list-item__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .list-item__link:hover .list-item__title,
+  .list-item__link:focus .list-item__title {
+    color: var(--accent);
+  }
+
+  .list-item__title {
+    color: rgb(var(--black));
+    line-height: 1;
+    margin: 0;
+    transition: color 150ms ease-in-out;
+  }
+
+  .list-item__date {
+    font-family: var(--font-mono);
+    color: rgb(var(--gray));
+    font-size: 0.875rem;
+  }
+</style>
+
+<li class="list-item__post">
+  <a class="list-item__link" href={link}>
+    <h4 class="list-item__title">{title}</h4>
+    <p class="list-item__date">
+      <FormattedDate date={date} />
+    </p>
+  </a>
+</li>

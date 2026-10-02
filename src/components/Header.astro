@@ -1,66 +1,415 @@
 ---
-import { SITE_TITLE } from '../consts';
-import { Image } from 'astro:assets';
-import Profile from "../assets/images/saitama-bald-1550-transparent.png"
-import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE, AVATAR_HEIGHT_PX, AVATAR_DENSITIES } from '@/consts';
+import { getImage } from 'astro:assets';
+import HeaderLink from '@components/HeaderLink.astro';
+import SiteAvatar from '@components/SiteAvatar.astro';
+import { hats } from '@/data/hats';
+
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/lab', label: 'Lab' },
+  { href: '/newsletter', label: 'Newsletter' },
+];
+
+// One rule per hat, keyed on the data-hat attribute the picker below sets on
+// <html>. Browsers only fetch background images for rules that match, so only
+// the picked hat loads, and every avatar copy shares it.
+const hatCss = (
+  await Promise.all(
+    hats.map(async (hat) => {
+      // Same options as the avatar's <Image>, so hat and face match in size
+      const { srcSet } = await getImage({
+        src: hat.image,
+        height: AVATAR_HEIGHT_PX,
+        densities: AVATAR_DENSITIES,
+      });
+      const sources = srcSet.values.map(
+        ({ url, descriptor }) => `url("${url}") ${descriptor}`,
+      );
+      return `:root[data-hat="${hat.id}"] .site-avatar-hat { background-image: image-set(${sources.join(', ')}); }`;
+    }),
+  )
+).join('\n');
+
+// The picker only needs the rules, not the images.
+const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
 ---
 
 <header class="grid-layout">
-	<nav>
-    <div>
-      <a href="/" class="site-title">
-        <Image src={Profile} class="site-title-image" alt="Smiling, unassuming bald man" />
-        <span> {SITE_TITLE}</span>
-      </a>
-    </div>
-		<div class="internal-links">
-			<HeaderLink href="/about">About</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/lab">Lab</HeaderLink>
-			<HeaderLink href="/newsletter">Newsletter</HeaderLink>
-		</div>
-	</nav>
+  <div class="bar">
+    <a href="/" class="site-title">
+      <SiteAvatar />
+      {SITE_TITLE}
+    </a>
+    <button
+      class="menu-button"
+      commandfor="site-menu"
+      command="show-modal"
+      aria-haspopup="dialog"
+      aria-label="Open menu"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="4" y1="6" x2="20" y2="6" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="18" x2="20" y2="18" />
+      </svg>
+    </button>
+  </div>
 </header>
+
+<style is:inline set:html={hatCss}></style>
+
+{/* Hat logic */}
+<script is:inline define:vars={{ hatRules }}>
+  const today = new Date();
+  const monthDay = (today.getMonth() + 1) * 100 + today.getDate();
+  const toMonthDay = (value) => {
+    const [month, day] = value.split('-').map(Number);
+    return month * 100 + day;
+  };
+  const coversToday = ({ from, to }) => {
+    const start = toMonthDay(from);
+    const end = toMonthDay(to);
+    // A range like 12-20 to 01-05 wraps past New Year
+    return start <= end
+      ? monthDay >= start && monthDay <= end
+      : monthDay >= start || monthDay <= end;
+  };
+
+  const dated = hatRules.filter(
+    (hat) => hat.from && hat.to && coversToday(hat),
+  );
+  const pool = dated.length
+    ? dated
+    : hatRules.filter((hat) => !hat.from && !hat.to);
+
+  // Keep one hat per browser session instead of a new one on every page
+  let id;
+  try {
+    id = sessionStorage.getItem('hat');
+  } catch {}
+  if (!pool.some((hat) => hat.id === id)) {
+    id = pool[Math.floor(Math.random() * pool.length)]?.id;
+    try {
+      if (id) sessionStorage.setItem('hat', id);
+    } catch {}
+  }
+
+  if (id) document.documentElement.dataset.hat = id;
+</script>
+
+<dialog id="site-menu" class="site-menu" closedby="any" aria-label="Site menu">
+  <div class="grid-layout">
+    <div class="bar">
+      <a href="/" class="site-menu-home" aria-label="Home">
+        <SiteAvatar />
+      </a>
+      <button
+        class="menu-button"
+        commandfor="site-menu"
+        command="close"
+        aria-label="Close menu"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="18" x2="20" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <nav aria-label="Primary">
+      <ul>
+        {links.map((link, i) => (
+          <li style={`--i: ${i}`}>
+            <HeaderLink href={link.href}>{link.label}</HeaderLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</dialog>
+
+<script>
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted)
+      document.querySelector<HTMLDialogElement>('#site-menu')?.close();
+  });
+</script>
+
 <style>
-  .site-title {
-    font-weight: 900;
+  :global(:root) {
+    --menu-button-size: 2.75rem;
+    --menu-bar-padding: 1rem;
+    /* Where the fixed menu button sits: at the top of the viewport, its right
+       edge lined up with the content column. The percentage resolves against
+       whatever uses it, and both the button and the menu span the viewport. */
+    --menu-button-top: var(--menu-bar-padding);
+    --menu-button-right: calc((100% - var(--content)) / 2);
+    --menu-duration: 0.5s;
+    --menu-fade-duration: 0.3s;
+    --menu-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  /* Lock page scroll while the menu is open; reserve the scrollbar's space so
+     the page doesn't shift when it disappears. */
+  :global(html) {
+    scrollbar-gutter: stable;
+  }
+  :global(html:has(.site-menu:modal)) {
+    overflow: hidden;
+  }
+
+  .bar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    /* Holds the fixed menu button's space (border-box includes the padding) */
+    min-height: calc(var(--menu-button-size) + var(--menu-bar-padding) * 2);
+    padding-block: var(--menu-bar-padding);
+  }
+
+  .site-title {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 900;
+    color: rgb(var(--black));
+    text-decoration: none;
   }
 
   .site-title:hover {
     color: var(--accent);
   }
 
-  .site-title-image {
-    height: 1.5em;
-    width: auto;
+  /* Hamburger / close button. Both are pinned to the same spot in the
+     viewport, so the trigger never scrolls away and the close button lands
+     exactly on top of it. */
+  .menu-button {
+    position: fixed;
+    top: var(--menu-button-top);
+    right: var(--menu-button-right);
+    z-index: 1;
+    /* Buttons don't inherit the page font, and --content is measured in ch */
+    font: inherit;
+    display: grid;
+    place-items: center;
+    width: var(--menu-button-size);
+    height: var(--menu-button-size);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    /* A frosted disc keeps the icon legible over scrolled content */
+    background: rgb(255 255 255 / 70%);
+    backdrop-filter: blur(8px);
+    color: rgb(var(--black));
+    cursor: pointer;
   }
 
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-  .internal-links {
-    display: flex;
-    gap: 0.5em;
+  .menu-button:hover {
+    color: var(--accent);
+  }
+
+  .menu-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    overflow: visible;
+  }
+
+  .menu-button line {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* The menu */
+  .site-menu {
+    --menu-bg: rgba(var(--gray-light), 60%);
+
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overscroll-behavior: contain;
+    /* A frosted pane over the page */
+    background: var(--menu-bg);
+    backdrop-filter: blur(10px);
+    color: rgb(var(--black));
+
+    /* Fades rather than revealing with an animated clip-path: in Chrome, a
+       large backdrop-filter under a moving clip-path flickers (seen at 1920px
+       wide). The dialog stays rendered for the full --menu-duration so the
+       button's morph and color hold still finish on close. */
+    opacity: 0;
+    transition:
+      opacity var(--menu-fade-duration) ease,
+      display var(--menu-duration) allow-discrete,
+      overlay var(--menu-duration) allow-discrete;
+  }
+
+  .site-menu[open] {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .site-menu[open] {
+      opacity: 0;
+    }
+  }
+
+  .site-menu::backdrop {
+    background: transparent;
+  }
+
+  .site-menu-home {
+    display: block;
+  }
+
+  .site-menu .menu-button {
+    /* The menu pane is already frosted */
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  /* Hold the accent on the button through both animations, then hand back to
+     its real hover state. Hover doesn't follow the animation on its own:
+     - Opening: the X appears under a pointer the browser hasn't re-checked
+       yet, so it would start black and only turn accent once hover catches up.
+     - Closing: a closing dialog no longer takes the pointer, so :hover drops
+       to the open button underneath and the visible X would snap to black.
+     With no end keyframe, each animation eases into the button's underlying
+     color. They need separate names: swapping between two rules that use the
+     same animation-name doesn't restart it. The closed dialog is
+     display: none, so the closing one only runs during the close transition. */
+  @keyframes menu-button-opening {
+    from,
+    75% {
+      color: var(--accent);
+    }
+  }
+
+  @keyframes menu-button-closing {
+    from,
+    75% {
+      color: var(--accent);
+    }
+  }
+
+  .site-menu[open] .menu-button {
+    animation: menu-button-opening var(--menu-duration) linear;
+  }
+
+  .site-menu:not([open]) .menu-button {
+    animation: menu-button-closing var(--menu-duration) linear;
+  }
+
+  /* On close, that underlying color matches whatever the open button will
+     show once the menu is gone: accent if it's hovered, black if not. */
+  header:has(.menu-button:hover) ~ .site-menu .menu-button {
+    color: var(--accent);
+  }
+
+  /* Morph the three lines into an X as the menu opens, and back as it closes */
+  .site-menu .menu-button line {
+    transition:
+      translate calc(var(--menu-duration) * 0.6) var(--menu-ease),
+      rotate calc(var(--menu-duration) * 0.6) var(--menu-ease),
+      opacity calc(var(--menu-duration) * 0.6) var(--menu-ease);
+  }
+  .site-menu .menu-button line:nth-child(1) {
+    transform-origin: 12px 6px;
+  }
+  .site-menu .menu-button line:nth-child(3) {
+    transform-origin: 12px 18px;
+  }
+
+  .site-menu[open] .menu-button line:nth-child(1) {
+    translate: 0 6px;
+    rotate: 45deg;
+  }
+  .site-menu[open] .menu-button line:nth-child(2) {
+    opacity: 0;
+  }
+  .site-menu[open] .menu-button line:nth-child(3) {
+    translate: 0 -6px;
+    rotate: -45deg;
+  }
+
+  /* Same selectors as the open state above: @starting-style rules cascade
+     normally, so a less specific one would lose and the lines would start as
+     an X with nothing to animate. */
+  @starting-style {
+    .site-menu[open] .menu-button line:nth-child(1),
+    .site-menu[open] .menu-button line:nth-child(3) {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+    .site-menu[open] .menu-button line:nth-child(2) {
+      opacity: 1;
+    }
+  }
+
+  /* Links */
+  .site-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.25rem;
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
+  .site-menu li {
+    opacity: 0;
+    translate: 0 0.75rem;
+    transition:
+      opacity 0.2s ease-out,
+      translate 0.2s ease-out;
+  }
+
+  /* Stagger in as the pane fades in; leave together, immediately. */
+  .site-menu[open] li {
+    opacity: 1;
+    translate: 0 0;
+    transition-duration: 0.35s;
+    transition-delay: calc(var(--menu-duration) * 0.4 + var(--i) * 60ms);
+  }
+
+  @starting-style {
+    .site-menu[open] li {
+      opacity: 0;
+      translate: 0 0.75rem;
+    }
+  }
+
+  .site-menu nav a {
+    color: inherit;
+    border-bottom: 4px solid transparent;
+  }
+
+  .site-menu nav a:hover,
+  .site-menu nav a.active {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+  }
+
+  .site-menu a:focus-visible,
+  .site-menu .menu-button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-menu,
+    .site-menu * {
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
+    }
   }
 </style>

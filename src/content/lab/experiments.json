@@ -5,7 +5,7 @@
     "url": "https://nathan-long.com/experiments/",
     "source": "https://github.com/nathanlong/experiments",
     "description": "A place to host experiments in motion, techniques, and other odd things.",
-    "pubDate": "2024-02-07",
+    "pubDate": "2024-02-07T12:00:00-0500",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/0c1009c9-34ab-418c-b504-c101fc4fe0f0",
     "imageAlt": "A flask with bubbling liquid overlaid with scanlines from an old CRT display",
     "feature": false
@@ -16,7 +16,7 @@
     "url": "https://nathan-long.com/hero-dice/",
     "source": "https://github.com/nathanlong/hero-dice",
     "description": "Minimalist dice roller for multiple TTRPG systems",
-    "pubDate": "2024-05-03",
+    "pubDate": "2024-05-03T12:00:00-0400",
     "image": "https://user-images.githubusercontent.com/623568/207949358-d9a41dd4-5355-474e-9433-6a258b4efeba.png",
     "imageAlt": "The word 'Hero' above a six-sided dice",
     "feature": false
@@ -27,7 +27,7 @@
     "url": "https://nathan-long.com/focus-timer/",
     "source": "https://github.com/nathanlong/focus-timer",
     "description": "Track your focus blocks in a day.",
-    "pubDate": "2026-03-01",
+    "pubDate": "2026-03-01T12:00:00-0500",
     "image": "https://github.com/user-attachments/assets/5416bca4-4293-4e1b-8918-39fdf1810e36",
     "imageAlt": "A head with a timer in place of a brain over a visualization of a day of focus",
     "feature": true
@@ -38,7 +38,7 @@
     "url": "https://nathan-long.com/rules/",
     "source": "https://github.com/nathanlong/rules",
     "description": "A personal reference for games (with house-rules) I play with my family.",
-    "pubDate": "2022-10-12",
+    "pubDate": "2022-10-12T12:00:00-0400",
     "image": "https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png",
     "imageAlt": "Playing card suit icons over a field of X's. Icon by Irene Hoffman",
     "feature": false
@@ -49,7 +49,7 @@
     "url": "https://nathanlong.itch.io/run-papa-rara-run",
     "source": "https://github.com/nathanlong/game-papa-rara-run",
     "description": "A very simple game in which you are a weird potato. And you run.",
-    "pubDate": "2024-07-05",
+    "pubDate": "2024-07-05T12:00:00-0400",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/49c0a275-00a3-4559-9a18-04ce0dc41814",
     "imageAlt": "A smiling potato on a field of grass, a castle barely visible in the distance. The potato's glassy eyes hide a hidden depth.",
     "feature": false
@@ -60,7 +60,7 @@
     "url": "https://nathan-long.com/voices.xml",
     "source": "https://github.com/nathanlong/nathanlong.github.io/blob/main/public/xsl/voices.xsl",
     "description": "My curated list of interesting websites. Powered by OPML and XSL.",
-    "pubDate": "2023-11-13",
+    "pubDate": "2023-11-13T12:00:00-0500",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/ce60dd05-ebb0-46e7-9501-306ca4f1dbc6",
     "imageAlt": "Profile of a face speaking inside a web browser. Icon by Gregor Cresnar.",
     "feature": false

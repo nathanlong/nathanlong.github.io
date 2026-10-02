@@ -1,7 +1,7 @@
 ---
 title: Keeping a Project Log
 description: What does a web developer log look like?
-pubDate: 2024-03-04
+pubDate: 2024-03-04T12:00:00-0500
 tags: [thoughts, process]
 ---
 

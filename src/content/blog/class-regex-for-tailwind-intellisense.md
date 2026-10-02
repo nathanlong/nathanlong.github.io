@@ -1,7 +1,7 @@
 ---
 title: Custom Class Regex for Tailwind IntelliSense in Neovim
 description: For when your templating language expects something that looks nothing like HTML.
-pubDate: 2023-11-29
+pubDate: 2023-11-29T12:00:00-0500
 tags: [neovim]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Owning My Voice
 description: 2023 is the year of the rabbit... and personal websites.
-pubDate: 2023-01-31
+pubDate: 2023-01-31T12:00:00-0500
 tags: [thoughts]
 ---
 

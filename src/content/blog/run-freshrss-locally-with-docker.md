@@ -71,7 +71,7 @@ You can also run it in ‘detached’ mode with `docker compose up -d`, but you�
 
 ## **Time to fill it with some voices!**
 
-Now that you have a locally running RSS reader, you need voices to fill it with\! I [publish a list of web industry voices](https://nathan-long.com/voices.xml) that I continually update. You can scan the list and pick what you want, or you can [download and import my OPML file](https://nathan-long.com/voices/feed.opml) to get your feeds started\!
+Now that you have a locally running RSS reader, you need voices to fill it with\! I [publish a list of web industry voices](https://nathan-long.com/voices.xml) that I continually update. You can scan the list and pick what you want, or you can [download and import my OPML file](https://nathan-long.com/data/feed.opml) to get your feeds started\!
 
 ## **A few RSS Tips**
 

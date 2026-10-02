@@ -1,7 +1,7 @@
 ---
 title: Talking about Motion for the Web
 description: Ways to classify and plan for motion in websites.
-pubDate: 2024-03-06
+pubDate: 2024-03-06T12:00:00-0500
 tags: [motion, talks]
 ---
 
