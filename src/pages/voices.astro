@@ -1,0 +1,101 @@
+---
+import BaseHead from '@components/BaseHead.astro';
+import Footer from '@components/Footer.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+import Header from '@components/Header.astro';
+import { getVoices, OPML_HREF } from '@/data/voices';
+
+const { updated, groups } = getVoices();
+const description = 'A collection of websites and feeds from the web industry.';
+---
+
+<style>
+  .voice-header {
+    text-align: center;
+  }
+
+  .voice-header .meta {
+    margin: 0 auto;
+    display: block;
+  }
+
+  .voice-section {
+    border: 2px solid var(--surface-sunken);
+    padding: 2ch;
+    border-radius: 1ch;
+  }
+
+  .voice-section__title {
+    margin-top: -2.5ch;
+    margin-left: -0.5ch;
+    margin-bottom: 1rem;
+    background-color: var(--surface-sunken);
+    padding: 0.5ch 0.75ch;
+    max-width: max-content;
+    border-radius: 1rem;
+  }
+
+  .voice-section__list {
+    display: grid;
+    list-style: none;
+    padding: 0;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    grid-row-gap: 1rem;
+  }
+
+  .voice-section__item {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+</style>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Web Voices" description={description} />
+  </head>
+  <body>
+    <Header />
+    <main class="grid-layout flow flow-3">
+      <section class="feature voice-header">
+        <h1>Web Voices</h1>
+        <p>{description}</p>
+        <p>
+          Download the <a href={OPML_HREF}>OPML file</a> to import into your
+          feed reader of choice.
+        </p>
+        {updated && (
+          <p class="meta">
+            Updated <FormattedDate date={updated} />
+          </p>
+        )}
+      </section>
+
+      {groups.map((group) => (
+        <section class="feature voice-section">
+          <h2 class="voice-section__title">{group.name}</h2>
+          <ul class="voice-section__list">
+            {group.voices.map((voice) => (
+              <li class="voice-section__item">
+                <strong>{voice.name}</strong>
+                <span>
+                {voice.htmlUrl && (
+                  <>
+                    {' '}
+                    <a href={voice.htmlUrl}>Website</a>
+                  </>
+                )}
+                {voice.htmlUrl && voice.xmlUrl && ' · '}
+                {voice.xmlUrl && <a href={voice.xmlUrl}>Feed</a>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </main>
+    <Footer />
+  </body>
+</html>

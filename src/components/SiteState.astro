@@ -1,0 +1,241 @@
+---
+// Sets the theme and hat attributes on <html> before first paint, and gives
+// the menu (ThemeControls.astro) an API so nothing else touches storage.
+// Must render after the color-scheme meta tag, which it updates.
+//
+// <html> attributes:
+// - data-daypart: the effective daypart id
+// - data-scheme: 'light' / 'dark', left off when Appearance is 'system'
+// - data-hat: the picked hat id
+//
+// Preview params, never stored: ?daypart=<id>, ?scheme=time|system|light|dark,
+// ?at=HH:MM[:SS]. See jk/01-time-color-change.md.
+import { dayparts } from '@/data/dayparts';
+import { hats } from '@/data/hats';
+
+const parts = dayparts.map(({ id, start, dark }) => ({ id, start, dark }));
+const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
+---
+
+<script is:inline define:vars={{ parts, hatRules }}>
+  const KEY = 'prefs';
+  const SCHEMES = ['system', 'light', 'dark'];
+  const PREVIEW_PARAMS = ['daypart', 'scheme', 'at'];
+  const root = document.documentElement;
+  const meta = document.querySelector('meta[name="color-scheme"]');
+  const ids = parts.map((p) => p.id);
+  let timer;
+  let painted = false; // set after the first apply()
+  let shown = {}; // { daypart, scheme } the page shows or is fading to
+
+  // Keep only values we recognize. Anything else (including the defaults
+  // 'time' and 'auto') is dropped, and a missing field means the default.
+  const clean = (value) => {
+    const out = {};
+    if (SCHEMES.includes(value?.scheme)) out.scheme = value.scheme;
+    if (ids.includes(value?.hue)) out.hue = value.hue;
+    return out;
+  };
+  const read = () => {
+    try {
+      return clean(JSON.parse(localStorage.getItem(KEY)));
+    } catch {
+      return {};
+    }
+  };
+
+  // The one localStorage read per page load
+  let prefs = read();
+
+  // --- Preview params (never stored) ------------------------------------
+
+  const params = new URLSearchParams(location.search);
+  let preview = clean({
+    scheme: params.get('scheme'),
+    hue: params.get('daypart'),
+  });
+  // ?scheme=time is valid too: it means "ignore the stored Appearance"
+  if (params.get('scheme') === 'time') preview.time = true;
+
+  let offset = 0; // ms added to the real clock by ?at=
+  const at = /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(params.get('at') ?? '');
+  if (at && !preview.hue && +at[1] < 24 && +at[2] < 60 && +(at[3] ?? 0) < 60) {
+    const target = new Date();
+    target.setHours(+at[1], +at[2], +(at[3] ?? 0), 0);
+    offset = target - Date.now();
+  }
+  const clockNow = () => new Date(Date.now() + offset);
+
+  // --- Clock ------------------------------------------------------------
+
+  // Latest part that has started by this hour; before the first start
+  // (e.g. 2am) it's the last part, carried over from the previous day.
+  const partAt = (hour) =>
+    parts.findLast((p) => p.start <= hour) ?? parts[parts.length - 1];
+
+  const clockPart = (now) =>
+    parts.find((p) => p.id === preview.hue) ?? partAt(now.getHours());
+
+  const nextBoundary = (now, part) => {
+    const next = parts[(parts.indexOf(part) + 1) % parts.length];
+    const at = new Date(now);
+    at.setHours(next.start, 0, 0, 0);
+    if (at <= now) at.setDate(at.getDate() + 1);
+    return at;
+  };
+
+  // --- Apply: both theme attributes from one clock reading ---------------
+
+  function apply(now = clockNow()) {
+    clearTimeout(timer);
+    const clock = clockPart(now);
+
+    const daypart = preview.hue ?? prefs.hue ?? clock.id;
+    const setting = preview.scheme ?? (preview.time ? null : prefs.scheme);
+    const scheme =
+      setting === 'system' ? null : (setting ?? (clock.dark ? 'dark' : 'light'));
+
+    // Compare with the last target, not the DOM: a crossfade still waiting
+    // to run hasn't written its attributes yet.
+    const changed = shown.daypart !== daypart || shown.scheme !== scheme;
+    shown = { daypart, scheme };
+    // Writes the latest target when it runs, so a crossfade that started
+    // earlier can't put back a state that's since been replaced
+    const update = () => {
+      root.dataset.daypart = shown.daypart;
+      if (shown.scheme) root.dataset.scheme = shown.scheme;
+      else delete root.dataset.scheme;
+      // Keeps the pre-CSS canvas in the right mode, so a light page on a
+      // dark OS doesn't flash dark before the stylesheet loads.
+      meta?.setAttribute('content', shown.scheme ?? 'light dark');
+    };
+    // Crossfade changes on a page that's already showing. Not on first
+    // load (nothing has painted yet), in a hidden tab, or for reduced
+    // motion.
+    if (
+      changed &&
+      painted &&
+      document.visibilityState === 'visible' &&
+      document.startViewTransition &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      document.startViewTransition(update);
+    else update();
+
+    // Only schedule if something follows the clock. Background tabs and
+    // sleep can make the timer late; the visibility listener catches up.
+    const hueFollows = !preview.hue && !prefs.hue;
+    const schemeFollows = !preview.hue && !setting;
+    if (hueFollows || schemeFollows)
+      timer = setTimeout(() => apply(), nextBoundary(now, clock) - now);
+
+    // Lets an open menu update its labels. Nothing listens yet on load.
+    document.dispatchEvent(new CustomEvent('site:state'));
+  }
+
+  function stopPreview() {
+    preview = {};
+    offset = 0;
+    const url = new URL(location.href);
+    PREVIEW_PARAMS.forEach((name) => url.searchParams.delete(name));
+    history.replaceState(history.state, '', url);
+  }
+
+  // --- Hat --------------------------------------------------------------
+
+  function applyHat(today) {
+    const monthDay = (today.getMonth() + 1) * 100 + today.getDate();
+    const toMonthDay = (value) => {
+      const [month, day] = value.split('-').map(Number);
+      return month * 100 + day;
+    };
+    const coversToday = ({ from, to }) => {
+      const start = toMonthDay(from);
+      const end = toMonthDay(to);
+      // A range like 12-20 to 01-05 wraps past New Year
+      return start <= end
+        ? monthDay >= start && monthDay <= end
+        : monthDay >= start || monthDay <= end;
+    };
+
+    const dated = hatRules.filter(
+      (hat) => hat.from && hat.to && coversToday(hat),
+    );
+    const pool = dated.length
+      ? dated
+      : hatRules.filter((hat) => !hat.from && !hat.to);
+
+    // Keep one hat per browser session instead of a new one on every page
+    let id;
+    try {
+      id = sessionStorage.getItem('hat');
+    } catch {}
+    if (!pool.some((hat) => hat.id === id)) {
+      id = pool[Math.floor(Math.random() * pool.length)]?.id;
+      try {
+        if (id) sessionStorage.setItem('hat', id);
+      } catch {}
+    }
+    if (id) root.dataset.hat = id;
+  }
+
+  // --- Load: one read per store, all attributes at once ------------------
+
+  apply();
+  painted = true;
+  applyHat(new Date()); // real date: ?at= only moves the time of day
+
+  // --- Keep in sync -----------------------------------------------------
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') apply();
+  });
+  addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+    // Restored from the back/forward cache: the script didn't rerun, and
+    // storage events from other tabs didn't arrive while it was cached.
+    prefs = read();
+    apply();
+  });
+  // Another tab changed prefs: the event carries the new value, so no read
+  addEventListener('storage', (event) => {
+    if (event.storageArea !== localStorage) return;
+    if (event.key !== KEY && event.key !== null) return; // null = clear()
+    try {
+      prefs = clean(JSON.parse(event.newValue));
+    } catch {
+      prefs = {};
+    }
+    apply();
+  });
+
+  // --- API for the menu (types in site-state.d.ts) -----------------------
+
+  window.siteState = {
+    /** Saved settings as the menu shows them, with defaults filled in */
+    get prefs() {
+      return { scheme: prefs.scheme ?? 'time', hue: prefs.hue ?? 'auto' };
+    },
+    /** The daypart the clock (or a preview) says right now */
+    clockPart: () => clockPart(clockNow()).id,
+    /** True while URL params are overriding things */
+    get previewing() {
+      return Object.keys(preview).length > 0 || offset !== 0;
+    },
+    stopPreview() {
+      stopPreview();
+      apply();
+    },
+    /** Merge a change, e.g. { scheme: 'time' } or { hue: 'auto' } */
+    set(change) {
+      prefs = clean({ ...prefs, ...change }); // defaults fail validation → removed
+      try {
+        if (Object.keys(prefs).length)
+          localStorage.setItem(KEY, JSON.stringify(prefs));
+        else localStorage.removeItem(KEY);
+      } catch {}
+      stopPreview();
+      apply();
+    },
+  };
+</script>

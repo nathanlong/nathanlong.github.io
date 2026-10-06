@@ -1,0 +1,68 @@
+---
+import FormattedDate from '@components/FormattedDate.astro';
+
+type Props = {
+  title: string;
+  description: string;
+  date: Date;
+  image: string;
+  imageAlt: string;
+  href: string;
+  source: string;
+};
+const { href, source, title, description, date, image, imageAlt } = Astro.props;
+---
+
+<style>
+  .list-item__lab {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .list-item__description {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+  }
+
+  .list-item__lab__image {
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    width: 5rem;
+    height: auto;
+    border-radius: 0.5rem;
+    background-color: var(--surface-sunken);
+  }
+
+  .list-item__lab__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .list-item__meta-list {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+</style>
+
+<li class="list-item__lab">
+  <img class="list-item__lab__image" src={image} alt={imageAlt} />
+  <div class="list-item__lab__content">
+    <div>
+      <h4 class="list-item__title">{title}</h4>
+      <p class="list-item__description">{description}</p>
+    </div>
+    <div class="list-item__meta-list">
+      <p class="list-item__date">
+        <FormattedDate date={date} />
+      </p>
+      {href && <a href={href}>View</a>}
+      {source && <a href={source}>Source</a>}
+    </div>
+  </div>
+</li>

@@ -3,16 +3,18 @@ import { SITE_TITLE, AVATAR_HEIGHT_PX, AVATAR_DENSITIES } from '@/consts';
 import { getImage } from 'astro:assets';
 import HeaderLink from '@components/HeaderLink.astro';
 import SiteAvatar from '@components/SiteAvatar.astro';
+import ThemeControls from '@components/ThemeControls.astro';
 import { hats } from '@/data/hats';
 
-const links = [
+export const links = [
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
   { href: '/lab', label: 'Lab' },
   { href: '/newsletter', label: 'Newsletter' },
+  { href: '/feed', label: 'RSS' },
 ];
 
-// One rule per hat, keyed on the data-hat attribute the picker below sets on
+// One rule per hat, keyed on the data-hat attribute SiteState.astro sets on
 // <html>. Browsers only fetch background images for rules that match, so only
 // the picked hat loads, and every avatar copy shares it.
 const hatCss = (
@@ -32,8 +34,6 @@ const hatCss = (
   )
 ).join('\n');
 
-// The picker only needs the rules, not the images.
-const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
 ---
 
 <header class="grid-layout">
@@ -59,45 +59,6 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
 </header>
 
 <style is:inline set:html={hatCss}></style>
-
-{/* Hat logic */}
-<script is:inline define:vars={{ hatRules }}>
-  const today = new Date();
-  const monthDay = (today.getMonth() + 1) * 100 + today.getDate();
-  const toMonthDay = (value) => {
-    const [month, day] = value.split('-').map(Number);
-    return month * 100 + day;
-  };
-  const coversToday = ({ from, to }) => {
-    const start = toMonthDay(from);
-    const end = toMonthDay(to);
-    // A range like 12-20 to 01-05 wraps past New Year
-    return start <= end
-      ? monthDay >= start && monthDay <= end
-      : monthDay >= start || monthDay <= end;
-  };
-
-  const dated = hatRules.filter(
-    (hat) => hat.from && hat.to && coversToday(hat),
-  );
-  const pool = dated.length
-    ? dated
-    : hatRules.filter((hat) => !hat.from && !hat.to);
-
-  // Keep one hat per browser session instead of a new one on every page
-  let id;
-  try {
-    id = sessionStorage.getItem('hat');
-  } catch {}
-  if (!pool.some((hat) => hat.id === id)) {
-    id = pool[Math.floor(Math.random() * pool.length)]?.id;
-    try {
-      if (id) sessionStorage.setItem('hat', id);
-    } catch {}
-  }
-
-  if (id) document.documentElement.dataset.hat = id;
-</script>
 
 <dialog id="site-menu" class="site-menu" closedby="any" aria-label="Site menu">
   <div class="grid-layout">
@@ -127,6 +88,9 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
         ))}
       </ul>
     </nav>
+    <div class="menu-item" style={`--i: ${links.length}`}>
+      <ThemeControls />
+    </div>
   </div>
 </dialog>
 
@@ -174,7 +138,7 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
     align-items: center;
     gap: 0.25rem;
     font-weight: 900;
-    color: rgb(var(--black));
+    color: var(--text-strong);
     text-decoration: none;
   }
 
@@ -200,9 +164,9 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
     border: 0;
     border-radius: 50%;
     /* A frosted disc keeps the icon legible over scrolled content */
-    background: rgb(255 255 255 / 70%);
+    background: color-mix(in oklch, var(--surface) 70%, transparent);
     backdrop-filter: blur(8px);
-    color: rgb(var(--black));
+    color: var(--text-strong);
     cursor: pointer;
   }
 
@@ -224,7 +188,7 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
 
   /* The menu */
   .site-menu {
-    --menu-bg: rgba(var(--gray-light), 60%);
+    --menu-bg: color-mix(in oklch, var(--surface-sunken) 60%, transparent);
 
     position: fixed;
     inset: 0;
@@ -239,7 +203,7 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
     /* A frosted pane over the page */
     background: var(--menu-bg);
     backdrop-filter: blur(10px);
-    color: rgb(var(--black));
+    color: var(--text-strong);
 
     /* Fades rather than revealing with an animated clip-path: in Chrome, a
        large backdrop-filter under a moving clip-path flickers (seen at 1920px
@@ -365,7 +329,7 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
     font-weight: 900;
   }
 
-  .site-menu li {
+  .site-menu :is(li, .menu-item) {
     opacity: 0;
     translate: 0 0.75rem;
     transition:
@@ -373,8 +337,9 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
       translate 0.2s ease-out;
   }
 
-  /* Stagger in as the pane fades in; leave together, immediately. */
-  .site-menu[open] li {
+  /* Stagger in as the pane fades in (links, then the theme controls); leave
+     together, immediately. */
+  .site-menu[open] :is(li, .menu-item) {
     opacity: 1;
     translate: 0 0;
     transition-duration: 0.35s;
@@ -382,7 +347,7 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
   }
 
   @starting-style {
-    .site-menu[open] li {
+    .site-menu[open] :is(li, .menu-item) {
       opacity: 0;
       translate: 0 0.75rem;
     }
@@ -401,8 +366,23 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
 
   .site-menu a:focus-visible,
   .site-menu .menu-button:focus-visible {
-    outline: 3px solid var(--accent);
+    outline: 3px solid var(--focus-ring);
     outline-offset: 4px;
+  }
+
+  .menu-item {
+    margin-block: 2rem;
+  }
+
+  /* System colors replace the frosted fills, so outline the button and pane */
+  @media (forced-colors: active) {
+    .menu-button,
+    .site-menu {
+      border: 1px solid CanvasText;
+    }
+    .site-menu .menu-button {
+      border-color: transparent;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

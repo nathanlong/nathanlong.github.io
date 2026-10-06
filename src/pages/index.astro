@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content';
 import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
-import FormattedDate from '@components/FormattedDate.astro';
 import ListItemPost from '@components/ListItemPost.astro';
+import ListItemLab from '@/components/ListItemLab.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 
 const posts = (await getCollection('blog'))
@@ -42,7 +42,7 @@ const latestNews = newsletter.items
     aspect-ratio: 1/1;
     width: 5rem;
     border-radius: 0.5rem;
-    background-color: rgb(var(--light-gray));
+    background-color: var(--surface-sunken);
   }
 
   .list-item__meta-list {
@@ -51,6 +51,35 @@ const latestNews = newsletter.items
     align-items: baseline;
     font-family: var(--font-mono);
     font-size: 0.825rem;
+  }
+
+  .section-header {
+    display: flex;
+    flex-directin: row;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .section-title {
+    flex-shrink: 0;
+  }
+
+  .section-title small {
+    font-weight: normal;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .section-header__link {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .spacer {
+    width: 100%;
+    border-bottom: 3px dotted var(--surface-sunken);
   }
 </style>
 
@@ -61,58 +90,78 @@ const latestNews = newsletter.items
   </head>
   <body>
     <Header />
-    <main class="grid-layout flow">
+    <main class="grid-layout flow flow-2">
       <section>
         <p>
           UI Designer at <a href="https://www.viget.com">Viget</a>. Keeping the
           internet weird one website at a time.
         </p>
       </section>
-      <hr />
-      <h2>Blog</h2>
-      {/* turn into component */}
-      <ul class="list-item">
-        {posts.map((post) => (
-          <ListItemPost
-            id={post.id}
-            section="blog"
-            title={post.data.title}
-            date={post.data.pubDate}
-          />
-        ))}
-      </ul>
-      <hr />
-      <h2>Lab</h2>
-      <ul class="list-item">
-        {experiments.map((experiment) => (
-          <li class="list-item__lab">
-            <img
-              class="list-item__lab__image"
-              src={experiment.data.image}
-              alt={experiment.data.imageAlt}
+
+      <section class="flow flow-2">
+        <div class="section-header">
+          <h2 class="section-title">Blog</h2>
+          <div class="spacer"></div>
+          <a class="section-header__link" href="/blog">
+            View All &rarr;
+          </a>
+        </div>
+        <ul class="list-item">
+          {posts.map((post) => (
+            <ListItemPost
+              id={post.id}
+              section="blog"
+              title={post.data.title}
+              date={post.data.pubDate}
             />
-            <div>
-              <h4 class="list-item__title">{experiment.data.name}</h4>
-              <div class="list-item__meta-list">
-                <p class="list-item__date">
-                  <FormattedDate date={experiment.data.pubDate} />
-                </p>
-                {experiment.data.url && <a href={experiment.data.url}>View</a>}
-                {experiment.data.source && (
-                  <a href={experiment.data.source}>Source</a>
-                )}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <hr />
-      <h2>Newsletter</h2>
-      <ul class="list-item">
-        {latestNews.map((item) => (
-          <ListItemPost href={item.href} title={item.title} date={item.date} />
-        ))}
-      </ul>
+          ))}
+        </ul>
+      </section>
+
+      <section class="flow flow-2">
+        <div class="section-header">
+          <h2 class="section-title">Lab</h2>
+          <div class="spacer"></div>
+          <a class="section-header__link" href="/lab">
+            View All &rarr;
+          </a>
+        </div>
+        <ul class="list-item">
+          {experiments.map((experiment) => (
+            <ListItemLab
+              title={experiment.data.name}
+              image={experiment.data.image}
+              imageAlt={experiment.data.imageAlt}
+              date={experiment.data.pubDate}
+              href={experiment.data.url}
+              source={experiment.data.source}
+            />
+          ))}
+        </ul>
+      </section>
+      <section class="flow flow-2">
+        <div class="section-header">
+          <h2 class="section-title">
+            Newsletter <small>(external)</small>
+          </h2>
+          <div class="spacer"></div>
+          <a
+            class="section-header__link"
+            href="https://buttondown.com/nathanlong/archive/"
+          >
+            View All &rarr;
+          </a>
+        </div>
+        <ul class="list-item">
+          {latestNews.map((item) => (
+            <ListItemPost
+              href={item.href}
+              title={item.title}
+              date={item.date}
+            />
+          ))}
+        </ul>
+      </section>
     </main>
     <Footer />
   </body>

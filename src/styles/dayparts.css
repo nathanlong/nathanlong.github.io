@@ -1,0 +1,128 @@
+/* Colors for each time of day (ids and hours are in src/data/dayparts.ts).
+   Each token is light-dark(light value, dark value), so every daypart has
+   both modes; Appearance picks which one shows.
+
+   --surface: bg, swatch fill, text on the checked Appearance segment; the "Use my settings" button
+  --surface-sunken: Inline code background, hr, the code-block Expand button, the menu pane (60% mix), Appearance segments, lab thumbnail placeholders
+  --surface-gradient: The wash at the top of the page and in the footer
+  --text-strong: Headings, the site title, menu text and button icon, post titles in lists, the checked Color chip's border
+  --text: Body copy, .prose, the Expand button text, captions, the footer link hover, the preview note
+  --text-muted: Dates and tags (.meta), list dates, the footer, control borders, segment dividers, the Auto/System "now" text
+  --accent: Links and their hover, the blockquote border, menu link underlines, hover colors on the title and menu button, the checked segment fill, the swatch dot, the "now" marker
+  --focus-ring: Focus outlines in the menu and theme controls
+  --shiki-token-*: Syntax colors in code blocks (others reuse the tokens above; see global.css)
+
+ */
+
+[data-daypart='dawn'] {
+  /* Rosé Pine Dawn / Moon. Violet sky, rose horizon. */
+  --surface: light-dark(oklch(98.7% 0.009 77), oklch(28.8% 0.043 289));
+  --surface-sunken: light-dark(oklch(95% 0.012 72), oklch(33.5% 0.048 290));
+  --text-strong: light-dark(oklch(28.9% 0.04 288), oklch(95% 0.01 30));
+  --text: light-dark(oklch(39.6% 0.052 290), oklch(90.9% 0.03 290));
+  --text-muted: light-dark(oklch(50.5% 0.046 291), oklch(73% 0.042 291));
+  --accent: light-dark(oklch(54.5% 0.126 20), oklch(78% 0.097 20));
+
+  --shiki-token-keyword: light-dark(oklch(49% 0.077 228), oklch(80% 0.085 220));
+  --shiki-token-function: light-dark(oklch(52% 0.115 22), oklch(80% 0.095 22));
+  --shiki-token-string: light-dark(oklch(51% 0.111 68), oklch(84% 0.105 75));
+  --shiki-token-constant: light-dark(oklch(51.5% 0.1 305), oklch(80% 0.095 305));
+  --shiki-token-parameter: light-dark(oklch(52% 0.12 0), oklch(78% 0.12 0));
+}
+
+[data-daypart='morning'] {
+  /* Kanagawa Lotus / Dragon. Misty rice paper, ink, and teal water. */
+  --surface: light-dark(oklch(97% 0.02 100), oklch(31% 0.008 70));
+  --surface-sunken: light-dark(oklch(93.5% 0.028 98), oklch(35.5% 0.01 70));
+  --text-strong: light-dark(oklch(29% 0.05 283), oklch(94% 0.03 95));
+  --text: light-dark(oklch(39% 0.04 283), oklch(87.6% 0.039 99));
+  --text-muted: light-dark(oklch(50.5% 0.02 96), oklch(72.5% 0.02 100));
+  --accent: light-dark(oklch(50% 0.085 222), oklch(78% 0.075 222));
+
+  --shiki-token-keyword: light-dark(oklch(50% 0.1 302), oklch(76% 0.09 302));
+  --shiki-token-function: light-dark(oklch(50% 0.1 262), oklch(76% 0.09 262));
+  --shiki-token-string: light-dark(oklch(49% 0.1 128), oklch(78% 0.11 128));
+  --shiki-token-constant: light-dark(oklch(50.5% 0.124 55), oklch(79% 0.12 51));
+  --shiki-token-parameter: light-dark(oklch(51% 0.12 0), oklch(76.5% 0.1 0));
+}
+
+/* Also the default without JS. :where() keeps it from beating the other
+   dayparts on <html>. */
+:where(:root),
+[data-daypart='noon'] {
+  /* Nord Snow Storm / Polar Night, with a bright green accent. */
+  --surface: light-dark(oklch(98% 0.009 245), oklch(28% 0.023 264));
+  --surface-sunken: light-dark(oklch(94.5% 0.014 250), oklch(33% 0.028 264));
+  --text-strong: light-dark(oklch(27% 0.03 262), oklch(95% 0.007 261));
+  --text: light-dark(oklch(38% 0.035 262), oklch(89.9% 0.016 263));
+  --text-muted: light-dark(oklch(50% 0.035 258), oklch(74% 0.03 255));
+  --accent: light-dark(oklch(50% 0.13 150), oklch(80% 0.12 150));
+
+  --shiki-token-keyword: light-dark(oklch(50% 0.12 255), oklch(77% 0.08 250));
+  --shiki-token-function: light-dark(oklch(49.5% 0.086 215), oklch(80% 0.07 210));
+  --shiki-token-string: light-dark(oklch(50.5% 0.104 80), oklch(84% 0.09 84));
+  --shiki-token-constant: light-dark(oklch(52% 0.13 335), oklch(76% 0.09 335));
+  --shiki-token-parameter: light-dark(oklch(51.5% 0.13 40), oklch(76% 0.1 40));
+}
+
+[data-daypart='afternoon'] {
+  /* Gruvbox, tipped toward golden hour. */
+  --surface: light-dark(oklch(96.5% 0.028 75), oklch(25% 0.008 60));
+  --surface-sunken: light-dark(oklch(92.5% 0.036 78), oklch(30% 0.01 55));
+  --text-strong: light-dark(oklch(27.7% 0.01 50), oklch(95.6% 0.05 96));
+  --text: light-dark(oklch(35.5% 0.012 50), oklch(89.4% 0.057 89));
+  --text-muted: light-dark(oklch(48.5% 0.025 60), oklch(71% 0.035 76));
+  --accent: light-dark(oklch(50% 0.155 40), oklch(77% 0.15 55));
+
+  --shiki-token-keyword: light-dark(oklch(48% 0.16 28), oklch(72% 0.16 30));
+  --shiki-token-function: light-dark(oklch(48% 0.085 155), oklch(76% 0.105 140));
+  --shiki-token-string: light-dark(oklch(49.5% 0.106 70), oklch(83% 0.14 83));
+  --shiki-token-constant: light-dark(oklch(49% 0.124 344), oklch(75% 0.095 2));
+  --shiki-token-parameter: light-dark(oklch(48% 0.082 216), oklch(74% 0.045 170));
+}
+
+[data-daypart='evening'] {
+  /* Catppuccin Latte / Mocha, tilted toward mauve for twilight. */
+  --surface: light-dark(oklch(96.5% 0.01 295), oklch(24% 0.032 300));
+  --surface-sunken: light-dark(oklch(93% 0.016 295), oklch(29% 0.038 300));
+  --text-strong: light-dark(oklch(29% 0.045 285), oklch(95% 0.015 300));
+  --text: light-dark(oklch(40% 0.045 280), oklch(87.9% 0.043 280));
+  --text-muted: light-dark(oklch(50% 0.036 280), oklch(74% 0.04 280));
+  --accent: light-dark(oklch(50% 0.2 300), oklch(78.7% 0.119 305));
+
+  --shiki-token-keyword: light-dark(oklch(50% 0.2 300), oklch(78.7% 0.119 305));
+  --shiki-token-function: light-dark(oklch(50% 0.18 262), oklch(77% 0.11 260));
+  --shiki-token-string: light-dark(oklch(48% 0.14 142), oklch(85% 0.109 143));
+  --shiki-token-constant: light-dark(oklch(50.5% 0.144 45), oklch(82.4% 0.101 53));
+  --shiki-token-parameter: light-dark(oklch(51.5% 0.18 15), oklch(78.2% 0.09 9));
+}
+
+[data-daypart='midnight'] {
+  /* Tokyo Night / Day. The darkest surface of the day, navy and electric blue. */
+  --surface: light-dark(oklch(96% 0.012 275), oklch(16% 0.022 275));
+  --surface-sunken: light-dark(oklch(92.5% 0.018 272), oklch(21% 0.028 275));
+  --text-strong: light-dark(oklch(27% 0.07 268), oklch(94% 0.028 275));
+  --text: light-dark(oklch(38% 0.06 268), oklch(84.6% 0.061 275));
+  --text-muted: light-dark(oklch(49% 0.05 270), oklch(70% 0.055 275));
+  --accent: light-dark(oklch(51% 0.18 265), oklch(74% 0.132 264));
+
+  --shiki-token-keyword: light-dark(oklch(50% 0.2 299), oklch(75.1% 0.134 299));
+  --shiki-token-function: light-dark(oklch(49.5% 0.17 262), oklch(74% 0.132 264));
+  --shiki-token-string: light-dark(oklch(48% 0.1 130), oklch(79.5% 0.139 130));
+  --shiki-token-constant: light-dark(oklch(50% 0.121 56), oklch(78.7% 0.137 51));
+  --shiki-token-parameter: light-dark(oklch(51.5% 0.19 12), oklch(74% 0.15 10));
+}
+
+/* High contrast: plain surfaces and near-black/white text for every
+   daypart. Accents stay, since they pass on these surfaces too. Last in the
+   file so it beats the blocks above at the same specificity. */
+@media (prefers-contrast: more) {
+  :root,
+  [data-daypart] {
+    --surface: light-dark(oklch(100% 0 0), oklch(15% 0 0));
+    --surface-sunken: light-dark(oklch(94% 0 0), oklch(21% 0 0));
+    --text-strong: light-dark(oklch(0% 0 0), oklch(100% 0 0));
+    --text: light-dark(oklch(18% 0 0), oklch(95% 0 0));
+    --text-muted: light-dark(oklch(38% 0 0), oklch(84% 0 0));
+  }
+}
