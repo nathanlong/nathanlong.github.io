@@ -1,16 +1,24 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
-import FormattedDate from '@components/FormattedDate.astro';
 import Header from '@components/Header.astro';
+import ListItemLab from '@/components/ListItemLab.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 
 const experiments = (await getCollection('lab')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
+
+<style>
+  .list-item--grid {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+</style>
 
 <!doctype html>
 <html lang="en">
@@ -22,14 +30,17 @@ const experiments = (await getCollection('lab')).sort(
     <main class="grid-layout">
       <h2>Lab</h2>
       <section>
-        <ul>
+        <ul class="list-item--grid">
           {experiments.map((experiment) => (
-            <li>
-              <h4 class="title">{experiment.data.name}</h4>
-              <p class="date">
-                <FormattedDate date={experiment.data.pubDate} />
-              </p>
-            </li>
+            <ListItemLab
+              title={experiment.data.name}
+              description={experiment.data.description}
+              image={experiment.data.image}
+              imageAlt={experiment.data.imageAlt}
+              date={experiment.data.pubDate}
+              href={experiment.data.url}
+              source={experiment.data.source}
+            />
           ))}
         </ul>
       </section>

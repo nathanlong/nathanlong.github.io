@@ -1,0 +1,357 @@
+---
+// Appearance and Color settings in the site menu. All state lives in the
+// head script (SiteState.astro); this only reads and calls window.siteState.
+import { dayparts } from '@/data/dayparts';
+
+const schemes = [
+  { value: 'time', label: 'Time', now: 'data-now-scheme' },
+  { value: 'system', label: 'System', now: 'data-now-system' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+];
+---
+
+<!-- Hidden until the script wires it up: without JS it can't do anything -->
+<form class="theme-controls" hidden>
+  <fieldset>
+    <legend>Appearance</legend>
+    <div class="segments">
+      {
+        schemes.map(({ value, label, now }) => (
+          <label class="segment">
+            <input class="sr-only" type="radio" name="scheme" value={value} />
+            {label}
+            {now && (
+              <span class="now">
+                <span class="sr-only">, </span>
+                <span {...{ [now]: '' }} />
+              </span>
+            )}
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Color</legend>
+    <div class="chips">
+      <label class="chip follow-clock">
+        <input class="sr-only" type="radio" name="hue" value="auto" />
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.25"></circle>
+          <path d="M8 4.5V8l2.5 1.5"></path>
+        </svg>
+        Auto
+        <span class="now"><span aria-hidden="true">·</span> <span data-now-hue></span></span>
+        <svg class="check" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3.5 8.5l3 3 6-7"></path>
+        </svg>
+      </label>
+      <span class="divider" aria-hidden="true"></span>
+      {
+        dayparts.map((part) => (
+          <label
+            class="chip"
+            data-option={part.id}
+            data-label={part.label}
+            data-dark={String(part.dark)}
+          >
+            <input class="sr-only" type="radio" name="hue" value={part.id} />
+            <span class="swatch" data-daypart={part.id} aria-hidden="true" />
+            {part.label}
+            <span class="now-marker" hidden>
+              <span class="sr-only">(current time of day)</span>
+            </span>
+            <svg class="check" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3.5 8.5l3 3 6-7" />
+            </svg>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <p class="preview-note" hidden>
+    Previewing from the link.
+    <button type="button" data-stop-preview>Use my settings</button>
+  </p>
+</form>
+
+<script>
+  const state = window.siteState;
+  const form = document.querySelector<HTMLFormElement>('.theme-controls');
+
+  if (state && form) {
+    const dark = matchMedia('(prefers-color-scheme: dark)');
+    const fields = form.elements as HTMLFormControlsCollection & {
+      scheme: RadioNodeList;
+      hue: RadioNodeList;
+    };
+    const find = (selector: string) =>
+      form.querySelector<HTMLElement>(selector);
+    const options = form.querySelectorAll<HTMLElement>('[data-option]');
+
+    function render() {
+      if (!state) return;
+      // The radios show the saved settings, even during a preview
+      const { scheme, hue } = state.prefs;
+      fields.scheme.value = scheme;
+      fields.hue.value = hue;
+
+      // What the automatic options resolve to right now
+      const clock = find(`[data-option="${state.clockPart()}"]`);
+      const nowScheme = find('[data-now-scheme]');
+      const nowSystem = find('[data-now-system]');
+      const nowHue = find('[data-now-hue]');
+      if (nowScheme)
+        nowScheme.textContent = clock?.dataset.dark === 'true' ? 'Dark' : 'Light';
+      if (nowSystem) nowSystem.textContent = dark.matches ? 'Dark' : 'Light';
+      if (nowHue) nowHue.textContent = clock?.dataset.label ?? '';
+      options.forEach((option) => {
+        const marker = option.querySelector<HTMLElement>('.now-marker');
+        if (marker) marker.hidden = option !== clock;
+      });
+
+      const note = find('.preview-note');
+      if (note) note.hidden = !state.previewing;
+    }
+
+    // Enter in a radio would otherwise submit the form and reload the page
+    form.addEventListener('submit', (event) => event.preventDefault());
+    form.addEventListener('change', (event) => {
+      const { name, value } = event.target as HTMLInputElement;
+      state.set({ [name]: value });
+    });
+    find('[data-stop-preview]')?.addEventListener('click', () =>
+      state.stopPreview(),
+    );
+
+    // Setting a radio's value doesn't fire change, so this can't loop
+    document.addEventListener('site:state', render); // every apply()
+    dark.addEventListener('change', render); // OS flipped light/dark
+    render();
+    form.hidden = false;
+  }
+</script>
+
+<style>
+  .theme-controls {
+    display: grid;
+    gap: 1.5rem;
+    font-size: 1rem;
+    container-type: inline-size;
+  }
+
+  .theme-controls[hidden] {
+    display: none;
+  }
+
+  fieldset {
+    min-width: 0;
+    border: 0;
+  }
+
+  legend {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+
+  label {
+    position: relative;
+    cursor: pointer;
+  }
+
+  label:has(input:focus-visible) {
+    z-index: 1;
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .now {
+    color: var(--text-muted);
+  }
+
+  /* Appearance: a segmented bar. The 1px gaps show the container's color as
+     dividers. */
+  .segments {
+    --radius: 0.75rem;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    border: 1px solid var(--text-muted);
+    border-radius: var(--radius);
+    background: var(--text-muted);
+  }
+
+  .segment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.375rem 0.5rem;
+    background: var(--surface-sunken);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .segment:first-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+  .segment:last-child {
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .segment .now {
+    font-size: 0.75rem;
+  }
+
+  .segment:has(:checked) {
+    background: var(--accent);
+    color: var(--surface);
+    font-weight: 700;
+  }
+
+  .segment:has(:checked) .now {
+    color: inherit;
+  }
+
+  /* Too narrow for four across: 2×2, rather than shrinking text */
+  @container (max-width: 20rem) {
+    .segments {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .segment:nth-child(1) {
+      border-radius: var(--radius) 0 0 0;
+    }
+    .segment:nth-child(2) {
+      border-radius: 0 var(--radius) 0 0;
+    }
+    .segment:nth-child(3) {
+      border-radius: 0 0 0 var(--radius);
+    }
+    .segment:nth-child(4) {
+      border-radius: 0 0 var(--radius) 0;
+    }
+  }
+
+  /* Color: a row of chips */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    /* The checked border is 1px wider; padding gives it back, so nothing
+       shifts */
+    padding: 0 calc(0.875rem + 1px);
+    border: 1px solid var(--text-muted);
+    border-radius: 999px;
+  }
+
+  .chip:has(:checked) {
+    padding-inline: 0.875rem;
+    border: 2px solid var(--text-strong);
+  }
+
+  .divider {
+    align-self: stretch;
+    width: 1px;
+    margin-inline: 0.25rem;
+    background: var(--text-muted);
+  }
+
+  .icon,
+  .check {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .check {
+    display: none;
+    stroke-width: 2;
+  }
+
+  .chip:has(:checked) .check {
+    display: block;
+  }
+
+  /* Has data-daypart, so the theme recipe gives it that daypart's colors:
+     its surface, with an accent dot */
+  .swatch {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid var(--text-muted);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      var(--accent) 0 35%,
+      var(--surface) calc(35% + 0.5px)
+    );
+  }
+
+  .now-marker::before {
+    content: '';
+    display: block;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .preview-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    color: var(--text);
+  }
+
+  .preview-note[hidden] {
+    display: none;
+  }
+
+  .preview-note button {
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border: 1px solid var(--text-muted);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-strong);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .preview-note button:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (forced-colors: active) {
+    .segment:has(:checked),
+    .chip:has(:checked) {
+      border-color: Highlight;
+    }
+    .segment:has(:checked) {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+    .swatch {
+      forced-color-adjust: none;
+    }
+  }
+</style>

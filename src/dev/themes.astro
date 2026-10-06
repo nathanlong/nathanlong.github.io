@@ -1,0 +1,336 @@
+---
+// Dev-only (see devPages in astro.config.mjs): every daypart in light and
+// dark side by side, with live WCAG contrast and sRGB gamut checks measured
+// from the real CSS. Each panel sets its own data-daypart and color-scheme,
+// so src/styles/dayparts.css colors it without anything faked.
+import { Code } from 'astro:components';
+import BaseHead from '@components/BaseHead.astro';
+import { dayparts } from '@/data/dayparts';
+import { codeTheme } from '@/data/code-theme.mjs';
+
+const sample = `// Comments should stay italic
+export function greet(name: string) {
+  return \`Hello, \${name}!\`;
+}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Theme preview" description="Every daypart, both modes" />
+  </head>
+  <body style="background: #fff;">
+    <main class="themes">
+      <h1>Themes</h1>
+      <p class="intro">
+        Contrast is measured live. Toggle DevTools → Rendering →
+        <code>prefers-contrast</code> to check high-contrast mode
+        (currently <strong data-contrast-mode>normal</strong>).{' '}
+        <span data-summary></span>
+      </p>
+      <div class="grid">
+        {
+          dayparts.map((part) =>
+            (['light', 'dark'] as const).map((scheme) => (
+              <section
+                class="panel grain"
+                data-daypart={part.id}
+                style={`color-scheme: ${scheme}`}
+              >
+                <h2>
+                  {part.label} · {scheme}
+                  {part.dark === (scheme === 'dark') && (
+                    <span class="default">default</span>
+                  )}
+                </h2>
+                <p class="meta">Oct 2, 2026 · #muted-meta</p>
+                <p>
+                  Body text with <a href="#">a link</a>,{' '}
+                  <a href="#" class="fake-focus">a focused link</a>, and{' '}
+                  <code>inline code</code>.
+                </p>
+                <blockquote>A blockquote, with an accent border.</blockquote>
+                <hr />
+                <Code
+                  code={sample}
+                  lang="ts"
+                  theme={codeTheme}
+                />
+                <div class="pane">
+                  <div class="segments">
+                    <span class="segment is-checked">
+                      Time<small>Dark</small>
+                    </span>
+                    <span class="segment">
+                      System<small>Light</small>
+                    </span>
+                  </div>
+                  <span class="chip is-checked">Checked chip ✓</span>
+                  <span class="chip">
+                    Auto <span class="now">· Evening</span>
+                  </span>
+                </div>
+                <ul class="checks" aria-label="Contrast checks" />
+              </section>
+            )),
+          )
+        }
+      </div>
+    </main>
+
+    <script>
+      import Color from 'colorjs.io';
+
+      // [label, foreground, background(s), minimum]. Values are CSS colors
+      // resolved inside each panel. 'pane' is the frosted menu pane, checked
+      // over each kind of page background it can sit on (worst one wins).
+      const PANE = 'color-mix(in oklch, var(--surface-sunken) 60%, transparent)';
+      const CODE_TOKENS = [
+        '--shiki-foreground',
+        '--shiki-token-comment',
+        '--shiki-token-keyword',
+        '--shiki-token-function',
+        '--shiki-token-string',
+        '--shiki-token-constant',
+        '--shiki-token-parameter',
+        '--shiki-token-punctuation',
+      ];
+      const checks: [string, string, string[], number][] = [
+        ['text / surface', 'var(--text)', ['var(--surface)'], 4.5],
+        ['text / sunken', 'var(--text)', ['var(--surface-sunken)'], 4.5],
+        ['muted / surface', 'var(--text-muted)', ['var(--surface)'], 4.5],
+        ['muted / sunken', 'var(--text-muted)', ['var(--surface-sunken)'], 4.5],
+        ['strong / surface', 'var(--text-strong)', ['var(--surface)'], 7],
+        ['accent / surface', 'var(--accent)', ['var(--surface)'], 4.5],
+        ['focus / surface', 'var(--focus-ring)', ['var(--surface)'], 3],
+        ['focus / pane', 'var(--focus-ring)', ['pane'], 3],
+        ['segment checked', 'var(--surface)', ['var(--accent)'], 4.5],
+        ['chip checked / pane', 'var(--text-strong)', ['pane'], 3],
+        ['strong / pane', 'var(--text-strong)', ['pane'], 4.5],
+        ['muted / pane', 'var(--text-muted)', ['pane'], 4.5],
+        ['border / sunken', 'var(--text-muted)', ['var(--surface-sunken)'], 3],
+        ['border / pane', 'var(--text-muted)', ['pane'], 3],
+        ...CODE_TOKENS.map(
+          (token): [string, string, string[], number] => [
+            `code ${token.replace('--shiki-token-', '')}`,
+            `var(${token})`,
+            ['var(--shiki-background)'],
+            4.5,
+          ],
+        ),
+      ];
+
+      const TOKENS = [
+        '--surface',
+        '--surface-sunken',
+        '--text-strong',
+        '--text',
+        '--text-muted',
+        '--accent',
+        ...CODE_TOKENS,
+      ];
+
+      // Resolve a CSS color as the panel sees it
+      function resolve(panel: HTMLElement, value: string) {
+        const probe = document.createElement('span');
+        probe.hidden = true;
+        probe.style.color = value;
+        panel.append(probe);
+        const color = new Color(getComputedStyle(probe).color);
+        probe.remove();
+        return color;
+      }
+
+      // Alpha-composite fg over an opaque bg, as the browser paints it
+      function over(fg: Color, bg: Color) {
+        const [a, b] = [fg.to('srgb'), bg.to('srgb')];
+        const alpha = a.alpha.valueOf();
+        const coords = a.coords.map(
+          (c, i) => (c ?? 0) * alpha + (b.coords[i] ?? 0) * (1 - alpha),
+        ) as [number, number, number];
+        return new Color('srgb', coords);
+      }
+
+      function measure() {
+        let failures = 0;
+        document.querySelectorAll<HTMLElement>('.panel').forEach((panel) => {
+          const surface = resolve(panel, 'var(--surface)');
+          const sunken = resolve(panel, 'var(--surface-sunken)');
+          const code = new Color(
+            getComputedStyle(panel.querySelector('.astro-code')!).backgroundColor,
+          );
+          const pane = resolve(panel, PANE);
+          // Page content behind the pane is blurred, so test against the
+          // backgrounds it's made of rather than individual glyphs
+          const panes = [surface, sunken, code].map((bg) => over(pane, bg));
+
+          // Outside sRGB, browsers clip or map the color, and contrast
+          // tools disagree about it
+          const outside = TOKENS.filter(
+            (token) => !resolve(panel, `var(${token})`).inGamut('srgb'),
+          );
+          if (outside.length) failures++;
+          const gamut = document.createElement('li');
+          gamut.className = outside.length ? 'fail' : 'pass';
+          gamut.textContent = outside.length
+            ? `✗ outside sRGB: ${outside.join(', ')}`
+            : '✓ all in sRGB';
+
+          const list = panel.querySelector('.checks')!;
+          list.replaceChildren(
+            gamut,
+            ...checks.map(([label, fg, bgs, min]) => {
+              const fgColor = resolve(panel, fg);
+              const ratio = Math.min(
+                ...bgs.flatMap((bg) =>
+                  (bg === 'pane' ? panes : [resolve(panel, bg)]).map((b) =>
+                    Math.abs(over(fgColor, b).contrast(b, 'WCAG21')),
+                  ),
+                ),
+              );
+              const pass = ratio >= min;
+              if (!pass) failures++;
+              const item = document.createElement('li');
+              item.className = pass ? 'pass' : 'fail';
+              item.textContent = `${pass ? '✓' : '✗'} ${label} ${ratio.toFixed(2)} (≥${min})`;
+              return item;
+            }),
+          );
+        });
+        const summary = document.querySelector('[data-summary]')!;
+        summary.textContent = failures
+          ? `${failures} failing.`
+          : 'All checks pass.';
+        summary.className = failures ? 'fail' : 'pass';
+      }
+
+      const more = matchMedia('(prefers-contrast: more)');
+      const update = () => {
+        document.querySelector('[data-contrast-mode]')!.textContent =
+          more.matches ? 'more' : 'normal';
+        measure();
+      };
+      more.addEventListener('change', update);
+      update();
+    </script>
+
+    <style>
+      .themes {
+        padding: 1.5rem;
+        font-size: 1rem;
+      }
+
+      .intro {
+        margin-bottom: 1.5rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+        gap: 1rem;
+      }
+
+      .panel {
+        display: grid;
+        gap: 0.75rem;
+        align-content: start;
+        padding: 1.25rem;
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .panel h2 {
+        font-size: 1.25rem;
+      }
+
+      .default {
+        margin-left: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: var(--text-muted);
+      }
+
+      .fake-focus {
+        outline: 3px solid var(--focus-ring);
+        outline-offset: 2px;
+      }
+
+      .panel :global(pre) {
+        font-size: 0.8rem;
+      }
+
+      .pane {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        border-radius: 8px;
+        background: color-mix(in oklch, var(--surface-sunken) 60%, transparent);
+        color: var(--text-strong);
+      }
+
+      .segments {
+        display: flex;
+        gap: 1px;
+        border: 1px solid var(--text-muted);
+        border-radius: 8px;
+        background: var(--text-muted);
+        overflow: hidden;
+      }
+
+      .segment {
+        display: grid;
+        padding: 0.25rem 0.75rem;
+        background: var(--surface-sunken);
+        line-height: 1.2;
+        text-align: center;
+      }
+
+      .segment small {
+        color: var(--text-muted);
+      }
+
+      .segment.is-checked {
+        background: var(--accent);
+        color: var(--surface);
+        font-weight: 700;
+      }
+
+      .segment.is-checked small {
+        color: inherit;
+      }
+
+      .chip {
+        padding: 0.25rem 0.75rem;
+        border: 1px solid var(--text-muted);
+        border-radius: 999px;
+      }
+
+      .chip.is-checked {
+        border: 2px solid var(--text-strong);
+      }
+
+      .now {
+        color: var(--text-muted);
+      }
+
+      .checks {
+        list-style: none;
+        padding: 0;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        columns: 2;
+      }
+
+      :global(.pass) {
+        color: var(--text-muted);
+      }
+
+      :global(.fail) {
+        color: light-dark(oklch(0.5 0.2 25), oklch(0.75 0.17 25));
+        font-weight: 700;
+      }
+    </style>
+  </body>
+</html>

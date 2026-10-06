@@ -7,16 +7,7 @@
 }
 
 :root {
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
-  --black: 15, 18, 25;
-  --gray: 96, 115, 159;
-  --gray-light: 229, 233, 240;
-  --gray-dark: 34, 41, 57;
-  --gray-gradient: rgba(var(--gray-light), 50%), #fff;
-  --box-shadow:
-    0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-    0 16px 32px rgba(var(--gray), 33%);
+  color-scheme: light dark;
   --font-sans:
     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Noto Sans', Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif,
@@ -35,6 +26,69 @@
   --feature: minmax(0, 10ch);
 }
 
+/* Theme
+   ==========================================================================
+   Each time of day sets its own colors (src/styles/dayparts.css). Tokens
+   use light-dark(), which follows each element's color-scheme, so forcing
+   a mode is a color-scheme change on <html> (the data-scheme attribute set
+   by SiteState.astro), with no prefers-color-scheme media queries. Without
+   data-scheme it follows the OS.
+
+   Don't register the color tokens with @property: unregistered,
+   light-dark() resolves where a token is used, following that element's
+   color-scheme. */
+
+:root[data-scheme='light'] {
+  color-scheme: light;
+}
+
+:root[data-scheme='dark'] {
+  color-scheme: dark;
+}
+
+/* Tokens built from the daypart colors. On [data-daypart] as well as
+   :root because var() in a custom property resolves where it's declared,
+   so elements with their own daypart (menu swatches, /dev/themes panels)
+   get their own. Zero specificity so it never fights dayparts.css. */
+:where(:root, [data-daypart]) {
+  --focus-ring: var(--accent);
+  /* Header and footer wash, fading into the page */
+  --surface-gradient:
+    color-mix(in oklch, var(--surface-sunken) 50%, var(--surface)),
+    var(--surface);
+
+  /* Code blocks. Token colors that need their own hue are per daypart in
+     dayparts.css; these reuse the site's tokens. */
+  --shiki-foreground: var(--text);
+  --shiki-background: var(--surface-sunken);
+  --shiki-token-comment: var(--text-muted);
+  --shiki-token-punctuation: var(--text-muted);
+  --shiki-token-link: var(--accent);
+  --shiki-token-string-expression: var(--shiki-token-string);
+  --shiki-token-inserted: var(--shiki-token-string);
+  --shiki-token-deleted: var(--shiki-token-constant);
+  --shiki-token-changed: var(--shiki-token-function);
+}
+
+/* Crossfade when the theme changes on a page that's already showing (see
+   apply() in SiteState.astro, which skips it under reduced motion) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+
+/* Code blocks: token colors come from the daypart (--shiki-* in
+   dayparts.css, theme in src/data/code-theme.mjs). The theme only styles
+   markdown emphasis, so comments get their italics here. */
+.astro-code [style*='--shiki-token-comment'] {
+  font-style: italic;
+}
+
+html {
+  /* Matches the overscroll area to the page */
+  background-color: var(--surface);
+}
+
 body {
   font-family: var(--font-sans);
   /* font-size: var(--fluid-base); */
@@ -42,12 +96,51 @@ body {
   margin: 0;
   padding: 0;
   text-align: left;
-  background: linear-gradient(var(--gray-gradient)) no-repeat;
-  background-size: 100% 600px;
+  background-color: var(--surface);
+  /* Header wash under the grain */
+  --grain-base: linear-gradient(var(--surface-gradient));
+  --grain-base-size: 100% 600px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  color: rgb(var(--gray-dark));
+  color: var(--text);
   line-height: 1.6;
+}
+
+/* Grain (jk/make_grain.sh): plain alpha, no blend mode. Black specks show
+   on light themes and white on dark, balanced to the same strength;
+   overlay blending made it nearly invisible on light surfaces. Anything
+   with its own background uses this so the grain isn't covered; set
+   --grain-base (and --grain-base-size) for a layer under it. */
+body,
+.grain,
+.astro-code {
+  background-image:
+    url(../assets/images/grain-dark.webp),
+    url(../assets/images/grain-light.webp),
+    var(--grain-base, none);
+  background-repeat: repeat, repeat, no-repeat;
+  background-size:
+    auto,
+    auto,
+    var(--grain-base-size, auto);
+}
+
+/* Custom properties inherit, so reset the base layer on each grain element
+   (zero specificity, so a component can still set its own) */
+:where(.grain, .astro-code) {
+  --grain-base: none;
+  --grain-base-size: auto;
+}
+
+@media (min-resolution: 1.5dppx) {
+  body,
+  .grain,
+  .astro-code {
+    background-size:
+      131px,
+      150px,
+      var(--grain-base-size, auto);
+  }
 }
 
 h1,
@@ -56,9 +149,9 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0 0 0.5rem 0;
-  color: rgb(var(--black));
+  color: var(--text-strong);
   line-height: 1.1;
+  text-wrap: pretty;
 }
 
 h1 {
@@ -95,7 +188,7 @@ a:hover {
 }
 
 .prose {
-  color: var(--gray-dark);
+  color: var(--text);
 }
 
 textarea {
@@ -121,15 +214,17 @@ code {
   border-radius: 2px;
   font-family: var(--font-mono);
   padding: 0 0.5ch;
-  background-color: rgb(var(--gray-light));
+  background-color: var(--surface-sunken);
 }
 pre {
   border-radius: 8px;
   padding: 2ch;
 }
+
 pre > code {
   all: unset;
 }
+
 blockquote {
   border-left: 4px solid var(--accent);
   padding: 0 0 0 1.5rem;
@@ -146,7 +241,7 @@ blockquote {
 
 hr {
   border: none;
-  border-top: 1px solid rgb(var(--gray-light));
+  border-top: 1px solid var(--surface-sunken);
 }
 ul,
 ol {
@@ -170,7 +265,7 @@ ol {
     var(--full) [full-end];
 }
 
-.grid-layout > * {
+:where(.grid-layout > *) {
   grid-column: content;
 }
 
@@ -212,10 +307,10 @@ ol {
   right: 0.5rem;
   z-index: 1;
   padding: 0.125rem 0.75ch;
-  border: 1px solid rgba(var(--gray), 40%);
+  border: 1px solid var(--text-muted);
   border-radius: 4px;
-  background: rgb(var(--gray-light));
-  color: rgb(var(--gray-dark));
+  background: var(--surface-sunken);
+  color: var(--text);
   font-family: var(--font-mono);
   font-size: 0.7em;
   cursor: pointer;
@@ -297,14 +392,14 @@ ol {
   gap: 0.5em;
   font-family: var(--font-mono);
   font-size: 0.875em;
-  color: rbg(var(--gray-light));
+  color: var(--text-muted);
 }
 
 .list-item {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 0;
 }
 
@@ -337,5 +432,5 @@ ol {
 
 .slide-image figcaption {
   font-size: 0.75rem;
-  color: rgb(var(--gray-dark));
+  color: var(--text);
 }

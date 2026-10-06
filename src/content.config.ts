@@ -21,6 +21,7 @@ const blog = defineCollection({
 const lab = defineCollection({
   loader: file('./src/content/lab/experiments.json'),
   schema: z.object({
+    id: z.string(),
     name: z.string(),
     url: z.url(),
     source: z.url(),

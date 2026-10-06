@@ -3,6 +3,7 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import { codeTheme } from './src/data/code-theme.mjs';
 
 /**
  * Wraps each highlighted code block in a container with an expand toggle.
@@ -29,16 +30,32 @@ const codeBlockToggle = {
   },
 };
 
+/**
+ * Pages that only exist in `astro dev`, kept outside src/pages so they're
+ * never part of a build.
+ * @type {import('astro').AstroIntegration}
+ */
+const devPages = {
+  name: 'dev-pages',
+  hooks: {
+    'astro:config:setup': ({ command, injectRoute }) => {
+      if (command === 'dev')
+        injectRoute({
+          pattern: '/dev/themes',
+          entrypoint: './src/dev/themes.astro',
+        });
+    },
+  },
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://nathan-long.com',
-	integrations: [mdx(), sitemap()],
+	integrations: [mdx(), sitemap(), devPages],
   markdown: {
     shikiConfig: {
-      themes: {
-        light: "catppuccin-latte",
-        dark: "catppuccin-mocha",
-      },
+      // Token colors are CSS variables set per daypart in dayparts.css
+      theme: codeTheme,
       transformers: [codeBlockToggle],
     }
   }
