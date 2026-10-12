@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "new": "./bin/new.sh",
+    "deploy": "./bin/deploy.sh"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.2",
