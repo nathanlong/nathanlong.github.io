@@ -6,7 +6,6 @@ import Header from '@components/Header.astro';
 import ListItemPost from '@components/ListItemPost.astro';
 import SectionHeader from '@components/SectionHeader.astro';
 import SubscribeCard from '@components/SubscribeCard.astro';
-import { SITE_TITLE } from '@/consts';
 import { NEWSLETTER, getIssues } from '@/data/newsletter';
 
 const DESCRIPTION =
@@ -18,7 +17,7 @@ const issues = (await getIssues()).slice(0, 8);
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`Newsletter | ${SITE_TITLE}`} description={DESCRIPTION} />
+    <BaseHead title="Newsletter" description={DESCRIPTION} />
   </head>
   <body>
     <Header />

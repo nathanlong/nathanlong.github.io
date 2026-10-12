@@ -3,7 +3,7 @@ import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import ListItemLab from '@/components/ListItemLab.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_DESCRIPTION } from '@/consts';
 import { getExperiments, lastTouched } from '@/data/lab';
 
 const experiments = await getExperiments();
@@ -21,7 +21,7 @@ const experiments = await getExperiments();
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title="Lab" description={SITE_DESCRIPTION} />
   </head>
   <body>
     <Header />

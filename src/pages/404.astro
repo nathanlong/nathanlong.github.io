@@ -1,0 +1,40 @@
+---
+import BaseHead from '@components/BaseHead.astro';
+import Footer from '@components/Footer.astro';
+import GradientOrbs from '@components/GradientOrbs.astro';
+import Button from '@components/Button.astro'
+import Header from '@components/Header.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title="Page not found"
+      description="This page doesn't exist."
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="grid-layout flow">
+      <section class="flow t-center">
+        <h1>
+          <span class="sr-only">404</span>
+          <GradientOrbs />
+        </h1>
+        <h2 class="subhead flow-0">
+          Sorry, I must have misplaced that page. Or it got lost.
+        </h2>
+        <Button href="/">Take it from the top</Button>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .subhead {
+    font-size: 1.2rem;
+  }
+
+</style>

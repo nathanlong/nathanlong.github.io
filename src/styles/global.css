@@ -134,6 +134,7 @@ body {
   overflow-wrap: break-word;
   color: var(--text);
   line-height: 1.6;
+  min-height: 100dvh;
 }
 
 /* Grain (jk/make_grain.sh): plain alpha, no blend mode. Black specks show
@@ -375,6 +376,10 @@ ol {
 .m-center {
   margin-left: auto;
   margin-right: auto;
+}
+
+.t-center {
+  text-align: center;
 }
 
 /* @flow - global spacing with fallback */

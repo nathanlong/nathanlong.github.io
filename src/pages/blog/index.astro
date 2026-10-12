@@ -5,7 +5,7 @@ import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import ListItemPost from '@/components/ListItemPost.astro';
-import { SITE_DESCRIPTION, SITE_TIMEZONE, SITE_TITLE } from '@/consts';
+import { SITE_DESCRIPTION, SITE_TIMEZONE } from '@/consts';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -29,14 +29,14 @@ const tags = [...new Set(posts.map((post) => post.data.tags).flat())].sort();
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title="Blog" description={SITE_DESCRIPTION} />
   </head>
   <body>
     <Header />
     <main class="grid-layout flow flow-2">
-      <section>
+      <section class="flow">
         <h1>Blog</h1>
-        <p>Sometimes I write about things like...</p>
+        <p class="flow-1/2">Sometimes I write about things like...</p>
       </section>
       <section class="post-tags flow-0">
         {tags.map((tag) => (

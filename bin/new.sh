@@ -4,16 +4,16 @@
 source ./bin/utils.sh
 
 e_header "Creating new entry..."
-e_question "What's the slug gonna be? (lowercase, dash-separated)"
+e_question "What's the slug? (lowercase, dash-separated)"
 read slug
 e_question "What's the title? (string)"
 read title
 e_question "What's the description? (string)"
 read description
-e_question "What tags? array:[motion, neovim, process, talks, thoughts, tooling]"
+e_question "What tags? (array:[motion, neovim, process, talks, thoughts, tooling])"
 read tags
-new_path="content/blog/${slug}.md"
-# Use ISO timestamp: https://rknight.me/blog/eleventy-post-dates/
+new_path="src/content/blog/${slug}.md"
+# Use ISO timestamp to skirt date issues
 new_date="$(date '+%Y-%m-%dT%H:%M:%S%z')"
 touch ${new_path}
 
