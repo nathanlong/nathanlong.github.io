@@ -4,6 +4,7 @@ import { getImage } from 'astro:assets';
 import HeaderLink from '@components/HeaderLink.astro';
 import SiteAvatar from '@components/SiteAvatar.astro';
 import ThemeControls from '@components/ThemeControls.astro';
+import MenuIcon from '@components/icons/menu.svg';
 import { hats } from '@/data/hats';
 
 export const links = [
@@ -11,7 +12,7 @@ export const links = [
   { href: '/blog', label: 'Blog' },
   { href: '/lab', label: 'Lab' },
   { href: '/newsletter', label: 'Newsletter' },
-  { href: '/feed', label: 'RSS' },
+  { href: '/rss.xml', label: 'RSS' },
 ];
 
 // One rule per hat, keyed on the data-hat attribute SiteState.astro sets on
@@ -49,11 +50,7 @@ const hatCss = (
       aria-haspopup="dialog"
       aria-label="Open menu"
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <line x1="4" y1="6" x2="20" y2="6" />
-        <line x1="4" y1="12" x2="20" y2="12" />
-        <line x1="4" y1="18" x2="20" y2="18" />
-      </svg>
+      <MenuIcon aria-hidden="true" />
     </button>
   </div>
 </header>
@@ -72,11 +69,7 @@ const hatCss = (
         command="close"
         aria-label="Close menu"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <line x1="4" y1="6" x2="20" y2="6" />
-          <line x1="4" y1="12" x2="20" y2="12" />
-          <line x1="4" y1="18" x2="20" y2="18" />
-        </svg>
+        <MenuIcon aria-hidden="true" />
       </button>
     </div>
     <nav aria-label="Primary">
@@ -180,12 +173,6 @@ const hatCss = (
     overflow: visible;
   }
 
-  .menu-button line {
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
   /* The menu */
   .site-menu {
     --menu-bg: color-mix(in oklch, var(--surface-sunken) 60%, transparent);
@@ -279,27 +266,27 @@ const hatCss = (
   }
 
   /* Morph the three lines into an X as the menu opens, and back as it closes */
-  .site-menu .menu-button line {
+  .site-menu .menu-button :global(line) {
     transition:
       translate calc(var(--menu-duration) * 0.6) var(--menu-ease),
       rotate calc(var(--menu-duration) * 0.6) var(--menu-ease),
       opacity calc(var(--menu-duration) * 0.6) var(--menu-ease);
   }
-  .site-menu .menu-button line:nth-child(1) {
+  .site-menu .menu-button :global(line):nth-child(1) {
     transform-origin: 12px 6px;
   }
-  .site-menu .menu-button line:nth-child(3) {
+  .site-menu .menu-button :global(line):nth-child(3) {
     transform-origin: 12px 18px;
   }
 
-  .site-menu[open] .menu-button line:nth-child(1) {
+  .site-menu[open] .menu-button :global(line):nth-child(1) {
     translate: 0 6px;
     rotate: 45deg;
   }
-  .site-menu[open] .menu-button line:nth-child(2) {
+  .site-menu[open] .menu-button :global(line):nth-child(2) {
     opacity: 0;
   }
-  .site-menu[open] .menu-button line:nth-child(3) {
+  .site-menu[open] .menu-button :global(line):nth-child(3) {
     translate: 0 -6px;
     rotate: -45deg;
   }
@@ -308,12 +295,12 @@ const hatCss = (
      normally, so a less specific one would lose and the lines would start as
      an X with nothing to animate. */
   @starting-style {
-    .site-menu[open] .menu-button line:nth-child(1),
-    .site-menu[open] .menu-button line:nth-child(3) {
+    .site-menu[open] .menu-button :global(line):nth-child(1),
+    .site-menu[open] .menu-button :global(line):nth-child(3) {
       translate: 0 0;
       rotate: 0deg;
     }
-    .site-menu[open] .menu-button line:nth-child(2) {
+    .site-menu[open] .menu-button :global(line):nth-child(2) {
       opacity: 1;
     }
   }
@@ -327,6 +314,7 @@ const hatCss = (
     gap: 0.25rem;
     font-size: 2rem;
     font-weight: 900;
+    line-height: 1.4;
   }
 
   .site-menu :is(li, .menu-item) {

@@ -1,10 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
-import FormattedDate from '@components/FormattedDate.astro';
 import Header from '@components/Header.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
 import ListItemPost from '@/components/ListItemPost.astro';
 import { SITE_DESCRIPTION, SITE_TIMEZONE, SITE_TITLE } from '@/consts';
 
@@ -34,16 +33,19 @@ const tags = [...new Set(posts.map((post) => post.data.tags).flat())].sort();
   </head>
   <body>
     <Header />
-    <main class="grid-layout">
+    <main class="grid-layout flow flow-2">
       <section>
-        Tags:
+        <h1>Blog</h1>
+        <p>Sometimes I write about things like...</p>
+      </section>
+      <section class="post-tags flow-0">
         {tags.map((tag) => (
-          <a href={`/tags/${tag}/`}>{tag}</a>
+          <a class="tag-link" href={`/tags/${tag}/`}>#{tag}</a>
         ))}
       </section>
       {[...postsByYear].map(([year, yearPosts]) => (
-        <section>
-          <h2>{year}</h2>
+        <section class="flow flow-2">
+          <SectionHeader title={year.toString()} />
           <ul class="list-item">
             {yearPosts.map((post) => (
               <ListItemPost

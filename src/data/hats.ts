@@ -1,5 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import trucker from '@/assets/images/hat-trucker.png';
+import pumpkin from '@/assets/images/hat-pumpkin.png';
 
 // Hats that drop onto the avatar on hover. Images should share the avatar's
 // canvas (avatar-base.png, 1400×1900), drawn in place over the head, so they
@@ -21,4 +22,5 @@ export interface Hat {
 
 export const hats: Hat[] = [
   { id: 'trucker', image: trucker, from: '09-22', to: '11-30' },
+  { id: 'pumpkin', image: pumpkin, from: '10-01', to: '10-31' },
 ];

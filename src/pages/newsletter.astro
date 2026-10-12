@@ -1,52 +1,62 @@
 ---
 import BaseHead from '@components/BaseHead.astro';
+import Button from '@components/Button.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import ListItemPost from '@components/ListItemPost.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import SubscribeCard from '@components/SubscribeCard.astro';
+import { SITE_TITLE } from '@/consts';
+import { NEWSLETTER, getIssues } from '@/data/newsletter';
+
+const DESCRIPTION =
+  'Every week I spew out thoughts, links, and occasional insights about working in the web industry.';
+
+const issues = (await getIssues()).slice(0, 8);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={`Newsletter | ${SITE_TITLE}`} description={DESCRIPTION} />
   </head>
   <body>
     <Header />
-    <main class="grid-layout flow">
-      <h1>Newsletter</h1>
-      <p>
-        Every week I spew out thoughts, links, and occasional insights about
-        working in the web industry.
-      </p>
+    <main class="grid-layout flow flow-2">
+      <section class="flow">
+        <h1>Newsletter</h1>
+        <p class="flow-1/2">{DESCRIPTION}</p>
+      </section>
 
-      <form
-        action="https://buttondown.email/api/emails/embed-subscribe/nathanlong"
-        method="post"
-        target="popupwindow"
-        onsubmit="window.open('https://buttondown.email/nathanlong', 'popupwindow')"
-        class="embeddable-buttondown-form flow text-center p-1 flex flex-col items-center rounded-1 border-1 mt-4 border-standard bg-background-offset popout"
-      >
-        <img
-          class="rounded-full w-7 mt-4-neg aspect-square"
-          src="https://github.com/user-attachments/assets/fc883491-4f35-406c-a42b-021de0d35327"
-        />
-        <h2 class="mt-0">Net Noodlings with Nathan</h2>
+      <SubscribeCard class="popout" />
 
-        <label for="bd-email">Enter your email to sign up</label>
-        <input
-          type="email"
-          name="email"
-          id="bd-email"
-          class="flow-0 block w-full"
+      <section class="flow flow-2">
+        <SectionHeader
+          title="Recent issues"
+          href={NEWSLETTER.archive}
+          note="external"
+          linkLabel="Archive"
         />
-        <input class="btn block" type="submit" value="Subscribe" />
-        <p class="font-xsmall">
-          <a href="https://buttondown.email/refer/nathanlong" target="_blank">
-            Powered by Buttondown.
-          </a>
-        </p>
-      </form>
+        {issues.length > 0 ? (
+          <ul class="list-item">
+            {issues.map((issue) => (
+              <ListItemPost
+                href={issue.href}
+                title={issue.title}
+                date={issue.date}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p>
+            Catch up on every issue in{' '}
+            <a href={NEWSLETTER.archive}>the archive</a>.
+          </p>
+        )}
+        <Button href={NEWSLETTER.archive}>See more in the Archives</Button>
+      </section>
     </main>
     <Footer />
   </body>
 </html>
+

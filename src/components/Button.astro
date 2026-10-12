@@ -1,0 +1,90 @@
+---
+// The site's pill button. A filled accent "primary" for the main action, an
+// outlined "secondary" for quieter ones. Pass href to get a link styled the
+// same; anything else (type, data-*, hidden, aria-*) goes on the element.
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  class?: string;
+} & HTMLAttributes<'button'> &
+  Omit<HTMLAttributes<'a'>, 'type'>;
+
+const {
+  variant = 'primary',
+  href,
+  class: className,
+  type = 'button',
+  ...rest
+} = Astro.props;
+
+const classes = ['button', `button--${variant}`, className];
+---
+
+{
+  href ? (
+    <a class:list={classes} href={href} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button class:list={classes} type={type} {...rest}>
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* display above would otherwise beat the hidden attribute */
+  .button[hidden] {
+    display: none;
+  }
+
+  .button:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .button--primary {
+    background: var(--accent);
+    color: var(--surface);
+  }
+
+  .button--primary:hover {
+    background: var(--text-strong);
+    color: var(--surface);
+  }
+
+  .button--secondary {
+    border-color: var(--text-muted);
+    background: var(--surface);
+    color: var(--text-strong);
+  }
+
+  .button--secondary:hover {
+    border-color: var(--text-strong);
+    color: var(--text-strong);
+  }
+
+  @media (forced-colors: active) {
+    .button {
+      border-color: ButtonText;
+    }
+  }
+</style>

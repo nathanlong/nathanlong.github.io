@@ -1,0 +1,57 @@
+---
+// A section's heading, a dotted rule, and a "View All" link to the rest of it
+interface Props {
+  title: string;
+  href?: string;
+  /** Small aside after the title, e.g. "external" */
+  note?: string;
+  linkLabel?: string;
+}
+
+const { title, href, note, linkLabel = 'View All' } = Astro.props;
+---
+
+<div class="section-header">
+  <h2 class="section-title">
+    {title}
+    {note && <small>{' '}({note})</small>}
+  </h2>
+  <div class="spacer"></div>
+  {
+    href && (
+      <a class="section-header__link" href={href}>
+        {linkLabel} &rarr;
+      </a>
+    )
+  }
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .section-title {
+    flex-shrink: 0;
+  }
+
+  .section-title small {
+    font-weight: normal;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .section-header__link {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .spacer {
+    width: 100%;
+    border-bottom: 3px dotted var(--surface-sunken);
+  }
+</style>

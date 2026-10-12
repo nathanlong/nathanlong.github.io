@@ -1,27 +1,43 @@
 ---
-import { links } from '@components/Header.astro';
+import GithubIcon from '@components/icons/github.svg';
+import CodepenIcon from '@components/icons/codepen.svg';
+import LinkedinIcon from '@components/icons/linkedin.svg';
+import RssIcon from '@components/icons/rss.svg';
 const today = new Date();
 ---
 
-<footer class="grid-layout grain">
+<footer class="grid-layout">
+  <div class="">👋</div>
   <div class="footer-content">
-    <div class="footer__meta">
-      <p>&copy; {today.getFullYear()} Nathan Long</p>
-      <p>
-        <a href="#">Certified Trackerless Web Burger</a>
-        <span>&trade;</span>
-      </p>
-    </div>
-
-    <nav>
-      <ul class="footer-nav__list">
-        {links.map((link, i) => (
-          <li style={`--i: ${i}`}>
-            <a href={link.href}>{link.label}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <p>&copy; {today.getFullYear()} Nathan Long</p>
+    <p>
+      <a href="/trackerless">Certified Trackerless Web Burger</a>
+      <span>&trade;</span>
+    </p>
+  </div>
+  <div class="footer-content">
+    <ul class="footer__links">
+      <li>
+        <a href="https://github.com/nathanlong">
+          <GithubIcon class="footer__icon" />
+        </a>
+      </li>
+      <li>
+        <a href="https://codepen.io/nathanlong">
+          <CodepenIcon class="footer__icon" />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/nathanmlong/">
+          <LinkedinIcon class="footer__icon" />
+        </a>
+      </li>
+      <li>
+        <a href="/rss.xml">
+          <RssIcon class="footer__icon" />
+        </a>
+      </li>
+    </ul>
   </div>
 </footer>
 
@@ -29,23 +45,25 @@ const today = new Date();
   footer {
     margin-top: 2rem;
     padding: 2rem 0;
-    /* Under the grain (see .grain in global.css) */
-    --grain-base: linear-gradient(var(--surface-gradient));
     color: var(--text-muted);
+    text-align: center;
   }
 
   .footer-content {
-    display: flex;
-    justify-content: space-between;
     font-size: 0.75rem;
+  }
+
+  .footer__links {
+    margin-top: 1.5rem;
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 1em;
+    justify-content: center;
     align-items: center;
   }
 
-  .footer-nav__list {
-    list-style: none;
-    font-size: 0.75rem;
-    display: flex;
-    gap: 0.5rem;
-    padding: 0;
+  .footer__icon {
+    width: 2rem;
   }
 </style>

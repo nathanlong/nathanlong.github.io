@@ -1,0 +1,197 @@
+---
+// Sign-up form for the newsletter. The full card leads /newsletter; the
+// compact one closes each blog post.
+import { Image } from 'astro:assets';
+import Button from '@components/Button.astro';
+import newsletterArt from '@/assets/images/newsletter.png';
+import { NEWSLETTER } from '@/data/newsletter';
+
+interface Props {
+  compact?: boolean;
+  class?: string;
+}
+
+const { compact = false, class: className } = Astro.props;
+// Unique per variant, so the label still points at the right field if both
+// ever share a page
+const inputId = compact ? 'subscribe-email-compact' : 'subscribe-email';
+// Rendered size in CSS px, matching .subscribe__art below
+const artSize = compact ? 64 : 112;
+---
+
+<form
+  class:list={['subscribe', 'grain', { 'subscribe--compact': compact }, className]}
+  action={NEWSLETTER.subscribe}
+  method="post"
+  target="_blank"
+>
+  <Image
+    class="subscribe__art"
+    src={newsletterArt}
+    width={artSize}
+    height={artSize}
+    densities={[1, 2]}
+    alt=""
+  />
+  <div class="subscribe__body">
+    {
+      compact ? (
+        <>
+          <h2 class="subscribe__title">Enjoyed this?</h2>
+          <p class="subscribe__pitch">
+          Get this and more in my weekly newsletter:{' '}
+            <a href="/newsletter">{NEWSLETTER.name}</a>.
+          </p>
+        </>
+      ) : (
+        <h2 class="subscribe__title">{NEWSLETTER.name}</h2>
+      )
+    }
+    <label for={inputId} class:list={{ 'sr-only': compact }}>
+      Enter your email to sign up
+    </label>
+    <div class="subscribe__row">
+      <input
+        type="email"
+        name="email"
+        id={inputId}
+        autocomplete="email"
+        placeholder="you@example.com"
+        required
+      />
+      <input type="hidden" name="embed" value="1" />
+      <Button type="submit">Subscribe</Button>
+    </div>
+    <p class="subscribe__fine-print">
+      Prefer a feed reader?{' '}
+      <a href={NEWSLETTER.rss}>Subscribe by RSS</a>.
+    </p>
+  </div>
+</form>
+
+<style>
+  .subscribe {
+    border: 1px solid var(--text-muted);
+    border-radius: 1rem;
+    background-color: var(--surface-sunken);
+  }
+
+  /* The art brings its own background, so it's cropped to a badge, ringed
+     like the card's edge */
+  .subscribe__art {
+    flex: none;
+    width: var(--art-size);
+    height: var(--art-size);
+    border: 1px solid var(--text-muted);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .subscribe__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .subscribe__title,
+  .subscribe__pitch {
+    margin: 0;
+  }
+
+  .subscribe label {
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+
+  .subscribe__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 28rem;
+  }
+
+  input[type='email'] {
+    flex: 1 1 14rem;
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border: 1px solid var(--text-muted);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-strong);
+    font: inherit;
+    font-size: 1rem;
+  }
+
+  input[type='email']::placeholder {
+    color: var(--text-muted);
+  }
+
+  .subscribe__row > :global(.button) {
+    flex: 1 0 auto;
+  }
+
+  input:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .subscribe__fine-print {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  /* Full: centered, with the art sitting half above the top edge */
+  .subscribe:not(.subscribe--compact) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-block-start: 4.5rem;
+    padding: 0 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .subscribe:not(.subscribe--compact) .subscribe__body {
+    align-items: center;
+    width: 100%;
+  }
+
+  .subscribe:not(.subscribe--compact) .subscribe__art {
+    --art-size: 7rem;
+    margin-block-start: -3.5rem;
+    margin-block-end: 0.75rem;
+  }
+
+  /* Compact: avatar beside a left-aligned body, stacking on narrow screens */
+  .subscribe--compact {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .subscribe--compact .subscribe__art {
+    --art-size: 4rem;
+  }
+
+  .subscribe--compact .subscribe__title {
+    font-size: 1.25rem;
+  }
+
+  .subscribe--compact .subscribe__pitch {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 30rem) {
+    .subscribe--compact {
+      flex-direction: column;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .subscribe {
+      border-color: CanvasText;
+    }
+  }
+</style>

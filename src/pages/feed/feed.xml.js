@@ -1,17 +1,3 @@
-import { getCollection } from 'astro:content';
-import rss from '@astrojs/rss';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
-
-export async function GET(context) {
-	const posts = await getCollection('blog');
-	return rss({
-		title: SITE_TITLE,
-		description: SITE_DESCRIPTION,
-		site: context.site,
-    stylesheet: '/xsl/feed.xsl',
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/blog/${post.id}/`,
-		})),
-	});
-}
+// The 11ty site published its feed here. GitHub Pages can't redirect, so keep
+// serving the same feed for existing subscribers; /rss.xml is the canonical one.
+export { GET } from '../rss.xml.js';

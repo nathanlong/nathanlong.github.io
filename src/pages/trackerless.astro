@@ -1,0 +1,73 @@
+---
+import BaseHead from '@components/BaseHead.astro';
+import Footer from '@components/Footer.astro';
+import Header from '@components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="grid-layout flow">
+      <img
+        src="https://github.com/user-attachments/assets/6650f9fc-80d0-4169-8a86-25e53e24109f"
+        alt=""
+        class="image-accent"
+        width="192"
+        height="171"
+      />
+
+      <section class="">
+        <h1>Certified No-Tracker Web-Burger</h1>
+        <p class="wrap-balance">
+          This website is a guaranteed 100% trackerless, free-range, web burger.
+        </p>
+      </section>
+
+      <hr />
+
+      <article class="flow">
+        <p>
+          <strong>No trackers? How will you know who visits your site?</strong>
+        </p>
+        <p>I won't! But hey, YOU'RE here...</p>
+        <p>
+          I <em>do</em> load JavaScript on these pages, but it's the JavaScript
+          I <em>want</em> to send for you. For funsies, not for tracking.
+        </p>
+        <hr />
+        <p>
+          <strong>
+            But how will you know what content is performing well?
+          </strong>
+        </p>
+        <p>
+          I won't! But in a way, that's freeing because{' '}
+          <a href="https://adactio.com/journal/20996">I publish for myself</a>.
+          If someone is helped by something I wrote, I hope they will reach out
+          like the beautiful 100% human-being they are and let me know.
+        </p>
+        <p class="flow-2">
+          <small>
+            Dancing burger animation by{' '}
+            <a href="https://giphy.com/stickers/food-hungry-burger-2NcM1fPMZ5EWDh694K">
+              Alex Bradt
+            </a>
+          </small>
+        </p>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .image-accent {
+    margin: 0 auto;
+    max-width: 12rem;
+  }
+</style>
