@@ -52,10 +52,10 @@
    get their own. Zero specificity so it never fights dayparts.css. */
 :where(:root, [data-daypart]) {
   --focus-ring: var(--accent);
-  /* Header and footer wash, fading into the page */
-  --surface-gradient:
-    color-mix(in oklch, var(--surface-sunken) 50%, var(--surface)),
-    var(--surface);
+  /* The wash at the top of the page: the daypart's glow fading into the
+     page. Mixed in oklab, which doesn't grey out midway like sRGB or swing
+     through other hues like oklch when glow and surface hues differ. */
+  --surface-gradient: in oklab, var(--surface-glow), var(--surface);
 
   /* Code blocks. Token colors that need their own hue are per daypart in
      dayparts.css; these reuse the site's tokens. */
@@ -82,6 +82,36 @@
    markdown emphasis, so comments get their italics here. */
 .astro-code [style*='--shiki-token-comment'] {
   font-style: italic;
+}
+
+/* Scrollbars for long lines: a thin thumb in the daypart's colors over the
+   block's own background, brightening to the accent while the block is
+   hovered or focused. Shiki sets overflow-x: auto inline. */
+.astro-code {
+  --scrollbar-thumb: var(--text-muted);
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.astro-code:is(:hover, :focus-visible) {
+  --scrollbar-thumb: var(--accent);
+}
+
+/* Older Safari doesn't support scrollbar-color. Chrome ignores these once
+   scrollbar-color is set, so only browsers without it need them. */
+@supports not (scrollbar-color: auto) {
+  .astro-code::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+  .astro-code::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .astro-code::-webkit-scrollbar-thumb {
+    /* The border insets the thumb from the block's rounded bottom edge */
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: var(--scrollbar-thumb) padding-box;
+  }
 }
 
 html {
@@ -113,21 +143,18 @@ body {
    --grain-base (and --grain-base-size) for a layer under it. */
 body,
 .grain,
-.astro-code {
+.astro-code,
+blockquote {
   background-image:
     url(../assets/images/grain-dark.webp),
-    url(../assets/images/grain-light.webp),
-    var(--grain-base, none);
+    url(../assets/images/grain-light.webp), var(--grain-base, none);
   background-repeat: repeat, repeat, no-repeat;
-  background-size:
-    auto,
-    auto,
-    var(--grain-base-size, auto);
+  background-size: auto, auto, var(--grain-base-size, auto);
 }
 
 /* Custom properties inherit, so reset the base layer on each grain element
    (zero specificity, so a component can still set its own) */
-:where(.grain, .astro-code) {
+:where(.grain, .astro-code, blockquote) {
   --grain-base: none;
   --grain-base-size: auto;
 }
@@ -135,11 +162,9 @@ body,
 @media (min-resolution: 1.5dppx) {
   body,
   .grain,
-  .astro-code {
-    background-size:
-      131px,
-      150px,
-      var(--grain-base-size, auto);
+  .astro-code,
+  blockquote {
+    background-size: 131px, 150px, var(--grain-base-size, auto);
   }
 }
 
@@ -181,14 +206,25 @@ b {
 
 a {
   color: var(--accent);
+  transition: color 150ms ease-in-out;
 }
 
 a:hover {
-  color: var(--accent);
+  color: var(--text-bold);
 }
 
 .prose {
   color: var(--text);
+}
+
+.prose h2 {
+  --flow-space: 3rem;
+  line-height: 1.3;
+  border-bottom: 3px dotted var(--surface-sunken);
+}
+
+.prose h3 {
+  --flow-space: 2rem;
 }
 
 textarea {
@@ -226,12 +262,12 @@ pre > code {
 }
 
 blockquote {
-  border-left: 4px solid var(--accent);
-  padding: 0 0 0 1.5rem;
+  padding: 1ch 2ch;
   margin: 0;
-  font-size: 1.25em;
-  line-height: 1.5;
-  font-weight: 300;
+  font-size: 1.125em;
+  font-weight: 400;
+  background-color: var(--surface-sunken);
+  border-radius: 1rem;
 }
 
 /* Better way to define? */
@@ -241,7 +277,7 @@ blockquote {
 
 hr {
   border: none;
-  border-top: 1px solid var(--surface-sunken);
+  border-top: 3px dotted var(--surface-sunken);
 }
 ul,
 ol {
@@ -351,6 +387,10 @@ ol {
   --flow-space: 0rem;
 }
 
+.flow-1\/2 {
+  --flow-space: 0.5rem;
+}
+
 .flow-1 {
   --flow-space: 1rem;
 }
@@ -388,8 +428,10 @@ ol {
 .meta,
 .post-tags {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5em;
+  column-gap: 0.5rem;
+  row-gap: 0.125rem;
   font-family: var(--font-mono);
   font-size: 0.875em;
   color: var(--text-muted);

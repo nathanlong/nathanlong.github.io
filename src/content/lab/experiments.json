@@ -6,6 +6,7 @@
     "source": "https://github.com/nathanlong/experiments",
     "description": "A place to host experiments in motion, techniques, and other odd things.",
     "pubDate": "2024-02-07T12:00:00-0500",
+    "updatedDate": "2026-06-15T12:00:00-0500",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/0c1009c9-34ab-418c-b504-c101fc4fe0f0",
     "imageAlt": "A flask with bubbling liquid overlaid with scanlines from an old CRT display",
     "feature": false
@@ -39,6 +40,7 @@
     "source": "https://github.com/nathanlong/rules",
     "description": "A personal reference for games (with house-rules) I play with my family.",
     "pubDate": "2022-10-12T12:00:00-0400",
+    "updatedDate": "2026-03-23T12:00:00-0500",
     "image": "https://user-images.githubusercontent.com/623568/211856834-436269ac-9130-4628-b088-b35f75b69810.png",
     "imageAlt": "Playing card suit icons over a field of X's. Icon by Irene Hoffman",
     "feature": false
@@ -61,6 +63,7 @@
     "source": "https://github.com/nathanlong/nathanlong.github.io/blob/main/public/xsl/voices.xsl",
     "description": "My curated list of interesting websites. Powered by OPML and XSL.",
     "pubDate": "2023-11-13T12:00:00-0500",
+    "updatedDate": "2026-01-20T12:00:00-0500",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/ce60dd05-ebb0-46e7-9501-306ca4f1dbc6",
     "imageAlt": "Profile of a face speaking inside a web browser. Icon by Gregor Cresnar.",
     "feature": false

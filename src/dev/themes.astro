@@ -100,6 +100,10 @@ export function greet(name: string) {
         ['text / sunken', 'var(--text)', ['var(--surface-sunken)'], 4.5],
         ['muted / surface', 'var(--text-muted)', ['var(--surface)'], 4.5],
         ['muted / sunken', 'var(--text-muted)', ['var(--surface-sunken)'], 4.5],
+        // The page wash starts at the glow, under the header and page title
+        ['text / glow', 'var(--text)', ['var(--surface-glow)'], 4.5],
+        ['muted / glow', 'var(--text-muted)', ['var(--surface-glow)'], 4.5],
+        ['accent / glow', 'var(--accent)', ['var(--surface-glow)'], 4.5],
         ['strong / surface', 'var(--text-strong)', ['var(--surface)'], 7],
         ['accent / surface', 'var(--accent)', ['var(--surface)'], 4.5],
         ['focus / surface', 'var(--focus-ring)', ['var(--surface)'], 3],
@@ -123,6 +127,7 @@ export function greet(name: string) {
       const TOKENS = [
         '--surface',
         '--surface-sunken',
+        '--surface-glow',
         '--text-strong',
         '--text',
         '--text-muted',

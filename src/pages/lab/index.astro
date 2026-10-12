@@ -1,14 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import ListItemLab from '@/components/ListItemLab.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { getExperiments, lastTouched } from '@/data/lab';
 
-const experiments = (await getCollection('lab')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const experiments = await getExperiments();
 ---
 
 <style>
@@ -27,8 +25,11 @@ const experiments = (await getCollection('lab')).sort(
   </head>
   <body>
     <Header />
-    <main class="grid-layout">
-      <h2>Lab</h2>
+    <main class="grid-layout flow flow-2">
+      <section class="flow">
+        <h1>Lab</h1>
+        <p class="flow-1/2">Side projects, demos, random things I've built...</p>
+      </section>
       <section>
         <ul class="list-item--grid">
           {experiments.map((experiment) => (
@@ -37,7 +38,7 @@ const experiments = (await getCollection('lab')).sort(
               description={experiment.data.description}
               image={experiment.data.image}
               imageAlt={experiment.data.imageAlt}
-              date={experiment.data.pubDate}
+              date={lastTouched(experiment)}
               href={experiment.data.url}
               source={experiment.data.source}
             />
