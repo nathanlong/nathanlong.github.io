@@ -1,0 +1,136 @@
+---
+// Giant text filled with drifting orbs in the daypart's accent colors
+// (src/scripts/canvas-gradient.ts), with the site grain on top. The canvas
+// and grain are clipped to the text by an inline SVG clipPath, so the orbs
+// only show inside the letters.
+//
+// Colors come from --orb-bg and --orb-1…--orb-8 below, so they follow the
+// daypart and Appearance, and tween when either changes.
+//
+// The clip is laid out in a 270×128 box (with room above and below for round glyphs that dip past the baseline) and scaled to the element, which
+// keeps that aspect ratio; textLength stretches the text to fill the width,
+// so the box is tuned for about three bold characters.
+
+interface Props {
+  text?: string;
+}
+
+const { text = '404' } = Astro.props;
+---
+
+<div class="gradient-orbs" aria-hidden="true">
+  <canvas></canvas>
+  <div class="grain"></div>
+  <svg width="0" height="0">
+    <clipPath id="gradient-orbs-clip" clipPathUnits="objectBoundingBox">
+      <text
+        transform="scale(0.0037037 0.0078125)"
+        x="0"
+        y="118"
+        textLength="270"
+        lengthAdjust="spacingAndGlyphs">{text}</text
+      >
+    </clipPath>
+  </svg>
+</div>
+
+<style>
+  .gradient-orbs {
+    /* Base color between orbs, then the orbs. All accents, so the letters
+       keep roughly link-level contrast with the page. */
+    --orb-bg: var(--accent);
+    --orb-1: var(--shiki-token-keyword);
+    --orb-2: var(--shiki-token-constant);
+    --orb-3: var(--shiki-token-string);
+    --orb-4: var(--shiki-token-function);
+
+    position: relative;
+    width: 100%;
+    aspect-ratio: 270 / 128;
+    clip-path: url(#gradient-orbs-clip);
+    /* Fills the letters until the first frame, or without WebGL/JS */
+    background: var(--accent);
+  }
+
+  .gradient-orbs > :is(canvas, .grain) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  svg {
+    position: absolute;
+  }
+
+  text {
+    font-family: var(--font-sans);
+    font-size: 150px;
+    font-weight: 900;
+  }
+</style>
+
+<script>
+  import {
+    canvasGradient,
+    type GradientPalette,
+  } from '@/scripts/canvas-gradient';
+
+  const MAX_ORBS = 8;
+
+  const root = document.querySelector<HTMLElement>('.gradient-orbs');
+  const canvas = root?.querySelector('canvas');
+
+  if (root && canvas) {
+    // Custom properties come back unresolved (var(), light-dark(),
+    // color-mix()), so let a probe element compute each one, then let a 2D
+    // canvas turn whatever color syntax that gives into sRGB bytes.
+    const probe = document.createElement('span');
+    probe.hidden = true;
+    root.append(probe);
+
+    const ctx = document
+      .createElement('canvas')
+      .getContext('2d', { willReadFrequently: true })!;
+    ctx.canvas.width = ctx.canvas.height = 1;
+
+    const toHex = (prop: string) => {
+      probe.style.color = `var(${prop})`;
+      ctx.clearRect(0, 0, 1, 1);
+      ctx.fillStyle = getComputedStyle(probe).color;
+      ctx.fillRect(0, 0, 1, 1);
+      const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+      return '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+    };
+
+    const readPalette = (): GradientPalette => {
+      const style = getComputedStyle(root);
+      const colors: string[] = [];
+      for (let i = 1; i <= MAX_ORBS; i++) {
+        if (!style.getPropertyValue(`--orb-${i}`).trim()) break;
+        colors.push(toHex(`--orb-${i}`));
+      }
+      return { bg: toHex('--orb-bg'), colors };
+    };
+
+    const orbs = canvasGradient(canvas, { ...readPalette(), speed: 3 });
+
+    // Retint on a daypart or Appearance change (SiteState.astro writes
+    // these on <html>), or an OS scheme change when Appearance is System.
+    // Batched to one read per frame.
+    let pending = false;
+    const retint = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => {
+        pending = false;
+        orbs.tween(readPalette(), 1200);
+      });
+    };
+    new MutationObserver(retint).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-daypart', 'data-scheme'],
+    });
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', retint);
+  }
+</script>

@@ -6,7 +6,7 @@ import Header from '@components/Header.astro';
 import ListItemPost from '@components/ListItemPost.astro';
 import ListItemLab from '@/components/ListItemLab.astro';
 import SectionHeader from '@components/SectionHeader.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_DESCRIPTION } from '@/consts';
 import { getExperiments, lastTouched } from '@/data/lab';
 import { NEWSLETTER, getIssues } from '@/data/newsletter';
 
@@ -45,7 +45,7 @@ const latestNews = (await getIssues()).slice(0, 3);
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead description={SITE_DESCRIPTION} />
   </head>
   <body>
     <Header />

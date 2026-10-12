@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_DESCRIPTION } from '@/consts';
 
 const allPosts = await getCollection("blog");
 // Extract flat array of unique, sorted tags
@@ -13,7 +13,7 @@ const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())].sort();
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title="Tags" description={SITE_DESCRIPTION} />
   </head>
   <body>
     <Header />

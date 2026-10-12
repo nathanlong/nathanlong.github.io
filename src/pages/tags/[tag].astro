@@ -6,7 +6,7 @@ import Footer from '@components/Footer.astro';
 import FormattedDate from '@components/FormattedDate.astro';
 import Header from '@components/Header.astro';
 import ListItemPost from '@/components/ListItemPost.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_DESCRIPTION } from '@/consts';
 
 // 1. Generate paths for all unique tags at build time
 export async function getStaticPaths() {
@@ -38,7 +38,7 @@ const { posts } = Astro.props;
 <html lang="en">
   <head>
     <BaseHead
-      title={`Posts tagged with "${tag}"`}
+      title={`Tagged with ${tag}`}
       description={SITE_DESCRIPTION}
     />
   </head>
