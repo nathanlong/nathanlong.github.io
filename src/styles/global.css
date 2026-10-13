@@ -442,6 +442,15 @@ ol {
   color: var(--text-muted);
 }
 
+ul.post-tags {
+  list-style: none;
+  padding: 0;
+}
+
+.post-tags--column {
+  flex-direction: column;
+}
+
 .list-item {
   list-style: none;
   display: flex;

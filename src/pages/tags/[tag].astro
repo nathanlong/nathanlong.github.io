@@ -44,8 +44,9 @@ const { posts } = Astro.props;
   </head>
   <body>
     <Header />
-    <main class="grid-layout">
-      <h2>Tagged with {tag}</h2>
+    <main class="grid-layout flow">
+      <h1>Tagged with {tag}</h1>
+      <hr />
       <ul class="list-item">
         {posts.map((post) => (
           <ListItemPost

@@ -18,12 +18,14 @@ const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())].sort();
   <body>
     <Header />
     <main class="grid-layout">
-      <section>
-        <ul>
+      <section class="flow">
+        <h1>Tags</h1>
+        <p class="flow-1/2">Certain topics I tend to write about:</p>
+        <ul class="post-tags post-tags--column">
           {tags.map((tag) => (
             <li>
               <a href={`/tags/${tag}/`}>
-                {tag}
+                #{tag}
               </a>
             </li>
           ))}
