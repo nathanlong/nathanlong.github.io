@@ -23,7 +23,7 @@ if [[ ! -f $deploy_dir/.git || $(git -C $deploy_dir branch --show-current) != $b
 fi
 
 e_header "Syncing build into worktree..."
-rsync -a --delete --exclude='.git' $build_dir/ $deploy_dir/
+rsync -a --checksum --delete --exclude='.git' $build_dir/ $deploy_dir/
 
 e_header "Creating new build for $timestamp"
 git -C $deploy_dir add --all

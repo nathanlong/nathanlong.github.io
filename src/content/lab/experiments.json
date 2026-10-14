@@ -59,9 +59,9 @@
   {
     "id": "web-voices",
     "name": "Web Voices",
-    "url": "https://nathan-long.com/voices.xml",
-    "source": "https://github.com/nathanlong/nathanlong.github.io/blob/main/public/xsl/voices.xsl",
-    "description": "My curated list of interesting websites. Powered by OPML and XSL.",
+    "url": "https://nathan-long.com/voices",
+    "source": "https://github.com/nathanlong/nathanlong.github.io/blob/main/public/data/feed.opml",
+    "description": "My curated list of interesting websites. Powered by OPML.",
     "pubDate": "2023-11-13T12:00:00-0500",
     "updatedDate": "2026-01-20T12:00:00-0500",
     "image": "https://github.com/nathanlong/nathanlong.github.io/assets/623568/ce60dd05-ebb0-46e7-9501-306ca4f1dbc6",
