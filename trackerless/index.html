@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-6klrbfs7><head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><script>(function(){const parts = [{"id":"dawn","start":5,"dark":true},{"id":"morning","start":8,"dark":false},{"id":"noon","start":11,"dark":false},{"id":"afternoon","start":14,"dark":false},{"id":"evening","start":18,"dark":true},{"id":"midnight","start":22,"dark":true}];
+const hatRules = [{"id":"trucker","from":"09-22","to":"11-30"},{"id":"pumpkin","from":"10-01","to":"10-31"}];
+
+  const KEY = 'prefs';
+  const SCHEMES = ['system', 'light', 'dark'];
+  const PREVIEW_PARAMS = ['daypart', 'scheme', 'at'];
+  const root = document.documentElement;
+  const meta = document.querySelector('meta[name="color-scheme"]');
+  const ids = parts.map((p) => p.id);
+  let timer;
+  let painted = false; // set after the first apply()
+  let shown = {}; // { daypart, scheme } the page shows or is fading to
+
+  // Keep only values we recognize. Anything else (including the defaults
+  // 'time' and 'auto') is dropped, and a missing field means the default.
+  const clean = (value) => {
+    const out = {};
+    if (SCHEMES.includes(value?.scheme)) out.scheme = value.scheme;
+    if (ids.includes(value?.hue)) out.hue = value.hue;
+    return out;
+  };
+  const read = () => {
+    try {
+      return clean(JSON.parse(localStorage.getItem(KEY)));
+    } catch {
+      return {};
+    }
+  };
+
+  // The one localStorage read per page load
+  let prefs = read();
+
+  // --- Preview params (never stored) ------------------------------------
+
+  const params = new URLSearchParams(location.search);
+  let preview = clean({
+    scheme: params.get('scheme'),
+    hue: params.get('daypart'),
+  });
+  // ?scheme=time is valid too: it means "ignore the stored Appearance"
+  if (params.get('scheme') === 'time') preview.time = true;
+
+  let offset = 0; // ms added to the real clock by ?at=
+  const at = /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(params.get('at') ?? '');
+  if (at && !preview.hue && +at[1] < 24 && +at[2] < 60 && +(at[3] ?? 0) < 60) {
+    const target = new Date();
+    target.setHours(+at[1], +at[2], +(at[3] ?? 0), 0);
+    offset = target - Date.now();
+  }
+  const clockNow = () => new Date(Date.now() + offset);
+
+  // --- Clock ------------------------------------------------------------
+
+  // Latest part that has started by this hour; before the first start
+  // (e.g. 2am) it's the last part, carried over from the previous day.
+  const partAt = (hour) =>
+    parts.findLast((p) => p.start <= hour) ?? parts[parts.length - 1];
+
+  const clockPart = (now) =>
+    parts.find((p) => p.id === preview.hue) ?? partAt(now.getHours());
+
+  const nextBoundary = (now, part) => {
+    const next = parts[(parts.indexOf(part) + 1) % parts.length];
+    const at = new Date(now);
+    at.setHours(next.start, 0, 0, 0);
+    if (at <= now) at.setDate(at.getDate() + 1);
+    return at;
+  };
+
+  // --- Apply: both theme attributes from one clock reading ---------------
+
+  function apply(now = clockNow()) {
+    clearTimeout(timer);
+    const clock = clockPart(now);
+
+    const daypart = preview.hue ?? prefs.hue ?? clock.id;
+    const setting = preview.scheme ?? (preview.time ? null : prefs.scheme);
+    const scheme =
+      setting === 'system' ? null : (setting ?? (clock.dark ? 'dark' : 'light'));
+
+    // Compare with the last target, not the DOM: a crossfade still waiting
+    // to run hasn't written its attributes yet.
+    const changed = shown.daypart !== daypart || shown.scheme !== scheme;
+    shown = { daypart, scheme };
+    // Writes the latest target when it runs, so a crossfade that started
+    // earlier can't put back a state that's since been replaced
+    const update = () => {
+      root.dataset.daypart = shown.daypart;
+      if (shown.scheme) root.dataset.scheme = shown.scheme;
+      else delete root.dataset.scheme;
+      // Keeps the pre-CSS canvas in the right mode, so a light page on a
+      // dark OS doesn't flash dark before the stylesheet loads.
+      meta?.setAttribute('content', shown.scheme ?? 'light dark');
+    };
+    // Crossfade changes on a page that's already showing. Not on first
+    // load (nothing has painted yet), in a hidden tab, or for reduced
+    // motion.
+    if (
+      changed &&
+      painted &&
+      document.visibilityState === 'visible' &&
+      document.startViewTransition &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      document.startViewTransition(update);
+    else update();
+
+    // Only schedule if something follows the clock. Background tabs and
+    // sleep can make the timer late; the visibility listener catches up.
+    const hueFollows = !preview.hue && !prefs.hue;
+    const schemeFollows = !preview.hue && !setting;
+    if (hueFollows || schemeFollows)
+      timer = setTimeout(() => apply(), nextBoundary(now, clock) - now);
+
+    // Lets an open menu update its labels. Nothing listens yet on load.
+    document.dispatchEvent(new CustomEvent('site:state'));
+  }
+
+  function stopPreview() {
+    preview = {};
+    offset = 0;
+    const url = new URL(location.href);
+    PREVIEW_PARAMS.forEach((name) => url.searchParams.delete(name));
+    history.replaceState(history.state, '', url);
+  }
+
+  // --- Hat --------------------------------------------------------------
+
+  function applyHat(today) {
+    const monthDay = (today.getMonth() + 1) * 100 + today.getDate();
+    const toMonthDay = (value) => {
+      const [month, day] = value.split('-').map(Number);
+      return month * 100 + day;
+    };
+    const coversToday = ({ from, to }) => {
+      const start = toMonthDay(from);
+      const end = toMonthDay(to);
+      // A range like 12-20 to 01-05 wraps past New Year
+      return start <= end
+        ? monthDay >= start && monthDay <= end
+        : monthDay >= start || monthDay <= end;
+    };
+
+    const dated = hatRules.filter(
+      (hat) => hat.from && hat.to && coversToday(hat),
+    );
+    const pool = dated.length
+      ? dated
+      : hatRules.filter((hat) => !hat.from && !hat.to);
+
+    // Keep one hat per browser session instead of a new one on every page
+    let id;
+    try {
+      id = sessionStorage.getItem('hat');
+    } catch {}
+    if (!pool.some((hat) => hat.id === id)) {
+      id = pool[Math.floor(Math.random() * pool.length)]?.id;
+      try {
+        if (id) sessionStorage.setItem('hat', id);
+      } catch {}
+    }
+    if (id) root.dataset.hat = id;
+  }
+
+  // --- Load: one read per store, all attributes at once ------------------
+
+  apply();
+  painted = true;
+  applyHat(new Date()); // real date: ?at= only moves the time of day
+
+  // --- Keep in sync -----------------------------------------------------
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') apply();
+  });
+  addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+    // Restored from the back/forward cache: the script didn't rerun, and
+    // storage events from other tabs didn't arrive while it was cached.
+    prefs = read();
+    apply();
+  });
+  // Another tab changed prefs: the event carries the new value, so no read
+  addEventListener('storage', (event) => {
+    if (event.storageArea !== localStorage) return;
+    if (event.key !== KEY && event.key !== null) return; // null = clear()
+    try {
+      prefs = clean(JSON.parse(event.newValue));
+    } catch {
+      prefs = {};
+    }
+    apply();
+  });
+
+  // --- API for the menu (types in site-state.d.ts) -----------------------
+
+  window.siteState = {
+    /** Saved settings as the menu shows them, with defaults filled in */
+    get prefs() {
+      return { scheme: prefs.scheme ?? 'time', hue: prefs.hue ?? 'auto' };
+    },
+    /** The daypart the clock (or a preview) says right now */
+    clockPart: () => clockPart(clockNow()).id,
+    /** True while URL params are overriding things */
+    get previewing() {
+      return Object.keys(preview).length > 0 || offset !== 0;
+    },
+    stopPreview() {
+      stopPreview();
+      apply();
+    },
+    /** Merge a change, e.g. { scheme: 'time' } or { hue: 'auto' } */
+    set(change) {
+      prefs = clean({ ...prefs, ...change }); // defaults fail validation → removed
+      try {
+        if (Object.keys(prefs).length)
+          localStorage.setItem(KEY, JSON.stringify(prefs));
+        else localStorage.removeItem(KEY);
+      } catch {}
+      stopPreview();
+      apply();
+    },
+  };
+})();</script><link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Nathan Long" href="https://nathan-long.com/rss.xml"><meta name="generator" content="Astro v7.3.5"><!-- Canonical URL --><link rel="canonical" href="https://nathan-long.com/trackerless/"><!-- Primary Meta Tags --><title>Certified Trackerless Web-Burger - Nathan Long</title><meta name="description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://nathan-long.com/trackerless/"><meta property="og:title" content="Certified Trackerless Web-Burger - Nathan Long"><meta property="og:description" content="A digital-garden/dumpster fire handcrafted by some ordinary web guy"><!-- <meta property="og:image" content={new URL(image.src, Astro.url)} /> --><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="/_astro/Header.BZIHcC_n.css"><style>.image-accent[data-astro-cid-6klrbfs7]{max-width:12rem;margin:0 auto}
+</style></head><body data-astro-cid-6klrbfs7><header class="grid-layout" data-astro-cid-nen7h5rs><div class="bar" data-astro-cid-nen7h5rs><a href="/" class="site-title" data-astro-cid-nen7h5rs><span class="site-avatar" style="--avatar-ratio: 1400 / 1900" data-astro-cid-xdqqxsx5><img src="/_astro/avatar-base.CwjzjNzs_2udfeT.webp" srcset="/_astro/avatar-base.CwjzjNzs_2udfeT.webp 1x, /_astro/avatar-base.CwjzjNzs_Z1r5EAe.webp 2x, /_astro/avatar-base.CwjzjNzs_rTGcQ.webp 3x" loading="eager" alt data-astro-cid-xdqqxsx5="true" decoding="async" width="29" height="40" class="site-avatar-image"><span class="site-avatar-hat" aria-hidden="true" data-astro-cid-xdqqxsx5></span></span>Nathan Long</a><button class="menu-button" commandfor="site-menu" command="show-modal" aria-haspopup="dialog" aria-label="Open menu" data-astro-cid-nen7h5rs><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" data-astro-cid-nen7h5rs="true">
+  <line x1="4" y1="6" x2="20" y2="6" />
+  <line x1="4" y1="12" x2="20" y2="12" />
+  <line x1="4" y1="18" x2="20" y2="18" />
+</svg></button></div></header><style>:root[data-hat="trucker"] .site-avatar-hat { background-image: image-set(url("/_astro/hat-trucker.B4719_gn_Z6qB5M.webp") 1x, url("/_astro/hat-trucker.B4719_gn_12rBS1.webp") 2x, url("/_astro/hat-trucker.B4719_gn_Z28Ja7P.webp") 3x); }
+:root[data-hat="pumpkin"] .site-avatar-hat { background-image: image-set(url("/_astro/hat-pumpkin.C14LsM9y_hOD5Q.webp") 1x, url("/_astro/hat-pumpkin.C14LsM9y_1qHR4E.webp") 2x, url("/_astro/hat-pumpkin.C14LsM9y_Z1JsTVc.webp") 3x); }</style><dialog id="site-menu" class="site-menu" closedby="any" aria-label="Site menu" data-astro-cid-nen7h5rs><div class="grid-layout" data-astro-cid-nen7h5rs><div class="bar" data-astro-cid-nen7h5rs><a href="/" class="site-menu-home" aria-label="Home" data-astro-cid-nen7h5rs><span class="site-avatar" style="--avatar-ratio: 1400 / 1900" data-astro-cid-xdqqxsx5><img src="/_astro/avatar-base.CwjzjNzs_2udfeT.webp" srcset="/_astro/avatar-base.CwjzjNzs_2udfeT.webp 1x, /_astro/avatar-base.CwjzjNzs_Z1r5EAe.webp 2x, /_astro/avatar-base.CwjzjNzs_rTGcQ.webp 3x" loading="eager" alt data-astro-cid-xdqqxsx5="true" decoding="async" width="29" height="40" class="site-avatar-image"><span class="site-avatar-hat" aria-hidden="true" data-astro-cid-xdqqxsx5></span></span></a><button class="menu-button" commandfor="site-menu" command="close" aria-label="Close menu" data-astro-cid-nen7h5rs><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" data-astro-cid-nen7h5rs="true">
+  <line x1="4" y1="6" x2="20" y2="6" />
+  <line x1="4" y1="12" x2="20" y2="12" />
+  <line x1="4" y1="18" x2="20" y2="18" />
+</svg></button></div><nav aria-label="Primary" data-astro-cid-nen7h5rs><ul data-astro-cid-nen7h5rs><li style="--i: 0" data-astro-cid-nen7h5rs><a href="/about" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>About</a></li><li style="--i: 1" data-astro-cid-nen7h5rs><a href="/blog" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>Blog</a></li><li style="--i: 2" data-astro-cid-nen7h5rs><a href="/lab" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>Lab</a></li><li style="--i: 3" data-astro-cid-nen7h5rs><a href="/newsletter" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>Newsletter</a></li><li style="--i: 4" data-astro-cid-nen7h5rs><a href="/rss.xml" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>RSS</a></li></ul></nav><div class="menu-item" style="--i: 5" data-astro-cid-nen7h5rs><!-- Hidden until the script wires it up: without JS it can't do anything --><form class="theme-controls" hidden data-astro-cid-cjlsbq3c><fieldset data-astro-cid-cjlsbq3c><legend data-astro-cid-cjlsbq3c>Appearance</legend><div class="segments" data-astro-cid-cjlsbq3c><label class="segment" data-astro-cid-cjlsbq3c><input class="sr-only" type="radio" name="scheme" value="time" data-astro-cid-cjlsbq3c>Time<span class="now" data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>, </span><span data-now-scheme class="astro-cjlsbq3c" data-astro-cid-cjlsbq3c></span></span></label><label class="segment" data-astro-cid-cjlsbq3c><input class="sr-only" type="radio" name="scheme" value="system" data-astro-cid-cjlsbq3c>System<span class="now" data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>, </span><span data-now-system class="astro-cjlsbq3c" data-astro-cid-cjlsbq3c></span></span></label><label class="segment" data-astro-cid-cjlsbq3c><input class="sr-only" type="radio" name="scheme" value="light" data-astro-cid-cjlsbq3c>Light</label><label class="segment" data-astro-cid-cjlsbq3c><input class="sr-only" type="radio" name="scheme" value="dark" data-astro-cid-cjlsbq3c>Dark</label></div></fieldset><fieldset data-astro-cid-cjlsbq3c><legend data-astro-cid-cjlsbq3c>Color</legend><div class="chips" data-astro-cid-cjlsbq3c><label class="chip follow-clock" data-astro-cid-cjlsbq3c><input class="sr-only" type="radio" name="hue" value="auto" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" data-astro-cid-cjlsbq3c="true">
+  <circle cx="8" cy="8" r="6.25" />
+  <path d="M8 4.5V8l2.5 1.5" />
+</svg>Auto<span class="now" data-astro-cid-cjlsbq3c><span data-now-hue data-astro-cid-cjlsbq3c></span></span></label><label class="chip" data-option="dawn" data-label="Dawn" data-dark="true" data-astro-cid-cjlsbq3c><span aria-hidden="true" class="indicator" data-astro-cid-cjlsbq3c></span><input class="sr-only" type="radio" name="hue" value="dawn" data-astro-cid-cjlsbq3c><span class="swatch" data-daypart="dawn" aria-hidden="true" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check" data-astro-cid-cjlsbq3c="true">
+  <path d="M3.5 8.5l3 3 6-7" />
+</svg></span>Dawn<span class="now-marker" hidden data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>(current time of day)</span></span></label><label class="chip" data-option="morning" data-label="Morning" data-dark="false" data-astro-cid-cjlsbq3c><span aria-hidden="true" class="indicator" data-astro-cid-cjlsbq3c></span><input class="sr-only" type="radio" name="hue" value="morning" data-astro-cid-cjlsbq3c><span class="swatch" data-daypart="morning" aria-hidden="true" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check" data-astro-cid-cjlsbq3c="true">
+  <path d="M3.5 8.5l3 3 6-7" />
+</svg></span>Morning<span class="now-marker" hidden data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>(current time of day)</span></span></label><label class="chip" data-option="noon" data-label="Noon" data-dark="false" data-astro-cid-cjlsbq3c><span aria-hidden="true" class="indicator" data-astro-cid-cjlsbq3c></span><input class="sr-only" type="radio" name="hue" value="noon" data-astro-cid-cjlsbq3c><span class="swatch" data-daypart="noon" aria-hidden="true" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check" data-astro-cid-cjlsbq3c="true">
+  <path d="M3.5 8.5l3 3 6-7" />
+</svg></span>Noon<span class="now-marker" hidden data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>(current time of day)</span></span></label><label class="chip" data-option="afternoon" data-label="Afternoon" data-dark="false" data-astro-cid-cjlsbq3c><span aria-hidden="true" class="indicator" data-astro-cid-cjlsbq3c></span><input class="sr-only" type="radio" name="hue" value="afternoon" data-astro-cid-cjlsbq3c><span class="swatch" data-daypart="afternoon" aria-hidden="true" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check" data-astro-cid-cjlsbq3c="true">
+  <path d="M3.5 8.5l3 3 6-7" />
+</svg></span>Afternoon<span class="now-marker" hidden data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>(current time of day)</span></span></label><label class="chip" data-option="evening" data-label="Evening" data-dark="true" data-astro-cid-cjlsbq3c><span aria-hidden="true" class="indicator" data-astro-cid-cjlsbq3c></span><input class="sr-only" type="radio" name="hue" value="evening" data-astro-cid-cjlsbq3c><span class="swatch" data-daypart="evening" aria-hidden="true" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check" data-astro-cid-cjlsbq3c="true">
+  <path d="M3.5 8.5l3 3 6-7" />
+</svg></span>Evening<span class="now-marker" hidden data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>(current time of day)</span></span></label><label class="chip" data-option="midnight" data-label="Midnight" data-dark="true" data-astro-cid-cjlsbq3c><span aria-hidden="true" class="indicator" data-astro-cid-cjlsbq3c></span><input class="sr-only" type="radio" name="hue" value="midnight" data-astro-cid-cjlsbq3c><span class="swatch" data-daypart="midnight" aria-hidden="true" data-astro-cid-cjlsbq3c><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check" data-astro-cid-cjlsbq3c="true">
+  <path d="M3.5 8.5l3 3 6-7" />
+</svg></span>Midnight<span class="now-marker" hidden data-astro-cid-cjlsbq3c><span class="sr-only" data-astro-cid-cjlsbq3c>(current time of day)</span></span></label></div></fieldset><p class="preview-note" hidden data-astro-cid-cjlsbq3c>Previewing from the link.<button class="button button--secondary" type="button" data-stop-preview="true" data-astro-cid-cjlsbq3c="true" data-astro-cid-ekguhzzh>Use my settings</button></p></form><script type="module">var e=window.siteState,t=document.querySelector(`.theme-controls`);if(e&&t){let n=matchMedia(`(prefers-color-scheme: dark)`),r=t.elements,i=e=>t.querySelector(e),a=t.querySelectorAll(`[data-option]`);function o(){if(!e)return;let{scheme:t,hue:o}=e.prefs;r.scheme.value=t,r.hue.value=o;let s=i(`[data-option="${e.clockPart()}"]`),c=i(`[data-now-scheme]`),l=i(`[data-now-system]`),u=i(`[data-now-hue]`);c&&(c.textContent=s?.dataset.dark===`true`?`Dark`:`Light`),l&&(l.textContent=n.matches?`Dark`:`Light`),u&&(u.textContent=s?.dataset.label??``),a.forEach(e=>{let t=e.querySelector(`.now-marker`);t&&(t.hidden=e!==s)});let d=i(`.preview-note`);d&&(d.hidden=!e.previewing)}t.addEventListener(`submit`,e=>e.preventDefault()),t.addEventListener(`change`,t=>{let{name:n,value:r}=t.target;e.set({[n]:r})}),i(`[data-stop-preview]`)?.addEventListener(`click`,()=>e.stopPreview()),document.addEventListener(`site:state`,o),n.addEventListener(`change`,o),o(),t.hidden=!1}</script></div></div></dialog><script type="module">window.addEventListener(`pageshow`,e=>{e.persisted&&document.querySelector(`#site-menu`)?.close()});</script><main class="grid-layout flow" data-astro-cid-6klrbfs7><img src="https://github.com/user-attachments/assets/6650f9fc-80d0-4169-8a86-25e53e24109f" alt="" class="image-accent" width="192" height="171" data-astro-cid-6klrbfs7><section class="" data-astro-cid-6klrbfs7><h1 data-astro-cid-6klrbfs7>Certified Trackerless Web-Burger</h1><p class="wrap-balance" data-astro-cid-6klrbfs7>This website is a guaranteed 100% trackerless, free-range, web burger.</p></section><hr data-astro-cid-6klrbfs7><article class="flow" data-astro-cid-6klrbfs7><p data-astro-cid-6klrbfs7><strong data-astro-cid-6klrbfs7>No trackers? How will you know who visits your site?</strong></p><p data-astro-cid-6klrbfs7>I won't! But hey, YOU'RE here...</p><p data-astro-cid-6klrbfs7>I <em data-astro-cid-6klrbfs7>do</em> load JavaScript on these pages, but it's the JavaScript I <em data-astro-cid-6klrbfs7>want</em> to send for you. For funsies, not for tracking.</p><hr data-astro-cid-6klrbfs7><p data-astro-cid-6klrbfs7><strong data-astro-cid-6klrbfs7>But how will you know what content is performing well?</strong></p><p data-astro-cid-6klrbfs7>I won't! But in a way, that's freeing because <a href="https://adactio.com/journal/20996" data-astro-cid-6klrbfs7>I publish for myself</a>. If someone is helped by something I wrote, I hope they will reach out like the beautiful 100% human-being they are and let me know.</p><p class="flow-2" data-astro-cid-6klrbfs7><small data-astro-cid-6klrbfs7>Dancing burger animation by <a href="https://giphy.com/stickers/food-hungry-burger-2NcM1fPMZ5EWDh694K" data-astro-cid-6klrbfs7>Alex Bradt</a></small></p></article></main><footer class="grid-layout" data-astro-cid-jo6i4kqk><div class="" data-astro-cid-jo6i4kqk>🚧</div><div class="footer-content" data-astro-cid-jo6i4kqk><p data-astro-cid-jo6i4kqk>&copy; 2026 Nathan Long.</p><p data-astro-cid-jo6i4kqk>This site is under active construction... So, uh, watch your step.</p><p data-astro-cid-jo6i4kqk><a href="/trackerless" data-astro-cid-jo6i4kqk>Certified Trackerless Web Burger</a><span data-astro-cid-jo6i4kqk>&trade;</span></p></div><div class="footer-content" data-astro-cid-jo6i4kqk><ul class="footer__links" data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a href="https://github.com/nathanlong" data-astro-cid-jo6i4kqk><svg viewBox="0 0 640 640" class="footer__icon" data-astro-cid-jo6i4kqk="true"><path d="M280.5 426.5C214.5 418.5 168 371 168 309.5C168 284.5 177 257.5 192 239.5C185.5 223 186.5 188 194 173.5C214 171 241 181.5 257 196C276 190 296 187 320.5 187C345 187 365 190 383 195.5C398.5 181.5 426 171 446 173.5C453 187 454 222 447.5 239C463.5 258 472 283.5 472 309.5C472 371 425.5 417.5 358.5 426C375.5 437 387 461 387 488.5L387 540.5C387 555.5 399.5 564 414.5 558C505 523.5 576 433 576 321C576 179.5 461 64 319.5 64C178 64 64 179.5 64 321C64 432 134.5 524 229.5 558.5C243 563.5 256 554.5 256 541L256 501C249 504 240 506 232 506C199 506 179.5 488 165.5 454.5C160 441 154 433 142.5 431.5C136.5 431 134.5 428.5 134.5 425.5C134.5 419.5 144.5 415 154.5 415C169 415 181.5 424 194.5 442.5C204.5 457 215 463.5 227.5 463.5C240 463.5 248 459 259.5 447.5C268 439 274.5 431.5 280.5 426.5z" fill="currentColor" /></svg></a></li><li data-astro-cid-jo6i4kqk><a href="https://codepen.io/nathanlong" data-astro-cid-jo6i4kqk><svg viewBox="0 0 640 640" class="footer__icon" data-astro-cid-jo6i4kqk="true"><path d="M566.3 223.7L332.3 67.7C324.3 62.8 315.8 62.7 307.7 67.7L73.7 223.7C67.7 227.7 64 234.8 64 242L64 398C64 405.1 67.7 412.3 73.7 416.3L307.7 572.3C315.7 577.2 324.2 577.3 332.3 572.3L566.3 416.3C572.3 412.3 576 405.2 576 398L576 242C576 234.9 572.3 227.7 566.3 223.7zM342 127.1L514.3 242L437.4 293.4L342 229.7L342 127.1zM298 127.1L298 229.7L202.6 293.4L125.7 242L298 127.1zM108 283.1L163.1 320L108 356.8L108 283.1zM298 512.8L125.7 398L202.6 346.6L298 410.3L298 512.8zM320 372L242.3 320L320 268L397.7 320L320 372zM342 512.9L342 410.3L437.4 346.6L514.3 398L342 512.9zM532 356.9L476.9 320L532 283.1L532 356.8z" fill="currentColor" /></svg></a></li><li data-astro-cid-jo6i4kqk><a href="https://www.linkedin.com/in/nathanmlong/" data-astro-cid-jo6i4kqk><svg viewBox="0 0 640 640" class="footer__icon" data-astro-cid-jo6i4kqk="true"><path d="M512 96L127.9 96C110.3 96 96 110.5 96 128.3L96 511.7C96 529.5 110.3 544 127.9 544L512 544C529.6 544 544 529.5 544 511.7L544 128.3C544 110.5 529.6 96 512 96zM231.4 480L165 480L165 266.2L231.5 266.2L231.5 480L231.4 480zM198.2 160C219.5 160 236.7 177.2 236.7 198.5C236.7 219.8 219.5 237 198.2 237C176.9 237 159.7 219.8 159.7 198.5C159.7 177.2 176.9 160 198.2 160zM480.3 480L413.9 480L413.9 376C413.9 351.2 413.4 319.3 379.4 319.3C344.8 319.3 339.5 346.3 339.5 374.2L339.5 480L273.1 480L273.1 266.2L336.8 266.2L336.8 295.4L337.7 295.4C346.6 278.6 368.3 260.9 400.6 260.9C467.8 260.9 480.3 305.2 480.3 362.8L480.3 480z" fill="currentColor" /></svg></a></li><li data-astro-cid-jo6i4kqk><a href="/rss.xml" data-astro-cid-jo6i4kqk><svg viewBox="0 -960 960 960" fill="#e3e3e3" class="footer__icon" data-astro-cid-jo6i4kqk="true"><path d="M143.5-143.5Q120-167 120-200t23.5-56.5Q167-280 200-280t56.5 23.5Q280-233 280-200t-23.5 56.5Q233-120 200-120t-56.5-23.5ZM680-120q0-117-44-218.5T516-516q-76-76-177.5-120T120-680v-120q142 0 265 53t216 146q93 93 146 216t53 265H680Zm-240 0q0-67-25-124.5T346-346q-44-44-101.5-69T120-440v-120q92 0 171.5 34.5T431-431q60 60 94.5 139.5T560-120H440Z" fill="currentColor" /></svg></a></li></ul></div></footer></body></html>
