@@ -13,8 +13,14 @@ const experiments = await getExperiments();
   .list-item--grid {
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  @media all and (min-width: 720px) {
+    .list-item--grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 </style>
 
