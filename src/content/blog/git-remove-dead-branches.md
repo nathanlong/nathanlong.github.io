@@ -38,13 +38,13 @@ The double-ampersand is a bash control operator that only moves onto the next pa
 
 ## List local branches
 
-```
+```bash
 git branch --format '%(refname:short) %(upstream:track)'
 ```
 
 This will return a list of local branches formatted with the short branch name and the upstream tracking status. Something like:
 
-```
+```bash
 main [ahead 1]
 feature-login [behind 2]
 feature-api [gone]
@@ -64,13 +64,13 @@ This uses the bash pipe operator (`|`) to feed the branch list into `awk`, which
 
 So an item like:
 
-```markup
+```bash
 feature-api [gone]
 ```
 
 turns into:
 
-```markup
+```bash
 $1 = feature-api
 $2 = [gone]
 ```
@@ -94,14 +94,14 @@ The final part of the script pipes our new dead branch list into `xargs`, which 
 So `xargs` will receive a list like:
 
 
-```
+```bash
 feature-api
 old-feature
 ```
 
 Which gets turned into:
 
-```
+```bash
 git branch -D feature-api old-feature
 ```
 

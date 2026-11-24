@@ -1,11 +1,13 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import FormattedDate from '@components/FormattedDate.astro';
 
 type Props = {
   title: string;
   description: string;
   date: Date;
-  image: string;
+  image: ImageMetadata;
   imageAlt: string;
   href: string;
   source: string;
@@ -51,7 +53,13 @@ const { href, source, title, description, date, image, imageAlt } = Astro.props;
 </style>
 
 <li class="list-item__lab">
-  <img class="list-item__lab__image" src={image} alt={imageAlt} />
+  <Image
+    class="list-item__lab__image"
+    src={image}
+    alt={imageAlt}
+    width={80}
+    densities={[1, 2]}
+  />
   <div class="list-item__lab__content">
     <div>
       <h4 class="list-item__title">{title}</h4>

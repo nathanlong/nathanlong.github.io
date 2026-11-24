@@ -28,7 +28,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
           )}
         </div>
         <section>
-          <h1>{title}</h1>
+          <h1 class="post-title">{title}</h1>
           <div class="meta">
             <div class="date">
               <FormattedDate date={pubDate} />
@@ -54,7 +54,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
         <slot />
       </article>
       <aside class="grid-layout post-subscribe" aria-label="Newsletter">
-        <SubscribeCard compact />
+        <SubscribeCard compact class="popout" />
       </aside>
     </main>
     <Footer />
@@ -95,3 +95,9 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
     </script>
   </body>
 </html>
+
+<style>
+  .post-title {
+    font-weight: 900;
+  }
+</style>

@@ -5,6 +5,11 @@ pubDate: 2024-03-21T12:00:00-0400
 tags: [tooling]
 ---
 
+import InlineVideo from '@components/content/InlineVideo.astro';
+import tigDemo from '@media/a-few-of-my-favorite-cli-things--demo-01.mp4';
+import exaDemo from '@media/a-few-of-my-favorite-cli-things--demo-02.mp4';
+import bashmarksDemo from '@media/a-few-of-my-favorite-cli-things--demo-03.mp4';
+
 I've recently been perusing the setups at [uses.tech](https://uses.tech/). It's interesting to see where people have landed on hardware and software options, but I started thinking about some of the miscellaneous CLI utilities I've tried and picked up along the way. My work LIVES inside the terminal (as a Vim user) and here are some of the small things I've found to make it easier on myself (in no particular order):
 
 ## tig
@@ -15,11 +20,7 @@ Git can be weird sometimes. While I don't use `tig` to perform any git operation
 
 (So what DO I do most of my git actions with? I use Tim Pope's excellent [Fugitive](https://github.com/tpope/vim-fugitive) Vim plugin, but that's more Vim-based, so it doesn't qualify for this article...)
 
-<div class="feature rounded-1 overflow-hidden lh-0">
-  <video class="w-full h-auto" autoplay muted loop playsinline>
-      <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/44491262-1f61-402d-b394-31c16aa65bcd" type="video/mp4" />
-  </video>
-</div>
+<InlineVideo src={tigDemo} />
 
 ## exa
 
@@ -32,11 +33,7 @@ alias ll='exa --long --header --git --all' # long form, everything
 alias lt='exa --tree --level=2 --long --all' # tree view
 ```
 
-<div class="feature rounded-1 overflow-hidden lh-0">
-  <video class="w-full h-auto" autoplay muted loop playsinline>
-    <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/4faafda2-4c14-49ad-a48f-7f21bbf289dd" type="video/mp4" />
-  </video>
-</div>
+<InlineVideo src={exaDemo} />
 
 ## bashmarks
 
@@ -96,8 +93,4 @@ It can be tough to make sure that your environments are in sync across projects,
 
 Think Activity Monitor, but way cooler looking and accessible without clicking a bunch of things. `btop` is a pleasing way to see just what is making your computer slow down to a crawl (shakes fist at Docker).
 
-<div class="feature rounded-1 overflow-hidden lh-0">
-<video class="w-full h-auto" autoplay muted loop playsinline>
-      <source src="https://github.com/nathanlong/nathanlong.github.io/assets/623568/15fc78f3-a1d3-4e30-acca-a070f4fea860" type="video/mp4" />
-</video>
-</div>
+<InlineVideo src={bashmarksDemo} />

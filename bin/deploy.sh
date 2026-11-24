@@ -7,6 +7,9 @@ build_dir='dist'
 deploy_dir='.gh-pages'
 branch='gh-pages'
 
+./bin/media.sh check
+./bin/media.sh backup
+
 e_header "Building site..."
 npm run build
 e_success "Built!"

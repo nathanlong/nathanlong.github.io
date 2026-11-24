@@ -7,14 +7,12 @@ tags: [neovim]
 
 Sometimes while using Tailwind, you need to place classes into things that aren't structured like HTML elements. Take a look at this Twig snippet from a Craft site:
 
-{% raw %}
 ```twig
 {{ entry.primaryDescription ? tag('div', {
   class: 'text-body-lg text-rich',
   html: entry.primaryDescription,
 }) }}
 ```
-{% endraw %}
 
 This checks for the existence of a field and wraps it in a `<div>` tag... But that little bit there as `class:`... If you're running Tailwind in Neovim like me, it doesn't recognize that as a trigger for autocomplete because it wants that sweet, sweet HTML `class=` attribute.
 

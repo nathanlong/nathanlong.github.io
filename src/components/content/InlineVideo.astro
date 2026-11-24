@@ -1,0 +1,158 @@
+---
+// A short, silent, looping clip that plays inline like an animated image,
+// with a play/pause button that appears on hover or keyboard focus.
+//
+//   import demo from '@media/post--demo.mp4';
+//   <InlineVideo src={demo} label="Scrolling through the tig history view" />
+//
+// Takes an imported file rather than a name: unlike images, every video a
+// lookup could reach would be copied into the build, used or not.
+//
+// Starts paused for visitors who prefer reduced motion. While paused, the
+// button stays visible so it's clear the clip can be played.
+import PauseIcon from '@/assets/icons/pause.svg';
+import PlayIcon from '@/assets/icons/play.svg';
+
+interface Props {
+  src: string;
+  /** Describes the clip for screen readers; omit if it's decorative */
+  label?: string;
+}
+
+const { src, label } = Astro.props;
+const type = src.endsWith('.webm') ? 'video/webm' : 'video/mp4';
+---
+
+<div class="inline-video">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    aria-label={label}
+    aria-hidden={label ? undefined : 'true'}
+  >
+    <source src={src} type={type} />
+  </video>
+  <button type="button" class="inline-video-toggle" aria-label="Pause video">
+    <PauseIcon class="icon-pause" aria-hidden="true" />
+    <PlayIcon class="icon-play" aria-hidden="true" />
+  </button>
+</div>
+
+<script>
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+  for (const wrapper of document.querySelectorAll<HTMLElement>(
+    '.inline-video',
+  )) {
+    const video = wrapper.querySelector('video')!;
+    const button = wrapper.querySelector('button')!;
+
+    // Follow the video's own events, so the button is right even when the
+    // browser pauses or blocks autoplay (e.g. iOS Low Power Mode)
+    const sync = () => {
+      wrapper.toggleAttribute('data-paused', video.paused);
+      button.setAttribute(
+        'aria-label',
+        video.paused ? 'Play video' : 'Pause video',
+      );
+    };
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+
+    const toggle = () => (video.paused ? video.play() : video.pause());
+    // A <button> already handles Enter and Space
+    button.addEventListener('click', toggle);
+    // Clicking the clip itself works too, as a larger target for pointers
+    video.addEventListener('click', toggle);
+
+    if (reduceMotion.matches) video.pause();
+    sync();
+  }
+</script>
+
+<style>
+  .inline-video {
+    grid-column: feature;
+    position: relative;
+    line-height: 0;
+  }
+
+  video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* Mirrors the header's .menu-button: a frosted disc with a centered icon */
+  .inline-video-toggle {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--surface) 70%, transparent);
+    backdrop-filter: blur(8px);
+    color: var(--text-strong);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  .inline-video-toggle:hover {
+    color: var(--accent);
+  }
+
+  .inline-video-toggle:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 4px;
+  }
+
+  .inline-video-toggle svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Shown on hover, on keyboard focus, while paused, and always on touch
+     screens, which can't hover */
+  .inline-video:hover .inline-video-toggle,
+  .inline-video-toggle:focus-visible,
+  .inline-video[data-paused] .inline-video-toggle {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .inline-video-toggle {
+      opacity: 1;
+    }
+  }
+
+  .icon-play,
+  .inline-video[data-paused] .icon-pause {
+    display: none;
+  }
+
+  .inline-video[data-paused] .icon-play {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .inline-video-toggle {
+      transition: none;
+    }
+  }
+
+  /* System colors replace the frosted fill, so outline the button */
+  @media (forced-colors: active) {
+    .inline-video-toggle {
+      border: 1px solid CanvasText;
+    }
+  }
+</style>

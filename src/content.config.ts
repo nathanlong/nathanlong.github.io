@@ -20,19 +20,20 @@ const blog = defineCollection({
 
 const lab = defineCollection({
   loader: file('./src/content/lab/experiments.json'),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    url: z.url(),
-    source: z.url(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    status: z.string().optional(),
-    image: z.url(),
-    imageAlt: z.string(),
-    feature: z.boolean(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      url: z.url(),
+      source: z.url(),
+      description: z.string(),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      status: z.string().optional(),
+      image: image(),
+      imageAlt: z.string(),
+      feature: z.boolean(),
+    }),
 });
 
 export const collections = { blog, lab };

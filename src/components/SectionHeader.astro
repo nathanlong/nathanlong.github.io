@@ -35,6 +35,7 @@ const { title, href, note, linkLabel = 'View All' } = Astro.props;
 
   .section-title {
     flex-shrink: 0;
+    font-weight: 900;
   }
 
   .section-title small {
@@ -53,5 +54,13 @@ const { title, href, note, linkLabel = 'View All' } = Astro.props;
   .spacer {
     width: 100%;
     border-bottom: 3px dotted var(--surface-sunken);
+    opacity: 50%;
+    mix-blend-mode: screen;
   }
+
+  :global([data-scheme="light"]) .spacer {
+    mix-blend-mode: multiply;
+    opacity: 60%;
+  }
+
 </style>

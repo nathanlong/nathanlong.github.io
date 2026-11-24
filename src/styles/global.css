@@ -458,35 +458,3 @@ ul.post-tags {
   gap: 1.5rem;
   padding: 0;
 }
-
-.slide {
-  --flow-space: 2rem;
-  grid-column: feature;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-@media all and (min-width: 576px) {
-  .slide {
-    flex-direction: row;
-    gap: 2rem;
-  }
-
-  .slide-image {
-    width: 50%;
-  }
-
-  .slide-text {
-    width: 50%;
-  }
-}
-
-.slide-text {
-  --flow-space: 1rem;
-}
-
-.slide-image figcaption {
-  font-size: 0.75rem;
-  color: var(--text);
-}

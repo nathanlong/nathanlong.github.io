@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# images and video: kept out of git, backed up to Google Drive (bin/media.sh)
+media/
 # generated types
 .astro/
 

@@ -1,0 +1,68 @@
+---
+// A presentation slide: the slide image beside its speaker notes.
+//
+//   <Slide image="@media/talk--slide-01.jpg" caption="Image by Someone">
+//     Speaker notes, in Markdown.
+//   </Slide>
+//
+// For a caption with links, use the caption slot instead of the prop:
+//   <Fragment slot="caption">Image by <a href="...">Someone</a></Fragment>
+import { Image } from 'astro:assets';
+import { resolveImage, type MediaImage } from '@/lib/media';
+
+interface Props {
+  image: MediaImage;
+  alt?: string;
+  caption?: string;
+}
+
+const { image, alt = '', caption } = Astro.props;
+const src = await resolveImage(image);
+const hasCaption = Boolean(caption) || Astro.slots.has('caption');
+---
+
+<div class="slide">
+  <figure class="slide-image">
+    <Image src={src} alt={alt} />
+    {hasCaption && (
+      <figcaption>
+        {caption}
+        <slot name="caption" />
+      </figcaption>
+    )}
+  </figure>
+  <div class="slide-text flow">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .slide {
+    --flow-space: 2rem;
+    grid-column: feature;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .slide-text {
+    --flow-space: 1rem;
+  }
+
+  figcaption {
+    font-size: 0.75rem;
+    color: var(--text);
+  }
+
+  @media all and (min-width: 576px) {
+    .slide {
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    .slide-image,
+    .slide-text {
+      width: 50%;
+    }
+  }
+</style>
