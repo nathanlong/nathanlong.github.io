@@ -13,6 +13,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
   Astro.props;
 ---
 
+<!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
@@ -58,11 +59,6 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
       </aside>
     </main>
     <Footer />
-    <style>
-      .post-subscribe {
-        margin-block: 4rem 2rem;
-      }
-    </style>
     <script>
       // Only one code block is expanded at a time. Each change fades the
       // block out, swaps its grid column, then fades it back in.
@@ -99,5 +95,9 @@ const { title, description, pubDate, updatedDate, heroImage, tags } =
 <style>
   .post-title {
     font-weight: 900;
+  }
+
+  .post-subscribe {
+    margin-block: 4rem 2rem;
   }
 </style>

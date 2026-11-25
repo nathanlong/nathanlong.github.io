@@ -13,15 +13,5 @@ export default {
   tabWidth: 2,
   trailingComma: 'all',
   useTabs: false,
-  // prettier-plugin-tailwindcss must stay last so it can wrap the other parsers.
-  plugins: ['prettier-plugin-astro',],
-  tailwindStylesheet: './src/styles/app.css',
-  overrides: [
-    {
-      files: '*.astro',
-      options: {
-        parser: 'astro',
-      },
-    },
-  ],
+  plugins: ['prettier-plugin-astro'],
 };

@@ -9,6 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "astro": "astro",
     "new": "./bin/new.sh",
     "deploy": "./bin/deploy.sh",

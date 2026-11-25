@@ -211,7 +211,7 @@ a {
 }
 
 a:hover {
-  color: var(--text-bold);
+  color: var(--text-strong);
 }
 
 .prose {

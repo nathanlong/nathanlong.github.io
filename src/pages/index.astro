@@ -19,29 +19,6 @@ const experiments = (await getExperiments()).slice(0, 3);
 const latestNews = (await getIssues()).slice(0, 3);
 ---
 
-<style>
-  .list-item__lab {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .list-item__lab__image {
-    aspect-ratio: 1/1;
-    width: 5rem;
-    border-radius: 0.5rem;
-    background-color: var(--surface-sunken);
-  }
-
-  .list-item__meta-list {
-    display: flex;
-    gap: 1rem;
-    align-items: baseline;
-    font-family: var(--font-mono);
-    font-size: 0.825rem;
-  }
-</style>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -77,6 +54,7 @@ const latestNews = (await getIssues()).slice(0, 3);
           {experiments.map((experiment) => (
             <ListItemLab
               title={experiment.data.name}
+              description={experiment.data.description}
               image={experiment.data.image}
               imageAlt={experiment.data.imageAlt}
               date={lastTouched(experiment)}

@@ -11,8 +11,20 @@ type Props = {
   imageAlt: string;
   href: string;
   source: string;
+  /** Heading level for the title: one below the heading the list sits under */
+  level?: 2 | 3 | 4;
 };
-const { href, source, title, description, date, image, imageAlt } = Astro.props;
+const {
+  href,
+  source,
+  title,
+  description,
+  date,
+  image,
+  imageAlt,
+  level = 3,
+} = Astro.props;
+const Heading = `h${level}` as const;
 ---
 
 <style>
@@ -22,10 +34,16 @@ const { href, source, title, description, date, image, imageAlt } = Astro.props;
     align-items: flex-start;
   }
 
+  /* Same size at every heading level */
+  .list-item__title {
+    font-size: 1.2em;
+  }
+
   .list-item__description {
     font-size: 0.875rem;
     color: var(--text-muted);
     line-height: 1.25;
+    margin-top: 0.25rem;
   }
 
   .list-item__lab__image {
@@ -62,7 +80,7 @@ const { href, source, title, description, date, image, imageAlt } = Astro.props;
   />
   <div class="list-item__lab__content">
     <div>
-      <h4 class="list-item__title">{title}</h4>
+      <Heading class="list-item__title">{title}</Heading>
       <p class="list-item__description">{description}</p>
     </div>
     <div class="list-item__meta-list">

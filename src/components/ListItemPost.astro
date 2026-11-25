@@ -4,13 +4,16 @@ import FormattedDate from '@components/FormattedDate.astro';
 type Props = {
   title: string;
   date: Date;
+  /** Heading level for the title: one below the heading the list sits under */
+  level?: 2 | 3 | 4;
 } & (
   | { href: string; id?: never; section?: never }
   | { id: string; section?: string; href?: never }
 );
 
-const { id, section = 'blog', href, title, date } = Astro.props;
+const { id, section = 'blog', href, title, date, level = 3 } = Astro.props;
 const link = href ?? `/${section}/${id}/`;
+const Heading = `h${level}` as const;
 ---
 
 <style is:global>
@@ -30,6 +33,8 @@ const link = href ?? `/${section}/${id}/`;
   }
 
   .list-item__title {
+    /* Same size at every heading level */
+    font-size: 1.2em;
     color: var(--text-strong);
     line-height: 1;
     margin: 0;
@@ -45,7 +50,7 @@ const link = href ?? `/${section}/${id}/`;
 
 <li class="list-item__post">
   <a class="list-item__link" href={link}>
-    <h4 class="list-item__title">{title}</h4>
+    <Heading class="list-item__title">{title}</Heading>
     <p class="list-item__date">
       <FormattedDate date={date} />
     </p>

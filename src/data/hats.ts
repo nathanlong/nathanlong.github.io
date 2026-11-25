@@ -28,8 +28,7 @@ type Season = Required<Pick<Hat, 'from' | 'to'>>;
 const seasons: Record<string, Season> = {
   trucker: { from: '09-22', to: '12-01' },
   pumpkin: { from: '10-01', to: '10-31' },
-  'tiny-bike-helmet': { from: '03-01', to: '12-01'},
-  'crewcut': { from: '01-01', to: '12-31'},
+  'tiny-bike-helmet': { from: '03-01', to: '12-01' },
 };
 
 const files = import.meta.glob<ImageMetadata>('/media/hat--*.png', {

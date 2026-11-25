@@ -1,9 +1,17 @@
 ---
 // A presentation slide: the slide image beside its speaker notes.
 //
-//   <Slide image="@media/talk--slide-01.jpg" caption="Image by Someone">
+//   <Slide
+//     image="@media/talk--slide-01.jpg"
+//     alt="A sketchbook open to a page of thumbnail doodles"
+//     caption="Image by Someone"
+//   >
 //     Speaker notes, in Markdown.
 //   </Slide>
+//
+// alt describes what the slide shows (its text, if it's a text slide). Use
+// alt="" only when the slide adds nothing beyond the notes beside it; a slide
+// without alt builds with a warning.
 //
 // For a caption with links, use the caption slot instead of the prop:
 //   <Fragment slot="caption">Image by <a href="...">Someone</a></Fragment>
@@ -12,18 +20,31 @@ import { resolveImage, type MediaImage } from '@/lib/media';
 
 interface Props {
   image: MediaImage;
-  alt?: string;
+  /** What the slide shows; "" if it's decorative */
+  alt: string;
   caption?: string;
 }
 
-const { image, alt = '', caption } = Astro.props;
+const { image, alt, caption } = Astro.props;
+if (alt === undefined) {
+  // A post renders more than once per build (its page, the RSS feed), so
+  // warn once per image. Kept on globalThis, since each render can load its
+  // own copy of this module.
+  const name = typeof image === 'string' ? image : image.src;
+  const warned: Set<string> = ((globalThis as any).__slideAltWarned ??=
+    new Set());
+  if (!warned.has(name)) {
+    warned.add(name);
+    console.warn(`[Slide] missing alt text: ${name}`);
+  }
+}
 const src = await resolveImage(image);
 const hasCaption = Boolean(caption) || Astro.slots.has('caption');
 ---
 
 <div class="slide">
   <figure class="slide-image">
-    <Image src={src} alt={alt} />
+    <Image src={src} alt={alt ?? ''} />
     {hasCaption && (
       <figcaption>
         {caption}

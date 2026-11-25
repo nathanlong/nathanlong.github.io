@@ -29,7 +29,8 @@ e_question() {
 seek_confirmation() {
   printf "\n"
   e_warning "$@"
-  read -p "Continue? (y/n) " -n 1
+  # zsh syntax: -k 1 reads one key, "REPLY?..." is the prompt
+  read -k 1 "REPLY?Continue? (y/n) "
   printf "\n"
 }
 

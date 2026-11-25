@@ -1,0 +1,13 @@
+# Build output and generated types
+dist/
+.astro/
+
+# Media (outside git) and the lockfile
+media/
+package-lock.json
+
+# Posts: Prettier can rewrite Markdown/MDX lists, emphasis, and tables
+src/content/
+
+# Personal notes, ignored by a global gitignore rather than this repo's
+jk/

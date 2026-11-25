@@ -40,6 +40,7 @@ const experiments = await getExperiments();
         <ul class="list-item--grid">
           {experiments.map((experiment) => (
             <ListItemLab
+              level={2}
               title={experiment.data.name}
               description={experiment.data.description}
               image={experiment.data.image}

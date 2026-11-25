@@ -3,7 +3,6 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '@components/BaseHead.astro';
 import Footer from '@components/Footer.astro';
-import FormattedDate from '@components/FormattedDate.astro';
 import Header from '@components/Header.astro';
 import ListItemPost from '@/components/ListItemPost.astro';
 import { SITE_DESCRIPTION } from '@/consts';
@@ -19,9 +18,9 @@ export async function getStaticPaths() {
 
   // Return a list of path segments and pass filtered posts as props
   return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post) =>
-      post.data.tags.includes(tag),
-    );
+    const filteredPosts = allPosts
+      .filter((post) => post.data.tags.includes(tag))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
     return {
       params: { tag },
       props: { posts: filteredPosts },
@@ -50,6 +49,7 @@ const { posts } = Astro.props;
       <ul class="list-item">
         {posts.map((post) => (
           <ListItemPost
+            level={2}
             id={post.id}
             title={post.data.title}
             date={post.data.pubDate}

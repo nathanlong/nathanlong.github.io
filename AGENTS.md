@@ -1,3 +1,8 @@
+## Boundaries
+
+- Ask: Before installing npm packages, making configuration changes
+- Never: commit to git or push to the remote
+
 ## Development
 
 When starting the dev server, use background mode:
