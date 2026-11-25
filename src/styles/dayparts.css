@@ -2,13 +2,13 @@
    Each token is light-dark(light value, dark value), so every daypart has
    both modes; Appearance picks which one shows.
 
-   --surface: bg, swatch fill, text on the checked Appearance segment; the secondary Button fill
+   --surface: bg, the swatch check mark, text on the checked Appearance segment; the secondary Button fill
   --surface-sunken: Inline code background, hr, the code-block Expand button, the menu pane (60% mix), Appearance segments, lab thumbnail placeholders
   --surface-glow: The sky-colored top of the page wash (--surface-gradient fades it into --surface), in the daypart's own hue. Text sits on it, so it's checked for contrast like a surface
-  --text-strong: Headings, the site title, menu text and button icon, post titles in lists, the checked Color chip's border
-  --text: Body copy, .prose, the Expand button text, captions, the footer link hover, the preview note
+  --text-strong: Headings, link hover, the site title, menu text and button icon, post titles in lists, the checked Color chip's border
+  --text: Body copy, .prose, the Expand button text, captions, the preview note
   --text-muted: Dates and tags (.meta), list dates, the footer, control borders, segment dividers, the Auto/System "now" text
-  --accent: Links and their hover, the blockquote border, menu link underlines, hover colors on the title and menu button, the checked segment fill, the swatch dot, the "now" marker
+  --accent: Links, menu link underlines, hover colors on the title and menu button, the checked segment fill, the swatch fill, the "now" marker
   --focus-ring: Focus outlines in the menu and theme controls
   --shiki-token-*: Syntax colors in code blocks (others reuse the tokens above; see global.css)
 

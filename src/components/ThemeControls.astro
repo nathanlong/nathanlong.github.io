@@ -52,7 +52,6 @@ const schemes = [
           data-label={part.label}
           data-dark={String(part.dark)}
         >
-          <span aria-hidden="true" class="indicator"></span>
           <input class="sr-only" type="radio" name="hue" value={part.id} />
           <span class="swatch" data-daypart={part.id} aria-hidden="true">
             <CheckIcon class="check" />
@@ -287,13 +286,6 @@ const schemes = [
     display: block;
   }
 
-  .divider {
-    align-self: stretch;
-    width: 1px;
-    margin-inline: 0.25rem;
-    background: var(--text-muted);
-  }
-
   .icon,
   .check {
     width: 1rem;
@@ -301,19 +293,13 @@ const schemes = [
   }
 
   /* Has data-daypart, so the theme recipe gives it that daypart's colors:
-     its surface, with an accent dot */
+     filled with its accent */
   .swatch {
     width: 100%;
     height: 2rem;
-    /* border: 1px solid var(--text-muted); */
     border-radius: 0.5rem;
     background: var(--accent);
     position: relative;
-    /* background: radial-gradient( */
-    /*   circle, */
-    /*   var(--accent) 0 35%, */
-    /*   var(--surface) calc(35% + 0.5px) */
-    /* ); */
   }
 
   .now-marker::before {
