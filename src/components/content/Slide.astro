@@ -71,7 +71,7 @@ const hasCaption = Boolean(caption) || Astro.slots.has('caption');
   }
 
   figcaption {
-    font-size: 0.75rem;
+    font-size: max(0.75rem, 0.6em);
     color: var(--text);
   }
 

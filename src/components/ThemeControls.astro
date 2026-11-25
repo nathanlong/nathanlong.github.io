@@ -136,7 +136,8 @@ const schemes = [
   .theme-controls {
     display: grid;
     gap: 1.5rem;
-    font-size: 1rem;
+    /* The panel's base size; everything inside is relative to it */
+    font-size: 0.85em;
     container-type: inline-size;
   }
 
@@ -151,7 +152,7 @@ const schemes = [
 
   legend {
     margin-bottom: 0.5rem;
-    font-size: 1.25rem;
+    font-size: 1.25em;
     font-weight: 900;
   }
 
@@ -169,7 +170,7 @@ const schemes = [
   .now {
     color: var(--text-muted);
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: max(0.75rem, 0.6em);
   }
 
   /* Appearance: a segmented bar. The 1px gaps show the container's color as
@@ -202,10 +203,6 @@ const schemes = [
   }
   .segment:last-child {
     border-radius: 0 var(--radius) var(--radius) 0;
-  }
-
-  .segment .now {
-    font-size: 0.75rem;
   }
 
   .segment:has(:checked) {

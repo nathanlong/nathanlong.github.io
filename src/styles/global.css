@@ -17,7 +17,6 @@
     Inconsolata, Consolas, MonoLisa, Monoid, Menlo, Monaco, Andale Mono WT,
     Andale Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono,
     Nimbus Mono L, monospace;
-  --fluid-base: clamp(1rem, 0.416666666666667vw + 0.875rem, 1.375rem);
   /* Grid values */
   --gap: clamp(1rem, 6vw, 3rem);
   --full: minmax(var(--gap), 1fr);
@@ -121,8 +120,9 @@ html {
 
 body {
   font-family: var(--font-sans);
-  /* font-size: var(--fluid-base); */
-  font-size: 20px;
+  /* The site's one type size; everything else is relative to it. See the
+     type scale under Typography below. */
+  font-size: 1.25rem;
   margin: 0;
   padding: 0;
   text-align: left;
@@ -180,6 +180,21 @@ h6 {
   text-wrap: pretty;
 }
 
+/* Type scale
+   ==========================================================================
+   body sets the one base size (1.25rem, 1.125rem on narrow screens); type
+   everywhere else is in em, so it follows. Stick to these:
+
+   Headings  2.074 / 1.728 / 1.44 / 1.2em (a 1.2 ratio)
+   Body      1em
+   Small     0.85em   pitch text, .meta and tags, the theme controls panel
+   Smaller   0.7em    dates, descriptions, fine print, "View All" links
+   Smallest  max(0.75rem, 0.6em)   footer, captions, notes; never under 12px
+   Controls  1rem     inputs and buttons (see input below)
+
+   em multiplies when nested, so size leaf text, not containers. A component
+   that sets its own base (like .theme-controls) sizes its insides from it. */
+
 h1 {
   font-size: 2.074em;
 }
@@ -228,13 +243,15 @@ a:hover {
   --flow-space: 2rem;
 }
 
+/* Controls stay at 1rem (16px at the browser default): smaller and iOS
+   zooms the page on focus */
 textarea {
   width: 100%;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 input {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 table {
@@ -286,7 +303,7 @@ ol {
 }
 @media (max-width: 720px) {
   body {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 }
 
@@ -438,8 +455,13 @@ ol {
   column-gap: 0.5rem;
   row-gap: 0.125rem;
   font-family: var(--font-mono);
-  font-size: 0.875em;
+  font-size: 0.85em;
   color: var(--text-muted);
+}
+
+/* Tags inside a post's meta line would otherwise shrink twice */
+.meta .post-tags {
+  font-size: 1em;
 }
 
 ul.post-tags {

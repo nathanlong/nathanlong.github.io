@@ -12,10 +12,10 @@ const { title, href, note, linkLabel = 'View All' } = Astro.props;
 ---
 
 <div class="section-header">
-  <h2 class="section-title">
-    {title}
-    {note && <small> ({note})</small>}
-  </h2>
+  <div class="section-title">
+    <h2>{title}</h2>
+    {note && <small>({note})</small>}
+  </div>
   <div class="spacer"></div>
   {href && (
     <a class="section-header__link" href={href}>
@@ -31,21 +31,29 @@ const { title, href, note, linkLabel = 'View All' } = Astro.props;
     gap: 1rem;
   }
 
+  /* The note sits beside the heading rather than in it, so it's sized from
+     the body like other small text, and isn't part of the heading's name */
   .section-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5ch;
     flex-shrink: 0;
+  }
+
+  .section-title h2 {
     font-weight: 900;
   }
 
   .section-title small {
     font-weight: normal;
-    font-size: 0.75rem;
+    font-size: max(0.75rem, 0.6em);
     color: var(--text-muted);
     font-family: var(--font-mono);
   }
 
   .section-header__link {
     flex-shrink: 0;
-    font-size: 0.75rem;
+    font-size: 0.7em;
     text-decoration: none;
   }
 
