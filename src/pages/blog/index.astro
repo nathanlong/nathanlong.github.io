@@ -40,7 +40,9 @@ const tags = [...new Set(posts.map((post) => post.data.tags).flat())].sort();
       </section>
       <section class="post-tags flow-0">
         {tags.map((tag) => (
-          <a class="tag-link" href={`/tags/${tag}/`}>#{tag}</a>
+          <a class="tag-link" href={`/tags/${tag}/`}>
+            #{tag}
+          </a>
         ))}
       </section>
       {[...postsByYear].map(([year, yearPosts]) => (

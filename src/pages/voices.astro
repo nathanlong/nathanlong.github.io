@@ -81,14 +81,14 @@ const description = 'A collection of websites and feeds from the web industry.';
               <li class="voice-section__item">
                 <strong>{voice.name}</strong>
                 <span>
-                {voice.htmlUrl && (
-                  <>
-                    {' '}
-                    <a href={voice.htmlUrl}>Website</a>
-                  </>
-                )}
-                {voice.htmlUrl && voice.xmlUrl && ' · '}
-                {voice.xmlUrl && <a href={voice.xmlUrl}>Feed</a>}
+                  {voice.htmlUrl && (
+                    <>
+                      {' '}
+                      <a href={voice.htmlUrl}>Website</a>
+                    </>
+                  )}
+                  {voice.htmlUrl && voice.xmlUrl && ' · '}
+                  {voice.xmlUrl && <a href={voice.xmlUrl}>Feed</a>}
                 </span>
               </li>
             ))}

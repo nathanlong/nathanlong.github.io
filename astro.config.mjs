@@ -51,12 +51,12 @@ const devPages = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://nathan-long.com',
-	integrations: [mdx(), sitemap(), devPages],
+  integrations: [mdx(), sitemap(), devPages],
   markdown: {
     shikiConfig: {
       // Token colors are CSS variables set per daypart in dayparts.css
       theme: codeTheme,
       transformers: [codeBlockToggle],
-    }
-  }
+    },
+  },
 });

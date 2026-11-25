@@ -22,17 +22,15 @@ const {
 const classes = ['button', `button--${variant}`, className];
 ---
 
-{
-  href ? (
-    <a class:list={classes} href={href} {...rest}>
-      <slot />
-    </a>
-  ) : (
-    <button class:list={classes} type={type} {...rest}>
-      <slot />
-    </button>
-  )
-}
+{href ? (
+  <a class:list={classes} href={href} {...rest}>
+    <slot />
+  </a>
+) : (
+  <button class:list={classes} type={type} {...rest}>
+    <slot />
+  </button>
+)}
 
 <style>
   .button {

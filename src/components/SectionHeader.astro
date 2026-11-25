@@ -14,16 +14,14 @@ const { title, href, note, linkLabel = 'View All' } = Astro.props;
 <div class="section-header">
   <h2 class="section-title">
     {title}
-    {note && <small>{' '}({note})</small>}
+    {note && <small> ({note})</small>}
   </h2>
   <div class="spacer"></div>
-  {
-    href && (
-      <a class="section-header__link" href={href}>
-        {linkLabel} &rarr;
-      </a>
-    )
-  }
+  {href && (
+    <a class="section-header__link" href={href}>
+      {linkLabel} &rarr;
+    </a>
+  )}
 </div>
 
 <style>
@@ -58,9 +56,8 @@ const { title, href, note, linkLabel = 'View All' } = Astro.props;
     mix-blend-mode: screen;
   }
 
-  :global([data-scheme="light"]) .spacer {
+  :global([data-scheme='light']) .spacer {
     mix-blend-mode: multiply;
     opacity: 60%;
   }
-
 </style>

@@ -24,57 +24,52 @@ export function greet(name: string) {
       <h1>Themes</h1>
       <p class="intro">
         Contrast is measured live. Toggle DevTools → Rendering →
-        <code>prefers-contrast</code> to check high-contrast mode
-        (currently <strong data-contrast-mode>normal</strong>).{' '}
-        <span data-summary></span>
+        <code>prefers-contrast</code> to check high-contrast mode (currently{' '}
+        <strong data-contrast-mode>normal</strong>). <span data-summary></span>
       </p>
       <div class="grid">
-        {
-          dayparts.map((part) =>
-            (['light', 'dark'] as const).map((scheme) => (
-              <section
-                class="panel grain"
-                data-daypart={part.id}
-                style={`color-scheme: ${scheme}`}
-              >
-                <h2>
-                  {part.label} · {scheme}
-                  {part.dark === (scheme === 'dark') && (
-                    <span class="default">default</span>
-                  )}
-                </h2>
-                <p class="meta">Oct 2, 2026 · #muted-meta</p>
-                <p>
-                  Body text with <a href="#">a link</a>,{' '}
-                  <a href="#" class="fake-focus">a focused link</a>, and{' '}
-                  <code>inline code</code>.
-                </p>
-                <blockquote>A blockquote, with an accent border.</blockquote>
-                <hr />
-                <Code
-                  code={sample}
-                  lang="ts"
-                  theme={codeTheme}
-                />
-                <div class="pane">
-                  <div class="segments">
-                    <span class="segment is-checked">
-                      Time<small>Dark</small>
-                    </span>
-                    <span class="segment">
-                      System<small>Light</small>
-                    </span>
-                  </div>
-                  <span class="chip is-checked">Checked chip ✓</span>
-                  <span class="chip">
-                    Auto <span class="now">· Evening</span>
+        {dayparts.map((part) =>
+          (['light', 'dark'] as const).map((scheme) => (
+            <section
+              class="panel grain"
+              data-daypart={part.id}
+              style={`color-scheme: ${scheme}`}
+            >
+              <h2>
+                {part.label} · {scheme}
+                {part.dark === (scheme === 'dark') && (
+                  <span class="default">default</span>
+                )}
+              </h2>
+              <p class="meta">Oct 2, 2026 · #muted-meta</p>
+              <p>
+                Body text with <a href="#">a link</a>,{' '}
+                <a href="#" class="fake-focus">
+                  a focused link
+                </a>
+                , and <code>inline code</code>.
+              </p>
+              <blockquote>A blockquote, with an accent border.</blockquote>
+              <hr />
+              <Code code={sample} lang="ts" theme={codeTheme} />
+              <div class="pane">
+                <div class="segments">
+                  <span class="segment is-checked">
+                    Time<small>Dark</small>
+                  </span>
+                  <span class="segment">
+                    System<small>Light</small>
                   </span>
                 </div>
-                <ul class="checks" aria-label="Contrast checks" />
-              </section>
-            )),
-          )
-        }
+                <span class="chip is-checked">Checked chip ✓</span>
+                <span class="chip">
+                  Auto <span class="now">· Evening</span>
+                </span>
+              </div>
+              <ul class="checks" aria-label="Contrast checks" />
+            </section>
+          )),
+        )}
       </div>
     </main>
 
@@ -84,7 +79,8 @@ export function greet(name: string) {
       // [label, foreground, background(s), minimum]. Values are CSS colors
       // resolved inside each panel. 'pane' is the frosted menu pane, checked
       // over each kind of page background it can sit on (worst one wins).
-      const PANE = 'color-mix(in oklch, var(--surface-sunken) 60%, transparent)';
+      const PANE =
+        'color-mix(in oklch, var(--surface-sunken) 60%, transparent)';
       const CODE_TOKENS = [
         '--shiki-foreground',
         '--shiki-token-comment',
@@ -114,14 +110,12 @@ export function greet(name: string) {
         ['muted / pane', 'var(--text-muted)', ['pane'], 4.5],
         ['border / sunken', 'var(--text-muted)', ['var(--surface-sunken)'], 3],
         ['border / pane', 'var(--text-muted)', ['pane'], 3],
-        ...CODE_TOKENS.map(
-          (token): [string, string, string[], number] => [
-            `code ${token.replace('--shiki-token-', '')}`,
-            `var(${token})`,
-            ['var(--shiki-background)'],
-            4.5,
-          ],
-        ),
+        ...CODE_TOKENS.map((token): [string, string, string[], number] => [
+          `code ${token.replace('--shiki-token-', '')}`,
+          `var(${token})`,
+          ['var(--shiki-background)'],
+          4.5,
+        ]),
       ];
 
       const TOKENS = [
@@ -162,7 +156,8 @@ export function greet(name: string) {
           const surface = resolve(panel, 'var(--surface)');
           const sunken = resolve(panel, 'var(--surface-sunken)');
           const code = new Color(
-            getComputedStyle(panel.querySelector('.astro-code')!).backgroundColor,
+            getComputedStyle(panel.querySelector('.astro-code')!)
+              .backgroundColor,
           );
           const pane = resolve(panel, PANE);
           // Page content behind the pane is blurred, so test against the
@@ -218,7 +213,6 @@ export function greet(name: string) {
       more.addEventListener('change', update);
       update();
     </script>
-
     <style>
       .themes {
         padding: 1.5rem;

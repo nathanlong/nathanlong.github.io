@@ -46,4 +46,3 @@ function validate(parts: Daypart[]) {
 }
 
 validate(dayparts);
-

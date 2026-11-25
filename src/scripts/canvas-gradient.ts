@@ -34,15 +34,15 @@ export interface CanvasGradientInstance {
 // Consts -----------------------------------------------------------------
 
 const MAX_ORBITS = 8;
-const DEFAULT_BG = "#0a0a1a";
-const DEFAULT_COLORS = ["#3b82f6", "#8b5cf6", "#06b6d4", "#ec4899"];
+const DEFAULT_BG = '#0a0a1a';
+const DEFAULT_COLORS = ['#3b82f6', '#8b5cf6', '#06b6d4', '#ec4899'];
 
 type Lab = [number, number, number];
 
 // Color conversions ------------------------------------------------------
 
 function hexToLinear(hex: string): [number, number, number] {
-  const c = hex.replace("#", "");
+  const c = hex.replace('#', '');
   const r = parseInt(c.slice(0, 2), 16) / 255;
   const g = parseInt(c.slice(2, 4), 16) / 255;
   const b = parseInt(c.slice(4, 6), 16) / 255;
@@ -67,7 +67,11 @@ function linearToOklab(r: number, g: number, b: number): Lab {
   ];
 }
 
-function oklabToLinear(L: number, a: number, b: number): [number, number, number] {
+function oklabToLinear(
+  L: number,
+  a: number,
+  b: number,
+): [number, number, number] {
   const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
   const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
   const s_ = L - 0.0894841775 * a - 1.291485548 * b;
@@ -86,7 +90,11 @@ function hexToOklab(hex: string): Lab {
   return linearToOklab(r, g, b);
 }
 
-function oklabToLinearClamped(L: number, a: number, b: number): [number, number, number] {
+function oklabToLinearClamped(
+  L: number,
+  a: number,
+  b: number,
+): [number, number, number] {
   const [r, g, bl] = oklabToLinear(L, a, b);
   return [Math.max(0, r), Math.max(0, g), Math.max(0, bl)];
 }
@@ -133,13 +141,13 @@ function makeOrbits(count: number): Orbit[] {
 function compileShader(
   gl: WebGL2RenderingContext | WebGLRenderingContext,
   type: number,
-  src: string
+  src: string,
 ): WebGLShader {
   const s = gl.createShader(type)!;
   gl.shaderSource(s, src);
   gl.compileShader(s);
   if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-    throw new Error(gl.getShaderInfoLog(s) ?? "Shader compile error");
+    throw new Error(gl.getShaderInfoLog(s) ?? 'Shader compile error');
   }
   return s;
 }
@@ -147,14 +155,14 @@ function compileShader(
 function linkProgram(
   gl: WebGL2RenderingContext | WebGLRenderingContext,
   vs: WebGLShader,
-  fs: WebGLShader
+  fs: WebGLShader,
 ): WebGLProgram {
   const p = gl.createProgram()!;
   gl.attachShader(p, vs);
   gl.attachShader(p, fs);
   gl.linkProgram(p);
   if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
-    throw new Error(gl.getProgramInfoLog(p) ?? "Program link error");
+    throw new Error(gl.getProgramInfoLog(p) ?? 'Program link error');
   }
   return p;
 }
@@ -326,7 +334,7 @@ void main() {
 
 export function canvasGradient(
   canvas: HTMLCanvasElement,
-  options: CanvasGradientOptions = {}
+  options: CanvasGradientOptions = {},
 ): CanvasGradientInstance {
   const bg = options.bg ?? DEFAULT_BG;
   const colors = options.colors ?? DEFAULT_COLORS;
@@ -336,12 +344,12 @@ export function canvasGradient(
 
   const ac = new AbortController();
   const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
+    '(prefers-reduced-motion: reduce)',
   ).matches;
 
   // Try WebGL2 first, fall back to WebGL1
-  const gl2 = canvas.getContext("webgl2");
-  const gl1 = gl2 ? null : canvas.getContext("webgl");
+  const gl2 = canvas.getContext('webgl2');
+  const gl1 = gl2 ? null : canvas.getContext('webgl');
   const gl = (gl2 ?? gl1) as WebGL2RenderingContext | WebGLRenderingContext;
 
   if (!gl) return { tween() {}, destroy() {} };
@@ -350,9 +358,7 @@ export function canvasGradient(
 
   // Compile + link
   const vs = compileShader(gl, gl.VERTEX_SHADER, isGL2 ? VS2 : VS1);
-  const fsSrc = isGL2
-    ? debug ? DEBUG_FS2 : FS2
-    : debug ? DEBUG_FS1 : FS1;
+  const fsSrc = isGL2 ? (debug ? DEBUG_FS2 : FS2) : debug ? DEBUG_FS1 : FS1;
   const fs = compileShader(gl, gl.FRAGMENT_SHADER, fsSrc);
   const program = linkProgram(gl, vs, fs);
   gl.useProgram(program);
@@ -365,20 +371,20 @@ export function canvasGradient(
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW
+      gl.STATIC_DRAW,
     );
-    const loc = gl.getAttribLocation(program, "aPos");
+    const loc = gl.getAttribLocation(program, 'aPos');
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   }
 
   // Uniform locations
-  const uCount = gl.getUniformLocation(program, "uCount");
-  const uPositions = gl.getUniformLocation(program, "uPositions");
-  const uColors = gl.getUniformLocation(program, "uColors");
-  const uBgColor = gl.getUniformLocation(program, "uBgColor");
-  const uSigma = gl.getUniformLocation(program, "uSigma");
-  const uScale = gl.getUniformLocation(program, "uScale");
+  const uCount = gl.getUniformLocation(program, 'uCount');
+  const uPositions = gl.getUniformLocation(program, 'uPositions');
+  const uColors = gl.getUniformLocation(program, 'uColors');
+  const uBgColor = gl.getUniformLocation(program, 'uBgColor');
+  const uSigma = gl.getUniformLocation(program, 'uSigma');
+  const uScale = gl.getUniformLocation(program, 'uScale');
 
   const orbitCount = Math.min(colors.length, MAX_ORBITS);
   const orbits = makeOrbits(orbitCount);
@@ -490,8 +496,10 @@ export function canvasGradient(
     const t = (timestamp / 1000) * speed;
     for (let i = 0; i < orbitCount; i++) {
       const c = orbits[i];
-      posData[i * 2] = (c.cx + c.rx * Math.cos(t * c.speed + c.phase)) * canvas.width;
-      posData[i * 2 + 1] = (c.cy + c.ry * Math.sin(t * c.speed + c.phase)) * canvas.height;
+      posData[i * 2] =
+        (c.cx + c.rx * Math.cos(t * c.speed + c.phase)) * canvas.width;
+      posData[i * 2 + 1] =
+        (c.cy + c.ry * Math.sin(t * c.speed + c.phase)) * canvas.height;
     }
 
     gl.uniform1i(uCount, orbitCount);
@@ -523,12 +531,12 @@ export function canvasGradient(
   }
 
   document.addEventListener(
-    "visibilitychange",
+    'visibilitychange',
     () => {
       isVisible = !document.hidden;
       syncLoop();
     },
-    { signal: ac.signal }
+    { signal: ac.signal },
   );
 
   const io = new IntersectionObserver(([entry]) => {
@@ -551,7 +559,8 @@ export function canvasGradient(
     // Reduced motion: snap + single redraw, no animation.
     if (prefersReducedMotion) {
       currentBgLab = [...targetBg];
-      for (let i = 0; i < count; i++) currentLabColors[i] = [...targetColors[i]];
+      for (let i = 0; i < count; i++)
+        currentLabColors[i] = [...targetColors[i]];
       setLinearFromLab();
       render(performance.now());
       return;
@@ -581,7 +590,7 @@ export function canvasGradient(
     gl.deleteShader(vs);
     gl.deleteShader(fs);
     if (quadBuffer) gl.deleteBuffer(quadBuffer);
-    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
   }
 
   return { tween: tweenTo, destroy };

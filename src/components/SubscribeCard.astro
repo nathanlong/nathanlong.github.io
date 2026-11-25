@@ -20,7 +20,12 @@ const artSize = compact ? 64 : 112;
 ---
 
 <form
-  class:list={['subscribe', 'grain', { 'subscribe--compact': compact }, className]}
+  class:list={[
+    'subscribe',
+    'grain',
+    { 'subscribe--compact': compact },
+    className,
+  ]}
   action={NEWSLETTER.subscribe}
   method="post"
   target="_blank"
@@ -34,19 +39,17 @@ const artSize = compact ? 64 : 112;
     alt=""
   />
   <div class="subscribe__body">
-    {
-      compact ? (
-        <>
-          <h2 class="subscribe__title">Enjoyed this?</h2>
-          <p class="subscribe__pitch">
+    {compact ? (
+      <>
+        <h2 class="subscribe__title">Enjoyed this?</h2>
+        <p class="subscribe__pitch">
           Get this and more in my weekly newsletter:{' '}
-            <a href="/newsletter">{NEWSLETTER.name}</a>.
-          </p>
-        </>
-      ) : (
-        <h2 class="subscribe__title">{NEWSLETTER.name}</h2>
-      )
-    }
+          <a href="/newsletter">{NEWSLETTER.name}</a>.
+        </p>
+      </>
+    ) : (
+      <h2 class="subscribe__title">{NEWSLETTER.name}</h2>
+    )}
     <label for={inputId} class:list={{ 'sr-only': compact }}>
       Enter your email to sign up
     </label>
@@ -63,8 +66,7 @@ const artSize = compact ? 64 : 112;
       <Button type="submit">Subscribe</Button>
     </div>
     <p class="subscribe__fine-print">
-      Prefer a feed reader?{' '}
-      <a href={NEWSLETTER.rss}>Subscribe by RSS</a>.
+      Prefer a feed reader? <a href={NEWSLETTER.rss}>Subscribe by RSS</a>.
     </p>
   </div>
 </form>

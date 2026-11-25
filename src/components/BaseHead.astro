@@ -8,10 +8,10 @@ import { SITE_TITLE } from '@/consts';
 import SiteState from '@components/SiteState.astro';
 
 interface Props {
-	/** Page name, shown as "Title - Site". Omit on the homepage. */
-	title?: string;
-	description: string;
-	image?: ImageMetadata;
+  /** Page name, shown as "Title - Site". Omit on the homepage. */
+  title?: string;
+  description: string;
+  image?: ImageMetadata;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -30,10 +30,10 @@ const title = pageTitle ? `${pageTitle} - ${SITE_TITLE}` : SITE_TITLE;
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
+  rel="alternate"
+  type="application/rss+xml"
+  title={SITE_TITLE}
+  href={new URL('rss.xml', Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
 

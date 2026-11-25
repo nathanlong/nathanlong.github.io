@@ -2,19 +2,17 @@
 import { SITE_TIMEZONE } from '@/consts';
 
 interface Props {
-	date: Date;
+  date: Date;
 }
 
 const { date } = Astro.props;
 ---
 
 <time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-			timeZone: SITE_TIMEZONE,
-		})
-	}
+  {date.toLocaleDateString('en-us', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: SITE_TIMEZONE,
+  })}
 </time>

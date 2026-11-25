@@ -27,7 +27,10 @@
   --shiki-token-keyword: light-dark(oklch(49% 0.077 228), oklch(80% 0.085 220));
   --shiki-token-function: light-dark(oklch(52% 0.115 22), oklch(80% 0.095 22));
   --shiki-token-string: light-dark(oklch(51% 0.111 68), oklch(84% 0.105 75));
-  --shiki-token-constant: light-dark(oklch(51.5% 0.1 305), oklch(80% 0.095 305));
+  --shiki-token-constant: light-dark(
+    oklch(51.5% 0.1 305),
+    oklch(80% 0.095 305)
+  );
   --shiki-token-parameter: light-dark(oklch(52% 0.12 0), oklch(78% 0.12 0));
 }
 
@@ -62,7 +65,10 @@
   --accent: light-dark(oklch(50% 0.13 150), oklch(80% 0.12 150));
 
   --shiki-token-keyword: light-dark(oklch(50% 0.12 255), oklch(77% 0.08 250));
-  --shiki-token-function: light-dark(oklch(49.5% 0.086 215), oklch(80% 0.07 210));
+  --shiki-token-function: light-dark(
+    oklch(49.5% 0.086 215),
+    oklch(80% 0.07 210)
+  );
   --shiki-token-string: light-dark(oklch(50.5% 0.104 80), oklch(84% 0.09 84));
   --shiki-token-constant: light-dark(oklch(52% 0.13 335), oklch(76% 0.09 335));
   --shiki-token-parameter: light-dark(oklch(51.5% 0.13 40), oklch(76% 0.1 40));
@@ -84,7 +90,10 @@
   --shiki-token-function: light-dark(oklch(48% 0.114 155), oklch(76% 0.16 140));
   --shiki-token-string: light-dark(oklch(49.5% 0.106 70), oklch(83% 0.165 83));
   --shiki-token-constant: light-dark(oklch(49% 0.17 344), oklch(75% 0.145 2));
-  --shiki-token-parameter: light-dark(oklch(48% 0.095 232), oklch(74% 0.11 170));
+  --shiki-token-parameter: light-dark(
+    oklch(48% 0.095 232),
+    oklch(74% 0.11 170)
+  );
 }
 
 [data-daypart='evening'] {
@@ -100,8 +109,14 @@
   --shiki-token-keyword: light-dark(oklch(50% 0.2 300), oklch(78.7% 0.119 305));
   --shiki-token-function: light-dark(oklch(50% 0.18 262), oklch(77% 0.11 260));
   --shiki-token-string: light-dark(oklch(48% 0.14 142), oklch(85% 0.109 143));
-  --shiki-token-constant: light-dark(oklch(50.5% 0.144 45), oklch(82.4% 0.101 53));
-  --shiki-token-parameter: light-dark(oklch(51.5% 0.18 15), oklch(78.2% 0.09 9));
+  --shiki-token-constant: light-dark(
+    oklch(50.5% 0.144 45),
+    oklch(82.4% 0.101 53)
+  );
+  --shiki-token-parameter: light-dark(
+    oklch(51.5% 0.18 15),
+    oklch(78.2% 0.09 9)
+  );
 }
 
 [data-daypart='midnight'] {
@@ -115,9 +130,15 @@
   --accent: light-dark(oklch(51% 0.18 265), oklch(74% 0.132 264));
 
   --shiki-token-keyword: light-dark(oklch(50% 0.2 299), oklch(75.1% 0.134 299));
-  --shiki-token-function: light-dark(oklch(49.5% 0.17 262), oklch(74% 0.132 264));
+  --shiki-token-function: light-dark(
+    oklch(49.5% 0.17 262),
+    oklch(74% 0.132 264)
+  );
   --shiki-token-string: light-dark(oklch(48% 0.1 130), oklch(79.5% 0.139 130));
-  --shiki-token-constant: light-dark(oklch(50% 0.121 56), oklch(78.7% 0.137 51));
+  --shiki-token-constant: light-dark(
+    oklch(50% 0.121 56),
+    oklch(78.7% 0.137 51)
+  );
   --shiki-token-parameter: light-dark(oklch(51.5% 0.19 12), oklch(74% 0.15 10));
 }
 

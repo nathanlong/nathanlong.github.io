@@ -19,20 +19,18 @@ const schemes = [
   <fieldset>
     <legend>Appearance</legend>
     <div class="segments">
-      {
-        schemes.map(({ value, label, now }) => (
-          <label class="segment">
-            <input class="sr-only" type="radio" name="scheme" value={value} />
-            {label}
-            {now && (
-              <span class="now">
-                <span class="sr-only">, </span>
-                <span {...{ [now]: '' }} />
-              </span>
-            )}
-          </label>
-        ))
-      }
+      {schemes.map(({ value, label, now }) => (
+        <label class="segment">
+          <input class="sr-only" type="radio" name="scheme" value={value} />
+          {label}
+          {now && (
+            <span class="now">
+              <span class="sr-only">, </span>
+              <span {...{ [now]: '' }} />
+            </span>
+          )}
+        </label>
+      ))}
     </div>
   </fieldset>
 
@@ -43,34 +41,36 @@ const schemes = [
         <input class="sr-only" type="radio" name="hue" value="auto" />
         <ClockIcon class="icon" aria-hidden="true" />
         Auto
-        <span class="now"><span data-now-hue></span></span>
+        <span class="now">
+          <span data-now-hue></span>
+        </span>
       </label>
-      {
-        dayparts.map((part) => (
-          <label
-            class="chip"
-            data-option={part.id}
-            data-label={part.label}
-            data-dark={String(part.dark)}
-          >
+      {dayparts.map((part) => (
+        <label
+          class="chip"
+          data-option={part.id}
+          data-label={part.label}
+          data-dark={String(part.dark)}
+        >
           <span aria-hidden="true" class="indicator"></span>
-            <input class="sr-only" type="radio" name="hue" value={part.id} />
-            <span class="swatch" data-daypart={part.id} aria-hidden="true">
-              <CheckIcon class="check" />
-            </span>
-            {part.label}
-            <span class="now-marker" hidden>
-              <span class="sr-only">(current time of day)</span>
-            </span>
-          </label>
-        ))
-      }
+          <input class="sr-only" type="radio" name="hue" value={part.id} />
+          <span class="swatch" data-daypart={part.id} aria-hidden="true">
+            <CheckIcon class="check" />
+          </span>
+          {part.label}
+          <span class="now-marker" hidden>
+            <span class="sr-only">(current time of day)</span>
+          </span>
+        </label>
+      ))}
     </div>
   </fieldset>
 
   <p class="preview-note" hidden>
     Previewing from the link.
-    <Button variant="secondary" data-stop-preview>Use my settings</Button>
+    <Button variant="secondary" data-stop-preview>
+      Use my settings
+    </Button>
   </p>
 </form>
 
@@ -101,7 +101,8 @@ const schemes = [
       const nowSystem = find('[data-now-system]');
       const nowHue = find('[data-now-hue]');
       if (nowScheme)
-        nowScheme.textContent = clock?.dataset.dark === 'true' ? 'Dark' : 'Light';
+        nowScheme.textContent =
+          clock?.dataset.dark === 'true' ? 'Dark' : 'Light';
       if (nowSystem) nowSystem.textContent = dark.matches ? 'Dark' : 'Light';
       if (nowHue) nowHue.textContent = clock?.dataset.label ?? '';
       options.forEach((option) => {
@@ -285,11 +286,9 @@ const schemes = [
     color: var(--surface);
   }
 
-
   .chip:has(:checked) .check {
     display: block;
   }
-
 
   .divider {
     align-self: stretch;

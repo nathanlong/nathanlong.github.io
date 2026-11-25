@@ -93,7 +93,9 @@ const hatRules = hats.map(({ id, from, to }) => ({ id, from, to }));
     const daypart = preview.hue ?? prefs.hue ?? clock.id;
     const setting = preview.scheme ?? (preview.time ? null : prefs.scheme);
     const scheme =
-      setting === 'system' ? null : (setting ?? (clock.dark ? 'dark' : 'light'));
+      setting === 'system'
+        ? null
+        : (setting ?? (clock.dark ? 'dark' : 'light'));
 
     // Compare with the last target, not the DOM: a crossfade still waiting
     // to run hasn't written its attributes yet.

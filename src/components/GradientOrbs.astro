@@ -28,8 +28,10 @@ const { text = '404' } = Astro.props;
         x="0"
         y="118"
         textLength="270"
-        lengthAdjust="spacingAndGlyphs">{text}</text
+        lengthAdjust="spacingAndGlyphs"
       >
+        {text}
+      </text>
     </clipPath>
   </svg>
 </div>
@@ -100,7 +102,9 @@ const { text = '404' } = Astro.props;
       ctx.fillStyle = getComputedStyle(probe).color;
       ctx.fillRect(0, 0, 1, 1);
       const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-      return '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+      return (
+        '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')
+      );
     };
 
     const readPalette = (): GradientPalette => {
@@ -131,6 +135,9 @@ const { text = '404' } = Astro.props;
       attributes: true,
       attributeFilter: ['data-daypart', 'data-scheme'],
     });
-    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', retint);
+    matchMedia('(prefers-color-scheme: dark)').addEventListener(
+      'change',
+      retint,
+    );
   }
 </script>
